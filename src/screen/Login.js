@@ -1,14 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, Dimensions, TouchableWithoutFeedback,Keyboard } from 'react-native';
+import {
+    Text,
+    View,
+    ImageBackground,
+    StatusBar,
+    Keyboard,
+    Animated,
+    ScrollView,
+    Easing,
+    Alert,
+    Picker,
+    KeyboardAvoidingView,
+    Platform,
+    Dimensions,
+    TouchableWithoutFeedback
+} from 'react-native';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import StyleLogin from '../Styles/StyleLogin';
 import { Button } from 'react-native-elements';
-import { OutlinedTextField } from 'react-native-material-textfield';
+import { OutlinedTextField, TextField } from 'react-native-material-textfield';
 //import { LoginApp } from '../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import AsyncStorage from '@react-native-community/async-storage';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 //import DatosUser from '../DatosUser'
 import { useNavigation } from '@react-navigation/native';
+import { NavigationEvents } from 'react-navigation';
+import styles from './styles';
+import Colors from '../utils/Colors';
+import { Dictionary } from '../utils/Dictionary';
+import { setLanguage } from '../utils/Session';
+import HeaderImage from '../../assets/globals/header.jpg';
+import Ripple from 'react-native-material-ripple';
 
 let ScreenWidth = Dimensions.get("window").width;
 let ScreenHeight = Dimensions.get("window").height;
@@ -20,65 +43,101 @@ export default function Login({logeadoHandler}) {
 	const [correoElectronico, setCorreoElectronico] = useState('');
 	const [contrasena, setContrasena] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [headerHeight, setheaderHeight] = useState(new Animated.Value(250));
     
     
 
     function toggleSwitch() {
         setShowPassword(!showPassword)
     }
+
+    const [language, setlanguage] = useState(false)
+    const [email, setemail] = useState(false)
+    const [emailError, setemailError] = useState(false)
+    const [password, setpassword] = useState(false)
+    const [passwordError, setpasswordError] = useState(false)
        
         return (
                 <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
-                <View style={{flex: 1,backgroundColor: '#123c5b',justifyContent:'center'}}>
-                    <View style={{flex: .2,marginBottom:10}}>
+                <View style={{ flex: 1 }}>
+                <NavigationEvents
+                    onWillFocus={_ => this.props.setForceInset('never')}
+                    onWillBlur={_ => this.props.setForceInset('always')}
+                />
+                <StatusBar
+                    backgroundColor="transparent"
+                    barStyle="light-content"
+                    translucent
+                />
+                <Animated.View
+                    style={[styles.header, { height: headerHeight }]}
+                >
+                    <ImageBackground
+                        style={styles.headerImage}
+                        source={HeaderImage}
+                        resizeMode="cover"
+                    >
+                        <Text style={styles.headerText}>DRAGON GOLF</Text>
+                    </ImageBackground>
+                </Animated.View>
+                <KeyboardAvoidingView style={styles.body} behavior='padding' enabled={Platform.OS === 'ios'}>
+                    <View style={styles.selectlanguage}>
+                        <Ionicon name='md-globe' size={18} color={Colors.Primary} />
+                        <View style={{ flex: 1 }}>
+                            <Picker
+                                selectedValue={language}
+                                onValueChange={setlanguage(language)}
+                                mode="dropdown"
+                            >
+                                <Picker.Item label='🇺🇸 EN' value='en' />
+                                <Picker.Item label='🇪🇸 ES' value='es' />
+                            </Picker>
+                        </View>
                     </View>
-                    <View style={{flex: .4,paddingHorizontal:30}}>
-                        <View style={{marginBottom:10}}>
-                            <OutlinedTextField
-                                label='Usuario'
-                                autoCapitalize='none'
-                                value={correoElectronico}
-                                onChangeText={(text) => setCorreoElectronico(text)}
-                                baseColor='#fff'
-                                tintColor='#fff'
-                                textColor='#fff'
-                                inputContainerStyle={{borderRadius:20}}
-                                labelTextStyle={StyleLogin.TextStyle}
-                        
-                            />
+                    <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
+                        <View style={styles.formContainer}>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.emailInput = ref}
+                                    label={email[language]}
+                                    tintColor={Colors.Primary}
+                                    autoCapitalize="none"
+                                    autoCompleteType='email'
+                                    keyboardType="email-address"
+                                    onChangeText={(email) => this.setState({ email })}
+                                    error={emailError}
+                                    onSubmitEditing={(event) => {
+                                        if(this.emailValidation(event.nativeEvent.text)){
+                                            this.passInput.focus();
+                                        }else{
+                                            setTimeout(_ => this.emailInput.focus(), 100);
+                                        }
+                                    }}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.passInput = ref}
+                                    label={password[language]}
+                                    tintColor={Colors.Primary}
+                                    secureTextEntry
+                                    autoCompleteType='password'
+                                    autoCapitalize="none"
+                                    onChangeText={(password) => this.setState({ password })}
+                                    error={passwordError}
+                                    onSubmitEditing={(event) => {
+                                        if(!this.passwordValidation(event.nativeEvent.text)){
+                                            setTimeout(_ => this.passInput.focus(), 100);
+                                        }
+                                    }}
+                                />
+                            </View>
                         </View>
-                        <View style={{marginBottom:20,justifyContent:'center'}}>
-                            <OutlinedTextField
-                                label='Contraseña'
-                                onChangeText={(text) => setContrasena(text)}
-                                secureTextEntry={!showPassword}
-                                baseColor='#fff'
-                                tintColor='#fff'
-                                textColor='#fff'
-                                labelTextStyle={StyleLogin.TextStyle}
-                            />
-                           <TouchableOpacity style={{ alignItems: 'flex-end', position: 'absolute',right:20}} onPress={toggleSwitch}>
-                                {
-                                    showPassword
-                                    ?
-                                    <EntypoIcon name='eye-with-line' color='white' size={20}/>
-                                    :
-                                    <EntypoIcon name='eye' color='white' size={20}/>
-                                }
-                            </TouchableOpacity>
+                        <View style={styles.buttonsView}>
                         </View>
-                        <Button title='Iniciar Sesión'
-                            titleStyle={{ color:'#104E81', fontFamily: 'Montserrat',textAlignVertical: 'bottom', fontSize: 18, color: '#104E81' }}
-                            buttonStyle={{ backgroundColor: "#fff" }}/>
-
-                        <View style={{margin:20,alignItems:'center'}}>
-                            <Text style={{color:'white'}}>Version 1.0</Text>
-                        </View>
-
-                    </View>
-
-
-                </View>
+                    </ScrollView>
+                </KeyboardAvoidingView>
+            </View>
                 </TouchableWithoutFeedback>
         );
 }
