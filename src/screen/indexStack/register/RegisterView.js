@@ -11,7 +11,6 @@ import {
     KeyboardAvoidingView,
     Platform
 } from 'react-native';
-import { connect } from 'react-redux';
 import { TextField } from 'react-native-material-textfield';
 import Ripple from 'react-native-material-ripple';
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -19,8 +18,6 @@ import ImagePicker from 'react-native-image-picker';
 import PhoneInput from 'react-native-phone-input'
 import styles from './styles';
 import Colors from '../../../utils/Colors';
-import * as Validations from '../../../utils/Validations';
-import { actionSignUp, actionSignUpError, actionLoading } from '../../../store/actions';
 import { Dictionary } from '../../../utils/Dictionary';
 
 class RegisterView extends Component {
@@ -441,87 +438,43 @@ class RegisterView extends Component {
     //============= VALIDATIONS ==============
 
     nameValidation = (name) => {
-        const response = Validations.nameValidation(name);
-        this.setState({ nameError: !response.ok ? response.error : '' });
-
-        return response.ok;
+        return true
     }
 
     lastNameValidation = (lastName) => {
-        const response = Validations.nameValidation(lastName);
-        this.setState({ lastNameError: !response.ok ? response.error : '' });
-
-        return response.ok;
+        return true
     }
 
     emailValidation = (email) => {
-        const response = Validations.emailValidation(email);
-        this.setState({ emailError: !response.ok ? response.error : '' });
-
-        return response.ok;
+        return true
     }
 
     nicknameValidation = (nickname) => {
-        const response = Validations.nicknameValidation(nickname);
-        this.setState({ nicknameError: !response.ok ? response.error : '' });
-
-        return response.ok;
+        return true
     }
 
     codeValidation = (code) => {
-        const response = Validations.intNumberValidation(code);
-        this.setState({ codeError: !response.ok ? response.error : '' });
-
-        return response.ok;
+        return true
     }
 
     cellphoneValidation = (cellphone) => {
-        const response = Validations.phoneValidation(cellphone);
-        this.setState({ cellphoneError: !response.ok ? response.error : '' });
-
-        return response.ok;
+        return true
     }
 
     ghinValidation = (ghin) => {
-        let ok = true;
-        const response = Validations.intNumberValidation(ghin);
-        this.setState({ ghinError: !response.ok ? response.error : '' });
-        if (response.ok) {
-            if (ghin.length !== 7){
-                this.setState({ ghinError: Dictionary.ghinMustContain[this.props.language] });
-                ok = false;
-            }
-        }
-
-        return response.ok && ok;
+        return true
     }
 
     handicapValidation = (handicap) => {
-        const response = Validations.floatNumberValidation(handicap);
-        this.setState({ handicapError: !response.ok ? response.error : '' });
-
-        return response.ok;
+        return true
     }
 
     passwordValidation = (password) => {
-        const response = Validations.passwordValidation(password);
-        this.setState({ passwordError: !response.ok ? response.error : '' });
-
-        return response.ok;
+        return true
     }
 
     confirmPasswordValidation = (confirmPassword) => {
-        let ok = true;
-        if (!confirmPassword) {
-            ok = false;
-            this.setState({ confirmPasswordError: Dictionary.required[this.props.language] });
-        } else if (confirmPassword !== this.state.password) {
-            ok = false;
-            this.setState({ confirmPasswordError: Dictionary.dontMatch[this.props.language] });
-        }
-        if (ok) this.setState({ confirmPasswordError: '' });
-
-        return ok;
+        return true
     }
 
     //============= VALIDATIONS ==============
@@ -574,22 +527,4 @@ class RegisterView extends Component {
 
 }
 
-const mapStateToProps = state => ({
-    language: state.reducerLanguage,
-    loading: state.reducerLoading,
-    signUpError: state.reducerSignUpError,
-});
-
-const mapDispatchToProps = dispatch => ({
-    signUp: (values) => {
-        dispatch(actionSignUp(values));
-    },
-    changeLoading: (value) => {
-        dispatch(actionLoading(value));
-    },
-    resetSignUpError: () => {
-        dispatch(actionSignUpError(null));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);
+export default RegisterView;

@@ -96,10 +96,6 @@ class LoginView extends Component {
 
         return (
             <View style={{ flex: 1 }}>
-                <NavigationEvents
-                    onWillFocus={_ => this.props.setForceInset('never')}
-                    onWillBlur={_ => this.props.setForceInset('always')}
-                />
                 <StatusBar
                     backgroundColor="transparent"
                     barStyle="light-content"
@@ -197,7 +193,8 @@ class LoginView extends Component {
             {
                 toValue: value,
                 duration: 500,
-                easing: Easing.elastic(1.2)
+                easing: Easing.elastic(1.2),
+                useNativeDriver: true
             }
         ).start()
     }
@@ -210,6 +207,18 @@ class LoginView extends Component {
     createAnAccountAction = () => {
         Keyboard.dismiss();
         this.props.navigation.navigate('RegisterView', { language: this.props.language });
+    }
+
+    emailValidation = (email) => {
+        console.warn('Hola')
+
+        return true;
+    }
+
+    passwordValidation = (password) => {
+        console.warn('Hola')
+
+        return true;
     }
 
     submit = () => {

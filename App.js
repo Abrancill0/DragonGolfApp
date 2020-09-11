@@ -3,12 +3,12 @@ import { TouchableOpacity, View, Text, Image, Alert, Dimensions, StyleSheet } fr
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator,DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer'
-import { CardStyleInterpolators } from '@react-navigation/stack';
 
 import SplashScreen from './src/screen/splashScreen/SplashScreen'
 
 import { Icon } from 'react-native-elements'
-import Login from './src/screen/Login'
+import Login from './src/screen/indexStack/login/LoginView'
+import RegisterView from './src/screen/indexStack/register/RegisterView'
 import FlashMessage from "react-native-flash-message";
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -128,11 +128,6 @@ export default class App extends Component {
 
     console.warn(this.state.logeado)
 
-    createSplashStack = () =>
-      <Stack.Navigator headerMode="none">
-        <Stack.Screen name='SplashScreen' component={SplashScreen} />
-      </Stack.Navigator>
-
 
     const DrawerContent = props => {
       return (
@@ -237,6 +232,17 @@ export default class App extends Component {
     createHomeStack = () =>
       <Stack.Navigator>
         <Stack.Screen name='Login' component={Login}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            }
+          })} />
+        <Stack.Screen name='RegisterView' component={RegisterView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
