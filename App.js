@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Text, Image, Alert, Dimensions, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, Image, Alert, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator,DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer'
@@ -55,7 +55,7 @@ export default class App extends Component {
             logeado:true,
             isLoading:false,
           })
-          this.LoadUsuario(IDUsuario)
+          //this.LoadUsuario(IDUsuario)
         }
         else
         {
@@ -132,7 +132,7 @@ export default class App extends Component {
     const DrawerContent = props => {
       return (
 
-        <View style={{flex:1,backgroundColor:'white'}}>
+        <View style={{flex:1}}>
           <View style={{height:'90%',padding:20}}>
               {
               this.state.logeado
@@ -270,12 +270,3 @@ export default class App extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  TextStyle: {
-    fontFamily: 'Montserrat',
-    fontSize: 15,
-    color: "#1e325c",
-    alignSelf: 'center'
-  },
-});

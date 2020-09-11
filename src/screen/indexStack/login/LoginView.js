@@ -118,7 +118,6 @@ class LoginView extends Component {
                         <View style={{ flex: 1 }}>
                             <Picker
                                 selectedValue={language}
-                                onValueChange={this.changeLanguage}
                                 mode="dropdown"
                             >
                                 <Picker.Item label='🇺🇸 EN' value='en' />
@@ -194,14 +193,14 @@ class LoginView extends Component {
                 toValue: value,
                 duration: 500,
                 easing: Easing.elastic(1.2),
-                useNativeDriver: true
+                useNativeDriver: false
             }
         ).start()
     }
 
     changeLanguage = (language) => {
         setLanguage(language);
-        this.props.changeLanguage(language);
+        //this.props.changeLanguage(language);
     }
 
     createAnAccountAction = () => {

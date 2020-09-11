@@ -103,46 +103,57 @@ class SplashScreen extends Component {
         Animated.timing(this.state.opacityImage, {
             toValue: 1,
             duration: 2000,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityD, {
             toValue: 1,
             duration: duration * 2,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityR, {
             toValue: 1,
             duration: duration * 3,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityA, {
             toValue: 1,
             duration: duration * 4,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityG, {
             toValue: 1,
             duration: duration * 5,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityO, {
             toValue: 1,
             duration: duration * 6,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityN, {
             toValue: 1,
             duration: duration * 7,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityG2, {
             toValue: 1,
             duration: duration * 8,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityO2, {
             toValue: 1,
             duration: duration * 9,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityL, {
             toValue: 1,
             duration: duration * 10,
+            useNativeDriver: false
         }),
         Animated.timing(this.state.opacityF, {
             toValue: 1,
             duration: duration * 11,
+            useNativeDriver: false
         }),
     ]).start(() => {
         this.loopAnimation();
@@ -167,92 +178,114 @@ class SplashScreen extends Component {
                 Animated.timing(this.state.opacityImage, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityD, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityR, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityA, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityG, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityO, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityN, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityG2, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityO2, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityL, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityF, {
                     toValue: 1,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
             ]),
             Animated.parallel([
                 Animated.timing(this.state.opacityImage, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityD, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityR, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityA, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityG, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityO, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityN, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityG2, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityO2, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityL, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
                 Animated.timing(this.state.opacityF, {
                     toValue: 0,
                     duration: loopDuration,
+                    useNativeDriver: false
                 }),
             ])
         ])
