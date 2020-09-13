@@ -19,6 +19,8 @@ import PhoneInput from 'react-native-phone-input'
 import styles from './styles';
 import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
+import { showMessage } from "react-native-flash-message";
+import { Registro } from '../../../Services/Services'
 
 class RegisterView extends Component {
 
@@ -31,6 +33,7 @@ class RegisterView extends Component {
             name: '',
             nameError: '',
             lastName: '',
+            lastName2: '',
             lastNameError: '',
             email: '',
             emailError: '',
@@ -49,6 +52,7 @@ class RegisterView extends Component {
             confirmPasswordError: '',
             deleting: false,
             seePassword: false,
+            re : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         }
     }
 
@@ -116,6 +120,7 @@ class RegisterView extends Component {
             photo,
             name,
             lastName,
+            lastName2,
             email,
             nickname,
             code,
@@ -150,71 +155,48 @@ class RegisterView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.nameIn = ref}
-                                    label={name[language]}
+                                    label={'name[language]'}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     onChangeText={(name) => this.setState({ name })}
-                                    error={nameError}
-                                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.nameValidation(text)) {
-                                            this.lastNameIn.focus();
-                                        } else {
-                                            setTimeout(_ => this.nameIn.focus(), 100);
-                                        }
-                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.lastNameIn = ref}
-                                    label={lastName[language]}
+                                    label={'lastName[language]'}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     onChangeText={(lastName) => this.setState({ lastName })}
-                                    error={lastNameError}
-                                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.lastNameValidation(text)) {
-                                            this.emailIn.focus();
-                                        } else {
-                                            setTimeout(_ => this.lastNameIn.focus(), 100);
-                                        }
-                                    }}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.lastNameIn = ref}
+                                    label={'lastName2[language]'}
+                                    tintColor={Colors.Primary}
+                                    autoCapitalize="words"
+                                    onChangeText={(lastName2) => this.setState({ lastName2 })}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.emailIn = ref}
-                                    label={email[language]}
+                                    label={'email[language]'}
                                     tintColor={Colors.Primary}
                                     keyboardType="email-address"
                                     autoCapitalize="none"
                                     onChangeText={(email) => this.setState({ email })}
-                                    error={emailError}
-                                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.emailValidation(text)) {
-                                            this.nicknameIn.focus();
-                                        } else {
-                                            setTimeout(_ => this.emailIn.focus(), 100);
-                                        }
-                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.nicknameIn = ref}
-                                    label={nickname[language]}
+                                    label={'nickname[language]'}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="characters"
                                     maxLength={5}
                                     onChangeText={(nickname) => this.setState({ nickname: nickname.toUpperCase() })}
-                                    error={nicknameError}
-                                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.nicknameValidation(text)) {
-                                            this.phoneIn.focus();
-                                        } else {
-                                            setTimeout(_ => this.nicknameIn.focus(), 100);
-                                        }
-                                    }}
                                 />
                             </View>
                             <View style={styles.phoneInputContainer}>
@@ -233,7 +215,7 @@ class RegisterView extends Component {
                                     </View>
                                     <View style={{ width: 50, marginTop: -10 }}>
                                         <TextField
-                                            label={code[language]}
+                                            label={'code[language]'}
                                             tintColor={Colors.Primary}
                                             keyboardType="number-pad"
                                             onChangeText={(codeNumber) => {
@@ -254,7 +236,7 @@ class RegisterView extends Component {
                                 <View style={{ flex: 1, marginTop: -10 }}>
                                     <TextField
                                         ref={ref => this.phoneIn = ref}
-                                        label={cellphoneText[language]}
+                                        label={'cellphoneText[language]'}
                                         tintColor={Colors.Primary}
                                         keyboardType="phone-pad"
                                         maxLength={14}
@@ -262,15 +244,6 @@ class RegisterView extends Component {
                                         onKeyPress={({ nativeEvent: { key } }) => this.setState({ deleting: key === 'Backspace' })}
                                         onChangeText={this.formatCellphone}
                                         value={cellphone}
-                                        error={cellphoneError}
-                                        returnKeyType='done'
-                                        onSubmitEditing={({ nativeEvent: { text } }) => {
-                                            if (this.cellphoneValidation(text)) {
-                                                this.ghinIn.focus();
-                                            } else {
-                                                setTimeout(_ => this.phoneIn.focus(), 100);
-                                            }
-                                        }}
                                     />
                                 </View>
                             </View>
@@ -283,15 +256,6 @@ class RegisterView extends Component {
                                     keyboardType="number-pad"
                                     autoCapitalize="none"
                                     onChangeText={(ghin) => this.setState({ ghin })}
-                                    error={ghinError}
-                                    returnKeyType='done'
-                                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.ghinValidation(text)) {
-                                            this.handicapIn.focus();
-                                        } else {
-                                            setTimeout(_ => this.ghinIn.focus(), 100);
-                                        }
-                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -303,33 +267,16 @@ class RegisterView extends Component {
                                     maxLength={5}
                                     autoCapitalize="none"
                                     onChangeText={(handicap) => this.setState({ handicap })}
-                                    error={handicapError}
-                                    returnKeyType='done'
-                                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.handicapValidation(text)) {
-                                            this.passIn.focus();
-                                        } else {
-                                            setTimeout(_ => this.handicapIn.focus(), 100);
-                                        }
-                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.passIn = ref}
-                                    label={password[language]}
+                                    label={'password[language]'}
                                     tintColor={Colors.Primary}
                                     secureTextEntry={!seePassword}
                                     autoCapitalize="none"
                                     onChangeText={(password) => this.setState({ password })}
-                                    error={passwordError}
-                                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.passwordValidation(text)) {
-                                            this.confirmPassIn.focus();
-                                        } else {
-                                            setTimeout(_ => this.passIn.focus(), 100);
-                                        }
-                                    }}
                                 />
                                 <TouchableOpacity
                                     style={styles.showPasswordButton}
@@ -345,19 +292,12 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     secureTextEntry
                                     autoCapitalize="none"
-                                    onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
-                                    error={confirmPasswordError}
-                                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (!this.confirmPasswordValidation(text)) {
-                                            setTimeout(_ => this.confirmPassIn.focus(), 100);
-                                        }
-                                    }}
                                 />
                             </View>
                         </View>
                         <View style={styles.buttonsView}>
                             <Ripple
-                                style={[styles.button, { backgroundColor: Colors.Gray }]}
+                                style={[styles.button, { backgroundColor: Colors.Primary }]}
                                 onPress={this.haveAnAccountAction}
                             >
                                 <Text style={styles.buttonText}>{haveAccount[language]}</Text>
@@ -484,6 +424,7 @@ class RegisterView extends Component {
             profilePicture,
             name,
             lastName,
+            lastName2,
             email,
             nickname,
             codeNumber,
@@ -494,35 +435,110 @@ class RegisterView extends Component {
             confirmPassword,
         } = this.state;
 
-        const nameOk = this.nameValidation(name);
-        const lastNameOk = this.lastNameValidation(lastName);
-        const emailOk = this.emailValidation(email);
-        const nicknameOk = this.nicknameValidation(nickname);
-        const codeNumberOk = this.codeValidation(codeNumber);
-        const cellphoneOk = this.cellphoneValidation(cellphone);
-        const ghinOk = this.ghinValidation(ghin);
-        const handicapOk = this.handicapValidation(handicap);
-        const passwordOk = this.passwordValidation(password);
-        const confirmPasswordOk = this.confirmPasswordValidation(confirmPassword);
+        if (name == '') {
+      showMessage({
+                message: 'Campo nombre obligatorio',
+                type: "warning",
+              });
+      return
+    }
 
-        const submitOk = nameOk && lastNameOk && emailOk && nicknameOk && codeNumberOk
-            && cellphoneOk && ghinOk && handicapOk && passwordOk && confirmPasswordOk;
+    if (lastName == '') {
+      showMessage({
+                message: 'Campo apellido paterno obligatorio',
+                type: "warning",
+              });
+      return
+    }
 
-        if (submitOk) {
-            const data = {
-                profilePicture,
-                name,
-                lastName,
-                email,
-                nickname,
-                codeNumber,
-                cellphone,
-                ghin,
-                handicap,
-                password
-            };
-            this.props.signUp(data);
+    if (lastName2 == '') {
+        showMessage({
+            message: 'Campo apellido materno obligatorio',
+            type: "warning",
+        });
+    return
+    }
+
+    if (email == '') {
+      showMessage({
+                message: 'Campo apellido materno obligatorio',
+                type: "warning",
+              });
+      return
+    }
+
+    if(!this.state.re.test(String(email).toLowerCase())){
+      showMessage({
+                message: 'Campo correo electronico no valido',
+                type: "danger",
+              });
+      return
+
+    }
+
+    if (nickname == '') {
+      showMessage({
+                message: 'Campo correo electronico obligatorio',
+                type: "warning",
+              });
+      return
+    }
+
+    if (codeNumber == '') {
+      showMessage({
+                message: 'Campo nomina obligatorio',
+                type: "warning",
+              });
+      return
+    }
+
+    if (cellphone == '') {
+      showMessage({
+                message: 'Campo zona obligatorio',
+                type: "warning",
+              });
+      return
+    }
+
+    if (password == '') {
+      showMessage({
+                message: 'Campo contraseña obligatorio',
+                type: "warning",
+              });
+      return
+    }
+      Registro(name, lastName, lastName2, email, password, nickname, cellphone)
+      .then((res) => {
+        console.warn(res)
+        if (res.estatus === 1) {
+
+          try {
+           showMessage({
+                message: 'Registro guardado correctamente',
+                type: "success",
+              });
+
+           //this.GuardarFoto()
+
+           setTimeout(() => {
+                 this.props.navigation.navigate('Login');
+               }, 2000)
+
+          } catch (e) {
+
+            showMessage({
+                message: 'Ocurrió un error, favor de intentar más tarde',
+                type: "danger",
+              });
+          }
         }
+        else {
+          showMessage({
+                message: res.mensaje,
+                type: "warning",
+              });
+        }
+      });
     }
 
 }

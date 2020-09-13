@@ -20,7 +20,10 @@ import styles from './styles';
 import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
 import { setLanguage } from '../../../utils/Session';
+import { getLanguage } from '../../../utils/Session';
 import { NavigationEvents } from 'react-navigation';
+import { Login } from '../../../Services/Services'
+import { showMessage } from "react-native-flash-message";
 
 //Assets
 import HeaderImage from '../../../../assets/globals/header.jpg';
@@ -33,8 +36,7 @@ class LoginView extends Component {
             headerHeight: new Animated.Value(250),
             email: '',
             password: '',
-            emailError: null,
-            passwordError: null,
+            re : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         }
     }
 
@@ -118,6 +120,7 @@ class LoginView extends Component {
                         <View style={{ flex: 1 }}>
                             <Picker
                                 selectedValue={language}
+                                onValueChange={this.changeLanguage}
                                 mode="dropdown"
                             >
                                 <Picker.Item label='🇺🇸 EN' value='en' />
@@ -130,43 +133,29 @@ class LoginView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.emailInput = ref}
-                                    label={email[language]}
+                                    label={'email[language]'}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="none"
                                     autoCompleteType='email'
                                     keyboardType="email-address"
                                     onChangeText={(email) => this.setState({ email })}
-                                    error={emailError}
-                                    onSubmitEditing={(event) => {
-                                        if(this.emailValidation(event.nativeEvent.text)){
-                                            this.passInput.focus();
-                                        }else{
-                                            setTimeout(_ => this.emailInput.focus(), 100);
-                                        }
-                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.passInput = ref}
-                                    label={password[language]}
+                                    label={'password[language]'}
                                     tintColor={Colors.Primary}
                                     secureTextEntry
                                     autoCompleteType='password'
                                     autoCapitalize="none"
                                     onChangeText={(password) => this.setState({ password })}
-                                    error={passwordError}
-                                    onSubmitEditing={(event) => {
-                                        if(!this.passwordValidation(event.nativeEvent.text)){
-                                            setTimeout(_ => this.passInput.focus(), 100);
-                                        }
-                                    }}
                                 />
                             </View>
                         </View>
                         <View style={styles.buttonsView}>
                             <Ripple
-                                style={[styles.button, { backgroundColor: Colors.Gray }]}
+                                style={[styles.button, { backgroundColor: Colors.Primary }]}
                                 onPress={this.createAnAccountAction}
                             >
                                 <Text style={styles.buttonText}>{createAccount[language]}</Text>
@@ -199,35 +188,109 @@ class LoginView extends Component {
     }
 
     changeLanguage = (language) => {
-        setLanguage(language);
-        //this.props.changeLanguage(language);
+        console.warn(language)
+        this.props.language=language;
+    }
+
+    submit = () => {
+        const email = this.state.email.trim();
+        const password = this.state.password;
+
+        if (email === "") {
+          showMessage({
+                    message: 'Campo usuario obligatorio',
+                    type: "warning",
+                  });
+          return;
+        }
+
+        if(!this.state.re.test(String(email).toLowerCase())){
+          showMessage({
+                    message: 'Campo usuario no valido',
+                    type: "danger",
+                  });
+          return
+
+        }
+
+        if (password === "") {
+          showMessage({
+                    message: 'Campo contraseña obligatorio',
+                    type: "warning",
+                  });
+          return;
+        }
+
+        Login(email, password)
+          .then((res) => {
+            console.warn(res)
+            if (res.estatus == 1) {
+
+              try {
+
+                /*AsyncStorage.setItem('CLVUSUARIOVERIFICADOR', res.Result[0].CLVUSUARIOVERIFICADOR.toString());
+                AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());
+                AsyncStorage.setItem('UsuVerContrasena', res.Result[0].UsuVerContrasena.toString());
+                AsyncStorage.setItem('UsuVerNombre', res.Result[0].UsuVerNombre.toString());
+                AsyncStorage.setItem('UsuverApellidopaterno', res.Result[0].UsuverApellidopaterno.toString());
+                AsyncStorage.setItem('UsuverApellidoMaterno', res.Result[0].UsuverApellidoMaterno.toString());
+                AsyncStorage.setItem('UsuVerFoto', res.Result[0].UsuVerFoto.toString());
+                AsyncStorage.setItem('UsuVerNomina', res.Result[0].UsuVerNomina.toString());
+                AsyncStorage.setItem('UsuVerOlvideContrasena', res.Result[0].UsuVerOlvideContrasena.toString());
+                AsyncStorage.setItem('UsuVerContrasenaTemp',res.Result[0].UsuVerContrasenaTemp.toString());
+                AsyncStorage.setItem('UsuVerStatus', res.Result[0].UsuVerStatus.toString());
+                AsyncStorage.setItem('CLVZONA', res.Result[0].CLVZONA.toString());
+                AsyncStorage.setItem('CLVROLES', res.Result[0].CLVROLES.toString());
+
+                setTimeout(
+                  () => { RNRestart.Restart();
+                    this.setState({
+                      usuario: '',
+                      password: '',
+                      status: false
+                    })
+                   },
+                  2000
+                )
+                
+                let Mensaje = 'Bienvenido ' + res.Result[0].UsuVerNombre + ' ' + res.Result[0].UsuverApellidopaterno + ' ' + res.Result[0].UsuverApellidoMaterno
+
+                showMessage({
+                  message: Mensaje,
+                  type: "success",
+                });
+
+              */} catch (e) {
+                showMessage({
+                  message: e.toString(),
+                  type: "danger",
+                });
+                this.setState({
+                  status: false
+                })
+              }
+            }
+            else if (res.estatus == 2) {
+              this.props.navigation.navigate('CambioContrasena', {UsuVerCorreo:UsuVerCorreo})
+              this.setState({
+                status: false
+              })
+            }
+            else {
+              this.setState({
+                status: false
+              })
+              showMessage({
+                    message: res.mensaje,
+                    type: "danger",
+                  });
+            }
+          });
     }
 
     createAnAccountAction = () => {
         Keyboard.dismiss();
         this.props.navigation.navigate('RegisterView', { language: this.props.language });
-    }
-
-    emailValidation = (email) => {
-        console.warn('Hola')
-
-        return true;
-    }
-
-    passwordValidation = (password) => {
-        console.warn('Hola')
-
-        return true;
-    }
-
-    submit = () => {
-        const email = this.state.email;
-        const password = this.state.password;
-        const emailOk = this.emailValidation(email);
-        const passwordOk = this.passwordValidation(password);
-        const submitOk = emailOk && passwordOk;
-
-        if (submitOk) this.props.signIn({ email, password });
     }
 }
 

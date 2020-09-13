@@ -156,18 +156,20 @@ class SplashScreen extends Component {
             useNativeDriver: false
         }),
     ]).start(() => {
-        this.loopAnimation();
+        //this.loopAnimation();
         this.getAsyncStorageData();
     });
   }
 
   getAsyncStorageData = async () => {
     const language = await getLanguage();
-    if(language) this.props.changeLanguage(language);
+    console.warn(language)
+    this.props.language=language
+    /*if(language) this.props.changeLanguage(language);
     const token = await getSessionToken();
-    // console.log(token);
+     console.warn(token);
     if(token) this.props.getUserData(token);
-    else this.props.navigation.navigate('IndexStack');
+    else this.props.navigation.navigate('IndexStack');*/
   }
 
   loopAnimation = () => {
