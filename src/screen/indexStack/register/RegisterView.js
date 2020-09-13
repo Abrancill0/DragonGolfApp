@@ -27,6 +27,7 @@ class RegisterView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            language: props.route.params.language,
             profilePicture: null,
             phoneCode: '+52',
             codeNumber: '52',
@@ -95,6 +96,7 @@ class RegisterView extends Component {
     render() {
 
         const {
+            language,
             profilePicture,
             phoneCode,
             codeNumber,
@@ -111,10 +113,6 @@ class RegisterView extends Component {
             confirmPasswordError,
             seePassword
         } = this.state
-
-        const {
-            language
-        } = this.props;
 
         const {
             photo,
@@ -155,7 +153,7 @@ class RegisterView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.nameIn = ref}
-                                    label={'name[language]'}
+                                    label={name[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     onChangeText={(name) => this.setState({ name })}
@@ -164,7 +162,7 @@ class RegisterView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.lastNameIn = ref}
-                                    label={'lastName[language]'}
+                                    label={lastName[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     onChangeText={(lastName) => this.setState({ lastName })}
@@ -173,7 +171,7 @@ class RegisterView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.lastNameIn = ref}
-                                    label={'lastName2[language]'}
+                                    label={lastName2[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     onChangeText={(lastName2) => this.setState({ lastName2 })}
@@ -182,7 +180,7 @@ class RegisterView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.emailIn = ref}
-                                    label={'email[language]'}
+                                    label={email[language]}
                                     tintColor={Colors.Primary}
                                     keyboardType="email-address"
                                     autoCapitalize="none"
@@ -192,7 +190,7 @@ class RegisterView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.nicknameIn = ref}
-                                    label={'nickname[language]'}
+                                    label={nickname[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="characters"
                                     maxLength={5}
@@ -215,7 +213,7 @@ class RegisterView extends Component {
                                     </View>
                                     <View style={{ width: 50, marginTop: -10 }}>
                                         <TextField
-                                            label={'code[language]'}
+                                            label={code[language]}
                                             tintColor={Colors.Primary}
                                             keyboardType="number-pad"
                                             onChangeText={(codeNumber) => {
@@ -236,7 +234,7 @@ class RegisterView extends Component {
                                 <View style={{ flex: 1, marginTop: -10 }}>
                                     <TextField
                                         ref={ref => this.phoneIn = ref}
-                                        label={'cellphoneText[language]'}
+                                        label={cellphoneText[language]}
                                         tintColor={Colors.Primary}
                                         keyboardType="phone-pad"
                                         maxLength={14}
@@ -272,7 +270,7 @@ class RegisterView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.passIn = ref}
-                                    label={'password[language]'}
+                                    label={password[language]}
                                     tintColor={Colors.Primary}
                                     secureTextEntry={!seePassword}
                                     autoCapitalize="none"
@@ -297,7 +295,7 @@ class RegisterView extends Component {
                         </View>
                         <View style={styles.buttonsView}>
                             <Ripple
-                                style={[styles.button, { backgroundColor: Colors.Primary }]}
+                                style={[styles.button, { backgroundColor: Colors.Gray }]}
                                 onPress={this.haveAnAccountAction}
                             >
                                 <Text style={styles.buttonText}>{haveAccount[language]}</Text>

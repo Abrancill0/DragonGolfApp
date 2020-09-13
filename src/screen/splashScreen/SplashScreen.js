@@ -164,7 +164,6 @@ class SplashScreen extends Component {
   getAsyncStorageData = async () => {
     const language = await getLanguage();
     console.warn(language)
-    this.props.language=language
     /*if(language) this.props.changeLanguage(language);
     const token = await getSessionToken();
      console.warn(token);

@@ -33,6 +33,7 @@ class LoginView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            language:'en',
             headerHeight: new Animated.Value(250),
             email: '',
             password: '',
@@ -83,11 +84,8 @@ class LoginView extends Component {
             headerHeight,
             emailError,
             passwordError,
+            language
         } = this.state
-
-        const {
-            language,
-        } = this.props;
 
         const {
             email,
@@ -133,7 +131,7 @@ class LoginView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.emailInput = ref}
-                                    label={'email[language]'}
+                                    label={email[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="none"
                                     autoCompleteType='email'
@@ -144,7 +142,7 @@ class LoginView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.passInput = ref}
-                                    label={'password[language]'}
+                                    label={password[language]}
                                     tintColor={Colors.Primary}
                                     secureTextEntry
                                     autoCompleteType='password'
@@ -155,7 +153,7 @@ class LoginView extends Component {
                         </View>
                         <View style={styles.buttonsView}>
                             <Ripple
-                                style={[styles.button, { backgroundColor: Colors.Primary }]}
+                                style={[styles.button, { backgroundColor: Colors.Gray }]}
                                 onPress={this.createAnAccountAction}
                             >
                                 <Text style={styles.buttonText}>{createAccount[language]}</Text>
@@ -189,7 +187,9 @@ class LoginView extends Component {
 
     changeLanguage = (language) => {
         console.warn(language)
-        this.props.language=language;
+        this.setState({
+            language
+        })
     }
 
     submit = () => {
@@ -290,7 +290,7 @@ class LoginView extends Component {
 
     createAnAccountAction = () => {
         Keyboard.dismiss();
-        this.props.navigation.navigate('RegisterView', { language: this.props.language });
+        this.props.navigation.navigate('RegisterView', { language: this.state.language });
     }
 }
 
