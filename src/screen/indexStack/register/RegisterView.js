@@ -22,6 +22,26 @@ import { Dictionary } from '../../../utils/Dictionary';
 import { showMessage } from "react-native-flash-message";
 import { Registro } from '../../../Services/Services'
 
+const {
+            photo,
+            name,
+            lastName,
+            lastName2,
+            email,
+            nickname,
+            code,
+            cellphone: cellphoneText,
+            ghinNumber,
+            handicap,
+            password,
+            confirmPassword,
+            haveAccount,
+            signIn,
+            required,
+            invalidEmail,
+            dontMatch
+        } = Dictionary;
+
 class RegisterView extends Component {
 
     constructor(props) {
@@ -31,14 +51,14 @@ class RegisterView extends Component {
             profilePicture: null,
             phoneCode: '+52',
             codeNumber: '52',
-            name: '',
+            nameReg: '',
             nameError: '',
-            lastName: '',
-            lastName2: '',
+            lastNameReg: '',
+            lastName2Reg: '',
             lastNameError: '',
-            email: '',
+            emailReg: '',
             emailError: '',
-            nickname: '',
+            nicknameReg: '',
             nicknameError: '',
             codeError: '',
             cellphone: '',
@@ -47,9 +67,9 @@ class RegisterView extends Component {
             ghinError: '',
             handicap: '',
             handicapError: '',
-            password: '',
+            passwordReg: '',
             passwordError: '',
-            confirmPassword: '',
+            confirmPasswordReg: '',
             confirmPasswordError: '',
             deleting: false,
             seePassword: false,
@@ -116,23 +136,6 @@ class RegisterView extends Component {
             confirmseePassword
         } = this.state
 
-        const {
-            photo,
-            name,
-            lastName,
-            lastName2,
-            email,
-            nickname,
-            code,
-            cellphone: cellphoneText,
-            ghinNumber,
-            handicap,
-            password,
-            confirmPassword,
-            haveAccount,
-            signIn
-        } = Dictionary;
-
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar
@@ -158,7 +161,7 @@ class RegisterView extends Component {
                                     label={name[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
-                                    onChangeText={(name) => this.setState({ name })}
+                                    onChangeText={(nameReg) => this.setState({ nameReg })}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -167,7 +170,7 @@ class RegisterView extends Component {
                                     label={lastName[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
-                                    onChangeText={(lastName) => this.setState({ lastName })}
+                                    onChangeText={(lastNameReg) => this.setState({ lastNameReg })}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -176,7 +179,7 @@ class RegisterView extends Component {
                                     label={lastName2[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
-                                    onChangeText={(lastName2) => this.setState({ lastName2 })}
+                                    onChangeText={(lastName2Reg) => this.setState({ lastName2Reg })}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -186,7 +189,7 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     keyboardType="email-address"
                                     autoCapitalize="none"
-                                    onChangeText={(email) => this.setState({ email })}
+                                    onChangeText={(emailReg) => this.setState({ emailReg })}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -196,7 +199,7 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     autoCapitalize="characters"
                                     maxLength={5}
-                                    onChangeText={(nickname) => this.setState({ nickname: nickname.toUpperCase() })}
+                                    onChangeText={(nickname) => this.setState({ nicknameReg: nickname.toUpperCase() })}
                                 />
                             </View>
                             <View style={styles.phoneInputContainer}>
@@ -276,7 +279,7 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     secureTextEntry={!seePassword}
                                     autoCapitalize="none"
-                                    onChangeText={(password) => this.setState({ password })}
+                                    onChangeText={(passwordReg) => this.setState({ passwordReg })}
                                 />
                                 <TouchableOpacity
                                     style={styles.showPasswordButton}
@@ -292,7 +295,7 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     secureTextEntry={!confirmseePassword}
                                     autoCapitalize="none"
-                                    onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+                                    onChangeText={(confirmPasswordReg) => this.setState({ confirmPasswordReg })}
                                 />
                                 <TouchableOpacity
                                     style={styles.showPasswordButton}
@@ -407,7 +410,7 @@ class RegisterView extends Component {
             this.setState({
               status: false,
               foto: path,
-              archivo_foto: {
+              profilePicture: {
                 uri: Platform.OS === "android" ? path : path.replace("file://", ""),
                 type: 'image/jepg',
                 name: name
@@ -450,7 +453,7 @@ class RegisterView extends Component {
             this.setState({
               status: false,
               foto: path,
-              archivo_foto: {
+              profilePicture: {
                 uri: Platform.OS === "android" ? path : path.replace("file://", ""),
                 type: 'image/jepg',
                 name: name
@@ -529,84 +532,85 @@ class RegisterView extends Component {
     submit = () => {
         const {
             profilePicture,
-            name,
-            lastName,
-            lastName2,
-            email,
-            nickname,
+            nameReg,
+            lastNameReg,
+            lastName2Reg,
+            emailReg,
+            nicknameReg,
             codeNumber,
             cellphone,
             ghin,
             handicap,
-            password,
-            confirmPassword,
+            passwordReg,
+            confirmPasswordReg,
+            language
         } = this.state;
 
-        if (name == '') {
+        if (nameReg == '') {
       showMessage({
-                message: 'Campo nombre obligatorio',
+                message: name[language] +' ' + required[language],
                 type: "warning",
               });
       return
     }
 
-    if (lastName == '') {
+    if (lastNameReg == '') {
       showMessage({
-                message: 'Campo apellido paterno obligatorio',
+                message: lastName[language] + ' ' + required[language],
                 type: "warning",
               });
       return
     }
 
-    if (email == '') {
+    if (emailReg == '') {
       showMessage({
-                message: 'Campo email obligatorio',
+                message: email[language] + ' ' + required[language],
                 type: "warning",
               });
       return
     }
 
-    if(!this.state.re.test(String(email).toLowerCase())){
+    if(!this.state.re.test(String(emailReg).toLowerCase())){
       showMessage({
-                message: 'Campo correo electronico no valido',
+                message: invalidEmail[language],
                 type: "danger",
               });
       return
 
     }
 
-    if (nickname == '') {
+    if (nicknameReg == '') {
       showMessage({
-                message: 'Campo nickname obligatorio',
+                message: nickname[language] + ' ' +required[language],
                 type: "warning",
               });
       return
     }
 
-    if (password == '') {
+    if (passwordReg == '') {
       showMessage({
-                message: 'Campo contraseña obligatorio',
+                message: password[language] + ' ' + required[language],
                 type: "warning",
               });
       return
     }
 
-    if (confirmPassword == '') {
+    if (confirmPasswordReg == '') {
       showMessage({
-                message: 'Campo confirmar contraseña obligatorio',
+                message: confirmPassword[language],
                 type: "warning",
               });
       return
     }
 
-    if (password != confirmPassword) {
+    if (passwordReg != confirmPasswordReg) {
       showMessage({
-                message: 'Las contraseñas tienen que ser iguales',
+                message: dontMatch[language],
                 type: "warning",
               });
       return
     }
-      Registro(name, lastName, lastName2, email, password, nickname, cellphone)
+      Registro(nameReg, lastNameReg, lastName2Reg, emailReg, passwordReg, nicknameReg, cellphone)
       .then((res) => {
         console.warn(res)
         if (res.estatus === 1) {
