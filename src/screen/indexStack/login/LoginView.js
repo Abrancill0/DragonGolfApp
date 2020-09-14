@@ -27,6 +27,15 @@ import { showMessage } from "react-native-flash-message";
 
 //Assets
 import HeaderImage from '../../../../assets/globals/header.jpg';
+const {
+            email,
+            password,
+            createAccount,
+            login,
+            required,
+            invalidEmail,
+            Bienvenido
+        } = Dictionary;
 
 class LoginView extends Component {
 
@@ -87,12 +96,6 @@ class LoginView extends Component {
             language
         } = this.state
 
-        const {
-            email,
-            password,
-            createAccount,
-            login
-        } = Dictionary;
 
         return (
             <View style={{ flex: 1 }}>
@@ -193,40 +196,47 @@ class LoginView extends Component {
     }
 
     submit = () => {
-        const email = this.state.email.trim();
-        const password = this.state.password;
+        const emailLogin = this.state.email.trim();
+        const passwordLogin = this.state.password;
 
-        if (email === "") {
+        if (emailLogin === "") {
           showMessage({
-                    message: 'Campo usuario obligatorio',
+                    message: email[this.state.language]+' ' + required[this.state.language],
                     type: "warning",
                   });
           return;
         }
 
-        if(!this.state.re.test(String(email).toLowerCase())){
+        if(!this.state.re.test(String(emailLogin).toLowerCase())){
           showMessage({
-                    message: 'Campo usuario no valido',
+                    message: invalidEmail[this.state.language],
                     type: "danger",
                   });
           return
 
         }
 
-        if (password === "") {
+        if (passwordLogin === "") {
           showMessage({
-                    message: 'Campo contraseña obligatorio',
+                    message: password[this.state.language]+' ' + required[this.state.language],
                     type: "warning",
                   });
           return;
         }
 
-        Login(email, password)
+        Login(emailLogin, passwordLogin)
           .then((res) => {
             console.warn(res)
             if (res.estatus == 1) {
 
               try {
+
+                let Mensaje = Bienvenido[this.state.language] + ' ' + res.resultado.usu_nombre + ' ' + res.resultado.usu_apellido_paterno + ' ' + res.resultado.usu_apellido_materno
+
+                showMessage({
+                  message: Mensaje,
+                  type: "success",
+                });
 
                 /*AsyncStorage.setItem('CLVUSUARIOVERIFICADOR', res.Result[0].CLVUSUARIOVERIFICADOR.toString());
                 AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());

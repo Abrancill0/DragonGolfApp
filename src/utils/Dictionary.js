@@ -45,6 +45,10 @@ export const Dictionary = {
         'en': "GHIN must contain 7 digits",
         'es': 'El GHIN debe tener 7 digitos'
     },
+    Bienvenido: {
+        'en': "Welcome",
+        'es': 'Bienvenido'
+    },
     //===========SignUpView===============
     signUp: {
         'en': 'Sign Up',

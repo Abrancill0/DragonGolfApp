@@ -14,7 +14,7 @@ import {
 import { TextField } from 'react-native-material-textfield';
 import Ripple from 'react-native-material-ripple';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import PhoneInput from 'react-native-phone-input'
 import styles from './styles';
 import Colors from '../../../utils/Colors';
@@ -53,6 +53,7 @@ class RegisterView extends Component {
             confirmPasswordError: '',
             deleting: false,
             seePassword: false,
+            confirmseePassword: false,
             re : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         }
     }
@@ -111,7 +112,8 @@ class RegisterView extends Component {
             handicapError,
             passwordError,
             confirmPasswordError,
-            seePassword
+            seePassword,
+            confirmseePassword
         } = this.state
 
         const {
@@ -245,7 +247,7 @@ class RegisterView extends Component {
                                     />
                                 </View>
                             </View>
-                            <View style={styles.inputContainer}>
+                            {/*<View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.ghinIn = ref}
                                     label={ghinNumber[language]}
@@ -266,7 +268,7 @@ class RegisterView extends Component {
                                     autoCapitalize="none"
                                     onChangeText={(handicap) => this.setState({ handicap })}
                                 />
-                            </View>
+                            </View>*/}
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.passIn = ref}
@@ -280,17 +282,24 @@ class RegisterView extends Component {
                                     style={styles.showPasswordButton}
                                     onPress={() => this.setState({ seePassword: !seePassword })}
                                 >
-                                    <Ionicon name={seePassword ? 'ios-eye' : 'ios-eye-off'} size={25} color={seePassword ? Colors.Primary : Colors.Gray} />
+                                    <Ionicon name={seePassword ? 'ios-eye' : 'ios-eye-off'} size={25} color={seePassword ? Colors.Primary : Colors.Primary} />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    ref={ref => this.confirmPassIn = ref}
+                                    ref={ref => this.passIn = ref}
                                     label={confirmPassword[language]}
                                     tintColor={Colors.Primary}
-                                    secureTextEntry
+                                    secureTextEntry={!confirmseePassword}
                                     autoCapitalize="none"
+                                    onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
                                 />
+                                <TouchableOpacity
+                                    style={styles.showPasswordButton}
+                                    onPress={() => this.setState({ confirmseePassword: !confirmseePassword })}
+                                >
+                                    <Ionicon name={confirmseePassword ? 'ios-eye' : 'ios-eye-off'} size={25} color={confirmseePassword ? Colors.Primary : Colors.Primary} />
+                                </TouchableOpacity>
                             </View>
                         </View>
                         <View style={styles.buttonsView}>
@@ -321,6 +330,20 @@ class RegisterView extends Component {
     }
 
     pickImage = () => {
+
+         setTimeout(() => {
+          Alert.alert(
+            Dictionary.selectPhoto[this.state.language],
+            '',
+            [
+              { text: Dictionary.takePhoto[this.state.language], onPress: () => this._openCamera() },
+              { text: Dictionary.selectPhoto[this.state.language], onPress: () => this._openGalley() },
+            ],
+            { cancelable: false }
+          )
+        }, 100)
+
+         /*
         const options = {
             title: Dictionary.selectPhoto[this.props.language],
             takePhotoButtonTitle: Dictionary.takePhoto[this.props.language],
@@ -348,8 +371,94 @@ class RegisterView extends Component {
                     profilePicture: source,
                 });
             }
-        });
+        });*/
     }
+
+     _openGalley() {
+
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+        let bytes = image.size
+        console.warn(bytes)
+        if (bytes >= 5242880) {
+          setTimeout(() => {
+            Alert.alert(
+              'La imagen debe pesar menos de 5mb',
+              '',
+              [
+                { text: 'Aceptar', style: 'Cancelar' },
+              ],
+              { cancelable: true }
+            )
+          }, 100)
+          this.setState({
+            status: false
+          })
+        }
+        else {
+
+          let path = image.path
+          let NombreArchivo = path.split('Pictures/');
+          let name = NombreArchivo[1];
+          console.warn(name)
+            this.setState({
+              status: false,
+              foto: path,
+              archivo_foto: {
+                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
+                type: 'image/jepg',
+                name: name
+              }
+            });
+        }
+    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
+  }
+
+  _openCamera() {
+
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+        let bytes = image.size
+        console.warn(bytes)
+        if (bytes >= 5242880) {
+          setTimeout(() => {
+            Alert.alert(
+              'La imagen debe pesar menos de 5mb',
+              '',
+              [
+                { text: 'Aceptar', style: 'Cancelar' },
+              ],
+              { cancelable: true }
+            )
+          }, 100)
+          this.setState({
+            status: false
+          })
+        }
+        else {
+
+          let path = image.path
+          let NombreArchivo = path.split('Pictures/');
+          let name = NombreArchivo[1];
+          console.warn(name)
+            this.setState({
+              status: false,
+              foto: path,
+              archivo_foto: {
+                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
+                type: 'image/jepg',
+                name: name
+              }
+            });
+        }
+    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
+  }
 
     formatCellphone = (cellphone) => {
         //Filter only numbers from the input
@@ -449,17 +558,9 @@ class RegisterView extends Component {
       return
     }
 
-    if (lastName2 == '') {
-        showMessage({
-            message: 'Campo apellido materno obligatorio',
-            type: "warning",
-        });
-    return
-    }
-
     if (email == '') {
       showMessage({
-                message: 'Campo apellido materno obligatorio',
+                message: 'Campo email obligatorio',
                 type: "warning",
               });
       return
@@ -476,23 +577,7 @@ class RegisterView extends Component {
 
     if (nickname == '') {
       showMessage({
-                message: 'Campo correo electronico obligatorio',
-                type: "warning",
-              });
-      return
-    }
-
-    if (codeNumber == '') {
-      showMessage({
-                message: 'Campo nomina obligatorio',
-                type: "warning",
-              });
-      return
-    }
-
-    if (cellphone == '') {
-      showMessage({
-                message: 'Campo zona obligatorio',
+                message: 'Campo nickname obligatorio',
                 type: "warning",
               });
       return
@@ -501,6 +586,22 @@ class RegisterView extends Component {
     if (password == '') {
       showMessage({
                 message: 'Campo contraseña obligatorio',
+                type: "warning",
+              });
+      return
+    }
+
+    if (confirmPassword == '') {
+      showMessage({
+                message: 'Campo confirmar contraseña obligatorio',
+                type: "warning",
+              });
+      return
+    }
+
+    if (password != confirmPassword) {
+      showMessage({
+                message: 'Las contraseñas tienen que ser iguales',
                 type: "warning",
               });
       return
