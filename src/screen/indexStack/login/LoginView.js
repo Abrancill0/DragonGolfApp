@@ -19,11 +19,13 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
+import { HomeTab } from '../../../routes/HomeTab';
 import { setLanguage } from '../../../utils/Session';
 import { getLanguage } from '../../../utils/Session';
 import { NavigationEvents } from 'react-navigation';
 import { Login } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
+import RNRestart from 'react-native-restart'
 
 //Assets
 import HeaderImage from '../../../../assets/globals/header.jpg';
@@ -237,6 +239,17 @@ class LoginView extends Component {
                   message: Mensaje,
                   type: "success",
                 });
+
+                setTimeout(
+                  () => { RNRestart.Restart();
+                    this.setState({
+                      usuario: '',
+                      password: '',
+                      status: false
+                    })
+                   },
+                  2000
+                )
 
                 /*AsyncStorage.setItem('CLVUSUARIOVERIFICADOR', res.Result[0].CLVUSUARIOVERIFICADOR.toString());
                 AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());

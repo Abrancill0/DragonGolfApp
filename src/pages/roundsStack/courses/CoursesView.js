@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import store from '../../../store/store';
-import { connect } from 'react-redux';
 import { Dictionary } from '../../../utils/Dictionary';
 import { NavigationEvents } from 'react-navigation';
 import { actionGetCourses, actionSetRoundCourse, actionLoadingRound } from '../../../store/actions';
@@ -73,16 +72,4 @@ const mapStateToProps = state => ({
     courses: state.reducerCourses,
 });
 
-const mapDispatchToProps = dispatch => ({
-    getCourses: () => {
-        dispatch(actionGetCourses());
-    },
-    setRoundCourse: (values) => {
-        dispatch(actionSetRoundCourse(values));
-    },
-    setLoadingRound: (value) => {
-      dispatch(actionLoadingRound(value));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CoursesView);
+export default CoursesView;

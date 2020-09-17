@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { connect } from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Dictionary } from '../../utils/Dictionary';
 
@@ -26,11 +25,4 @@ class TournamentsView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-});
-
-const mapDispatchToProps = dispatch => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TournamentsView);
+export default TournamentsView;

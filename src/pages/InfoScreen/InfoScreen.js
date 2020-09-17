@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Text, Linking } from 'react-native'
-import { connect } from 'react-redux'
 import store from '../../store/store';
 import { Dictionary } from '../../utils/Dictionary';
 import { NavigationEvents, ScrollView } from 'react-navigation';
@@ -50,12 +49,4 @@ class InfoScreen extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    language: state.reducerLanguage
-})
-
-const mapDispatchToProps = dispatch => ({
-
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(InfoScreen)
+export default InfoScreen

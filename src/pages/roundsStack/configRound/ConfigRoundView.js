@@ -11,7 +11,6 @@ import {
   Alert,
   TouchableOpacity
 } from 'react-native';
-import { connect } from 'react-redux';
 import { NavigationEvents } from 'react-navigation';
 import { TextField } from 'react-native-material-textfield';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -22,8 +21,6 @@ import Colors from '../../../utils/Colors';
 import { ButtonGroup } from 'react-native-elements';
 import HeaderButton from '../../global/HeaderButton';
 import Entypo from 'react-native-vector-icons/Entypo';
-import store from '../../../store/store';
-import { actionSaveRound, actionUpdateRound, actionSetRound, actionSetRoundId, actionSetRoundCourse, actionSetHcpAdj, actionSetRoundPlayers, actionSetInitHole, actionSetSwitchAdv } from '../../../store/actions';
 import Details from '../../../utils/Details';
 
 class ConfigRoundView extends Component {
@@ -87,15 +84,15 @@ class ConfigRoundView extends Component {
 
       props.saveRound(roundData);
     } else {
-      props.navigate('HomeTab');
+      //props.navigate('HomeTab');
     }
 
     props.navigation.setParams({
       Title: title,
     });
 
-    props.setInitHole(holeNumber);
-    props.setSwitchAdv(switchAdv);
+    //props.setInitHole(holeNumber);
+    //props.setSwitchAdv(switchAdv);
 
     this.state = {
       roundName: title,
@@ -111,8 +108,7 @@ class ConfigRoundView extends Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    const state = store.getState();
-    const language = state.reducerLanguage;
+    const language = 'es';
     return {
       title: navigation.getParam('Title', 'Round'),
       headerRight: (
@@ -176,10 +172,6 @@ class ConfigRoundView extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <NavigationEvents
-          onWillFocus={this.initBackHandler}
-          onWillBlur={this.removeBackHandler}
-        />
         <StatusBar
           backgroundColor='#FFFFFF'
           barStyle='dark-content'
@@ -557,42 +549,4 @@ class ConfigRoundView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  course: state.reducerRoundCourse,
-  roundId: state.reducerRoundId,
-  round: state.reducerRound,
-  preferences: state.reducerPreferences,
-});
-
-const mapDispatchToProps = dispatch => ({
-  saveRound: (values) => {
-    dispatch(actionSaveRound(values));
-  },
-  updateRound: (values) => {
-    dispatch(actionUpdateRound(values));
-  },
-  setRoundId: (value) => {
-    dispatch(actionSetRoundId(value));
-  },
-  clearRound: () => {
-    dispatch(actionSetRound(null));
-  },
-  clearCourse: () => {
-    dispatch(actionSetRoundCourse(null));
-  },
-  setHcpAdj: (value) => {
-    dispatch(actionSetHcpAdj(value));
-  },
-  clearPlayers: () => {
-    dispatch(actionSetRoundPlayers([]));
-  },
-  setInitHole: (value) => {
-    dispatch(actionSetInitHole(value));
-  },
-  setSwitchAdv: (value) => {
-    dispatch(actionSetSwitchAdv(value));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigRoundView);
+export default ConfigRoundView;

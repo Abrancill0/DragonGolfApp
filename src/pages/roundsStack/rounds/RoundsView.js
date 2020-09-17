@@ -7,13 +7,10 @@ import {
   Platform,
   NativeModules
 } from 'react-native';
-import store from '../../../store/store';
-import { connect } from 'react-redux';
 import { Dictionary } from '../../../utils/Dictionary';
 import { NavigationEvents } from 'react-navigation';
 import HeaderButton from '../../global/HeaderButton';
 import RoundComponent from './RoundComponent';
-import { actionGetRounds, actionSetRounds, actionDeleteRound, actionSetRound, actionSetRoundCourse, actionSetForceInset, actionLoadingRound } from '../../../store/actions';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import HideItem from '../../global/HideItem';
@@ -28,9 +25,9 @@ class RoundsView extends Component {
       visible: true,
     };
 
-    props.setForceInset('always');
+    //props.setForceInset('always');
 
-    props.getRounds();
+    //props.getRounds();
     this.isDeleting = false;
     this.isEditing = false;
     this.hideSnackbar = null;
@@ -48,8 +45,7 @@ class RoundsView extends Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    const state = store.getState();
-    const language = state.reducerLanguage;
+    const language = 'es';
     return {
       title: navigation.getParam('Title', Dictionary.rounds[language]),
       headerRight: (
@@ -88,12 +84,6 @@ class RoundsView extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <NavigationEvents
-          onWillFocus={_ => {
-            getRounds();
-            this.changeTitleText();
-          }}
-        />
         <StatusBar
           backgroundColor="#FFFFFF"
           barStyle="dark-content"
@@ -198,28 +188,4 @@ const mapStateToProps = state => ({
   courses: state.reducerCourses
 });
 
-const mapDispatchToProps = dispatch => ({
-  getRounds: () => {
-    dispatch(actionGetRounds());
-  },
-  updateRounds: (values) => {
-    dispatch(actionSetRounds(values));
-  },
-  deleteRound: (value) => {
-    dispatch(actionDeleteRound(value));
-  },
-  setRound: (values) => {
-    dispatch(actionSetRound(values));
-  },
-  setCourse: (values) => {
-    dispatch(actionSetRoundCourse(values));
-  },
-  setForceInset: (value) => {
-    dispatch(actionSetForceInset(value));
-  },
-  setLoadingRound: (value) => {
-    dispatch(actionLoadingRound(value));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RoundsView);
+export default RoundsView;

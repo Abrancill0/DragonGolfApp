@@ -5,19 +5,36 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator,DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer'
 
 import SplashScreen from './src/screen/splashScreen/SplashScreen'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+
 
 import { Icon } from 'react-native-elements'
 import Login from './src/screen/indexStack/login/LoginView'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
+import Rounds from './src/pages/roundsStack/rounds/RoundsView'
+import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
 import FlashMessage from "react-native-flash-message";
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
+import RoundsStack from './src/routes/RoundsStack';
+//import PlayersStack from './PlayersStack';
+//import CoursesStack from './CoursesStack';
+//import SettingsStack from './SettingsStack';
+//import TournamentsView from '../pages/tournamentsStack/TournamentsView';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Colors from './src/utils/Colors';
+import { Dictionary } from './src/utils/Dictionary';
+
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator();
 var { width, height } = Dimensions.get('window');
+const BottomTab = createBottomTabNavigator();
 
 
 export default class App extends Component {
@@ -48,22 +65,23 @@ export default class App extends Component {
   loadSesion = async () => {
 
     try {
-        let IDUsuario = await AsyncStorage.getItem('CLVUsuario')
-        if (IDUsuario != null )
-        {
+        //let IDUsuario = await AsyncStorage.getItem('CLVUsuario')
+        //if (IDUsuario != null )
+        //{
           this.setState({
             logeado:true,
             isLoading:false,
+            activo:true
           })
           //this.LoadUsuario(IDUsuario)
-        }
-        else
+        //}
+        /*else
         {
           this.setState({
             logeado:false,
             isLoading:false
           })
-        }
+        }*/
       } catch (error) {
         this.setState({
           logeado:false,
@@ -127,6 +145,12 @@ export default class App extends Component {
   render() {
 
     console.warn(this.state.logeado)
+
+    const DrawerContent2 = props => {
+      return (
+        <View></View>
+      )
+    }
 
 
     const DrawerContent = props => {
@@ -225,13 +249,60 @@ export default class App extends Component {
     }
 
     createHomeDrawer = () =>
-      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />} >
+      <Drawer.Navigator drawerContent={props => this.state.activo?<DrawerContent {...props} />:<DrawerContent {...props} />} >
         <Drawer.Screen name='createHomeStack' children={createHomeStack} options={{ title: 'Inicio' }} />
       </Drawer.Navigator>
+
+    CreateHomeBottomTabNavigator = () =>
+      <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
+        <BottomTab.Screen name='Rounds' component={Rounds} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              <View style={{height:'60%',width:'60%'}}>
+                {/*<Image source={require('./Src/Resource/cuenta1.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
+              </View>
+              )
+            }else
+            {
+              return(
+                <View style={{height:'60%',width:'60%'}}>
+                  {/*<Image source={require('./Src/Resource/cuenta2.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
+                </View>
+              )
+            }
+          },
+            
+          })} />
+        <BottomTab.Screen name='configureRounds'component={configureRounds}
+          options={({ route }) => ({
+            headerShown:true,
+            tabBarIcon:({ focused })=>{
+              if(focused==true)
+              {
+                return(
+                <View style={{height:'60%',width:'60%'}}>
+                  {/*<Image source={require('./Src/Resource/canjear1.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
+                </View>
+                )
+              }else
+              {
+                return(
+                  <View style={{height:'60%',width:'60%'}}>
+                    {/*<Image source={require('./Src/Resource/canjear2.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
+                  </View>
+                )
+              }
+            },
+            
+          })} />
+      </BottomTab.Navigator>
     
     createHomeStack = () =>
       <Stack.Navigator>
-        <Stack.Screen name='Login' component={Login}
+        <Stack.Screen name='Login' component={this.state.activo?CreateHomeBottomTabNavigator:Login}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
@@ -240,7 +311,8 @@ export default class App extends Component {
             headerTintColor: '#104E81',
             headerTitleStyle: {
               fontWeight: 'bold',
-            }
+            },
+              headerShown:false
           })} />
         <Stack.Screen name='RegisterView' component={RegisterView}
           options={({ route }) => ({
@@ -251,7 +323,8 @@ export default class App extends Component {
             headerTintColor: '#104E81',
             headerTitleStyle: {
               fontWeight: 'bold',
-            }
+            },
+              headerShown:false
           })} />
       </Stack.Navigator>
 

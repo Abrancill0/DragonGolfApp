@@ -1,23 +1,23 @@
-import RoundsView from '../pages/roundsStack/rounds/RoundsView';
+import RegisterView from '../screen/indexStack/register/RegisterView';
 import { createStackNavigator } from 'react-navigation-stack';
-import CoursesView from '../pages/roundsStack/courses/CoursesView';
-import RoundTab from './RoundTab';
-import InfoScreen from '../pages/InfoScreen/InfoScreen';
+//import CoursesView from '../pages/roundsStack/courses/CoursesView';
+//import RoundTab from './RoundTab';
+//import InfoScreen from '../pages/InfoScreen/InfoScreen';
 
 const RoundsStack = createStackNavigator(
     {
-        RoundsView,
-        CoursesView,
+        RegisterView,
+        /*CoursesView,
         RoundTab: {
             screen: RoundTab,
             navigationOptions: {
                 header: null
             }
         },
-        InfoScreen
+        InfoScreen*/
     },
     {
-        initialRouteName: "RoundsView",
+        initialRouteName: "RegisterView",
         headerLayoutPreset: 'center',
         defaultNavigationOptions: {
             headerForceInset: {

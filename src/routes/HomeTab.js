@@ -1,17 +1,16 @@
 import React from 'react';
 import { Text } from 'react-native';
 import RoundsStack from './RoundsStack';
-import PlayersStack from './PlayersStack';
-import CoursesStack from './CoursesStack';
-import SettingsStack from './SettingsStack';
-import TournamentsView from '../pages/tournamentsStack/TournamentsView';
+//import PlayersStack from './PlayersStack';
+//import CoursesStack from './CoursesStack';
+//import SettingsStack from './SettingsStack';
+//import TournamentsView from '../pages/tournamentsStack/TournamentsView';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../utils/Colors';
-import store from '../store/store';
 import { Dictionary } from '../utils/Dictionary';
 
 const HomeTab = createMaterialTopTabNavigator(
@@ -19,8 +18,7 @@ const HomeTab = createMaterialTopTabNavigator(
         RoundsStack: {
             screen: RoundsStack,
             navigationOptions: () => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{fontSize: 12}} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.rounds[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -32,12 +30,11 @@ const HomeTab = createMaterialTopTabNavigator(
                     ),
                 }
             }
-        },
+        },/*
         PlayersStack: {
             screen: PlayersStack,
             navigationOptions: ({ navigation }) => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{fontSize: 12}} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.players[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -53,8 +50,7 @@ const HomeTab = createMaterialTopTabNavigator(
         CoursesStack: {
             screen: CoursesStack,
             navigationOptions: () => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{fontSize: 12}} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.courses[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -70,8 +66,7 @@ const HomeTab = createMaterialTopTabNavigator(
         TournamentsView: {
             screen: TournamentsView,
             navigationOptions: () => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{fontSize: 12}} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.tournaments[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -87,8 +82,7 @@ const HomeTab = createMaterialTopTabNavigator(
         SettingsStack: {
             screen: SettingsStack,
             navigationOptions: () => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{fontSize: 12}} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.settings[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -100,7 +94,7 @@ const HomeTab = createMaterialTopTabNavigator(
                     ),
                 }
             }
-        }
+        }*/
     },
     {
         initialRouteName: "RoundsStack",
