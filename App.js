@@ -11,7 +11,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import { Icon } from 'react-native-elements'
 import Login from './src/screen/indexStack/login/LoginView'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
-import Rounds from './src/pages/roundsStack/rounds/RoundsView'
+import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
 import FlashMessage from "react-native-flash-message";
 
@@ -255,7 +255,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-        <BottomTab.Screen name='Rounds' component={Rounds} 
+        <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)

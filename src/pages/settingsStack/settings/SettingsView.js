@@ -12,19 +12,16 @@ import {
   Platform,
   TouchableOpacity
 } from 'react-native';
-import store from '../../../store/store';
-import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from '../../global/HeaderButton';
 import Colors from '../../../utils/Colors';
 import styles from './styles';
 import { setLanguage, getSessionToken } from '../../../utils/Session';
-import { actionLanguage, actionSignOut, actionGetUserData, actionSaveSNWUser, actionSaveTNWUser, actionSavePreferences, actionSaveSNWPlayer, actionSaveTNWPlayer, actionSaveGS, actionSaveEB, actionSaveAS, actionSaveBB } from '../../../store/actions';
 import DragonButton from '../../global/DragonButton';
 import FormatCellphone from '../../../utils/FormatCellphone';
 import Ripple from 'react-native-material-ripple';
-import * as Validations from '../../../utils/Validations';
+//import * as Validations from '../../../utils/Validations';
 import moment from 'moment';
 import { RadioButton } from 'react-native-paper';
 import Details from '../../../utils/Details';
@@ -139,6 +136,7 @@ class SettingsView extends Component {
 
 
     this.state = {
+      language:'en',
       asHowAdvMove,
       asHowManyStrokes,
       asAdvMoves,
@@ -320,6 +318,7 @@ class SettingsView extends Component {
   render() {
 
     const {
+      language,
       asHowAdvMove,
       asHowManyStrokes,
       asAdvMoves,
@@ -362,7 +361,6 @@ class SettingsView extends Component {
     } = this.state;
 
     const {
-      language,
       userData,
       navigation
     } = this.props;
@@ -1351,8 +1349,10 @@ class SettingsView extends Component {
   }
 
   changeLanguage = (language) => {
-    setLanguage(language);
-    this.props.changeLanguage(language);
+    //setLanguage(language);
+    this.setState({
+            language
+        })
     this.changeTitleText(language);
   }
 
@@ -1995,40 +1995,4 @@ class SettingsView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-  preferences: state.reducerPreferences,
-});
-
-const mapDispatchToProps = dispatch => ({
-  changeLanguage: (value) => {
-    dispatch(actionLanguage(value));
-  },
-  getUserData: (value) => {
-    dispatch(actionGetUserData(value));
-  },
-  savePreferences: (values) => {
-    dispatch(actionSavePreferences(values));
-  },
-  saveGS: (values) => {
-    dispatch(actionSaveGS(values));
-  },
-  saveSNW: (values) => {
-    dispatch(actionSaveSNWPlayer(values));
-  },
-  saveTNW: (values) => {
-    dispatch(actionSaveTNWPlayer(values));
-  },
-  saveEB: (values) => {
-    dispatch(actionSaveEB(values));
-  },
-  saveAS: (values) => {
-    dispatch(actionSaveAS(values));
-  },
-  saveBB: (values) => {
-    dispatch(actionSaveBB(values));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsView);
+export default SettingsView;
