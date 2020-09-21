@@ -25,6 +25,9 @@ import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 import { RadioButton } from 'react-native-paper';
 import Details from '../../../utils/Details';
+import AsyncStorage from '@react-native-community/async-storage';
+import { InfoUsuario } from '../../../Services/Services'
+import { showMessage } from "react-native-flash-message";
 // import * as Animatable from 'react-native-animatable';
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
@@ -34,7 +37,7 @@ class SettingsView extends Component {
     super(props);
     this.havePreferences = false;
 
-    const { preferences } = props;
+    //const { preferences } = props;
     let asHowAdvMove = 'match';
     let asHowManyStrokes = '0.5';
     let asAdvMoves = false;
@@ -76,7 +79,7 @@ class SettingsView extends Component {
     let bbWagerB9 = '';
     let bbWager18 = '';
 
-    try {
+    /*try {
       //============ASDATA===============
       asHowAdvMove = preferences.asData.how_adv_move;
       asHowManyStrokes = preferences.asData.how_many_strokes;
@@ -131,11 +134,12 @@ class SettingsView extends Component {
       console.log('====================================');
       console.log(error + ' file: SettingsView, line: 74');
       console.log('====================================');
-    }
+    }*/
 
 
 
     this.state = {
+      userData: [],
       language:'en',
       asHowAdvMove,
       asHowManyStrokes,
@@ -178,10 +182,8 @@ class SettingsView extends Component {
       bbWagerB9,
       bbWager18,
     };
-
-    if (!props.userData) {
-      this.getUserData();
-    }
+    
+    this.getUserData();
 
     this.inputs = {};
   }
@@ -210,7 +212,7 @@ class SettingsView extends Component {
     }
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  /*UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.preferences !== this.props.preferences) {
       try {
         const { preferences } = nextProps;
@@ -313,11 +315,12 @@ class SettingsView extends Component {
         console.log('====================================');
       }
     }
-  }
+  }*/
 
   render() {
 
     const {
+      userData,
       language,
       asHowAdvMove,
       asHowManyStrokes,
@@ -359,11 +362,6 @@ class SettingsView extends Component {
       bbWager18,
       seePicker
     } = this.state;
-
-    const {
-      userData,
-      navigation
-    } = this.props;
 
     const {
       ghinNumber,
@@ -409,7 +407,7 @@ class SettingsView extends Component {
                 </View>
                 <View>
                   <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{userData ? userData.email : 'example@mail.com'}</Text>
-                  <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone()}</Text>
+                  <Text style={styles.textLink} ellipsizeMode="tail">{userData.cellphone}</Text>
                 </View>
               </View>
             </View>
@@ -1362,7 +1360,7 @@ class SettingsView extends Component {
     });
   }
 
-  formatCellphone = () => {
+  /*formatCellphone = () => {
     if (this.props.userData) {
       let { userData: { cellphone } } = this.props;
       let formatted = '';
@@ -1377,11 +1375,41 @@ class SettingsView extends Component {
 
       return formatted;
     }
-  }
+  }*/
 
   getUserData = async () => {
-    const token = await getSessionToken();
-    this.props.getUserData(token);
+    const token = await AsyncStorage.getItem('usu_id')
+    InfoUsuario(token)
+    .then((res) => {
+        if(res.estatus==1){
+            const lista =[
+            {
+              name: res.resultado.usu_nombre,
+              nick_name: res.resultado.usu_nickname,
+              email: res.resultado.usu_email,
+              ghin_number: res.resultado.usu_ghin_numero,
+              handicap: res.resultado.usu_handicap_index,
+              cellphone:res.resultado.usu_telefono
+            }]
+          console.warn(lista)
+          this.setState({
+            userData: lista
+          })
+        }  
+        else{
+            //setLoading(false)
+            showMessage({
+                message: res.mensaje,
+                type: 'info',
+            });
+        }
+    }).catch(error=>{
+        //setLoading(false)
+        showMessage({
+            message: error,
+            type:'error',
+        });
+    })
   }
 
   snwValidations = () => {

@@ -30,6 +30,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from './src/utils/Colors';
 import { Dictionary } from './src/utils/Dictionary';
+import { InfoUsuario } from './src/Services/Services';
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator();
@@ -65,23 +66,23 @@ export default class App extends Component {
   loadSesion = async () => {
 
     try {
-        //let IDUsuario = await AsyncStorage.getItem('CLVUsuario')
-        //if (IDUsuario != null )
-        //{
+        let IDUsuario = await AsyncStorage.getItem('usu_id')
+        if (IDUsuario != null )
+        {
           this.setState({
             logeado:true,
             isLoading:false,
             activo:true
           })
-          //this.LoadUsuario(IDUsuario)
-        //}
-        /*else
+          this.LoadUsuario(IDUsuario)
+        }
+        else
         {
           this.setState({
             logeado:false,
             isLoading:false
           })
-        }*/
+        }
       } catch (error) {
         this.setState({
           logeado:false,
@@ -97,14 +98,14 @@ export default class App extends Component {
     .then((res) => {
         if(res.estatus==1){
           console.warn(res)
-            let result=res.Result[0]
+            let result=res.resultado
             this.setState({
               logeado:true,
               isLoading:false,
-              UsuNombre:result.UsuNombre,
-              UsuApellidoPaterno:result.UsuApellidoPaterno,
-              UsuApelidoMaterno:result.UsuApelidoMaterno,
-              UsuFoto:result.UsuFoto+'?'+Math.random()
+              UsuNombre:result.usu_nombre,
+              UsuApellidoPaterno:result.usu_apellido_paterno,
+              UsuApelidoMaterno:result.usu_apellido_materno
+              //UsuFoto:result.UsuFoto+'?'+Math.random()
             })
         }  
         else{
@@ -180,7 +181,7 @@ export default class App extends Component {
               :
               null
               }
-              <TouchableOpacity onPress={() => props.navigation.closeDrawer()} style={{width:'100%',flexDirection:'row',alignItems:'center'}}>
+              <TouchableOpacity  style={{width:'100%',flexDirection:'row',alignItems:'center'}}>
                   <View style={{flex:.1}}>
                     <FontAwesomeIcon name='bank' color='#0F222D' size={20}/>
                   </View>

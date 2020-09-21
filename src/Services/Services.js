@@ -11,6 +11,17 @@ export const Login = (email,password) => {
                 });
 };
 
+export const InfoUsuario = (usu_id) => {
+    const URL = RutaBase + "show?usu_id=" + usu_id ;
+    return fetch(URL, {
+                method: "GET"
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const Registro = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_email,usu_password,usu_nickname,usu_telefono) => {
     const URL = RutaBase + "store";
     return fetch(URL, {

@@ -26,6 +26,7 @@ import { NavigationEvents } from 'react-navigation';
 import { Login } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart'
+import AsyncStorage from '@react-native-community/async-storage';
 
 //Assets
 import HeaderImage from '../../../../assets/globals/header.jpg';
@@ -251,8 +252,8 @@ class LoginView extends Component {
                   2000
                 )
 
-                /*AsyncStorage.setItem('CLVUSUARIOVERIFICADOR', res.Result[0].CLVUSUARIOVERIFICADOR.toString());
-                AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());
+                AsyncStorage.setItem('usu_id', res.resultado.usu_id.toString());
+                /*AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());
                 AsyncStorage.setItem('UsuVerContrasena', res.Result[0].UsuVerContrasena.toString());
                 AsyncStorage.setItem('UsuVerNombre', res.Result[0].UsuVerNombre.toString());
                 AsyncStorage.setItem('UsuverApellidopaterno', res.Result[0].UsuverApellidopaterno.toString());
