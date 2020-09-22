@@ -29,159 +29,61 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { InfoUsuario, updateSettings } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 // import * as Animatable from 'react-native-animatable';
+import { openDatabase } from 'react-native-sqlite-storage';
+
+var db = openDatabase({ name: 'UserDatabase.db' });
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
 
 class SettingsView extends Component {
   constructor(props) {
     super(props);
+
     this.havePreferences = false;
-
-    //const { preferences } = props;
-    let asHowAdvMove = 'match';
-    let asHowManyStrokes = '0.5';
-    let asAdvMoves = false;
-    let asDoesCarryMove = false;
-    let rabbit16 = '';
-    let rabbit712 = '';
-    let rabbit1318 = '';
-    let medalF9 = '';
-    let medalB9 = '';
-    let medal18 = '';
-    let skins = '';
-    let skinCarry = false;
-    let lowedAdv = false;
-    let snwAutoPress = '2';
-    let snwFront9 = '';
-    let snwBack9 = '';
-    let snwMatch = '';
-    let snwCarry = '';
-    let snwMedal = '';
-    let snwUseFactor = false;
-    let snwValueFactor = '';
-    let tnwAutoPress = '2';
-    let tnwFront9 = '';
-    let tnwBack9 = '';
-    let tnwMatch = '';
-    let tnwCarry = '';
-    let tnwMedal = '';
-    let tnwWhoGets = 'each';
-    let tnwUseFactor = false;
-    let tnwValueFactor = '';
-    let ebWager = '';
-    let ssDoubleEagle = '5';
-    let ssEaglePoints = '4';
-    let ssBirdie = '3';
-    let ssPar = '2';
-    let ssBogey = '1';
-    let ssDoubleBogey = '0';
-    let bbWagerF9 = '';
-    let bbWagerB9 = '';
-    let bbWager18 = '';
-
-    /*try {
-      //============ASDATA===============
-      asHowAdvMove = preferences.asData.how_adv_move;
-      asHowManyStrokes = preferences.asData.how_many_strokes;
-      asAdvMoves = parseInt(preferences.asData.adv_moves) ? true : false;
-      asDoesCarryMove = parseInt(preferences.asData.carry_move_adv) ? true : false;
-      //============GSDATA===============
-      rabbit16 = preferences.gsData.rabbit_1_6;
-      rabbit712 = preferences.gsData.rabbit_7_12;
-      rabbit1318 = preferences.gsData.rabbit_13_18;
-      medalF9 = preferences.gsData.medal_play_f9;
-      medalB9 = preferences.gsData.medal_play_b9;
-      medal18 = preferences.gsData.medal_play_18;
-      skins = preferences.gsData.skins;
-      skinCarry = !!preferences.gsData.skins_carry_over;
-      lowedAdv = !!preferences.gsData.lowed_adv_on_f9;
-      //============NASSAU SETTINGS===============
-      snwUseFactor = preferences.snwData.tipo_calculo === 'factor';
-      snwValueFactor = preferences.snwData.cantidad;
-      tnwUseFactor = preferences.tnwData.tipo_calculo === 'factor';
-      tnwValueFactor = preferences.tnwData.cantidad;
-      //============SNWDATA===============
-      snwAutoPress = preferences.snwData.automatic_presses_every;
-      snwFront9 = snwUseFactor ? preferences.snwData.cantidad : preferences.snwData.front_9;
-      snwBack9 = preferences.snwData.back_9;
-      snwMatch = preferences.snwData.match;
-      snwCarry = preferences.snwData.carry;
-      snwMedal = preferences.snwData.medal;
-      //============TNWDATA===============
-      tnwAutoPress = preferences.tnwData.automatic_presses_every;
-      tnwFront9 = tnwUseFactor ? preferences.tnwData.cantidad : preferences.tnwData.front_9;
-      tnwBack9 = preferences.tnwData.back_9;
-      tnwMatch = preferences.tnwData.match;
-      tnwCarry = preferences.tnwData.carry;
-      tnwMedal = preferences.tnwData.medal;
-      tnwWhoGets = preferences.tnwData.who_gets_the_adv_strokes;
-      //============EBDATA===============
-      ebWager = preferences.ebData.wager;
-      //============BBDATA===============
-      bbWagerF9 = preferences.bbData.wager_f9;
-      bbWagerB9 = preferences.bbData.wager_b9;
-      bbWager18 = preferences.bbData.wager_18;
-      //============SSDATA===============
-      ssDoubleEagle = preferences.sfsData.double_eagles_points;
-      ssEaglePoints = preferences.sfsData.eagle_points;
-      ssBirdie = preferences.sfsData.birdie;
-      ssPar = preferences.sfsData.par;
-      ssBogey = preferences.sfsData.bogey;
-      ssDoubleBogey = preferences.sfsData.double_bogey;
-
-      this.havePreferences = true;
-    } catch (error) {
-      console.log('====================================');
-      console.log(error + ' file: SettingsView, line: 74');
-      console.log('====================================');
-    }*/
-
-
-
-    this.state = {
+    this.state={
       userData: [],
       language:'en',
-      asHowAdvMove,
-      asHowManyStrokes,
-      asAdvMoves,
-      asDoesCarryMove,
-      rabbit16,
-      rabbit712,
-      rabbit1318,
-      medalF9,
-      medalB9,
-      medal18,
-      skins,
-      skinCarry,
-      lowedAdv,
-      snwUseFactor,
-      snwValueFactor,
-      snwAutoPress,
-      snwFront9,
-      snwBack9,
-      snwMatch,
-      snwCarry,
-      snwMedal,
-      tnwUseFactor,
-      tnwValueFactor,
-      tnwAutoPress,
-      tnwFront9,
-      tnwBack9,
-      tnwMatch,
-      tnwCarry,
-      tnwMedal,
-      tnwWhoGets,
-      ebWager,
-      ssDoubleEagle,
-      ssEaglePoints,
-      ssBirdie,
-      ssPar,
-      ssBogey,
-      ssDoubleBogey,
-      bbWagerF9,
-      bbWagerB9,
-      bbWager18,
-    };
+      asHowAdvMove : 'match',
+      asHowManyStrokes : '0.5',
+      asAdvMoves : false,
+      asDoesCarryMove : false,
+      rabbit16 : '',
+      rabbit712 : '',
+      rabbit1318 : '',
+      medalF9 : '',
+      medalB9 : '',
+      medal18 : '',
+      skins : '',
+      skinCarry : false,
+      lowedAdv : false,
+      snwAutoPress : '2',
+      snwFront9 : '',
+      snwBack9 : '',
+      snwMatch : '',
+      snwCarry : '',
+      snwMedal : '',
+      snwUseFactor : false,
+      snwValueFactor : '',
+      tnwAutoPress : '2',
+      tnwFront9 : '',
+      tnwBack9 : '',
+      tnwMatch : '',
+      tnwCarry : '',
+      tnwMedal : '',
+      tnwWhoGets : 'each',
+      tnwUseFactor : false,
+      tnwValueFactor : '',
+      ebWager : '',
+      ssDoubleEagle : '5',
+      ssEaglePoints : '4',
+      ssBirdie : '3',
+      ssPar : '2',
+      ssBogey : '1',
+      ssDoubleBogey : '0',
+      bbWagerF9 : '',
+      bbWagerB9 : '',
+      bbWager18 : '',
+    }
     
     this.getUserData();
 
@@ -211,111 +113,6 @@ class SettingsView extends Component {
       )
     }
   };
-
-  /*UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.preferences !== this.props.preferences) {
-      try {
-        const { preferences } = nextProps;
-        //============ASDATA===============
-        asHowAdvMove = preferences.asData.how_adv_move;
-        asHowManyStrokes = preferences.asData.how_many_strokes;
-        asAdvMoves = parseInt(preferences.asData.adv_moves) ? true : false;
-        asDoesCarryMove = parseInt(preferences.asData.carry_move_adv) ? true : false;
-        //============GSDATA===============
-        rabbit16 = preferences.gsData.rabbit_1_6;
-        rabbit712 = preferences.gsData.rabbit_7_12;
-        rabbit1318 = preferences.gsData.rabbit_13_18;
-        medalF9 = preferences.gsData.medal_play_f9;
-        medalB9 = preferences.gsData.medal_play_b9;
-        medal18 = preferences.gsData.medal_play_18;
-        skins = preferences.gsData.skins;
-        skinCarry = !!preferences.gsData.skins_carry_over;
-        lowedAdv = !!preferences.gsData.lowed_adv_on_f9;
-        //============NASSAU SETTINGS===============
-        snwUseFactor = preferences.snwData.tipo_calculo === 'factor';
-        snwValueFactor = preferences.snwData.cantidad;
-        tnwUseFactor = preferences.tnwData.tipo_calculo === 'factor';
-        tnwValueFactor = preferences.tnwData.cantidad;
-        //============SNWDATA===============
-        snwAutoPress = preferences.snwData.automatic_presses_every;
-        snwFront9 = snwUseFactor ? preferences.snwData.cantidad : preferences.snwData.front_9;
-        snwBack9 = preferences.snwData.back_9;
-        snwMatch = preferences.snwData.match;
-        snwCarry = preferences.snwData.carry;
-        snwMedal = preferences.snwData.medal;
-        //============TNWDATA===============
-        tnwAutoPress = preferences.tnwData.automatic_presses_every;
-        tnwFront9 = tnwUseFactor ? preferences.tnwData.cantidad : preferences.tnwData.front_9;
-        tnwBack9 = preferences.tnwData.back_9;
-        tnwMatch = preferences.tnwData.match;
-        tnwCarry = preferences.tnwData.carry;
-        tnwMedal = preferences.tnwData.medal;
-        tnwWhoGets = preferences.tnwData.who_gets_the_adv_strokes;
-        //============EBDATA===============
-        ebWager = preferences.ebData.wager;
-        //============BBDATA===============
-        bbWagerF9 = preferences.bbData.wager_f9;
-        bbWagerB9 = preferences.bbData.wager_b9;
-        bbWager18 = preferences.bbData.wager_18;
-        //============SSDATA===============
-        ssDoubleEagle = preferences.sfsData.double_eagles_points;
-        ssEaglePoints = preferences.sfsData.eagle_points;
-        ssBirdie = preferences.sfsData.birdie;
-        ssPar = preferences.sfsData.par;
-        ssBogey = preferences.sfsData.bogey;
-        ssDoubleBogey = preferences.sfsData.double_bogey;
-
-        this.havePreferences = true;
-        this.setState({
-          asHowAdvMove,
-          asHowManyStrokes,
-          asAdvMoves,
-          asDoesCarryMove,
-          rabbit16,
-          rabbit712,
-          rabbit1318,
-          medalF9,
-          medalB9,
-          medal18,
-          skins,
-          skinCarry,
-          lowedAdv,
-          snwUseFactor,
-          snwValueFactor,
-          snwAutoPress,
-          snwFront9,
-          snwBack9,
-          snwMatch,
-          snwCarry,
-          snwMedal,
-          tnwUseFactor,
-          tnwValueFactor,
-          tnwAutoPress,
-          tnwFront9,
-          tnwBack9,
-          tnwMatch,
-          tnwCarry,
-          tnwMedal,
-          tnwWhoGets,
-          ebWager,
-          ssDoubleEagle,
-          ssEaglePoints,
-          ssBirdie,
-          ssPar,
-          ssBogey,
-          ssDoubleBogey,
-          bbWagerF9,
-          bbWagerB9,
-          bbWager18,
-          seePicker: false
-        });
-      } catch (error) {
-        console.log('====================================');
-        console.log(error + ' file: SettingsView, line: 312');
-        console.log('====================================');
-      }
-    }
-  }*/
 
   render() {
 
@@ -1384,6 +1181,7 @@ class SettingsView extends Component {
         if(res.estatus==1){
             const lista =[
             {
+              id: res.resultado.usu_id,
               name: res.resultado.usu_nombre,
               nick_name: res.resultado.usu_nickname,
               email: res.resultado.usu_email,
@@ -1395,6 +1193,23 @@ class SettingsView extends Component {
           this.setState({
             userData: lista[0]
           })
+
+        db.transaction(function (txn) {
+        txn.executeSql(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='table_settings'",
+          [],
+          function (tx, res) {
+            console.warn('item:', res);
+            if (res.rows.length == 0) {
+              txn.executeSql('DROP TABLE IF EXISTS table_settings', []);
+              txn.executeSql(
+                'CREATE TABLE IF NOT EXISTS table_settings(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_language VARCHAR(3), user_how_adv_move VARCHAR(20), user_strokes_moved_per_round VARCHAR(20))',
+                []
+              );
+            }
+          }
+        );
+      });
         }  
         else{
             //setLoading(false)
@@ -2004,28 +1819,37 @@ class SettingsView extends Component {
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
       gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
       gsDataPlayer.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwPlayerData.automatic_presses_every,
-      snwPlayerData.use_factor,snwPlayerData.front_9,snwPlayerData.back_9,snwPlayerData.match,
-      snwPlayerData.carry,snwPlayerData.medal,tnwPlayerData.automatic_presses_every,tnwPlayerData.use_factor,
+      snwPlayerData.front_9,snwPlayerData.back_9,snwPlayerData.match,
+      snwPlayerData.carry,snwPlayerData.medal,tnwPlayerData.automatic_presses_every,
       tnwPlayerData.front_9,tnwPlayerData.back_9,tnwPlayerData.match,tnwPlayerData.carry,tnwPlayerData.medal,
       tnwPlayerData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
       bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
       sfsData.bogey,sfsData.double_bogey)
       .then((res) => {
         console.warn(res)
-        /*if(res.estatus==1){
-            const lista =[
-            {
-              name: res.resultado.usu_nombre,
-              nick_name: res.resultado.usu_nickname,
-              email: res.resultado.usu_email,
-              ghin_number: res.resultado.usu_ghin_numero,
-              handicap: res.resultado.usu_handicap_index,
-              cellphone:res.resultado.usu_telefono
-            }]
-          console.warn(res)
-          this.setState({
-            userData: lista[0]
-          })
+        if(res.estatus==1){
+          db.transaction((tx) => {
+            tx.executeSql(
+              'UPDATE table_settings set user_language=?, user_how_adv_move=? , user_strokes_moved_per_round=? where user_id=?',
+              [language, asData.how_adv_move, asData.how_many_strokes, data.user_id],
+              (tx, results) => {
+                console.warn('Results', results);
+                if (results.rowsAffected > 0) {
+                  Alert.alert(
+                    'Success',
+                    'User updated successfully',
+                    [
+                      {
+                        text: 'Ok',
+                        //onPress: () => navigation.navigate('HomeScreen'),
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                } else alert('Updation Failed');
+              }
+            );
+          });
         }  
         else{
             //setLoading(false)
@@ -2033,7 +1857,7 @@ class SettingsView extends Component {
                 message: res.mensaje,
                 type: 'info',
             });
-        }*/
+        }
     }).catch(error=>{
         //setLoading(false)
         showMessage({

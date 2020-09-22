@@ -31,6 +31,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from './src/utils/Colors';
 import { Dictionary } from './src/utils/Dictionary';
 import { InfoUsuario } from './src/Services/Services';
+import NetInfo from "@react-native-community/netinfo";
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator();
@@ -48,7 +49,8 @@ export default class App extends Component {
       UsuNombre:'',
       UsuApellidoPaterno:'',
       UsuApelidoMaterno:'',
-      UsuFoto:''
+      UsuFoto:'',
+      conexion: true
     }
 
     this.loadSesion = this.loadSesion.bind(this)
@@ -56,12 +58,33 @@ export default class App extends Component {
 
   }
 
-  componentDidMount(){
-    setTimeout(() => {
-      this.loadSesion();
-    },500)
+  handleConnectivityChange = (connection) => {
+    if(connection.isInternetReachable)
+    {
+        this.setState({
+          conexion:true
+        })
+        this.loadSesion()
+    }
+    else if(connection.isInternetReachable==false)
+    {
+      this.setState({
+        conexion:false,
+        count:0
+      })
+    }
+  };
+
+  componentDidMount() {
+    this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
   }
 
+  componentWillUnmount() {
+    if (this.netinfoUnsubscribe) {
+      this.netinfoUnsubscribe();
+      this.netinfoUnsubscribe = null;
+    }
+  }
 
   loadSesion = async () => {
 
@@ -277,28 +300,6 @@ export default class App extends Component {
           },
             
           })} />
-        <BottomTab.Screen name='configureRounds'component={configureRounds}
-          options={({ route }) => ({
-            headerShown:true,
-            tabBarIcon:({ focused })=>{
-              if(focused==true)
-              {
-                return(
-                <View style={{height:'60%',width:'60%'}}>
-                  {/*<Image source={require('./Src/Resource/canjear1.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
-                </View>
-                )
-              }else
-              {
-                return(
-                  <View style={{height:'60%',width:'60%'}}>
-                    {/*<Image source={require('./Src/Resource/canjear2.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
-                  </View>
-                )
-              }
-            },
-            
-          })} />
       </BottomTab.Navigator>
     
     createHomeStack = () =>
@@ -335,6 +336,15 @@ export default class App extends Component {
     }
     return (
       <NavigationContainer>
+      {
+        !this.state.conexion
+        ?
+        <View style={{height:25,backgroundColor:'#DC3A20',justifyContent:'center',alignItems:'center'}}>
+          <Text style={{color:'white'}}>Sin conexión</Text>
+        </View>
+        :
+        null
+        }
         <Stack.Navigator
          headerMode="none">
           <Drawer.Screen name='Home' children={createHomeDrawer} options={{ title: 'Dragon Golf' }} />
