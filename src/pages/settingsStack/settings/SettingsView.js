@@ -26,7 +26,7 @@ import moment from 'moment';
 import { RadioButton } from 'react-native-paper';
 import Details from '../../../utils/Details';
 import AsyncStorage from '@react-native-community/async-storage';
-import { InfoUsuario } from '../../../Services/Services'
+import { InfoUsuario, updateSettings } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 // import * as Animatable from 'react-native-animatable';
 
@@ -1391,9 +1391,9 @@ class SettingsView extends Component {
               handicap: res.resultado.usu_handicap_index,
               cellphone:res.resultado.usu_telefono
             }]
-          console.warn(lista)
+          console.warn(res)
           this.setState({
-            userData: lista
+            userData: lista[0]
           })
         }  
         else{
@@ -1780,15 +1780,9 @@ class SettingsView extends Component {
   }
 
   submit = () => {
-    const snwOk = this.snwValidations();
-    const tnwOk = this.tnwValidations();
-    const gsOk = this.gsValidations();
-    const ebOk = this.ebValidations();
-    const ssOk = this.ssValidations();
-    const bbOk = this.bbValidations();
 
-    if (snwOk && tnwOk && gsOk && ebOk && ssOk && bbOk) {
       const {
+        language,
         snwAutoPress,
         snwFront9,
         snwBack9,
@@ -1920,7 +1914,7 @@ class SettingsView extends Component {
         wager_18: bbWager18
       }
 
-      const { userData } = this.props;
+      const { userData } = this.state;
 
       let data = {
         user_id: userData.id,
@@ -1935,8 +1929,6 @@ class SettingsView extends Component {
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-
-      this.props.savePreferences(data);
 
       const gsDataPlayer = {
         player_id: 1,
@@ -1953,8 +1945,6 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      this.props.saveGS(gsDataPlayer);
-
       const snwPlayerData = {
         automatic_presses_every: snwAutoPress,
         use_factor: snwUseFactor ? 'factor' : 'value',
@@ -1968,8 +1958,6 @@ class SettingsView extends Component {
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-
-      this.props.saveSNW(snwPlayerData);
 
       const tnwPlayerData = {
         automatic_presses_every: tnwAutoPress,
@@ -1986,16 +1974,12 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      this.props.saveTNW(tnwPlayerData);
-
       const ebPlayerData = {
         wager: ebWager,
         player_id: 1,
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-
-      this.props.saveEB(ebPlayerData);
 
       const asPlayerData = {
         advantage_move: asHowAdvMove,
@@ -2007,8 +1991,6 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      this.props.saveAS(asPlayerData);
-
       const bbPlayerData = {
         wager_f9: bbWagerF9,
         wager_b9: bbWagerB9,
@@ -2018,8 +2000,47 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      this.props.saveBB(bbPlayerData);
-    }
+      updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
+      asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
+      gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
+      gsDataPlayer.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwPlayerData.automatic_presses_every,
+      snwPlayerData.use_factor,snwPlayerData.front_9,snwPlayerData.back_9,snwPlayerData.match,
+      snwPlayerData.carry,snwPlayerData.medal,tnwPlayerData.automatic_presses_every,tnwPlayerData.use_factor,
+      tnwPlayerData.front_9,tnwPlayerData.back_9,tnwPlayerData.match,tnwPlayerData.carry,tnwPlayerData.medal,
+      tnwPlayerData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
+      bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
+      sfsData.bogey,sfsData.double_bogey)
+      .then((res) => {
+        console.warn(res)
+        /*if(res.estatus==1){
+            const lista =[
+            {
+              name: res.resultado.usu_nombre,
+              nick_name: res.resultado.usu_nickname,
+              email: res.resultado.usu_email,
+              ghin_number: res.resultado.usu_ghin_numero,
+              handicap: res.resultado.usu_handicap_index,
+              cellphone:res.resultado.usu_telefono
+            }]
+          console.warn(res)
+          this.setState({
+            userData: lista[0]
+          })
+        }  
+        else{
+            //setLoading(false)
+            showMessage({
+                message: res.mensaje,
+                type: 'info',
+            });
+        }*/
+    }).catch(error=>{
+        //setLoading(false)
+        showMessage({
+            message: error,
+            type:'error',
+        });
+    })
   }
 }
 
