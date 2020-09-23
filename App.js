@@ -32,6 +32,7 @@ import Colors from './src/utils/Colors';
 import { Dictionary } from './src/utils/Dictionary';
 import { InfoUsuario } from './src/Services/Services';
 import NetInfo from "@react-native-community/netinfo";
+import RNRestart from 'react-native-restart'
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator();
@@ -90,6 +91,7 @@ export default class App extends Component {
 
     try {
         let IDUsuario = await AsyncStorage.getItem('usu_id')
+        console.warn(IDUsuario)
         if (IDUsuario != null )
         {
           this.setState({
@@ -156,8 +158,7 @@ export default class App extends Component {
         {
           text: 'Confirmar', onPress: () => {
             AsyncStorage.clear();
-            props.navigation.closeDrawer()
-            this.setState({logeado:false})
+            RNRestart.Restart();
           }
         },
       ],
@@ -185,15 +186,15 @@ export default class App extends Component {
               {
               this.state.logeado
               ?
-              <View style={{height:'25%',borderBottomWidth:1,borderBottomColor:'#0F222D',marginBottom:10}}>
+              <View style={{height:'25%',borderBottomWidth:1,borderBottomColor:Colors.Primary,marginBottom:10}}>
                 {
                   this.state.UsuFoto==null
                   ?
-                  <TouchableOpacity onPress={() => props.navigation.navigate('Perfil')} style={{marginBottom:20,alignItems:'center'}}>
+                  <TouchableOpacity style={{marginBottom:20,alignItems:'center'}}>
                       <FontAwesomeIcon name='user-circle' color='white' size={70}/>
                   </TouchableOpacity>
                   :
-                  <TouchableOpacity onPress={() => props.navigation.navigate('Perfil')} style={{marginBottom:20,height:70,width:70,alignSelf:'center'}}>
+                  <TouchableOpacity style={{marginBottom:20,height:70,width:70,alignSelf:'center'}}>
                       <Image source={{uri:'http://200.94.138.139:84'+this.state.UsuFoto}} resizeMode='cover' style={{flex:1,borderRadius:200}} height={undefined} width={undefined}/>
                   </TouchableOpacity>
                 }
@@ -212,21 +213,20 @@ export default class App extends Component {
                   <DrawerItem
                   label="Inicio"
                   onPress={() => props.navigation.closeDrawer()}
-                  labelStyle={{color:'#0F222D'}} />
+                  labelStyle={{color:Colors.Primary}} />
                 </View>
               </TouchableOpacity> 
               {
               this.state.logeado
               ?
-              <TouchableOpacity onPress={() => props.navigation.navigate('Perfil')} style={{width:'100%',flexDirection:'row',alignItems:'center'}}>
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}}>
                   <View style={{flex:.1}}>
                     <FontAwesomeIcon name='user' color='#0F222D' size={20}/>
                   </View>
                 <View style={{flex:.9}}>
                   <DrawerItem
                   label="Perfil"
-                  onPress={() => props.navigation.navigate('Perfil')}
-                  labelStyle={{color:'#0F222D'}} />
+                  labelStyle={{color:Colors.Primary}} />
                 </View>
               </TouchableOpacity> 
                :
@@ -254,7 +254,7 @@ export default class App extends Component {
           <TouchableOpacity 
             activeOpacity={0.8}
             onPress={() => this.closeSesion(props)}
-            style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:'#123c5b',padding:10}}>
+            style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>
               </View>

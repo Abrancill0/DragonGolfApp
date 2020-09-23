@@ -30,8 +30,9 @@ import { InfoUsuario, updateSettings } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 // import * as Animatable from 'react-native-animatable';
 import { openDatabase } from 'react-native-sqlite-storage';
+import EntypoIcon from 'react-native-vector-icons/Entypo'
 
-var db = openDatabase({ name: 'UserDatabase.db' });
+var db = openDatabase({ name: 'DragonGolf.db' });
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
 
@@ -43,8 +44,8 @@ class SettingsView extends Component {
     this.state={
       userData: [],
       language:'en',
-      asHowAdvMove : 'match',
-      asHowManyStrokes : '0.5',
+      asHowAdvMove : 'Match',
+      asHowManyStrokes : '0.50',
       asAdvMoves : false,
       asDoesCarryMove : false,
       rabbit16 : '',
@@ -54,7 +55,7 @@ class SettingsView extends Component {
       medalB9 : '',
       medal18 : '',
       skins : '',
-      skinCarry : false,
+      skinCarry : 0,
       lowedAdv : false,
       snwAutoPress : '2',
       snwFront9 : '',
@@ -183,10 +184,12 @@ class SettingsView extends Component {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled" >
 
+        <TouchableOpacity style={{padding:10,width:50}} onPress={()=> this.props.navigation.openDrawer()}>
+          <EntypoIcon name={'menu'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
           <Ripple
             style={styles.profileCard}
             rippleColor='gray'
-            onPress={() => this.props.navigation.navigate('EditUserView')}
           >
             <View style={styles.imageNameView}>
               <Image
@@ -254,19 +257,19 @@ class SettingsView extends Component {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <View style={styles.radioButtonView}>
-                  <RadioButton value="match" color={Colors.Primary} />
+                  <RadioButton value="Match" color={Colors.Primary} />
                   <TouchableOpacity
-                    onPress={() => this.setState({ asHowAdvMove: 'match' })}
+                    onPress={() => this.setState({ asHowAdvMove: 'Match' })}
                   >
-                    <Text style={[styles.radioButtonText, { color: asHowAdvMove === 'match' ? Colors.Primary : Colors.Black }]}>{match[language]}</Text>
+                    <Text style={[styles.radioButtonText, { color: asHowAdvMove === 'Match' ? Colors.Primary : Colors.Black }]}>{match[language]}</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.radioButtonView}>
                   <RadioButton value="money" color={Colors.Primary} />
                   <TouchableOpacity
-                    onPress={() => this.setState({ asHowAdvMove: 'money' })}
+                    onPress={() => this.setState({ asHowAdvMove: 'Money' })}
                   >
-                    <Text style={[styles.radioButtonText, { color: asHowAdvMove === 'money' ? Colors.Primary : Colors.Black }]}>{money[language]}</Text>
+                    <Text style={[styles.radioButtonText, { color: asHowAdvMove === 'Money' ? Colors.Primary : Colors.Black }]}>{money[language]}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -283,27 +286,27 @@ class SettingsView extends Component {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <View style={styles.radioButtonView}>
-                  <RadioButton value="0.5" color={Colors.Primary} />
+                  <RadioButton value="0.50" color={Colors.Primary} />
                   <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '0.5' })}
+                    onPress={() => this.setState({ asHowManyStrokes: '0.50' })}
                   >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '0.5' ? Colors.Primary : Colors.Black }]}>0.5</Text>
+                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '0.50' ? Colors.Primary : Colors.Black }]}>0.5</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.radioButtonView}>
-                  <RadioButton value="1" color={Colors.Primary} />
+                  <RadioButton value="1.00" color={Colors.Primary} />
                   <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '1' })}
+                    onPress={() => this.setState({ asHowManyStrokes: '1.00' })}
                   >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '1' ? Colors.Primary : Colors.Black }]}>1</Text>
+                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '1.00' ? Colors.Primary : Colors.Black }]}>1</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.radioButtonView}>
-                  <RadioButton value="2" color={Colors.Primary} />
+                  <RadioButton value="2.00" color={Colors.Primary} />
                   <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '2' })}
+                    onPress={() => this.setState({ asHowManyStrokes: '2.00' })}
                   >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '2' ? Colors.Primary : Colors.Black }]}>2</Text>
+                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '2.00' ? Colors.Primary : Colors.Black }]}>2</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -492,7 +495,7 @@ class SettingsView extends Component {
 
           <View style={styles.optionSection}>
             <View style={styles.optionView}>
-              <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.skinCarryOver })}>
+              <TouchableOpacity style={{ flex: 1 }} >
                 <Text style={styles.optionsText}>Skin Carry Over <Text style={{ color: Colors.Primary }}>?</Text></Text>
               </TouchableOpacity>
               <View style={styles.costInputView}>
@@ -508,7 +511,7 @@ class SettingsView extends Component {
 
           <View style={styles.optionSection}>
             <View style={styles.optionView}>
-              <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.lowerAdvOnF9 })}>
+              <TouchableOpacity style={{ flex: 1 }}>
                 <Text style={styles.optionsText}>Lower Adv On F9 <Text style={{ color: Colors.Primary }}>?</Text></Text>
               </TouchableOpacity>
               <View style={styles.costInputView}>
@@ -843,7 +846,7 @@ class SettingsView extends Component {
 
           <View style={styles.optionSection}>
             <View style={{ paddingHorizontal: 10 }}>
-              <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.whoGetsAdv })}>
+              <TouchableOpacity style={{ flex: 1 }} >
                 <Text style={styles.optionsText}>{whoGetsAdv[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
               </TouchableOpacity>
               {Platform.OS === 'ios' &&
@@ -1189,27 +1192,75 @@ class SettingsView extends Component {
               handicap: res.resultado.usu_handicap_index,
               cellphone:res.resultado.usu_telefono
             }]
+
+            this.setState({
+            asHowAdvMove: res.resultado.set_how_adv_move,
+            asHowManyStrokes: res.resultado.set_strokes_moved_per_round,
+            asAdvMoves: res.resultado.set_adv_moves_on_9_holes,
+            asDoesCarryMove: res.resultado.set_carry_moves_adv,
+            rabbit16: res.resultado.set_rabbit_1_6,
+            rabbit712: res.resultado.set_rabbit_7_12,
+            rabbit1318: res.resultado.set_rabbit_13_18,
+            medalF9: res.resultado.set_medal_play_f9,
+            medalB9: res.resultado.set_medal_play_b9,
+            medal18: res.resultado.set_medal_play_18,
+            skins: res.resultado.set_skins,
+            skinCarry: res.resultado.set_skins_carry_over,
+            lowedAdv: res.resultado.set_lower_adv_f9,
+            snwUseFactor: res.resultado.set_snw_use_factor,
+            snwAutoPress: res.resultado.set_snw_automatic_press,
+            snwFront9: res.resultado.set_snw_front_9,
+            snwBack9: res.resultado.set_snw_back_9,
+            snwMatch: res.resultado.set_snw_match,
+            snwCarry: res.resultado.set_snw_carry,
+            snwMedal: res.resultado.set_snw_medal,
+            tnwUseFactor: res.resultado.set_tmw_use_factor,
+            tnwAutoPress: res.resultado.set_tmw_automatic_press,
+            tnwFront9: res.resultado.set_tmw_front_9,
+            tnwBack9: res.resultado.set_tmw_back_9,
+            tnwMatch: res.resultado.set_tmw_match,
+            tnwCarry: res.resultado.set_tmw_carry,
+            tnwMedal: res.resultado.set_tmw_medal,
+            tnwWhoGets: res.resultado.set_tmw_adv_strokes,
+            ebWager: res.resultado.set_eb_wager,
+            ssDoubleEagle: res.resultado.set_stableford_double_eagle,
+            ssEaglePoints: res.resultado.set_stableford_eagle,
+            ssBirdie: res.resultado.set_stableford_birdie,
+            ssPar: res.resultado.set_stableford_par,
+            ssBogey: res.resultado.set_stableford_bogey,
+            ssDoubleBogey: res.resultado.set_stableford_double_bogey,
+            bbWagerF9: res.resultado.set_bbt_wager_f9,
+            bbWagerB9: res.resultado.set_bbt_wager_b9,
+            bbWager18: res.resultado.set_bbt_wager_18,
+            //seePicker: res.resultado.usu_id
+          })
           console.warn(res)
           this.setState({
             userData: lista[0]
           })
 
-        db.transaction(function (txn) {
-        txn.executeSql(
-          "SELECT name FROM sqlite_master WHERE type='table' AND name='table_settings'",
-          [],
-          function (tx, res) {
-            console.warn('item:', res);
-            if (res.rows.length == 0) {
-              txn.executeSql('DROP TABLE IF EXISTS table_settings', []);
-              txn.executeSql(
-                'CREATE TABLE IF NOT EXISTS table_settings(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_language VARCHAR(3), user_how_adv_move VARCHAR(20), user_strokes_moved_per_round VARCHAR(20))',
-                []
-              );
-            }
-          }
-        );
-      });
+        db.transaction((tx) => {
+            tx.executeSql(
+              'UPDATE Settings set user_language=?, user_how_adv_move=? , user_strokes_moved_per_round=? where user_id=?',
+              [language, asData.how_adv_move, asData.how_many_strokes, lista[0].id],
+              (tx, results) => {
+                console.warn('Results', results);
+                if (results.rowsAffected > 0) {
+                  Alert.alert(
+                    'Success',
+                    'User updated successfully',
+                    [
+                      {
+                        text: 'Ok',
+                        //onPress: () => navigation.navigate('HomeScreen'),
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                } else alert('Updation Failed');
+              }
+            );
+          });
         }  
         else{
             //setLoading(false)
@@ -1631,6 +1682,8 @@ class SettingsView extends Component {
         tnwValueFactor
       } = this.state;
 
+      console.warn(tnwWhoGets)
+
       const tnwData = {
         useFactor: tnwUseFactor ? 'factor' : 'value',
         valueFactor: tnwValueFactor,
@@ -1815,14 +1868,16 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
+      console.warn(gsDataPlayer.skins_carry_over)
+
       updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
       gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
-      gsDataPlayer.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwPlayerData.automatic_presses_every,
+      gsData.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwPlayerData.automatic_presses_every,
       snwPlayerData.front_9,snwPlayerData.back_9,snwPlayerData.match,
       snwPlayerData.carry,snwPlayerData.medal,tnwPlayerData.automatic_presses_every,
       tnwPlayerData.front_9,tnwPlayerData.back_9,tnwPlayerData.match,tnwPlayerData.carry,tnwPlayerData.medal,
-      tnwPlayerData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
+      tnwData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
       bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
       sfsData.bogey,sfsData.double_bogey)
       .then((res) => {
