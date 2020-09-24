@@ -7,10 +7,10 @@ class InfoScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            language: 'es'
+            language: props.route.params.language
         };
 
-        this.data = props.navigation.getParam('data');
+        this.data = props.route.params.data
     }
 
 

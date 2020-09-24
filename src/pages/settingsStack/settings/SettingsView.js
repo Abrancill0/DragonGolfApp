@@ -194,6 +194,7 @@ class SettingsView extends Component {
           <Ripple
             style={styles.profileCard}
             rippleColor='gray'
+            onPress={() => this.props.navigation.navigate('EditUserView')}
           >
             <View style={styles.imageNameView}>
               <Image
@@ -499,7 +500,7 @@ class SettingsView extends Component {
 
           <View style={styles.optionSection}>
             <View style={styles.optionView}>
-              <TouchableOpacity style={{ flex: 1 }} >
+              <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.skinCarryOver, language: language })}>
                 <Text style={styles.optionsText}>Skin Carry Over <Text style={{ color: Colors.Primary }}>?</Text></Text>
               </TouchableOpacity>
               <View style={styles.costInputView}>
@@ -515,7 +516,7 @@ class SettingsView extends Component {
 
           <View style={styles.optionSection}>
             <View style={styles.optionView}>
-              <TouchableOpacity style={{ flex: 1 }}>
+              <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.lowerAdvOnF9, language: language })}>
                 <Text style={styles.optionsText}>Lower Adv On F9 <Text style={{ color: Colors.Primary }}>?</Text></Text>
               </TouchableOpacity>
               <View style={styles.costInputView}>
@@ -850,7 +851,7 @@ class SettingsView extends Component {
 
           <View style={styles.optionSection}>
             <View style={{ paddingHorizontal: 10 }}>
-              <TouchableOpacity  style={{ flex: 1 }} >
+              <TouchableOpacity  style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.whoGetsAdv, language: language })}>
                 <Text style={styles.optionsText}>{whoGetsAdv[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
               </TouchableOpacity>
               {Platform.OS === 'ios' &&

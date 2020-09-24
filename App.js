@@ -14,6 +14,7 @@ import RegisterView from './src/screen/indexStack/register/RegisterView'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
+import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
 import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
 import FlashMessage from "react-native-flash-message";
 
@@ -340,6 +341,30 @@ export default class App extends Component {
               headerShown:false
           })} />
         <Stack.Screen name='RegisterView' component={RegisterView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='InfoScreen' component={InfoScreen}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='EditUserView' component={EditUserView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

@@ -11,15 +11,12 @@ import {
     KeyboardAvoidingView,
     Platform
 } from 'react-native';
-import store from '../../../store/store';
-import { connect } from 'react-redux';
 import { TextField } from 'react-native-material-textfield';
 import ImagePicker from 'react-native-image-picker';
 import PhoneInput from 'react-native-phone-input'
 import styles from './styles';
 import Colors from '../../../utils/Colors';
-import * as Validations from '../../../utils/Validations';
-import { actionUpdateUserData, actionUpdatePlayer } from '../../../store/actions';
+//import * as Validations from '../../../utils/Validations';
 import { Dictionary } from '../../../utils/Dictionary';
 import DragonButton from '../../global/DragonButton';
 import FormatCellphone from '../../../utils/FormatCellphone';
@@ -29,34 +26,34 @@ class EditUserView extends Component {
 
     constructor(props) {
         super(props);
-        const { cellphone, email, ghin_number, handicap, id, id_sync, last_name, name, nick_name, photo, ultimate_sync } = props.userData;
+        //const { cellphone, email, ghin_number, handicap, id, id_sync, last_name, name, nick_name, photo, ultimate_sync } = props.userData;
         let formatted = '';
         let pureCell = '';
-        if (cellphone.length > 10) {
+        /*if (cellphone.length > 10) {
             pureCell = cellphone.substr(cellphone.length - 10);
         }
         formatted = cellphone.substr(0, cellphone.length - 10);
-        pureCell = FormatCellphone(pureCell);
+        pureCell = FormatCellphone(pureCell);*/
         this.state = {
             id,
-            id_sync,
-            profilePicture: photo ? { uri: photo } : null,
+            //id_sync,
+            //profilePicture: photo ? { uri: photo } : null,
             phoneCode: formatted,
             codeNumber: formatted.substring(1, formatted.length),
-            name: name,
+            name: 'name',
             nameError: '',
-            lastName: last_name,
+            lastName: 'last_name',
             lastNameError: '',
-            email: email,
+            email: 'email',
             emailError: '',
-            nickname: nick_name,
+            nickname: 'nick_name',
             nicknameError: '',
             codeError: '',
             cellphone: pureCell,
             cellphoneError: '',
-            ghin: ghin_number,
+            ghin: 'ghin_number',
             ghinError: '',
-            handicap: handicap.toString(),
+            handicap: 'handicap'.toString(),
             handicapError: '',
             deleting: false,
         }
@@ -77,8 +74,7 @@ class EditUserView extends Component {
     }
 
     static navigationOptions = ({ navigation }) => {
-        const state = store.getState();
-        const language = state.reducerLanguage;
+        const language = 'es';
         return {
             title: navigation.getParam('Title', Dictionary.editUser[language]),
         }
@@ -540,18 +536,5 @@ class EditUserView extends Component {
 
 }
 
-const mapStateToProps = state => ({
-    language: state.reducerLanguage,
-    userData: state.reducerUserData,
-});
 
-const mapDispatchToProps = dispatch => ({
-    updateUserData: (values) => {
-        dispatch(actionUpdateUserData(values))
-    },
-    updatePlayer: (values) => {
-        dispatch(actionUpdatePlayer(values));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditUserView);
+export default EditUserView;
