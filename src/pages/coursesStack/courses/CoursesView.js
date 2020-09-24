@@ -6,14 +6,11 @@ import {
   Dimensions,
   Alert
 } from 'react-native';
-import store from '../../../store/store';
-import { connect } from 'react-redux';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from '../../global/HeaderButton';
-import CourseComponent from './CourseComponent';
+//import CourseComponent from './CourseComponent';
 import { NavigationEvents } from 'react-navigation';
-import { actionGetCourses, actionSetCourses, actionDeleteCourse } from '../../../store/actions';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import HideItem from '../../global/HideItem';
 import Snackbar from 'react-native-snackbar';
@@ -24,14 +21,15 @@ class RoundsView extends Component {
     super(props);
     this.state = {
       visible: true,
+      language: 'es'
     };
 
-    props.getCourses();
+    //props.getCourses();
     this.isDeleting = false;
     this.isEditing = false;
     this.hideSnackbar = null;
 
-    this.rowTranslateAnimatedValues = null;
+    this.rowTranslateAnimatedValues = true;
 
     Dimensions.addEventListener('change', () => {
       this.setState({ visible: false });
@@ -74,7 +72,7 @@ class RoundsView extends Component {
     const {
       language,
       courses
-    } = this.props;
+    } = this.state;
 
     const {
       emptyCourseList
@@ -82,9 +80,6 @@ class RoundsView extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <NavigationEvents
-          onWillFocus={this.changeTitleText}
-        />
         <StatusBar
           backgroundColor="#FFFFFF"
           barStyle="dark-content"
@@ -96,7 +91,7 @@ class RoundsView extends Component {
             extraData={courses}
             style={{ flex: 1, paddingVertical: 5 }}
             keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
+            /*renderItem={({ item }) => (
               <CourseComponent
                 item={item}
                 height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
@@ -105,7 +100,7 @@ class RoundsView extends Component {
                 })}
                 opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
               />
-            )}
+            )}*/
             ListEmptyComponent={
               <ListEmptyComponent
                 text={emptyCourseList[language]}
@@ -204,23 +199,4 @@ class RoundsView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-  courses: state.reducerCourses,
-  rounds: state.reducerRounds,
-});
-
-const mapDispatchToProps = dispatch => ({
-  getCourses: () => {
-    dispatch(actionGetCourses());
-  },
-  updateCourses: (values) => {
-    dispatch(actionSetCourses(values));
-  },
-  deleteCourse: (value) => {
-    dispatch(actionDeleteCourse(value));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RoundsView);
+export default RoundsView;

@@ -31,6 +31,7 @@ import { showMessage } from "react-native-flash-message";
 // import * as Animatable from 'react-native-animatable';
 import { openDatabase } from 'react-native-sqlite-storage';
 import EntypoIcon from 'react-native-vector-icons/Entypo'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 var db = openDatabase({ name: 'DragonGolf.db' });
 
@@ -42,6 +43,7 @@ class SettingsView extends Component {
 
     this.havePreferences = false;
     this.state={
+      status: true,
       userData: [],
       language:'en',
       asHowAdvMove : 'Match',
@@ -183,7 +185,9 @@ class SettingsView extends Component {
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled" >
-
+        <Spinner
+            visible={this.state.status}
+            color={Colors.Primary} />
         <TouchableOpacity style={{padding:10,width:50}} onPress={()=> this.props.navigation.openDrawer()}>
           <EntypoIcon name={'menu'} size={25} color={Colors.Primary} />
         </TouchableOpacity>
@@ -846,7 +850,7 @@ class SettingsView extends Component {
 
           <View style={styles.optionSection}>
             <View style={{ paddingHorizontal: 10 }}>
-              <TouchableOpacity style={{ flex: 1 }} >
+              <TouchableOpacity  style={{ flex: 1 }} >
                 <Text style={styles.optionsText}>{whoGetsAdv[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
               </TouchableOpacity>
               {Platform.OS === 'ios' &&
@@ -1232,6 +1236,7 @@ class SettingsView extends Component {
             bbWagerF9: res.resultado.set_bbt_wager_f9,
             bbWagerB9: res.resultado.set_bbt_wager_b9,
             bbWager18: res.resultado.set_bbt_wager_18,
+            status: false
             //seePicker: res.resultado.usu_id
           })
           console.warn(res)
@@ -1885,7 +1890,7 @@ class SettingsView extends Component {
         if(res.estatus==1){
           showMessage({
                 message: res.mensaje,
-                type: 'Success',
+                type: 'success',
             });
           db.transaction((tx) => {
             tx.executeSql(

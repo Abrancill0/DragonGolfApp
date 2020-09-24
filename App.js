@@ -12,6 +12,8 @@ import { Icon } from 'react-native-elements'
 import Login from './src/screen/indexStack/login/LoginView'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
+import CoursesView from './src/pages/coursesStack/courses/CoursesView'
+import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
 import FlashMessage from "react-native-flash-message";
 
@@ -279,6 +281,27 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
+      <BottomTab.Screen name='CoursesView' component={CoursesView} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              <View style={{height:'60%',width:'60%'}}>
+                {/*<Image source={require('./Src/Resource/cuenta1.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
+              </View>
+              )
+            }else
+            {
+              return(
+                <View style={{height:'60%',width:'60%'}}>
+                  {/*<Image source={require('./Src/Resource/cuenta2.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
+                </View>
+              )
+            }
+          },
+            
+          })} />
         <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{

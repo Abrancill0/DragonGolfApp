@@ -1,51 +1,36 @@
 import React, { Component } from 'react'
-import { Text, Linking } from 'react-native'
-import store from '../../store/store';
+import { Text, Linking, ScrollView, View } from 'react-native'
 import { Dictionary } from '../../utils/Dictionary';
-import { NavigationEvents, ScrollView } from 'react-navigation';
 import styles from './styles';
 
 class InfoScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            language: 'es'
         };
 
         this.data = props.navigation.getParam('data');
     }
 
-    static navigationOptions = ({ navigation }) => {
-        const state = store.getState();
-        const language = state.reducerLanguage;
-        return {
-            title: navigation.getParam('Title', Dictionary.details[language])
-        }
-    };
 
     render() {
 
-        const {language} = this.props;
+        const {language} = this.state;
         const {title, info, retrieved, url} = this.data;
 
         return (
+            <View>
             <ScrollView
-                style={{flex: 1, paddingVertical: 15, paddingHorizontal: 20}}
+                style={{ paddingVertical: 15, paddingHorizontal: 20}}
                 contentContainerStyle={{alignItems: 'center'}}
             >
-                <NavigationEvents
-                    onWillFocus={this.changeTitleText}
-                />
                 <Text style={styles.title}>{title[language]}</Text>
                 <Text style={styles.info}>{info[language]}</Text>
                 {retrieved && <Text style={styles.retrieved} onPress={_ => Linking.openURL(url)}>{retrieved[language]}</Text>}
             </ScrollView>
+            </View>
         )
-    }
-
-    changeTitleText = () => {
-        this.props.navigation.setParams({
-            Title: Dictionary.details[this.props.language]
-        });
     }
 }
 
