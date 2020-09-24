@@ -249,7 +249,7 @@ class LoginView extends Component {
                       status: false
                     })
                    },
-                  700
+                  1000
                 )
 
                 AsyncStorage.setItem('usu_id', res.resultado.usu_id.toString());

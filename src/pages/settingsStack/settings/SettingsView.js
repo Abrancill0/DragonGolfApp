@@ -1883,6 +1883,10 @@ class SettingsView extends Component {
       .then((res) => {
         console.warn(res)
         if(res.estatus==1){
+          showMessage({
+                message: res.mensaje,
+                type: 'Success',
+            });
           db.transaction((tx) => {
             tx.executeSql(
               'UPDATE table_settings set user_language=?, user_how_adv_move=? , user_strokes_moved_per_round=? where user_id=?',
