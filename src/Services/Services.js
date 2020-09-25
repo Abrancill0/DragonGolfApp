@@ -46,6 +46,29 @@ export const Registro = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,us
                 });
 };
 
+export const Update = (usu_id,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_nickname,usu_telefono) => {
+    const URL = RutaBase + "usuarios/update";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    usu_id: usu_id,
+                    usu_nombre: usu_nombre,
+                    usu_apellido_paterno: usu_apellido_paterno,
+                    usu_apellido_materno: usu_apellido_materno,
+                    usu_nickname: usu_nickname,
+                    usu_telefono: usu_telefono
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const updateSettings = (usu_id,set_idioma,set_how_adv_move,set_strokes_moved_per_round,
 set_adv_moves_on_9_holes,set_carry_moves_adv,set_rabbit_1_6,set_rabbit_7_12,set_rabbit_13_18,set_medal_play_f9,
 set_medal_play_b9,set_medal_play_18,set_skins,set_skins_carry_over,set_lower_adv_f9,set_snw_automatic_press,set_snw_front_9,set_snw_back_9,set_snw_match,set_snw_carry,set_snw_medal,

@@ -12,7 +12,7 @@ import {
     Platform
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import PhoneInput from 'react-native-phone-input'
 import styles from './styles';
 import Colors from '../../../utils/Colors';
@@ -21,41 +21,62 @@ import { Dictionary } from '../../../utils/Dictionary';
 import DragonButton from '../../global/DragonButton';
 import FormatCellphone from '../../../utils/FormatCellphone';
 import moment from 'moment';
+import { Update } from '../../../Services/Services'
+import { showMessage } from "react-native-flash-message";
+
+const {
+    photo,
+    name,
+    lastName,
+    lastName2,
+    email,
+    nickname,
+    invalidEmail,
+    code,
+    cellphone: cellphoneText,
+    ghinNumber,
+    handicap,
+    save,
+        } = Dictionary;
 
 class EditUserView extends Component {
 
     constructor(props) {
+
         super(props);
-        //const { cellphone, email, ghin_number, handicap, id, id_sync, last_name, name, nick_name, photo, ultimate_sync } = props.userData;
+        const { cellphone, email, ghin_number, handicap, id, id_sync, last_name, last_name2, name, nick_name, photo, ultimate_sync } = props.route.params.userData;
         let formatted = '';
         let pureCell = '';
-        /*if (cellphone.length > 10) {
+        //if (cellphone.length > 10) {
             pureCell = cellphone.substr(cellphone.length - 10);
-        }
+        //}
         formatted = cellphone.substr(0, cellphone.length - 10);
-        pureCell = FormatCellphone(pureCell);*/
+        pureCell = FormatCellphone(pureCell);
         this.state = {
+            language:props.route.params.language,
             id,
-            //id_sync,
-            //profilePicture: photo ? { uri: photo } : null,
+            id_sync,
+            profilePicture: photo ? { uri: photo } : null,
             phoneCode: formatted,
             codeNumber: formatted.substring(1, formatted.length),
-            name: 'name',
+            nameReg: name,
             nameError: '',
-            lastName: 'last_name',
+            lastNameReg: last_name,
+            lastName2Reg: last_name2,
             lastNameError: '',
-            email: 'email',
+            email: email,
             emailError: '',
-            nickname: 'nick_name',
+            nickname: nick_name,
             nicknameError: '',
             codeError: '',
             cellphone: pureCell,
             cellphoneError: '',
-            ghin: 'ghin_number',
+            ghin: ghin_number,
             ghinError: '',
-            handicap: 'handicap'.toString(),
+            //handicap: handicap.toString(),
             handicapError: '',
             deleting: false,
+            re : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         }
 
         this.inputs = {};
@@ -74,7 +95,7 @@ class EditUserView extends Component {
     }
 
     static navigationOptions = ({ navigation }) => {
-        const language = 'es';
+        const language = this.state.language;
         return {
             title: navigation.getParam('Title', Dictionary.editUser[language]),
         }
@@ -115,6 +136,7 @@ class EditUserView extends Component {
     render() {
 
         const {
+            language,
             profilePicture,
             phoneCode,
             codeNumber,
@@ -129,22 +151,6 @@ class EditUserView extends Component {
             handicapError,
         } = this.state
 
-        const {
-            language
-        } = this.props;
-
-        const {
-            photo,
-            name,
-            lastName,
-            email,
-            nickname,
-            code,
-            cellphone: cellphoneText,
-            ghinNumber,
-            handicap,
-            save,
-        } = Dictionary;
 
         return (
             <View style={{ flex: 1 }}>
@@ -169,11 +175,11 @@ class EditUserView extends Component {
                                 <TextField
                                     ref={ref => this.inputs['name'] = ref}
                                     label={name[language]}
-                                    value={this.state.name}
+                                    value={this.state.nameReg}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     autoCompleteType="name"
-                                    onChangeText={(name) => this.setState({ name })}
+                                    onChangeText={(nameReg) => this.setState({ nameReg })}
                                     error={nameError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
                                         if (this.nameValidation(text)) {
@@ -187,11 +193,29 @@ class EditUserView extends Component {
                                 <TextField
                                     ref={ref => this.inputs['lastName'] = ref}
                                     label={lastName[language]}
-                                    value={this.state.lastName}
+                                    value={this.state.lastNameReg}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     autoCorrect={false}
-                                    onChangeText={(lastName) => this.setState({ lastName })}
+                                    onChangeText={(lastNameReg) => this.setState({ lastNameReg })}
+                                    error={lastNameError}
+                                    onSubmitEditing={({ nativeEvent: { text } }) => {
+                                        if (this.lastNameValidation(text)) {
+                                            this.focusNextField('email');
+                                        }
+                                    }}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.inputs['lastName2'] = ref}
+                                    label={lastName2[language]}
+                                    value={this.state.lastName2Reg}
+                                    tintColor={Colors.Primary}
+                                    autoCapitalize="words"
+                                    autoCorrect={false}
+                                    onChangeText={(lastName2Reg) => this.setState({ lastName2Reg })}
                                     error={lastNameError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
                                         if (this.lastNameValidation(text)) {
@@ -204,6 +228,7 @@ class EditUserView extends Component {
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.inputs['email'] = ref}
+                                    editable={false}
                                     label={email[language]}
                                     value={this.state.email}
                                     tintColor={Colors.Primary}
@@ -211,7 +236,7 @@ class EditUserView extends Component {
                                     autoCapitalize="none"
                                     autoCompleteType="email"
                                     autoCorrect={false}
-                                    onChangeText={(email) => this.setState({ email })}
+                                    onChangeText={(emailReg) => this.setState({ emailReg })}
                                     error={emailError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
                                         if (this.emailValidation(text)) {
@@ -230,7 +255,7 @@ class EditUserView extends Component {
                                     autoCapitalize="characters"
                                     autoCorrect={false}
                                     maxLength={5}
-                                    onChangeText={(nickname) => this.setState({ nickname: nickname.toUpperCase() })}
+                                    onChangeText={(nickname) => this.setState({ nicknameReg: nickname.toUpperCase() })}
                                     error={nicknameError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
                                         if (this.nicknameValidation(text)) {
@@ -357,6 +382,20 @@ class EditUserView extends Component {
     }
 
     pickImage = () => {
+
+         setTimeout(() => {
+          Alert.alert(
+            Dictionary.selectPhoto[this.state.language],
+            '',
+            [
+              { text: Dictionary.takePhoto[this.state.language], onPress: () => this._openCamera() },
+              { text: Dictionary.selectPhoto[this.state.language], onPress: () => this._openGalley() },
+            ],
+            { cancelable: false }
+          )
+        }, 100)
+
+         /*
         const options = {
             title: Dictionary.selectPhoto[this.props.language],
             takePhotoButtonTitle: Dictionary.takePhoto[this.props.language],
@@ -364,11 +403,6 @@ class EditUserView extends Component {
             cancelButtonTitle: Dictionary.cancel[this.props.language],
             mediaType: 'photo',
             allowsEditing: true,
-            storageOptions: {
-                skipBackup: true,
-                path: 'DragonGolf',
-                waitUntilSaved: true
-            }
         };
 
         ImagePicker.showImagePicker(options, (response) => {
@@ -382,12 +416,101 @@ class EditUserView extends Component {
             } else {
                 const source = { uri: response.uri };
 
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
                 this.setState({
                     profilePicture: source,
                 });
             }
-        });
+        });*/
     }
+
+     _openGalley() {
+
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+        let bytes = image.size
+        console.warn(bytes)
+        if (bytes >= 5242880) {
+          setTimeout(() => {
+            Alert.alert(
+              'La imagen debe pesar menos de 5mb',
+              '',
+              [
+                { text: 'Aceptar', style: 'Cancelar' },
+              ],
+              { cancelable: true }
+            )
+          }, 100)
+          this.setState({
+            status: false
+          })
+        }
+        else {
+
+          let path = image.path
+          let NombreArchivo = path.split('Pictures/');
+          let name = NombreArchivo[1];
+          console.warn(name)
+            this.setState({
+              status: false,
+              foto: path,
+              profilePicture: {
+                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
+                type: 'image/jepg',
+                name: name
+              }
+            });
+        }
+    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
+  }
+
+  _openCamera() {
+
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+        let bytes = image.size
+        console.warn(bytes)
+        if (bytes >= 5242880) {
+          setTimeout(() => {
+            Alert.alert(
+              'La imagen debe pesar menos de 5mb',
+              '',
+              [
+                { text: 'Aceptar', style: 'Cancelar' },
+              ],
+              { cancelable: true }
+            )
+          }, 100)
+          this.setState({
+            status: false
+          })
+        }
+        else {
+
+          let path = image.path
+          let NombreArchivo = path.split('Pictures/');
+          let name = NombreArchivo[1];
+          console.warn(name)
+            this.setState({
+              status: false,
+              foto: path,
+              profilePicture: {
+                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
+                type: 'image/jepg',
+                name: name
+              }
+            });
+        }
+    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
+  }
 
     formatCellphone = (cellphone) => {
         //Filter only numbers from the input
@@ -479,59 +602,104 @@ class EditUserView extends Component {
     //============= VALIDATIONS ==============
 
     submit = () => {
-        let {
-            profilePicture,
+        const {
             id,
-            id_sync,
-            name,
-            lastName,
-            email,
-            nickname,
+            profilePicture,
+            nameReg,
+            lastNameReg,
+            lastName2Reg,
+            emailReg,
+            nicknameReg,
             codeNumber,
             cellphone,
             ghin,
             handicap,
+            passwordReg,
+            confirmPasswordReg,
+            language
         } = this.state;
 
-        const nameOk = this.nameValidation(name);
-        const lastNameOk = this.lastNameValidation(lastName);
-        const emailOk = this.emailValidation(email);
-        const nicknameOk = this.nicknameValidation(nickname);
-        const codeNumberOk = this.codeValidation(codeNumber);
-        const cellphoneOk = this.cellphoneValidation(cellphone);
-        const ghinOk = this.ghinValidation(ghin);
-        const handicapOk = this.handicapValidation(handicap);
+        if (nameReg == '') {
+      showMessage({
+                message: name[language] +' ' + required[language],
+                type: "warning",
+              });
+      return
+    }
 
-        const submitOk = nameOk && lastNameOk && emailOk && nicknameOk && codeNumberOk
-            && cellphoneOk && ghinOk && handicapOk;
+    if (lastNameReg == '') {
+      showMessage({
+                message: lastName[language] + ' ' + required[language],
+                type: "warning",
+              });
+      return
+    }
 
-        if (submitOk) {
-            let cleaned = ('' + cellphone).replace(/\D/g, '');
 
-            let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-            if (match) cellphone = match[1] + match[2] + match[3];
+    if (nicknameReg == '') {
+      showMessage({
+                message: nickname[language] + ' ' +required[language],
+                type: "warning",
+              });
+      return
+    }
 
-            name = name.trim();
-            lastName = lastName.trim();
+    if (passwordReg == '') {
+      showMessage({
+                message: password[language] + ' ' + required[language],
+                type: "warning",
+              });
+      return
+    }
 
-            const data = {
-                id,
-                name: name,
-                last_name: lastName,
-                email: email,
-                nick_name: nickname,
-                cellphone: '+' + codeNumber + cellphone,
-                language: this.props.language,
-                handicap: handicap,
-                ghin_number: ghin,
-                photo: profilePicture ? profilePicture.uri : '',
-                id_sync: id_sync,
-                ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
-            };
-            this.props.updateUserData(data);
-            data.strokes = '';
-            this.props.updatePlayer(data);
+    if (confirmPasswordReg == '') {
+      showMessage({
+                message: confirmPassword[language],
+                type: "warning",
+              });
+      return
+    }
+
+    if (passwordReg != confirmPasswordReg) {
+      showMessage({
+                message: dontMatch[language],
+                type: "warning",
+              });
+      return
+    }
+    console.warn(id)
+      Update(id, nameReg, lastNameReg, lastName2Reg, nicknameReg, codeNumber + cellphone)
+      .then((res) => {
+        console.warn(res)
+        if (res.estatus === 1) {
+
+          try {
+           showMessage({
+                message: 'Registro guardado correctamente',
+                type: "success",
+              });
+
+           //this.GuardarFoto()
+
+           setTimeout(() => {
+                 this.props.navigation.navigate('Login');
+               }, 2000)
+
+          } catch (e) {
+
+            showMessage({
+                message: 'Ocurrió un error, favor de intentar más tarde',
+                type: "danger",
+              });
+          }
         }
+        else {
+          showMessage({
+                message: res.mensaje,
+                type: "warning",
+              });
+        }
+      });
     }
 
 }

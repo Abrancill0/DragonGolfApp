@@ -610,7 +610,7 @@ class RegisterView extends Component {
               });
       return
     }
-      Registro(nameReg, lastNameReg, lastName2Reg, emailReg, passwordReg, nicknameReg, cellphone)
+      Registro(nameReg, lastNameReg, lastName2Reg, emailReg, passwordReg, nicknameReg, codeNumber + cellphone)
       .then((res) => {
         console.warn(res)
         if (res.estatus === 1) {

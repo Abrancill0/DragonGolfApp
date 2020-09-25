@@ -194,7 +194,7 @@ class SettingsView extends Component {
           <Ripple
             style={styles.profileCard}
             rippleColor='gray'
-            onPress={() => this.props.navigation.navigate('EditUserView')}
+            onPress={() => this.props.navigation.navigate('EditUserView', {userData:userData, language:language})}
           >
             <View style={styles.imageNameView}>
               <Image
@@ -270,7 +270,7 @@ class SettingsView extends Component {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.radioButtonView}>
-                  <RadioButton value="money" color={Colors.Primary} />
+                  <RadioButton value="Money" color={Colors.Primary} />
                   <TouchableOpacity
                     onPress={() => this.setState({ asHowAdvMove: 'Money' })}
                   >
@@ -1191,6 +1191,8 @@ class SettingsView extends Component {
             {
               id: res.resultado.usu_id,
               name: res.resultado.usu_nombre,
+              last_name: res.resultado.usu_apellido_paterno,
+              last_name2: res.resultado.usu_apellido_materno,
               nick_name: res.resultado.usu_nickname,
               email: res.resultado.usu_email,
               ghin_number: res.resultado.usu_ghin_numero,
