@@ -282,7 +282,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-      <BottomTab.Screen name='CoursesView' component={CoursesView} 
+      <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -303,7 +303,7 @@ export default class App extends Component {
           },
             
           })} />
-        <BottomTab.Screen name='SettingsView' component={SettingsView} 
+      <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)

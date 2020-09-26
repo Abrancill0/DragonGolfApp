@@ -74,7 +74,7 @@ class SettingsView extends Component {
       tnwCarry : '',
       tnwMedal : '',
       tnwWhoGets : 'each',
-      tnwUseFactor : false,
+      tnwUseFactor : 0,
       tnwValueFactor : '',
       ebWager : '',
       ssDoubleEagle : '5',
@@ -1094,6 +1094,7 @@ class SettingsView extends Component {
 
   changeSNUseFactor = (snwUseFactor) => {
     const state = this.state;
+    console.warn(snwUseFactor)
     state.snwUseFactor = snwUseFactor;
     if (state.snwFront9 && state.snwFront9 != 0) {
       if (snwUseFactor) {
@@ -1110,6 +1111,7 @@ class SettingsView extends Component {
     }
 
     this.setState(state);
+    console.warn(state.snwUseFactor)
   }
 
   changeTNUseFactor = (tnwUseFactor) => {
@@ -1242,7 +1244,7 @@ class SettingsView extends Component {
             status: false
             //seePicker: res.resultado.usu_id
           })
-          console.warn(res)
+          console.warn(res.resultado)
           this.setState({
             userData: lista[0]
           })
@@ -1667,8 +1669,10 @@ class SettingsView extends Component {
         snwValueFactor,
       } = this.state;
 
+      console.warn(snwUseFactor)
+
       const snwData = {
-        useFactor: snwUseFactor ? 'factor' : 'value',
+        useFactor: snwUseFactor ? 1 : 0,
         valueFactor: snwValueFactor,
         automatic_presses_every: snwAutoPress,
         front_9: snwFront9,
@@ -1690,10 +1694,10 @@ class SettingsView extends Component {
         tnwValueFactor
       } = this.state;
 
-      console.warn(tnwWhoGets)
+      //console.warn(tnwWhoGets)
 
       const tnwData = {
-        useFactor: tnwUseFactor ? 'factor' : 'value',
+        useFactor: tnwUseFactor ? 1 : 0,
         valueFactor: tnwValueFactor,
         automatic_presses_every: tnwAutoPress,
         front_9: tnwFront9,
@@ -1823,7 +1827,7 @@ class SettingsView extends Component {
 
       const snwPlayerData = {
         automatic_presses_every: snwAutoPress,
-        use_factor: snwUseFactor ? 'factor' : 'value',
+        use_factor: snwUseFactor ? true: false,
         cantidad: snwFront9,
         front_9: snwUseFactor ? 1 : snwFront9,
         back_9: snwBack9,
@@ -1837,7 +1841,7 @@ class SettingsView extends Component {
 
       const tnwPlayerData = {
         automatic_presses_every: tnwAutoPress,
-        use_factor: tnwUseFactor ? 'factor' : 'value',
+        use_factor: tnwUseFactor ? 1: 0,
         cantidad: tnwFront9,
         front_9: tnwUseFactor ? 1 : tnwFront9,
         back_9: tnwBack9,
@@ -1876,13 +1880,13 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      console.warn(gsDataPlayer.skins_carry_over)
+      console.warn(asData.adv_moves)
 
       updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
       gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
-      gsData.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwPlayerData.automatic_presses_every,
-      snwPlayerData.front_9,snwPlayerData.back_9,snwPlayerData.match,
+      gsData.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwPlayerData.automatic_presses_every, 
+      snwPlayerData.use_factor,snwPlayerData.front_9,snwPlayerData.back_9,snwPlayerData.match,
       snwPlayerData.carry,snwPlayerData.medal,tnwPlayerData.automatic_presses_every,
       tnwPlayerData.front_9,tnwPlayerData.back_9,tnwPlayerData.match,tnwPlayerData.carry,tnwPlayerData.medal,
       tnwData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
