@@ -4,7 +4,8 @@ import {
   StatusBar,
   Animated,
   Dimensions,
-  Alert
+  Alert,
+  TouchableOpacity
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Dictionary } from '../../../utils/Dictionary';
@@ -15,6 +16,7 @@ import ListEmptyComponent from '../../global/ListEmptyComponent';
 import HideItem from '../../global/HideItem';
 import Snackbar from 'react-native-snackbar';
 import Colors from '../../../utils/Colors';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 class RoundsView extends Component {
   constructor(props) {
@@ -85,13 +87,16 @@ class RoundsView extends Component {
           barStyle="dark-content"
           translucent={false}
         />
+        <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.goBack()}>
+          <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
         {this.rowTranslateAnimatedValues && visible &&
           <SwipeListView
             data={courses}
             extraData={courses}
             style={{ flex: 1, paddingVertical: 5 }}
             keyExtractor={item => item.id.toString()}
-            /*renderItem={({ item }) => (
+            renderItem={({ item }) => (
               <CourseComponent
                 item={item}
                 height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
@@ -100,7 +105,7 @@ class RoundsView extends Component {
                 })}
                 opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
               />
-            )}*/
+            )}
             ListEmptyComponent={
               <ListEmptyComponent
                 text={emptyCourseList[language]}

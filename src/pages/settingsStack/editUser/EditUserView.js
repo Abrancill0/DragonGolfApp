@@ -24,6 +24,7 @@ import moment from 'moment';
 import { Update } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const {
     photo,
@@ -160,6 +161,9 @@ class EditUserView extends Component {
                     barStyle="dark-content"
                     translucent={false}
                 />
+                <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.goBack()}>
+                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                </TouchableOpacity>
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
                     <ScrollView style={{ flex: 1, paddingTop: 20 }} keyboardShouldPersistTaps='handled'>
                         <TouchableOpacity

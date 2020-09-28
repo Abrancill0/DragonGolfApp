@@ -41,6 +41,7 @@ const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator();
 var { width, height } = Dimensions.get('window');
 const BottomTab = createBottomTabNavigator();
+const BlankProfile = require('./assets/globals/blank-profile.png');
 
 
 export default class App extends Component {
@@ -54,7 +55,8 @@ export default class App extends Component {
       UsuApellidoPaterno:'',
       UsuApelidoMaterno:'',
       UsuFoto:'',
-      conexion: true
+      conexion: true,
+      userData:[]
     }
 
     this.loadSesion = this.loadSesion.bind(this)
@@ -120,7 +122,7 @@ export default class App extends Component {
 
   };
 
-  LoadUsuario(CLVUsuario)
+  LoadUsuario(CLVUsuario) 
   {
     InfoUsuario(CLVUsuario)
     .then((res) => {
@@ -135,6 +137,22 @@ export default class App extends Component {
               UsuApelidoMaterno:result.usu_apellido_materno
               //UsuFoto:result.UsuFoto+'?'+Math.random()
             })
+            const lista =[
+            {
+              id: res.resultado.usu_id,
+              name: res.resultado.usu_nombre,
+              last_name: res.resultado.usu_apellido_paterno,
+              last_name2: res.resultado.usu_apellido_materno,
+              nick_name: res.resultado.usu_nickname,
+              email: res.resultado.usu_email,
+              ghin_number: res.resultado.usu_ghin_numero,
+              handicap: res.resultado.usu_handicap_index,
+              cellphone:res.resultado.usu_telefono,
+              language: res.resultado.set_idioma
+            }]
+            this.setState({
+            userData: lista[0]
+          })
         }  
         else{
             setLoading(false)
@@ -182,6 +200,9 @@ export default class App extends Component {
 
 
     const DrawerContent = props => {
+      const {
+        userData
+      } = this.state;
       return (
 
         <View style={{flex:1}}>
@@ -190,20 +211,19 @@ export default class App extends Component {
               this.state.logeado
               ?
               <View style={{height:'25%',borderBottomWidth:1,borderBottomColor:Colors.Primary,marginBottom:10}}>
-                {
-                  this.state.UsuFoto==null
-                  ?
-                  <TouchableOpacity style={{marginBottom:20,alignItems:'center'}}>
-                      <FontAwesomeIcon name='user-circle' color='white' size={70}/>
-                  </TouchableOpacity>
-                  :
-                  <TouchableOpacity style={{marginBottom:20,height:70,width:70,alignSelf:'center'}}>
-                      <Image source={{uri:'http://200.94.138.139:84'+this.state.UsuFoto}} resizeMode='cover' style={{flex:1,borderRadius:200}} height={undefined} width={undefined}/>
-                  </TouchableOpacity>
-                }
+                  <TouchableOpacity style={{marginBottom:20,alignItems:'center'}} onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language})}>
+                      <Image
+                        source={userData ? userData.photo ? { uri: userData.photo } : BlankProfile : BlankProfile}
+                        style={{
+                          width: 60,
+                          height: 60,
+                          borderRadius: 30
+                        }}
+                      />
                 <View>
                   <Text style={{textAlign:'center'}}>{this.state.UsuNombre+' '+this.state.UsuApellidoPaterno+' '+this.state.UsuApelidoMaterno}</Text>
                 </View>
+                </TouchableOpacity>
               </View>
               :
               null
@@ -222,14 +242,15 @@ export default class App extends Component {
               {
               this.state.logeado
               ?
-              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}}>
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language})}>
                   <View style={{flex:.1}}>
                     <FontAwesomeIcon name='user' color='#0F222D' size={20}/>
                   </View>
                 <View style={{flex:.9}}>
                   <DrawerItem
                   label="Perfil"
-                  labelStyle={{color:Colors.Primary}} />
+                  labelStyle={{color:Colors.Primary}}
+                  onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language})} />
                 </View>
               </TouchableOpacity> 
                :
@@ -282,7 +303,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-      <BottomTab.Screen name='SettingsView' component={SettingsView} 
+      <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -303,7 +324,7 @@ export default class App extends Component {
           },
             
           })} />
-      <BottomTab.Screen name='CoursesView' component={CoursesView} 
+      <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
