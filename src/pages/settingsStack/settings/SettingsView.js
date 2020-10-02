@@ -1199,7 +1199,8 @@ class SettingsView extends Component {
               email: res.resultado.usu_email,
               ghin_number: res.resultado.usu_ghin_numero,
               handicap: res.resultado.usu_handicap_index,
-              cellphone:res.resultado.usu_telefono
+              cellphone:res.resultado.usu_telefono,
+              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
             }]
 
             this.setState({

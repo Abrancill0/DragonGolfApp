@@ -11,7 +11,8 @@ import {
     Alert,
     Picker,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    TouchableOpacity
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import Ripple from 'react-native-material-ripple';
@@ -37,7 +38,8 @@ const {
             login,
             required,
             invalidEmail,
-            Bienvenido
+            Bienvenido,
+            Recupera
         } = Dictionary;
 
 class LoginView extends Component {
@@ -173,6 +175,9 @@ class LoginView extends Component {
                                 <Ionicon name="ios-arrow-forward" size={30} color={Colors.White} />
                             </Ripple>
                         </View>
+                        <TouchableOpacity style={{padding:10, alignSelf: 'center'}} onPress={()=>this.props.navigation.navigate('RecuperaContrasena', {language:language})}>
+                            <Text style={{color:Colors.Primary,fontWeight:'bold',fontSize:16}}>{Recupera[language]}</Text>
+                        </TouchableOpacity>
                     </ScrollView>
                 </KeyboardAvoidingView>
             </View>

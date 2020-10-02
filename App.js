@@ -10,6 +10,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 import { Icon } from 'react-native-elements'
 import Login from './src/screen/indexStack/login/LoginView'
+import RecuperaContrasena from './src/screen/indexStack/login/RecuperaContrasena'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
@@ -148,7 +149,8 @@ export default class App extends Component {
               ghin_number: res.resultado.usu_ghin_numero,
               handicap: res.resultado.usu_handicap_index,
               cellphone:res.resultado.usu_telefono,
-              language: res.resultado.set_idioma
+              language: res.resultado.set_idioma,
+              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
             }]
             this.setState({
             userData: lista[0]
@@ -350,6 +352,18 @@ export default class App extends Component {
     createHomeStack = () =>
       <Stack.Navigator>
         <Stack.Screen name='Login' component={this.state.activo?CreateHomeBottomTabNavigator:Login}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+        <Stack.Screen name='RecuperaContrasena' component={RecuperaContrasena}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

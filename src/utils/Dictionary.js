@@ -8,6 +8,14 @@ export const Dictionary = {
         'en': 'Password',
         'es': 'Contraseña'
     },
+    Recupera: {
+        'en': 'Forgot your password?',
+        'es': '¿Olvidó su Contraseña?'
+    },
+    RecPass: {
+        'en': 'Recover Password',
+        'es': 'Recuperar Contraseña'
+    },
     createAccount: {
         'en': 'Create an account',
         'es': 'Crear cuenta'
