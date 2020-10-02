@@ -464,10 +464,10 @@ class RegisterView extends Component {
   }
 
     formatCellphone = (cellphone) => {
-        //Filter only numbers from the input
+        /*Filter only numbers from the input
         let cleaned = ('' + cellphone).replace(/\D/g, '');
 
-        //Check if the input is of correct length
+        Check if the input is of correct length
         let match1 = cleaned.match(/^(\d{3})$/);
         let match2 = cleaned.match(/^(\d{3})(\d{3})$/);
         let match3 = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
@@ -480,9 +480,9 @@ class RegisterView extends Component {
         } else if (match1) {
             if (!this.state.deleting)
                 this.setState({ cellphone: '(' + match1[1] + ') ' });
-        } else {
+        } else {*/
             this.setState({ cellphone: cellphone, deleting: false });
-        }
+        //}
     }
 
     //============= VALIDATIONS ==============

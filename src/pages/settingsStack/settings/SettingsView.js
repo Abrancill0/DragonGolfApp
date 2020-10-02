@@ -1827,7 +1827,7 @@ class SettingsView extends Component {
 
       const snwPlayerData = {
         automatic_presses_every: snwAutoPress,
-        use_factor: snwUseFactor ? true: false,
+        use_factor: snwUseFactor ? 1: 0,
         cantidad: snwFront9,
         front_9: snwUseFactor ? 1 : snwFront9,
         back_9: snwBack9,
