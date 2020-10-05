@@ -11,6 +11,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import { Icon } from 'react-native-elements'
 import Login from './src/screen/indexStack/login/LoginView'
 import RecuperaContrasena from './src/screen/indexStack/login/RecuperaContrasena'
+import CambioContrasena from './src/screen/indexStack/login/CambioContrasena'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
@@ -364,6 +365,18 @@ export default class App extends Component {
               headerShown:false
           })} />
         <Stack.Screen name='RecuperaContrasena' component={RecuperaContrasena}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='CambioContrasena' component={CambioContrasena}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

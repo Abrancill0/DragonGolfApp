@@ -15,11 +15,17 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
+import Ripple from 'react-native-material-ripple';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import Colors from '../../../utils/Colors';
 
 let ScreenHeight = Dimensions.get("window").height;
 
 const {
-            RecPass
+            RecPass,
+            email,
+            required,
+            invalidEmail,
         } = Dictionary;
 
 export default class Mascota extends Component {
@@ -37,27 +43,27 @@ export default class Mascota extends Component {
   clicked = async () => {
 
     if (this.state.mail === "") {
-      showMessage({
-                message: 'Campo correo electronico obligatorio',
-                type: "warning",
-              });
-      return;
-    }
+          showMessage({
+                    message: email[this.state.language]+' ' + required[this.state.language],
+                    type: "warning",
+                  });
+          return;
+        }
 
     if(!this.state.re.test(String(this.state.mail).toLowerCase())){
-      showMessage({
-                message: 'Campo correo electronico no valido',
-                type: "danger",
-              });
-      return
+          showMessage({
+                    message: invalidEmail[this.state.language],
+                    type: "danger",
+                  });
+          return
 
-    }
+        }
 
     this.setState({
       status: true
     })
 
-    OlvideContrasena(this.state.mail)
+    /*OlvideContrasena(this.state.mail)
       .then((res) => {
 
         this.setState({
@@ -78,7 +84,7 @@ export default class Mascota extends Component {
               });
         }
         this.props.navigation.goBack()
-      });
+      });*/
   }
 
   render() {
@@ -93,15 +99,15 @@ export default class Mascota extends Component {
         <Spinner
             visible={this.state.status}
             color='#104E81' />
-        <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.goBack()}>
-          <MaterialIcon name={'arrow-back'} size={25} color={'#E5DF4E'} />
+        <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> this.props.navigation.goBack()}>
+          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
         </TouchableOpacity>
         <View style={{ flex: .5, margin: 15, justifyContent: 'space-around' }}>
 
                 <View style={{ alignSelf: 'center' }}>
-                  <Text style={{ color: "#E5DF4E", fontFamily: 'Montserrat', fontSize: 18}}>{RecPass[language]}</Text>
+                  <Text style={{ color: Colors.Primary, fontFamily: 'Montserrat', fontSize: 18}}>{RecPass[language]}</Text>
                 </View>
-                <View style={{flexDirection: 'row', margin:20}}>
+                <View style={{flexDirection: 'row', margin:20, width: '100%', alignItems: 'center'}}>
                   <View style={{flexDirection: 'column', flex:.1}}>
                     <Image style={{
                       marginTop: 30,
@@ -111,24 +117,27 @@ export default class Mascota extends Component {
                     }}
                     source={require('../../../../assets/globals/usuario.png')} />
                     </View>
-                    <View style={styles.formContainer}>
-                    <TextField
-                      label='Usuario'
-                      value={this.state.usuario}
-                      onChangeText={(text) => this.setState({ mail: text })}
-                      baseColor='#fff'
-                      tintColor='#fff'
-                      textColor='#fff'
-                      labelTextStyle={styles2.TextStyle}
-                    />
+                    <View style={styles.inputContainer}>
+                      <TextField
+                        label={email[language]}
+                        tintColor={Colors.Primary}
+                        autoCapitalize="none"
+                        autoCompleteType='email'
+                        keyboardType="email-address"
+                        onChangeText={(mail) => this.setState({ mail })}
+                      />
                     </View>
                   </View>
-                <View style={styles2.Box2}>
-                  <Button title='Recuperar Contraseña'
-                    buttonStyle={{backgroundColor:'#0f222d',borderRadius:10,paddingHorizontal:20}}
-                    titleStyle={{fontWeight:'100'}}
-                    onPress={this.clicked} />
-                </View>
+                  <View style={styles.buttonsView}>
+                    <Ripple
+                      style={[styles.button, { backgroundColor: Colors.Primary }]}
+                      onPress={this.clicked}
+                    >
+                    <Text style={[styles.buttonText, { color: Colors.White }]}>{RecPass[language]}</Text>
+                    <View style={{ width: 30 }} />
+                    <Ionicon name="ios-arrow-forward" size={30} color={Colors.White} />
+                    </Ripple>
+                  </View>
               </View>
         </View>
     </TouchableWithoutFeedback>
@@ -141,7 +150,7 @@ const styles2 = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignContent: 'center',
-    backgroundColor: '#123c5b'
+    backgroundColor: Colors.White
   },
   Box2: {
     margin: 20

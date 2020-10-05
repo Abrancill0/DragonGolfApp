@@ -74,7 +74,7 @@ class SettingsView extends Component {
       tnwCarry : '',
       tnwMedal : '',
       tnwWhoGets : 'each',
-      tnwUseFactor : 0,
+      tnwUseFactor : false,
       tnwValueFactor : '',
       ebWager : '',
       ssDoubleEagle : '5',
@@ -324,8 +324,8 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={asAdvMoves}
-                  thumbColor={asAdvMoves ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={asAdvMoves ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(asAdvMoves) => this.setState({ asAdvMoves })}
                 />
               </View>
@@ -338,8 +338,8 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={asDoesCarryMove}
-                  thumbColor={asDoesCarryMove ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={asDoesCarryMove ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(asDoesCarryMove) => this.setState({ asDoesCarryMove })}
                 />
               </View>
@@ -506,8 +506,8 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={skinCarry}
-                  thumbColor={skinCarry ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={skinCarry ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(skinCarry) => this.setState({ skinCarry })}
                 />
               </View>
@@ -522,8 +522,8 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={lowedAdv}
-                  thumbColor={lowedAdv ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={lowedAdv ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(lowedAdv) => this.setState({ lowedAdv })}
                 />
               </View>
@@ -555,8 +555,8 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={snwUseFactor}
-                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={this.changeSNUseFactor}
                 />
               </View>
@@ -586,7 +586,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Front 9</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   style={styles.costInput}
                   selectionColor={Colors.Primary}
@@ -607,7 +607,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Back 9</Text>
               <View style={styles.costInputView}>
-                {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Back 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['snw2'] = ref}
                   style={styles.costInput}
@@ -629,7 +629,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Match</Text>
               <View style={styles.costInputView}>
-                {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Match X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['snw3'] = ref}
                   style={styles.costInput}
@@ -651,7 +651,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Carry</Text>
               <View style={styles.costInputView}>
-                {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Carry X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['snw4'] = ref}
                   style={styles.costInput}
@@ -673,7 +673,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Medal</Text>
               <View style={styles.costInputView}>
-                {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Medal X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['snw5'] = ref}
                   style={styles.costInput}
@@ -715,8 +715,8 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={tnwUseFactor}
-                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={this.changeTNUseFactor}
                 />
               </View>
@@ -746,7 +746,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Front 9</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   style={styles.costInput}
                   selectionColor={Colors.Primary}
@@ -767,7 +767,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Back 9</Text>
               <View style={styles.costInputView}>
-                {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Back 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['tnw2'] = ref}
                   style={styles.costInput}
@@ -789,7 +789,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Match</Text>
               <View style={styles.costInputView}>
-                {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Match X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['tnw3'] = ref}
                   style={styles.costInput}
@@ -811,7 +811,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Carry</Text>
               <View style={styles.costInputView}>
-                {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Carry X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['tnw4'] = ref}
                   style={styles.costInput}
@@ -833,7 +833,7 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Medal</Text>
               <View style={styles.costInputView}>
-                {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Medal X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['tnw5'] = ref}
                   style={styles.costInput}
@@ -1189,6 +1189,12 @@ class SettingsView extends Component {
     InfoUsuario(token)
     .then((res) => {
         if(res.estatus==1){
+
+          let snwUF = false
+          let snwTF = false
+          if(res.resultado.set_snw_use_factor===1) {snwUF=true} else {snwUF=false}
+          if(res.resultado.set_tmw_use_factor===1) {snwTF=true} else {snwTF=false}
+
             const lista =[
             {
               id: res.resultado.usu_id,
@@ -1217,14 +1223,14 @@ class SettingsView extends Component {
             skins: res.resultado.set_skins,
             skinCarry: res.resultado.set_skins_carry_over,
             lowedAdv: res.resultado.set_lower_adv_f9,
-            snwUseFactor: res.resultado.set_snw_use_factor,
+            snwUseFactor: snwUF,
             snwAutoPress: res.resultado.set_snw_automatic_press,
             snwFront9: res.resultado.set_snw_front_9,
             snwBack9: res.resultado.set_snw_back_9,
             snwMatch: res.resultado.set_snw_match,
             snwCarry: res.resultado.set_snw_carry,
             snwMedal: res.resultado.set_snw_medal,
-            tnwUseFactor: res.resultado.set_tmw_use_factor,
+            tnwUseFactor: snwTF,
             tnwAutoPress: res.resultado.set_tmw_automatic_press,
             tnwFront9: res.resultado.set_tmw_front_9,
             tnwBack9: res.resultado.set_tmw_back_9,
@@ -1709,16 +1715,6 @@ class SettingsView extends Component {
         who_gets_the_adv_strokes: tnwWhoGets,
       }
 
-      if (snwUseFactor) {
-        snwData.valueFactor = snwData.front_9;
-        snwData.front_9 = 1;
-      }
-
-      if (tnwUseFactor) {
-        tnwData.valueFactor = tnwData.front_9;
-        tnwData.front_9 = 1;
-      }
-
       const {
         rabbit16,
         rabbit712,
@@ -1881,15 +1877,16 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      console.warn(asData.adv_moves)
+      console.warn('s: '+snwData.useFactor)
+      console.warn('t: '+tnwData.useFactor)
 
       updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
       gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
-      gsData.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwPlayerData.automatic_presses_every, 
-      snwPlayerData.use_factor,snwPlayerData.front_9,snwPlayerData.back_9,snwPlayerData.match,
-      snwPlayerData.carry,snwPlayerData.medal,tnwPlayerData.automatic_presses_every,
-      tnwPlayerData.front_9,tnwPlayerData.back_9,tnwPlayerData.match,tnwPlayerData.carry,tnwPlayerData.medal,
+      gsData.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwData.automatic_presses_every, 
+      snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
+      snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
+      tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
       tnwData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
       bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
       sfsData.bogey,sfsData.double_bogey)

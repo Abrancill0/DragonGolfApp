@@ -21,6 +21,7 @@ import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
 import { showMessage } from "react-native-flash-message";
 import { Registro } from '../../../Services/Services'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const {
             photo,
@@ -145,6 +146,9 @@ class RegisterView extends Component {
                 />
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
                     <ScrollView style={{ flex: 1, paddingTop: 20 }} keyboardShouldPersistTaps='handled'>
+                        <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> this.props.navigation.goBack()}>
+                          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                        </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.imagePicker}
                             onPress={this.pickImage}

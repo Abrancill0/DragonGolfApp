@@ -16,6 +16,10 @@ export const Dictionary = {
         'en': 'Recover Password',
         'es': 'Recuperar Contraseña'
     },
+    CamPass: {
+        'en': 'Change Password',
+        'es': 'Cambiar Contraseña'
+    },
     createAccount: {
         'en': 'Create an account',
         'es': 'Crear cuenta'
