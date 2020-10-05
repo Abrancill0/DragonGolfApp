@@ -21,7 +21,7 @@ import { Dictionary } from '../../../utils/Dictionary';
 import DragonButton from '../../global/DragonButton';
 import FormatCellphone from '../../../utils/FormatCellphone';
 import moment from 'moment';
-import { Update } from '../../../Services/Services'
+import { Update, Update2 } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -47,6 +47,7 @@ class EditUserView extends Component {
 
         super(props);
         const { cellphone, email, ghin_number, handicap, id, id_sync, last_name, last_name2, name, nick_name, photo, ultimate_sync } = props.route.params.userData;
+        const {getUserData} = props.route.params.getUserData
         //let formatted = '';
         //let pureCell = '';
         //if (cellphone.length > 10) {
@@ -519,7 +520,7 @@ class EditUserView extends Component {
 
     formatCellphone = (cellphone) => {
         //Filter only numbers from the input
-        let cleaned = ('' + cellphone).replace(/\D/g, '');
+        /*let cleaned = ('' + cellphone).replace(/\D/g, '');
 
         //Check if the input is of correct length
         let match1 = cleaned.match(/^(\d{3})$/);
@@ -534,9 +535,9 @@ class EditUserView extends Component {
         } else if (match1) {
             if (!this.state.deleting)
                 this.setState({ cellphone: '(' + match1[1] + ') ' });
-        } else {
+        } else {*/
             this.setState({ cellphone: cellphone, deleting: false });
-        }
+        //}
     }
 
     //============= VALIDATIONS ==============
@@ -641,41 +642,81 @@ class EditUserView extends Component {
               });
       return
     }
-    console.warn(id + ' ' + nameReg+ ' ' + lastNameReg+ ' ' + lastName2Reg+ ' ' + nicknameReg+ ' ' + codeNumber + cellphone)
-      Update(id, nameReg, lastNameReg, lastName2Reg, nicknameReg, codeNumber + cellphone, profilePicture)
-      .then((res) => {
-        console.warn(res)
-        if (res.estatus === 1) {
 
-          try {
-           showMessage({
-                message: 'Registro guardado correctamente',
-                type: "success",
-              });
+    let foto
 
-           //this.GuardarFoto()
+    if(profilePicture.name==undefined){
+        Update(id, nameReg, lastNameReg, lastName2Reg, nicknameReg, codeNumber + cellphone)
+          .then((res) => {
+            console.warn(res)
+            if (res.estatus === 1) {
 
-           setTimeout(
-                  () => { RNRestart.Restart();
-                   },
-                  1000
-                )
+              try {
+               showMessage({
+                    message: 'Registro guardado correctamente',
+                    type: "success",
+                  });
 
-          } catch (e) {
+                this.props.route.params.getUserData()
 
-            showMessage({
-                message: 'Ocurrió un error, favor de intentar más tarde',
-                type: "danger",
-              });
-          }
-        }
-        else {
-          showMessage({
-                message: res.mensaje,
-                type: "warning",
-              });
-        }
-      });
+               /*setTimeout(
+                      () => { RNRestart.Restart();
+                       },
+                      1000
+                    )*/
+
+              } catch (e) {
+
+                showMessage({
+                    message: e.toString(),
+                    type: "danger",
+                  });
+              }
+            }
+            else {
+              showMessage({
+                    message: res.mensaje,
+                    type: "warning",
+                  });
+            }
+          });
+    }
+    else{
+        Update2(id, nameReg, lastNameReg, lastName2Reg, nicknameReg, codeNumber + cellphone, profilePicture)
+          .then((res) => {
+            console.warn(res)
+            if (res.estatus === 1) {
+
+              try {
+               showMessage({
+                    message: 'Registro guardado correctamente',
+                    type: "success",
+                  });
+
+               //this.GuardarFoto()
+
+               /*setTimeout(
+                      () => { RNRestart.Restart();
+                       },
+                      1000
+                    )*/
+
+              } catch (e) {
+
+                showMessage({
+                    message: 'Ocurrió un error, favor de intentar más tarde',
+                    type: "danger",
+                  });
+              }
+            }
+            else {
+              showMessage({
+                    message: res.mensaje,
+                    type: "warning",
+                  });
+            }
+          });
+        } 
     }
 
 }

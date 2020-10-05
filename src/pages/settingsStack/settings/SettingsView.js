@@ -73,7 +73,7 @@ class SettingsView extends Component {
       tnwMatch : '',
       tnwCarry : '',
       tnwMedal : '',
-      tnwWhoGets : 'each',
+      tnwWhoGets : 'Each',
       tnwUseFactor : false,
       tnwValueFactor : '',
       ebWager : '',
@@ -87,11 +87,15 @@ class SettingsView extends Component {
       bbWagerB9 : '',
       bbWager18 : '',
     }
-    
-    this.getUserData();
+
+    this.getUserData = this.getUserData.bind(this);
 
     this.inputs = {};
   }
+
+   async componentDidMount() {
+    this.getUserData();
+   }
 
   static navigationOptions = ({ navigation }) => {
     const state = store.getState();
@@ -194,7 +198,7 @@ class SettingsView extends Component {
           <Ripple
             style={styles.profileCard}
             rippleColor='gray'
-            onPress={() => this.props.navigation.navigate('EditUserView', {userData:userData, language:language})}
+            onPress={() => this.props.navigation.navigate('EditUserView', {userData:userData, language:language, getUserData:this.getUserData})}
           >
             <View style={styles.imageNameView}>
               <Image
@@ -856,7 +860,7 @@ class SettingsView extends Component {
               </TouchableOpacity>
               {Platform.OS === 'ios' &&
                 <TouchableOpacity style={styles.whoGetButton} onPress={_ => this.setState({ seePicker: !seePicker })}>
-                  <Text style={styles.optionsText}>{this.whoGetsAdvText(tnwWhoGets)}</Text>
+                  <Text style={styles.optionsText}>{tnwWhoGets}</Text>
                   <Ionicon name={!seePicker ? 'chevron-down' : 'chevron-up'} size={20} color={Colors.Black} />
                 </TouchableOpacity>
               }
@@ -866,11 +870,11 @@ class SettingsView extends Component {
                 onValueChange={(tnwWhoGets) =>
                   this.setState({ tnwWhoGets })
                 }>
-                <Picker.Item label="Hi Handicap" value="hihcp" />
-                <Picker.Item label="Low Handicap" value="lowhcp" />
-                <Picker.Item label="Each" value="each" />
-                <Picker.Item label="Slid Hi" value="slidhi" />
-                <Picker.Item label="Slid Low" value="slidlow" />
+                <Picker.Item label="Hi Handicap" value="Hi Handicap" />
+                <Picker.Item label="Low Handicap" value="Low Handicap" />
+                <Picker.Item label="Each" value="Each" />
+                <Picker.Item label="Slid Hi" value="Slid Hi" />
+                <Picker.Item label="Slid Low" value="Slid Low" />
               </Picker>}
             </View>
           </View>
@@ -1134,21 +1138,6 @@ class SettingsView extends Component {
     this.setState(state);
   }
 
-  whoGetsAdvText = (text) => {
-    switch (text) {
-      case 'hihcp':
-        return 'Hi Handicap';
-      case 'lowhcp':
-        return 'Low Handicap';
-      case 'each':
-        return 'Each';
-      case 'slidhi':
-        return 'Slid Hi';
-      case 'slidlow':
-        return 'Slid Low';
-    }
-  }
-
   focusNextField = (field) => {
     this.inputs[field].focus();
   }
@@ -1221,7 +1210,7 @@ class SettingsView extends Component {
             asHowAdvMove: res.resultado.set_how_adv_move,
             asHowManyStrokes: res.resultado.set_strokes_moved_per_round,
             asAdvMoves: _9holes,
-            asDoesCarryMove: _9holes,
+            asDoesCarryMove: carryMov,
             rabbit16: res.resultado.set_rabbit_1_6,
             rabbit712: res.resultado.set_rabbit_7_12,
             rabbit1318: res.resultado.set_rabbit_13_18,
@@ -1885,8 +1874,7 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      console.warn('s: '+snwData.useFactor)
-      console.warn('t: '+tnwData.useFactor)
+      console.warn('t: '+tnwData.who_gets_the_adv_strokes)
 
       updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,

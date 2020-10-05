@@ -46,7 +46,29 @@ export const Registro = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,us
         })
 };
 
-export const Update = (usu_id,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_nickname,usu_telefono, usu_imagen) => {
+export const Update = (usu_id,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_nickname,usu_telefono) => {
+    const formData = new FormData();
+
+      formData.append('usu_id', usu_id);
+      formData.append('usu_nombre', usu_nombre);
+      formData.append('usu_apellido_paterno', usu_apellido_paterno);
+      formData.append('usu_apellido_materno', usu_apellido_materno);
+      formData.append('usu_nickname', usu_nickname);
+      formData.append('usu_telefono', usu_telefono);
+
+      const URL = RutaBase + "usuarios/update";
+      return fetch(URL, {
+
+        method: 'POST',
+        body: formData
+      })
+        .then((response) => response.json())
+        .catch((error) => {
+          console.warn(error)
+        })
+};
+
+export const Update2 = (usu_id,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_nickname,usu_telefono, usu_imagen) => {
     const formData = new FormData();
 
       formData.append('usu_id', usu_id);
