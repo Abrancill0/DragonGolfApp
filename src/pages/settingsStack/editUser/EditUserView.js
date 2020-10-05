@@ -642,7 +642,7 @@ class EditUserView extends Component {
       return
     }
     console.warn(id + ' ' + nameReg+ ' ' + lastNameReg+ ' ' + lastName2Reg+ ' ' + nicknameReg+ ' ' + codeNumber + cellphone)
-      Update(id, nameReg, lastNameReg, lastName2Reg, nicknameReg, codeNumber + cellphone)
+      Update(id, nameReg, lastNameReg, lastName2Reg, nicknameReg, codeNumber + cellphone, profilePicture)
       .then((res) => {
         console.warn(res)
         if (res.estatus === 1) {

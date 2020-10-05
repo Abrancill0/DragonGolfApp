@@ -46,27 +46,27 @@ export const Registro = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,us
         })
 };
 
-export const Update = (usu_id,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_nickname,usu_telefono) => {
-    const URL = RutaBase + "usuarios/update";
-    return fetch(URL, {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    usu_id: usu_id,
-                    usu_nombre: usu_nombre,
-                    usu_apellido_paterno: usu_apellido_paterno,
-                    usu_apellido_materno: usu_apellido_materno,
-                    usu_nickname: usu_nickname,
-                    usu_telefono: usu_telefono
-                }),
-            })
-            .then((response) => response.json())
-            .catch((error) => {
-                    console.warn(error);
-                });
+export const Update = (usu_id,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_nickname,usu_telefono, usu_imagen) => {
+    const formData = new FormData();
+
+      formData.append('usu_id', usu_id);
+      formData.append('usu_nombre', usu_nombre);
+      formData.append('usu_apellido_paterno', usu_apellido_paterno);
+      formData.append('usu_apellido_materno', usu_apellido_materno);
+      formData.append('usu_nickname', usu_nickname);
+      formData.append('usu_telefono', usu_telefono);
+      formData.append('usu_imagen', usu_imagen);
+
+      const URL = RutaBase + "usuarios/update";
+      return fetch(URL, {
+
+        method: 'POST',
+        body: formData
+      })
+        .then((response) => response.json())
+        .catch((error) => {
+          console.warn(error)
+        })
 };
 
 export const updateSettings = (usu_id,set_idioma,set_how_adv_move,set_strokes_moved_per_round,

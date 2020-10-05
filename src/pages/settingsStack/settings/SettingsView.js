@@ -1192,8 +1192,16 @@ class SettingsView extends Component {
 
           let snwUF = false
           let snwTF = false
-          if(res.resultado.set_snw_use_factor===1) {snwUF=true} else {snwUF=false}
-          if(res.resultado.set_tmw_use_factor===1) {snwTF=true} else {snwTF=false}
+          let _9holes = false
+          let carryMov = false
+          let carryOver = false
+          let lowedf9 = false
+          if(res.resultado.set_snw_use_factor==="\u0001") {snwUF=true} else {snwUF=false}
+          if(res.resultado.set_tmw_use_factor==="\u0001") {snwTF=true} else {snwTF=false}
+          if(res.resultado.set_adv_moves_on_9_holes==="\u0001") {_9holes=true} else {_9holes=false}
+          if(res.resultado.set_carry_moves_adv==="\u0001") {carryMov=true} else {carryMov=false}
+          if(res.resultado.set_skins_carry_over==="\u0001") {carryOver=true} else {carryOver=false}
+          if(res.resultado.set_lower_adv_f9==="\u0001") {lowedf9=true} else {lowedf9=false}
 
             const lista =[
             {
@@ -1212,8 +1220,8 @@ class SettingsView extends Component {
             this.setState({
             asHowAdvMove: res.resultado.set_how_adv_move,
             asHowManyStrokes: res.resultado.set_strokes_moved_per_round,
-            asAdvMoves: res.resultado.set_adv_moves_on_9_holes,
-            asDoesCarryMove: res.resultado.set_carry_moves_adv,
+            asAdvMoves: _9holes,
+            asDoesCarryMove: _9holes,
             rabbit16: res.resultado.set_rabbit_1_6,
             rabbit712: res.resultado.set_rabbit_7_12,
             rabbit1318: res.resultado.set_rabbit_13_18,
@@ -1221,8 +1229,8 @@ class SettingsView extends Component {
             medalB9: res.resultado.set_medal_play_b9,
             medal18: res.resultado.set_medal_play_18,
             skins: res.resultado.set_skins,
-            skinCarry: res.resultado.set_skins_carry_over,
-            lowedAdv: res.resultado.set_lower_adv_f9,
+            skinCarry: carryOver,
+            lowedAdv: res.lowedf9,
             snwUseFactor: snwUF,
             snwAutoPress: res.resultado.set_snw_automatic_press,
             snwFront9: res.resultado.set_snw_front_9,
@@ -1883,7 +1891,7 @@ class SettingsView extends Component {
       updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
       gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
-      gsData.skins_carry_over,gsDataPlayer.lowed_adv_on_f9,snwData.automatic_presses_every, 
+      gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
       snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
       snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
       tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,

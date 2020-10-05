@@ -235,7 +235,7 @@ class LoginView extends Component {
         Login(emailLogin, passwordLogin)
           .then((res) => {
             console.warn(res)
-            if (res.estatus == 2) {
+            if (res.estatus == 1) {
 
               try {
 
@@ -299,7 +299,7 @@ class LoginView extends Component {
                 })
               }
             }
-            else if (res.estatus == 1) {
+            else if (res.estatus == 2) {
               this.props.navigation.navigate('CambioContrasena', {Email:emailLogin})
               this.setState({
                 status: false
