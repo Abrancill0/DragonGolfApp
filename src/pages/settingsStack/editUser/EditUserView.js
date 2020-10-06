@@ -48,6 +48,9 @@ class EditUserView extends Component {
         super(props);
         const { cellphone, email, ghin_number, handicap, id, id_sync, last_name, last_name2, name, nick_name, photo, ultimate_sync } = props.route.params.userData;
         const {getUserData} = props.route.params.getUserData
+        console.warn(getUserData)
+        console.warn(props.route.params.language)
+        console.warn(getUserData)
         //let formatted = '';
         //let pureCell = '';
         //if (cellphone.length > 10) {

@@ -62,6 +62,7 @@ export default class App extends Component {
     }
 
     this.loadSesion = this.loadSesion.bind(this)
+    this.getUserData = this.getUserData.bind(this)
 
 
   }
@@ -92,6 +93,33 @@ export default class App extends Component {
       this.netinfoUnsubscribe();
       this.netinfoUnsubscribe = null;
     }
+  }
+
+  getUserData = async () => {
+    const token = await AsyncStorage.getItem('usu_id')
+    InfoUsuario(token)
+    .then((res) => {
+        if(res.estatus==1){
+
+            const lista =[
+            {
+              id: res.resultado.usu_id,
+              name: res.resultado.usu_nombre,
+              last_name: res.resultado.usu_apellido_paterno,
+              last_name2: res.resultado.usu_apellido_materno,
+              nick_name: res.resultado.usu_nickname,
+              email: res.resultado.usu_email,
+              ghin_number: res.resultado.usu_ghin_numero,
+              handicap: res.resultado.usu_handicap_index,
+              cellphone:res.resultado.usu_telefono,
+              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen,
+              language: res.resultado.set_idioma.substring(0,2)
+            }]
+            this.setState({
+            userData: lista[0]
+          })
+        }  
+      })
   }
 
   loadSesion = async () => {
@@ -151,7 +179,8 @@ export default class App extends Component {
               handicap: res.resultado.usu_handicap_index,
               cellphone:res.resultado.usu_telefono,
               language: res.resultado.set_idioma,
-              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
+              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen,
+              language: res.resultado.set_idioma.substring(0,2)
             }]
             this.setState({
             userData: lista[0]
@@ -214,7 +243,7 @@ export default class App extends Component {
               this.state.logeado
               ?
               <View style={{height:'25%',borderBottomWidth:1,borderBottomColor:Colors.Primary,marginBottom:10}}>
-                  <TouchableOpacity style={{marginBottom:20,alignItems:'center'}} onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language})}>
+                  <TouchableOpacity style={{marginBottom:20,alignItems:'center'}} onPress={() => props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})}>
                       <Image
                         source={userData ? userData.photo ? { uri: userData.photo } : BlankProfile : BlankProfile}
                         style={{
@@ -245,7 +274,7 @@ export default class App extends Component {
               {
               this.state.logeado
               ?
-              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language})}>
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})}>
                   <View style={{flex:.1}}>
                     <FontAwesomeIcon name='user' color='#0F222D' size={20}/>
                   </View>
@@ -253,7 +282,7 @@ export default class App extends Component {
                   <DrawerItem
                   label="Perfil"
                   labelStyle={{color:Colors.Primary}}
-                  onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language})} />
+                  onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})} />
                 </View>
               </TouchableOpacity> 
                :
