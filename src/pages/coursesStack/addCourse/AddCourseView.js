@@ -8,35 +8,30 @@ import {
     KeyboardAvoidingView,
     Platform
 } from 'react-native'
-import { connect } from 'react-redux';
 import { Dictionary } from '../../../utils/Dictionary';
-import store from '../../../store/store';
 import styles from './styles';
 import { TextField } from 'react-native-material-textfield';
 import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
-import { NavigationEvents } from 'react-navigation';
-import { actionSaveCourse, actionUpdateCourse } from '../../../store/actions';
-import * as Validations from '../../../utils/Validations';
 import moment from 'moment';
 
 class AddCourseView extends Component {
     constructor(props) {
         super(props);
-        let course=props.navigation.getParam('course');
+        /*let course=props.navigation.getParam('course');
         if (course){
             this.state = {
-                name: course.name,
+                name: 'course.name',
                 nameError: '',
-                shortName: course.short_name,
+                shortName: 'course.short_name',
                 shortNameError: '',
-                city: course.city,
+                city: 'course.city',
                 cityError: '',
-                address: course.address,
+                address: 'course.address',
                 addressError: '',
-                country: course.country,
+                country: 'course.country',
             }
-        }else {
+        }else {*/
             this.state = {
                 name: '',
                 nameError: '',
@@ -46,9 +41,10 @@ class AddCourseView extends Component {
                 cityError: '',
                 address: '',
                 addressError: '',
-                country: 'México'
+                country: 'México',
+                language: 'es'
             }
-        }
+        //}
     }
 
     static navigationOptions = ({navigation}) => {
@@ -71,12 +67,9 @@ class AddCourseView extends Component {
             cityError,
             address,
             addressError,
-            country
-        } = this.state;
-
-        const {
+            country,
             language
-        } = this.props;
+        } = this.state; this.props;
 
         const {
             courseName,
@@ -89,12 +82,9 @@ class AddCourseView extends Component {
             save,
             update,
         } = Dictionary;
-        let course = this.props.navigation.getParam('course');
+        //let course = this.props.navigation.getParam('course');
         return (
             <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
-                <NavigationEvents
-                    onWillFocus={this.changeTitleText}
-                />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>
@@ -242,7 +232,7 @@ class AddCourseView extends Component {
                     id_sync: null,
                     ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
                 };
-                this.props.updateCourse(data);
+                //this.props.updateCourse(data);
             }else {
                 const data = {
                     name,
@@ -253,24 +243,10 @@ class AddCourseView extends Component {
                     id_sync: null,
                     ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
                 };
-                this.props.saveCourse(data);
+                //this.props.saveCourse(data);
             }
         }
     }
 }
 
-const mapStateToProps = state => ({
-    language: state.reducerLanguage,
-    userData: state.reducerUserData,
-});
-
-const mapDispatchToProps = dispatch => ({
-    saveCourse: (values) => {
-        dispatch(actionSaveCourse(values));
-    },
-    updateCourse: (values)=> {
-        dispatch(actionUpdateCourse(values));
-    },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddCourseView);
+export default AddCourseView;

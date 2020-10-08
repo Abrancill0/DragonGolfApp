@@ -87,7 +87,7 @@ class RoundsView extends Component {
           barStyle="dark-content"
           translucent={false}
         />
-        <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.goBack()}>
+        <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.navigate('AddCourse')}>
           <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
         </TouchableOpacity>
         {this.rowTranslateAnimatedValues && visible &&

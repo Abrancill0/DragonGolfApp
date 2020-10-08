@@ -28,9 +28,10 @@ import { Login } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
-
+import SQLite from 'react-native-sqlite-storage';
 //Assets
 import HeaderImage from '../../../../assets/globals/header.jpg';
+
 const {
             email,
             password,
@@ -60,7 +61,30 @@ class LoginView extends Component {
     };
 
     componentDidMount() {
-        this.keyboardDidShowListener = Keyboard.addListener(
+
+      var db = SQLite.openDatabase({ name: "DragonGolf", createFromLocation: "~DragonGolf.db" },
+        this.openSuccess, this.openError);
+
+      try{
+
+      db.transaction(tx => {
+          tx.executeSql('Select * Login', [], (tx, results) => {
+
+          })
+        });
+     }catch(e){
+        console.warn(e)
+     }
+ }
+
+    /*componentDidMount() {
+
+        db = SQLite.openDatabase({ name: "DragonGolf", createFromLocation: "~DragonGolf.db" },
+        this.openSuccess, this.openError);
+
+     
+
+        /*this.keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow',
             () => this.changeHeaderSize(120),
         );
@@ -68,7 +92,7 @@ class LoginView extends Component {
             'keyboardDidHide',
             () => this.changeHeaderSize(250),
         );
-    }
+    }*/
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.signInError !== nextProps.signInError) {
@@ -88,8 +112,8 @@ class LoginView extends Component {
     }
 
     componentWillUnmount() {
-        this.keyboardDidShowListener.remove();
-        this.keyboardDidHideListener.remove();
+        //this.keyboardDidShowListener.remove();
+        //this.keyboardDidHideListener.remove();
     }
 
     render() {
@@ -204,6 +228,47 @@ class LoginView extends Component {
     }
 
     submit = () => {
+
+        try{
+
+            let usuario = "chuy@hotmail.com"
+            let password = "123"
+
+                    db.transaction((tx) => {
+
+                    let sql = `Insert into Login (usuario, password)` + ` VALUES ("${usuario}","${password}");`
+
+                    console.warn(sql)
+
+                    tx.executeSql(sql, [], (tx, results) => {
+                      console.warn('Consulta OK')
+
+                      var len = results.rows.length;
+
+                      const tempticket = [];
+
+                      for (let i = 0; i < len; i++) {
+                        let row = results.rows.item(i);
+
+                        let Localidad = row.Localidad
+                        let ClaveLocalidad = row.Clave_Localidad
+
+                        tempticket.push(Localidad + ' - ' + ClaveLocalidad);
+                      }
+
+                      this.setState({
+                        Localidades: tempticket
+                      });
+
+                      console.warn(tempticket)
+                    });
+                    console.warn(tx)
+                  });
+                }
+                catch(e){
+                    console.warn(e)
+                }
+                return
         const emailLogin = this.state.email.trim();
         const passwordLogin = this.state.password;
 
@@ -246,7 +311,7 @@ class LoginView extends Component {
                   type: "success",
                 });
 
-                setTimeout(
+                /*setTimeout(
                   () => { RNRestart.Restart();
                     this.setState({
                       usuario: '',
@@ -255,9 +320,12 @@ class LoginView extends Component {
                     })
                    },
                   1000
-                )
+                )*/
 
-                AsyncStorage.setItem('usu_id', res.resultado.usu_id.toString());
+                //AsyncStorage.setItem('usu_id', res.resultado.usu_id.toString());
+
+                   
+
                 /*AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());
                 AsyncStorage.setItem('UsuVerContrasena', res.Result[0].UsuVerContrasena.toString());
                 AsyncStorage.setItem('UsuVerNombre', res.Result[0].UsuVerNombre.toString());

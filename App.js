@@ -15,6 +15,7 @@ import CambioContrasena from './src/screen/indexStack/login/CambioContrasena'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
+import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
 import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
@@ -418,6 +419,18 @@ export default class App extends Component {
               headerShown:false
           })} />
         <Stack.Screen name='RegisterView' component={RegisterView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+        <Stack.Screen name='AddCourse' component={AddCourse}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
