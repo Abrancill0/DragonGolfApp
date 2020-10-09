@@ -59,9 +59,9 @@ export default class Mascota extends Component {
 
         }
 
-    this.setState({
+    /*this.setState({
       status: true
-    })
+    })*/
 
     /*OlvideContrasena(this.state.mail)
       .then((res) => {

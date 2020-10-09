@@ -6,7 +6,8 @@ import {
     ScrollView,
     Picker,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    TouchableOpacity
 } from 'react-native'
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
@@ -14,6 +15,7 @@ import { TextField } from 'react-native-material-textfield';
 import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
 import moment from 'moment';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 class AddCourseView extends Component {
     constructor(props) {
@@ -86,6 +88,9 @@ class AddCourseView extends Component {
         return (
             <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
                 <View style={{ flex: 1 }}>
+                <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.goBack()}>
+                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                </TouchableOpacity>
                     <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>
                             <View style={styles.inputContainer}>
@@ -206,7 +211,7 @@ class AddCourseView extends Component {
         return response.ok;
     }
 
-    submit = () => {
+    submit = () => {/*
 
         const {
             name,
@@ -246,7 +251,7 @@ class AddCourseView extends Component {
                 //this.props.saveCourse(data);
             }
         }
-    }
+    */}
 }
 
 export default AddCourseView;

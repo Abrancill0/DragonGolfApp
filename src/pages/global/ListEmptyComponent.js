@@ -17,8 +17,8 @@ export default class ListEmptyComponent extends Component {
     return (
       <View style={styles.emptyView}>
         {iconFamily === 'font-awesome' ?
-          <FontAwesome name={iconName} size={50} color="lightgray" /> :
-          <MaterialCommunity name={iconName} size={50} color="lightgray" />
+          <FontAwesome name={iconName} size={50} color="red" /> :
+          <MaterialCommunity name={iconName} size={50} color="red" />
         }
         <Text style={styles.emptyText}>{text}</Text>
       </View>

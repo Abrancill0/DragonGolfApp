@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
     emptyText: {
         fontSize: 16,
-        color: 'lightgray',
+        color: 'red',
         fontWeight: 'bold',
         marginTop: 10
     },

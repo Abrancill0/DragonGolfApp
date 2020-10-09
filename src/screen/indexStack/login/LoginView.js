@@ -60,7 +60,7 @@ class LoginView extends Component {
         header: null,
     };
 
-    componentDidMount() {
+    componentDidMount() {/*
 
       var db = SQLite.openDatabase({ name: "DragonGolf", createFromLocation: "~DragonGolf.db" },
         this.openSuccess, this.openError);
@@ -75,7 +75,7 @@ class LoginView extends Component {
      }catch(e){
         console.warn(e)
      }
- }
+ */}
 
     /*componentDidMount() {
 
@@ -227,7 +227,7 @@ class LoginView extends Component {
         })
     }
 
-    submit = () => {
+    submit = () => {/*
 
         try{
 
@@ -268,7 +268,7 @@ class LoginView extends Component {
                 catch(e){
                     console.warn(e)
                 }
-                return
+                return*/
         const emailLogin = this.state.email.trim();
         const passwordLogin = this.state.password;
 
@@ -311,7 +311,7 @@ class LoginView extends Component {
                   type: "success",
                 });
 
-                /*setTimeout(
+                setTimeout(
                   () => { RNRestart.Restart();
                     this.setState({
                       usuario: '',
@@ -320,9 +320,9 @@ class LoginView extends Component {
                     })
                    },
                   1000
-                )*/
+                )
 
-                //AsyncStorage.setItem('usu_id', res.resultado.usu_id.toString());
+                AsyncStorage.setItem('usu_id', res.resultado.usu_id.toString());
 
                    
 

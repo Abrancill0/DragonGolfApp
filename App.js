@@ -342,14 +342,16 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%'}}>
+              <View style={{backgroundColor:'blue', height:'100%',width:'100%'}}>
+                <Text style={{color:'white', alignSelf:'center'}}>Settings</Text>
                 {/*<Image source={require('./Src/Resource/cuenta1.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
               </View>
               )
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%'}}>
+                <View style={{backgroundColor:'red', height:'100%',width:'100%'}}>
+                <Text style={{color:'white', alignSelf:'center'}}>Settings</Text>
                   {/*<Image source={require('./Src/Resource/cuenta2.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
                 </View>
               )
@@ -363,14 +365,16 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%'}}>
+              <View style={{backgroundColor:'blue', height:'100%',width:'100%'}}>
+                <Text style={{color:'white', alignSelf:'center'}}>Courses</Text>
                 {/*<Image source={require('./Src/Resource/cuenta1.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
               </View>
               )
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%'}}>
+                <View style={{backgroundColor:'red', height:'100%',width:'100%'}}>
+                <Text style={{color:'white', alignSelf:'center'}}>Courses</Text>
                   {/*<Image source={require('./Src/Resource/cuenta2.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
                 </View>
               )
