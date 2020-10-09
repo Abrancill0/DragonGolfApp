@@ -103,9 +103,9 @@ class AddCourseView extends Component {
                                     value={name}
                                     error={nameError}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
-                                        if(this.nameValidation(text)){
+                                        //if(this.nameValidation(text)){
                                             this.shortNameIn.focus();
-                                        }
+                                        //}
                                     }}
                                     blurOnSubmit={false}
                                 />
@@ -123,9 +123,9 @@ class AddCourseView extends Component {
                                         value={shortName}
                                         error={shortNameError}
                                         onSubmitEditing={({nativeEvent: {text}}) => {
-                                            if(this.shortNameValidation(text)){
+                                            //if(this.shortNameValidation(text)){
                                                 this.cityIn.focus();
-                                            }
+                                            //}
                                         }}
                                         blurOnSubmit={false}
                                     />
@@ -140,9 +140,9 @@ class AddCourseView extends Component {
                                         value={city}
                                         error={cityError}
                                         onSubmitEditing={({nativeEvent: {text}}) => {
-                                            if(this.cityValidation(text)){
+                                            //if(this.cityValidation(text)){
                                                 this.cityIn.blur();
-                                            }
+                                            //}
                                         }}
                                         blurOnSubmit={false}
                                     />
