@@ -342,18 +342,22 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{backgroundColor:'blue', height:'100%',width:'100%'}}>
-                <Text style={{color:'white', alignSelf:'center'}}>Settings</Text>
-                {/*<Image source={require('./Src/Resource/cuenta1.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
+              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialIcons
+                    name='settings'
+                    color={Colors.Primary}
+                    size={25} />
               </View>
               )
             }else
             {
               return(
-                <View style={{backgroundColor:'red', height:'100%',width:'100%'}}>
-                <Text style={{color:'white', alignSelf:'center'}}>Settings</Text>
-                  {/*<Image source={require('./Src/Resource/cuenta2.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
-                </View>
+                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialIcons
+                    name='settings'
+                    color={Colors.Black}
+                    size={20} />
+              </View>
               )
             }
           },
@@ -365,18 +369,22 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{backgroundColor:'blue', height:'100%',width:'100%'}}>
-                <Text style={{color:'white', alignSelf:'center'}}>Courses</Text>
-                {/*<Image source={require('./Src/Resource/cuenta1.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
+              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialCommunityIcons
+                    name='golf'
+                    color={Colors.Primary}
+                    size={25} />
               </View>
               )
             }else
             {
               return(
-                <View style={{backgroundColor:'red', height:'100%',width:'100%'}}>
-                <Text style={{color:'white', alignSelf:'center'}}>Courses</Text>
-                  {/*<Image source={require('./Src/Resource/cuenta2.png')} style={{ flex: 1, height: undefined, width:undefined }} resizeMode='contain'/>*/}
-                </View>
+                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialCommunityIcons
+                    name='golf'
+                    color={Colors.Black}
+                    size={20} />
+              </View>
               )
             }
           },
