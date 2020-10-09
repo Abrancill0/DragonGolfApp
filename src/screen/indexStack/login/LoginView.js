@@ -49,7 +49,7 @@ class LoginView extends Component {
         super(props);
         this.state = {
             language:'en',
-            headerHeight: new Animated.Value(250),
+            headerHeight: new Animated.Value(240),
             email: '',
             password: '',
             re : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -62,8 +62,8 @@ class LoginView extends Component {
 
     componentDidMount() {/*
 
-      var db = SQLite.openDatabase({ name: "DragonGolf", createFromLocation: "~DragonGolf.db" },
-        this.openSuccess, this.openError);
+      db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" },
+        this.openSuccess, this.openError);/*
 
       try{
 
@@ -232,16 +232,19 @@ class LoginView extends Component {
         try{
 
             let usuario = "chuy@hotmail.com"
-            let password = "123"
+            let password = "XYZ"
 
                     db.transaction((tx) => {
 
                     let sql = `Insert into Login (usuario, password)` + ` VALUES ("${usuario}","${password}");`
+                    let sql2 = `SELECT * FROM Login`
+                    let sql3 = `DELETE FROM Login`
 
                     console.warn(sql)
 
-                    tx.executeSql(sql, [], (tx, results) => {
+                    tx.executeSql(sql2, [], (tx, results) => {
                       console.warn('Consulta OK')
+                      console.warn(results)
 
                       var len = results.rows.length;
 
@@ -250,8 +253,8 @@ class LoginView extends Component {
                       for (let i = 0; i < len; i++) {
                         let row = results.rows.item(i);
 
-                        let Localidad = row.Localidad
-                        let ClaveLocalidad = row.Clave_Localidad
+                        let Localidad = row.usuario
+                        let ClaveLocalidad = row.password
 
                         tempticket.push(Localidad + ' - ' + ClaveLocalidad);
                       }

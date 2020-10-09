@@ -358,7 +358,7 @@ class SettingsView extends Component {
                 <Text style={styles.dollarText}>$</Text>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -367,6 +367,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('gs2')}
                   value={rabbit16}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -380,7 +381,7 @@ class SettingsView extends Component {
                 <TextInput
                   ref={ref => this.inputs['gs2'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -389,6 +390,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('gs3')}
                   value={rabbit712}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -402,7 +404,7 @@ class SettingsView extends Component {
                 <TextInput
                   ref={ref => this.inputs['gs3'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -411,6 +413,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('gs4')}
                   value={rabbit1318}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -424,7 +427,7 @@ class SettingsView extends Component {
                 <TextInput
                   ref={ref => this.inputs['gs4'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -433,6 +436,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('gs5')}
                   value={medalF9}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -446,7 +450,7 @@ class SettingsView extends Component {
                 <TextInput
                   ref={ref => this.inputs['gs5'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -455,6 +459,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('gs6')}
                   value={medalB9}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -468,7 +473,7 @@ class SettingsView extends Component {
                 <TextInput
                   ref={ref => this.inputs['gs6'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -477,6 +482,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('gs7')}
                   value={medal18}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -490,13 +496,14 @@ class SettingsView extends Component {
                 <TextInput
                   ref={ref => this.inputs['gs7'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
                   maxLength={8}
                   onChangeText={(skins) => this.setState({ skins })}
                   value={skins}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -541,13 +548,14 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
                   maxLength={2}
                   onChangeText={(snwAutoPress) => this.setState({ snwAutoPress })}
                   value={snwAutoPress}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -590,10 +598,10 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Front 9</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{snwUseFactor ? '$ ': '$ ' }</Text>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -602,6 +610,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('snw2')}
                   value={snwFront9}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -611,11 +620,11 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Back 9</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Back 9 X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['snw2'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -624,6 +633,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('snw3')}
                   value={snwBack9}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -633,11 +643,11 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Match</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Match X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['snw3'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -646,6 +656,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('snw4')}
                   value={snwMatch}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -655,11 +666,11 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Carry</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Carry X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['snw4'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -668,6 +679,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('snw5')}
                   value={snwCarry}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -677,17 +689,18 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Medal</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Medal X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['snw5'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
                   maxLength={8}
                   onChangeText={(snwMedal) => this.setState({ snwMedal })}
                   value={snwMedal}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -701,13 +714,14 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
                   maxLength={2}
                   onChangeText={(tnwAutoPress) => this.setState({ tnwAutoPress })}
                   value={tnwAutoPress}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -750,10 +764,10 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Front 9</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{tnwUseFactor ? '$ ': '$ ' }</Text>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -762,6 +776,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('tnw2')}
                   value={tnwFront9}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -771,11 +786,11 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Back 9</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Back 9 X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['tnw2'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -784,6 +799,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('tnw3')}
                   value={tnwBack9}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -793,11 +809,11 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Match</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Match X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['tnw3'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -806,6 +822,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('tnw4')}
                   value={tnwMatch}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -815,11 +832,11 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Carry</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Carry X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['tnw4'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -828,6 +845,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('tnw5')}
                   value={tnwCarry}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -837,17 +855,18 @@ class SettingsView extends Component {
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Medal</Text>
               <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Medal X ': '$ ' }</Text>
+                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
                 <TextInput
                   ref={ref => this.inputs['tnw5'] = ref}
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
                   maxLength={8}
                   onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
                   value={tnwMedal}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -887,13 +906,14 @@ class SettingsView extends Component {
                 <Text style={styles.dollarText}>$</Text>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
                   maxLength={8}
                   onChangeText={(ebWager) => this.setState({ ebWager })}
                   value={ebWager}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -907,7 +927,7 @@ class SettingsView extends Component {
                 <Text style={styles.dollarText}>$</Text>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -916,6 +936,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('bbt2')}
                   value={bbWagerF9}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -928,7 +949,7 @@ class SettingsView extends Component {
                 <Text style={styles.dollarText}>$</Text>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -938,6 +959,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('bbt3')}
                   value={bbWagerB9}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -950,7 +972,7 @@ class SettingsView extends Component {
                 <Text style={styles.dollarText}>$</Text>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -958,6 +980,7 @@ class SettingsView extends Component {
                   onChangeText={(bbWager18) => this.setState({ bbWager18 })}
                   ref={ref => this.inputs['bbt3'] = ref}
                   value={bbWager18}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -970,7 +993,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -979,6 +1002,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('ss2')}
                   value={ssDoubleEagle}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -990,7 +1014,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -1000,6 +1024,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('ss3')}
                   value={ssEaglePoints}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -1011,7 +1036,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -1021,6 +1046,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('ss4')}
                   value={ssBirdie}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -1032,7 +1058,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -1042,6 +1068,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('ss5')}
                   value={ssPar}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -1053,7 +1080,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -1063,6 +1090,7 @@ class SettingsView extends Component {
                   onSubmitEditing={_ => this.focusNextField('ss6')}
                   value={ssBogey}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
@@ -1074,7 +1102,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <TextInput
                   style={styles.costInput}
-                  selectionColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   placeholder="0"
                   keyboardType="numeric"
                   returnKeyType='done'
@@ -1082,6 +1110,7 @@ class SettingsView extends Component {
                   onChangeText={(ssDoubleBogey) => this.setState({ ssDoubleBogey })}
                   ref={ref => this.inputs['ss6'] = ref}
                   value={ssDoubleBogey}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
