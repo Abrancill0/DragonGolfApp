@@ -69,19 +69,19 @@ export default class App extends Component {
   }
 
   handleConnectivityChange = (connection) => {
-    if(connection.isInternetReachable)
+    if(connection.isInternetReachable==false)
     {
         this.setState({
           conexion:true
         })
         this.loadSesion()
     }
-    else if(connection.isInternetReachable==false)
+    else if(connection.isInternetReachable)
     {
       this.setState({
-        conexion:false,
-        count:0
+        conexion:false
       })
+        this.loadSesionLocal()
     }
   };
 
@@ -201,6 +201,80 @@ export default class App extends Component {
             type:'error',
         });
     })
+  }
+
+
+
+  loadSesionLocal = async () => {
+
+    try {
+        let IDUsuario = await AsyncStorage.getItem('usu_id')
+        console.warn(IDUsuario)
+        if (IDUsuario != null )
+        {
+          this.setState({
+            logeado:true,
+            isLoading:false,
+            activo:true
+          })
+          this.LoadUsuarioLocal(IDUsuario)
+        }
+        else
+        {
+          this.setState({
+            logeado:false,
+            isLoading:false
+          })
+        }
+      } catch (error) {
+        this.setState({
+          logeado:false,
+          isLoading:false
+        })
+      }
+
+  };
+
+  LoadUsuarioLocal(CLVUsuario) 
+  {
+    try{
+
+            let usuario = "chuy@hotmail.com"
+            let password = "XYZ"
+
+                    db.transaction((tx) => {
+
+                    let sql = `Insert into Login (usuario, password)` + ` VALUES ("${usuario}","${password}");`
+                    let sql2 = `SELECT * FROM Usuario`
+                    let sql3 = `DELETE FROM Login`
+
+                    console.warn(sql)
+
+                    tx.executeSql(sql2, [], (tx, results) => {
+                      console.warn('Consulta OK')
+                      console.warn(results)
+
+                      var len = results.rows.length;
+
+                      const tempticket = [];
+
+                      for (let i = 0; i < len; i++) {
+                        let row = results.rows.item(i);
+                        console.warn(row)
+                      }
+
+                      this.setState({
+                        Localidades: tempticket
+                      });
+
+                      console.warn(tempticket)
+                    });
+                    console.warn(tx)
+                  });
+                }
+                catch(e){
+                  console.warn(e)
+                }
   }
 
   closeSesion(props){

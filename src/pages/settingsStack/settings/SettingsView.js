@@ -29,9 +29,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { InfoUsuario, updateSettings } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 // import * as Animatable from 'react-native-animatable';
-import { openDatabase } from 'react-native-sqlite-storage';
+import SQLite from 'react-native-sqlite-storage';
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from 'react-native-loading-spinner-overlay';
+import NetInfo from "@react-native-community/netinfo";
 
 var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" },
         this.openSuccess, this.openError);
@@ -94,8 +95,25 @@ class SettingsView extends Component {
     this.inputs = {};
   }
 
+  handleConnectivityChange = (connection) => {
+    if(connection.isInternetReachable==false)
+    {
+        this.setState({
+          conexion:true
+        })
+        this.getUserData()
+    }
+    else if(connection.isInternetReachable)
+    {
+      this.setState({
+        conexion:false
+      })
+        this.getUserDataLocal()
+    }
+  };
+
    async componentDidMount() {
-    this.getUserData();
+    this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
    }
 
   static navigationOptions = ({ navigation }) => {
@@ -1202,6 +1220,109 @@ class SettingsView extends Component {
       return formatted;
     }
   }*/
+
+  getUserDataLocal = async () => {
+    const token = await AsyncStorage.getItem('usu_id')
+    InfoUsuario(token)
+    .then((res) => {
+        if(res.estatus==1){
+
+            const lista =[
+            {
+              id: res.resultado.usu_id,
+              name: res.resultado.usu_nombre,
+              last_name: res.resultado.usu_apellido_paterno,
+              last_name2: res.resultado.usu_apellido_materno,
+              nick_name: res.resultado.usu_nickname,
+              email: res.resultado.usu_email,
+              ghin_number: res.resultado.usu_ghin_numero,
+              handicap: res.resultado.usu_handicap_index,
+              cellphone:res.resultado.usu_telefono,
+              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
+            }]
+              db.transaction((tx) => {
+
+                    let sql = `SELECT * FROM Settings`
+
+                    console.warn(sql)
+
+                    tx.executeSql(sql, [], (tx, results) => {
+                      console.warn('Consulta OK')
+                      console.warn(results)
+
+                      var len = results.rows.length;
+
+                      const tempticket = [];
+
+                      for (let i = 0; i < len; i++) {
+                        let row = results.rows.item(i);
+                        console.warn(row)
+
+                          let usu_id = row.usu_id
+                          let Lenguage = row.Lenguage
+
+                          this.setState({
+                            asHowAdvMove: row.HowAdvMove.toString(),
+                            asHowManyStrokes: row.StrokesMovedPerRound,
+                            asAdvMoves: row.AdvMovesOn9Holes.toString(),
+                            asDoesCarryMove: row.CarryMovesAdv.toString(),
+                            rabbit16: row.Rabbit1_6.toString(),
+                            rabbit712: row.Rabbit7_12.toString(),
+                            rabbit1318: row.Rabbit13_18.toString(),
+                            medalF9: row.MedalPlayF9.toString(),
+                            medalB9: row.MedalPlayB9.toString(),
+                            medal18: row.MedalPlay18.toString(),
+                            skins: row.Skins.toString(),
+                            skinCarry: row.SkinsCarryOver.toString(),
+                            lowedAdv: row.LowerAdvF9.toString(),
+                            snwUseFactor: row.SNWUseFactor.toString(),
+                            snwAutoPress: row.SNWAutomaticPress.toString(),
+                            snwFront9: row.SNWFront9.toString(),
+                            snwBack9: row.SNWBack9.toString(),
+                            snwMatch: row.SNWMatch.toString(),
+                            snwCarry: row.SNWCarry.toString(),
+                            snwMedal: row.SNWMedal.toString(),
+                            tnwUseFactor: row.TMWUseFactor.toString(),
+                            tnwAutoPress: row.TMWAutomaticPress.toString(),
+                            tnwFront9: row.TMWFront9.toString(),
+                            tnwBack9: row.TMWBack9.toString(),
+                            tnwMatch: row.TMWMatch.toString(),
+                            tnwCarry: row.MTWCarry.toString(),
+                            tnwMedal: row.TMWMedal.toString(),
+                            tnwWhoGets: row.TMWAdvStrokes.toString(),
+                            ebWager: row.EBWager.toString(),
+                            bbWagerF9: row.BBTWagerF9.toString(),
+                            bbWagerB9: row.BBTWagerB9.toString(),
+                            bbWager18: row.BBTWager18.toString(),
+                            ssDoubleEagle: row.StablefordDoubleEagle.toString(),
+                            ssEaglePoints: row.StablefordEagle.toString(),
+                            ssBirdie: row.StablefordBirdie.toString(),
+                            ssPar: row.StablefordPar.toString(),
+                            ssBogey: row.StablefordBogey.toString(),
+                            ssDoubleBogey: row.StablefordDoubleBogey.toString(),
+                            status: false
+                            //seePicker: res.resultado.usu_id
+                          })
+                      }
+                    });
+                    console.warn(tx)
+        })  
+      }
+        else{
+            //setLoading(false)
+            showMessage({
+                message: res.mensaje,
+                type: 'info',
+            });
+        }
+    }).catch(error=>{
+        //setLoading(false)
+        showMessage({
+            message: error,
+            type:'error',
+        });
+    })
+  }
 
   getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')

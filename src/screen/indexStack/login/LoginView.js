@@ -237,7 +237,7 @@ class LoginView extends Component {
                     db.transaction((tx) => {
 
                     let sql = `Insert into Login (usuario, password)` + ` VALUES ("${usuario}","${password}");`
-                    let sql2 = `SELECT * FROM Login`
+                    let sql2 = `SELECT * FROM Settings`
                     let sql3 = `DELETE FROM Login`
 
                     console.warn(sql)
@@ -252,11 +252,89 @@ class LoginView extends Component {
 
                       for (let i = 0; i < len; i++) {
                         let row = results.rows.item(i);
+                        console.warn(row)
 
-                        let Localidad = row.usuario
-                        let ClaveLocalidad = row.password
+                          /*let usu_id = row.usu_id
+                          let Lenguage = row.Lenguage
+                          let HowAdvMove = row.HowAdvMove
+                          let StrokesMovedPerRound = row.StrokesMovedPerRound
+                          let AdvMovesOn9Holes = row.AdvMovesOn9Holes
+                          let CarryMovesAdv = row.CarryMovesAdv
+                          let Rabbit1_6 = row.Rabbit1_6
+                          let Rabbit7_12 = row.Rabbit7_12
+                          let Rabbit13_18 = row.Rabbit13_18
+                          let MedalPlayF9 = row.MedalPlayF9
+                          let MedalPlayB9 = row.MedalPlayB9
+                          let MedalPlay18 = row.MedalPlay18
+                          let Skins = row.Skins
+                          let SkinsCarryOver = row.SkinsCarryOver
+                          //let LowerAdvF9 = row.LowerAdvF9
+                          //let SNWAutomaticPress = row.SNWAutomaticPress
+                          //let SNWUseFactor = row.SNWUseFactor
+                          let SNWFront9 = row.SNWFront9
+                          let SNWBack9 = row.SNWBack9
+                          let SNWMatch = row.SNWMatch
+                          let SNWCarry = row.SNWCarry
+                          let SNWMedal = row.SNWMedal
+                          let TMWAutomaticPress = row.TMWAutomaticPress
+                          let TMWUseFactor = row.TMWUseFactor
+                          let TMWFront9 = row.TMWFront9
+                          let TMWBack9 = row.TMWBack9
+                          let TMWMatch = row.TMWMatch
+                          let MTWCarry = row.MTWCarry
+                          let TMWMedal = row.TMWMedal
+                          let TMWAdvStrokes = row.TMWAdvStrokes
+                          let EBWager = row.EBWager
+                          let BBTWagerF9 = row.BBTWagerF9
+                          let BBTWagerB9 = row.BBTWagerB9
+                          let BBTWager18 = row.BBTWager18
+                          let StablefordDoubleEagle = row.StablefordDoubleEagle
+                          let StablefordEagle = row.StablefordEagle 
+                          let StablefordBirdie = row.StablefordBirdie
+                          let StablefordPar = row.StablefordPar
+                          let StablefordBogey = row.StablefordBogey
+                          let StablefordDoubleBogey = row.StablefordDoubleBogey
 
-                        tempticket.push(Localidad + ' - ' + ClaveLocalidad);
+                        tempticket.push(usu_id
+          + ' - ' + Lenguage
+          + ' - ' + HowAdvMove
+          + ' - ' + StrokesMovedPerRound
+          + ' - ' + AdvMovesOn9Holes
+          + ' - ' + CarryMovesAdv
+          + ' - ' + Rabbit1_6
+          + ' - ' + Rabbit7_12
+          + ' - ' + Rabbit13_18
+          + ' - ' + MedalPlayF9
+          + ' - ' + MedalPlayB9
+          + ' - ' + MedalPlay18
+          + ' - ' + Skins
+          + ' - ' + SkinsCarryOver
+          //+ ' - ' + LowerAdvF9
+          //+ ' - ' + SNWAutomaticPress
+          //+ ' - ' + SNWUseFactor
+          + ' - ' + SNWFront9
+          + ' - ' + SNWBack9
+          + ' - ' + SNWMatch
+          + ' - ' + SNWCarry
+          + ' - ' + SNWMedal
+          + ' - ' + TMWAutomaticPress
+          + ' - ' + TMWUseFactor
+          + ' - ' + TMWFront9
+          + ' - ' + TMWBack9
+          + ' - ' + TMWMatch
+          + ' - ' + MTWCarry
+          + ' - ' + TMWMedal
+          + ' - ' + TMWAdvStrokes
+          + ' - ' + EBWager
+          + ' - ' + BBTWagerF9
+          + ' - ' + BBTWagerB9
+          + ' - ' + BBTWager18
+          + ' - ' + StablefordDoubleEagle
+          + ' - ' + StablefordEagle
+          + ' - ' + StablefordBirdie
+          + ' - ' + StablefordPar
+          + ' - ' + StablefordBogey
+          + ' - ' + StablefordDoubleBogey);
                       }
 
                       this.setState({
