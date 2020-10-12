@@ -33,7 +33,8 @@ import { openDatabase } from 'react-native-sqlite-storage';
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from 'react-native-loading-spinner-overlay';
 
-var db = openDatabase({ name: 'DragonGolf.db' });
+var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" },
+        this.openSuccess, this.openError);
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
 
@@ -1265,15 +1266,15 @@ class SettingsView extends Component {
             tnwMedal: res.resultado.set_tmw_medal,
             tnwWhoGets: res.resultado.set_tmw_adv_strokes,
             ebWager: res.resultado.set_eb_wager,
+            bbWagerF9: res.resultado.set_bbt_wager_f9,
+            bbWagerB9: res.resultado.set_bbt_wager_b9,
+            bbWager18: res.resultado.set_bbt_wager_18,
             ssDoubleEagle: res.resultado.set_stableford_double_eagle,
             ssEaglePoints: res.resultado.set_stableford_eagle,
             ssBirdie: res.resultado.set_stableford_birdie,
             ssPar: res.resultado.set_stableford_par,
             ssBogey: res.resultado.set_stableford_bogey,
             ssDoubleBogey: res.resultado.set_stableford_double_bogey,
-            bbWagerF9: res.resultado.set_bbt_wager_f9,
-            bbWagerB9: res.resultado.set_bbt_wager_b9,
-            bbWager18: res.resultado.set_bbt_wager_18,
             status: false
             //seePicker: res.resultado.usu_id
           })
@@ -1283,15 +1284,30 @@ class SettingsView extends Component {
           })
 
         db.transaction((tx) => {
+
+          let sql = `Insert into Settings (usu_id,Lenguage,HowAdvMove,StrokesMovedPerRound,AdvMovesOn9Holes,CarryMovesAdv,Rabbit1_6,Rabbit7_12,Rabbit13_18,
+          MedalPlayF9,MedalPlayB9,MedalPlay18,Skins,SkinsCarryOver,LowerAdvF9,SNWAutomaticPress,SNWUseFactor,SNWFront9,SNWBack9,SNWMatch,SNWCarry,SNWMedal,
+          TMWAutomaticPress,TMWUseFactor,TMWFront9,TMWBack9,TMWMatch,MTWCarry,TMWMedal,TMWAdvStrokes,EBWager,BBTWagerF9,BBTWagerB9,BBTWager18,
+          StablefordDoubleEagle,StablefordEagle,StablefordBirdie,StablefordPar,StablefordBogey,StablefordDoubleBogey)` + ` VALUES ("${lista[0].id}","${this.state.language}","
+          ${res.resultado.set_how_adv_move}","${res.resultado.set_strokes_moved_per_round}","${_9holes}","${carryMov}","${res.resultado.set_rabbit_1_6.split('.')[0]}","
+          ${res.resultado.set_rabbit_7_12.split('.')[0]}","${res.resultado.set_rabbit_13_18.split('.')[0]}","${res.resultado.set_medal_play_f9.split('.')[0]}","
+          ${res.resultado.set_medal_play_b9.split('.')[0]}","${res.resultado.set_medal_play_18.split('.')[0]}","${res.resultado.set_skins.split('.')[0]}","
+          ${carryOver}","${res.lowedf9}","${res.resultado.set_snw_automatic_press}","${snwUF}","${res.resultado.set_snw_front_9}","${res.resultado.set_snw_back_9}","
+          ${res.resultado.set_snw_match}","${res.resultado.set_snw_carry}","${res.resultado.set_snw_medal}","${res.resultado.set_tmw_automatic_press}","${snwTF}","
+          ${res.resultado.set_tmw_front_9}","${res.resultado.set_tmw_back_9}","${res.resultado.set_tmw_match}","${res.resultado.set_tmw_carry}","
+          ${res.resultado.set_tmw_medal}","${res.resultado.set_tmw_adv_strokes}","${res.resultado.set_eb_wager}","${res.resultado.set_bbt_wager_f9}","
+          ${res.resultado.set_bbt_wager_b9}","${res.resultado.set_bbt_wager_18}","${res.resultado.set_stableford_double_eagle}","
+          ${res.resultado.set_stableford_eagle}","${res.resultado.set_stableford_birdie}","${res.resultado.set_stableford_par}","
+          ${res.resultado.set_stableford_bogey}","${res.resultado.set_stableford_double_bogey}");`
             tx.executeSql(
-              'UPDATE Settings set user_language=?, user_how_adv_move=? , user_strokes_moved_per_round=? where user_id=?',
-              [language, asData.how_adv_move, asData.how_many_strokes, lista[0].id],
+              sql,
+              [],
               (tx, results) => {
                 console.warn('Results', results);
                 if (results.rowsAffected > 0) {
                   Alert.alert(
                     'Success',
-                    'User updated successfully',
+                    'Settings Insert successfully',
                     [
                       {
                         text: 'Ok',
@@ -1924,14 +1940,22 @@ class SettingsView extends Component {
             });
           db.transaction((tx) => {
             tx.executeSql(
-              'UPDATE table_settings set user_language=?, user_how_adv_move=? , user_strokes_moved_per_round=? where user_id=?',
-              [language, asData.how_adv_move, asData.how_many_strokes, data.user_id],
+               `UPDATE Settings set Lenguage=?,HowAdvMove=?,StrokesMovedPerRound=?,AdvMovesOn9Holes=?,CarryMovesAdv=?,Rabbit1_6=?,Rabbit7_12=?,Rabbit13_18=?,MedalPlayF9=?,
+              MedalPlayB9=?,MedalPlay18=?,Skins=?,SkinsCarryOver=?,LowerAdvF9=?,SNWAutomaticPress=?,SNWUseFactor=?,SNWFront9=?,SNWBack9=?,SNWMatch=?,SNWCarry=?,SNWMedal=?,
+          TMWAutomaticPress=?,TMWUseFactor=?,TMWFront9=?,TMWBack9=?,TMWMatch=?,MTWCarry=?,TMWMedal=?,TMWAdvStrokes=?,EBWager=?,BBTWagerF9=?,BBTWagerB9=?,BBTWager18=?,
+          StablefordDoubleEagle=?,StablefordEagle=?,StablefordBirdie=?,StablefordPar=?,StablefordBogey=?,StablefordDoubleBogey=? where usu_id=?`,
+              [language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,
+              gsDataPlayer.rabbit_13_18, gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,gsData.skinCarry,
+              gsData.lowedAdv,snwData.automatic_presses_every, snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,snwData.carry,snwData.medal,
+              tnwData.automatic_presses_every, tnwData.useFactor,tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,tnwData.who_gets_the_adv_strokes,
+              ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,
+              sfsData.birdie,sfsData.par,sfsData.bogey,sfsData.double_bogey, data.user_id],
               (tx, results) => {
                 console.warn('Results', results);
                 if (results.rowsAffected > 0) {
                   Alert.alert(
                     'Success',
-                    'User updated successfully',
+                    'Settings updated successfully',
                     [
                       {
                         text: 'Ok',
