@@ -335,6 +335,10 @@ export default class App extends Component {
               :
               null
               }
+              {
+              this.state.logeado
+              ?
+              <View>
               <TouchableOpacity  style={{width:'100%',flexDirection:'row',alignItems:'center'}}>
                   <View style={{flex:.1}}>
                     <FontAwesomeIcon name='bank' color='#0F222D' size={20}/>
@@ -346,9 +350,6 @@ export default class App extends Component {
                   labelStyle={{color:Colors.Primary}} />
                 </View>
               </TouchableOpacity> 
-              {
-              this.state.logeado
-              ?
               <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})}>
                   <View style={{flex:.1}}>
                     <FontAwesomeIcon name='user' color='#0F222D' size={20}/>
@@ -360,28 +361,14 @@ export default class App extends Component {
                   onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})} />
                 </View>
               </TouchableOpacity> 
+              </View>
                :
                null
                }
           </View>
           {
-          !this.state.logeado
+          this.state.logeado
           ?
-          <View style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:'#123c5b'}}>
-              <View style={{flex:.45,borderRightWidth:1,borderColor:'white'}}>
-                <DrawerItem
-                label="Registrar"
-                onPress={() => props.navigation.navigate('Registro')}
-                labelStyle={{color:'white'}} />
-              </View> 
-              <View style={{flex:.55,color:'white'}}>
-                <DrawerItem
-                label="Iniciar sesión"
-                onPress={() => props.navigation.navigate('Login')}
-                labelStyle={{color:'white',flexWrap:'wrap-reverse'}} />
-              </View>
-          </View>
-          :
           <TouchableOpacity 
             activeOpacity={0.8}
             onPress={() => this.closeSesion(props)}
@@ -396,6 +383,8 @@ export default class App extends Component {
                 labelStyle={{color:'white'}} />
               </View> 
           </TouchableOpacity>
+          :
+          null
           }
               
         </View>
@@ -404,7 +393,7 @@ export default class App extends Component {
     }
 
     createHomeDrawer = () =>
-      <Drawer.Navigator drawerContent={props => this.state.activo?<DrawerContent {...props} />:<DrawerContent {...props} />} >
+      <Drawer.Navigator drawerContent={props => this.state.activo?<DrawerContent {...props} />:null} >
         <Drawer.Screen name='createHomeStack' children={createHomeStack} options={{ title: 'Inicio' }} />
       </Drawer.Navigator>
 

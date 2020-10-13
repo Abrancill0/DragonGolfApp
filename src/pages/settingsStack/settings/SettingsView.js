@@ -96,14 +96,14 @@ class SettingsView extends Component {
   }
 
   handleConnectivityChange = (connection) => {
-    if(connection.isInternetReachable==false)
+    if(connection.isInternetReachable)
     {
         this.setState({
           conexion:true
         })
         this.getUserData()
     }
-    else if(connection.isInternetReachable)
+    else if(connection.isInternetReachable==false)
     {
       this.setState({
         conexion:false
@@ -1222,105 +1222,110 @@ class SettingsView extends Component {
   }*/
 
   getUserDataLocal = async () => {
-    const token = await AsyncStorage.getItem('usu_id')
-    InfoUsuario(token)
-    .then((res) => {
-        if(res.estatus==1){
 
-            const lista =[
+    db.transaction((tx) => {
+
+      let sql = `SELECT * FROM Usuario`
+      console.warn(sql)
+      tx.executeSql(sql, [], (tx, results) => {
+        console.warn('Consulta OK')
+        console.warn(results)
+
+        var len = results.rows.length;
+
+        const tempticket = [];
+
+        for (let i = 0; i < len; i++) {
+          let row = results.rows.item(i);
+          console.warn(row)
+
+          const lista =[
             {
-              id: res.resultado.usu_id,
-              name: res.resultado.usu_nombre,
-              last_name: res.resultado.usu_apellido_paterno,
-              last_name2: res.resultado.usu_apellido_materno,
-              nick_name: res.resultado.usu_nickname,
-              email: res.resultado.usu_email,
-              ghin_number: res.resultado.usu_ghin_numero,
-              handicap: res.resultado.usu_handicap_index,
-              cellphone:res.resultado.usu_telefono,
-              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
+              id: row.OnlineId,
+              name: row.FirstName,
+              last_name: row.FirstLastName,
+              last_name2: row.LastName,
+              nick_name: row.Nickname,
+              email: row.Email,
+              ghin_number: row.GhinNumber,
+              handicap: row.Handicap,
+              cellphone:row.Cellphone,
+              password:row.Password,
+              //photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
             }]
-              db.transaction((tx) => {
 
-                    let sql = `SELECT * FROM Settings`
-
-                    console.warn(sql)
-
-                    tx.executeSql(sql, [], (tx, results) => {
-                      console.warn('Consulta OK')
-                      console.warn(results)
-
-                      var len = results.rows.length;
-
-                      const tempticket = [];
-
-                      for (let i = 0; i < len; i++) {
-                        let row = results.rows.item(i);
-                        console.warn(row)
-
-                          let usu_id = row.usu_id
-                          let Lenguage = row.Lenguage
-
-                          this.setState({
-                            asHowAdvMove: row.HowAdvMove.toString(),
-                            asHowManyStrokes: row.StrokesMovedPerRound,
-                            asAdvMoves: row.AdvMovesOn9Holes.toString(),
-                            asDoesCarryMove: row.CarryMovesAdv.toString(),
-                            rabbit16: row.Rabbit1_6.toString(),
-                            rabbit712: row.Rabbit7_12.toString(),
-                            rabbit1318: row.Rabbit13_18.toString(),
-                            medalF9: row.MedalPlayF9.toString(),
-                            medalB9: row.MedalPlayB9.toString(),
-                            medal18: row.MedalPlay18.toString(),
-                            skins: row.Skins.toString(),
-                            skinCarry: row.SkinsCarryOver.toString(),
-                            lowedAdv: row.LowerAdvF9.toString(),
-                            snwUseFactor: row.SNWUseFactor.toString(),
-                            snwAutoPress: row.SNWAutomaticPress.toString(),
-                            snwFront9: row.SNWFront9.toString(),
-                            snwBack9: row.SNWBack9.toString(),
-                            snwMatch: row.SNWMatch.toString(),
-                            snwCarry: row.SNWCarry.toString(),
-                            snwMedal: row.SNWMedal.toString(),
-                            tnwUseFactor: row.TMWUseFactor.toString(),
-                            tnwAutoPress: row.TMWAutomaticPress.toString(),
-                            tnwFront9: row.TMWFront9.toString(),
-                            tnwBack9: row.TMWBack9.toString(),
-                            tnwMatch: row.TMWMatch.toString(),
-                            tnwCarry: row.MTWCarry.toString(),
-                            tnwMedal: row.TMWMedal.toString(),
-                            tnwWhoGets: row.TMWAdvStrokes.toString(),
-                            ebWager: row.EBWager.toString(),
-                            bbWagerF9: row.BBTWagerF9.toString(),
-                            bbWagerB9: row.BBTWagerB9.toString(),
-                            bbWager18: row.BBTWager18.toString(),
-                            ssDoubleEagle: row.StablefordDoubleEagle.toString(),
-                            ssEaglePoints: row.StablefordEagle.toString(),
-                            ssBirdie: row.StablefordBirdie.toString(),
-                            ssPar: row.StablefordPar.toString(),
-                            ssBogey: row.StablefordBogey.toString(),
-                            ssDoubleBogey: row.StablefordDoubleBogey.toString(),
-                            status: false
-                            //seePicker: res.resultado.usu_id
-                          })
-                      }
-                    });
-                    console.warn(tx)
-        })  
-      }
-        else{
-            //setLoading(false)
-            showMessage({
-                message: res.mensaje,
-                type: 'info',
-            });
+          this.setState({
+            userData: lista[0]
+          })
         }
-    }).catch(error=>{
-        //setLoading(false)
-        showMessage({
-            message: error,
-            type:'error',
-        });
+      });
+      console.warn(tx)
+    }) 
+
+    db.transaction((tx) => {
+
+      let sql = `SELECT * FROM Settings`
+      console.warn(sql)
+      tx.executeSql(sql, [], (tx, results) => {
+        console.warn('Consulta OK')
+        console.warn(results)
+
+        var len = results.rows.length;
+
+        const tempticket = [];
+
+        for (let i = 0; i < len; i++) {
+          let row = results.rows.item(i);
+          console.warn(row)
+
+          let usu_id = row.usu_id
+          let Lenguage = row.Lenguage
+
+          this.setState({
+            asHowAdvMove: row.HowAdvMove.toString(),
+            asHowManyStrokes: row.StrokesMovedPerRound,
+            asAdvMoves: row.AdvMovesOn9Holes.toString(),
+            asDoesCarryMove: row.CarryMovesAdv.toString(),
+            rabbit16: row.Rabbit1_6.toString(),
+            rabbit712: row.Rabbit7_12.toString(),
+            rabbit1318: row.Rabbit13_18.toString(),
+            medalF9: row.MedalPlayF9.toString(),
+            medalB9: row.MedalPlayB9.toString(),
+            medal18: row.MedalPlay18.toString(),
+            skins: row.Skins.toString(),
+            skinCarry: row.SkinsCarryOver.toString(),
+            lowedAdv: row.LowerAdvF9.toString(),
+            snwUseFactor: row.SNWUseFactor.toString(),
+            snwAutoPress: row.SNWAutomaticPress.toString(),
+            snwFront9: row.SNWFront9.toString(),
+            snwBack9: row.SNWBack9.toString(),
+            snwMatch: row.SNWMatch.toString(),
+            snwCarry: row.SNWCarry.toString(),
+            snwMedal: row.SNWMedal.toString(),
+            tnwUseFactor: row.TMWUseFactor.toString(),
+            tnwAutoPress: row.TMWAutomaticPress.toString(),
+            tnwFront9: row.TMWFront9.toString(),
+            tnwBack9: row.TMWBack9.toString(),
+            tnwMatch: row.TMWMatch.toString(),
+            tnwCarry: row.MTWCarry.toString(),
+            tnwMedal: row.TMWMedal.toString(),
+            tnwWhoGets: row.TMWAdvStrokes.toString(),
+            ebWager: row.EBWager.toString(),
+            bbWagerF9: row.BBTWagerF9.toString(),
+            bbWagerB9: row.BBTWagerB9.toString(),
+            bbWager18: row.BBTWager18.toString(),
+            ssDoubleEagle: row.StablefordDoubleEagle.toString(),
+            ssEaglePoints: row.StablefordEagle.toString(),
+            ssBirdie: row.StablefordBirdie.toString(),
+            ssPar: row.StablefordPar.toString(),
+            ssBogey: row.StablefordBogey.toString(),
+            ssDoubleBogey: row.StablefordDoubleBogey.toString(),
+            status: false
+            //seePicker: res.resultado.usu_id
+          })
+        }
+      });
+      console.warn(tx)
     })
   }
 
@@ -1351,9 +1356,10 @@ class SettingsView extends Component {
               last_name2: res.resultado.usu_apellido_materno,
               nick_name: res.resultado.usu_nickname,
               email: res.resultado.usu_email,
-              ghin_number: res.resultado.usu_ghin_numero,
-              handicap: res.resultado.usu_handicap_index,
+              ghin_number: 1,//res.resultado.usu_ghin_numero,
+              handicap: "1",//res.resultado.usu_handicap_index,
               cellphone:res.resultado.usu_telefono,
+              password:res.resultado.usu_password,
               photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
             }]
 
@@ -1403,6 +1409,34 @@ class SettingsView extends Component {
           this.setState({
             userData: lista[0]
           })
+
+        db.transaction((tx) => {
+
+          let sql = `Insert into Usuario (UsuId,FirstName,LastName,Email,Password,Cellphone,Nickname,GhinNumber,Handicap,Status,FirstLastName)VALUES("${lista[0].id}","${lista[0].name}","${lista[0].last_name2}","${lista[0].email}","
+          ${lista[0].password}","${lista[0].cellphone}","${lista[0].nick_name}","${lista[0].ghin_number}","${lista[0].handicap}","Local","${lista[0].last_name}");`
+          console.warn(sql)
+            tx.executeSql(
+              sql,
+              [],
+              (tx, results) => {
+                console.warn('Results', results);
+                if (results.rowsAffected > 0) {
+                  Alert.alert(
+                    'Success',
+                    'Settings Insert successfully',
+                    [
+                      {
+                        text: 'Ok',
+                        //onPress: () => navigation.navigate('HomeScreen'),
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                } else alert('Updation Failed');
+              }
+            );
+            console.warn(tx)
+          });
 
         db.transaction((tx) => {
 

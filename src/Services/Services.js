@@ -1,6 +1,6 @@
 const RutaBase = 'http://trascenti.com/pruebasDragon/public/api/';
 
-export const Login = (email,password) => {
+export const Logearse = (email,password) => {
     const URL = RutaBase + "usuarios/login?usu_email=" + email+"&usu_password="+password ;
     return fetch(URL, {
                 method: "GET"

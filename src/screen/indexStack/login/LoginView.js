@@ -68,11 +68,11 @@ export default function Login({ logeadoHandler }) {
         navigation.navigate('RegisterView', { language: language });
     }
 
-    function Logearse() {
+    function Logearse2() {
 
         if (emailLogin === "") {
           showMessage({
-                    message: email[this.state.language]+' ' + required[this.state.language],
+                    message: email[language]+' ' + required[language],
                     type: "warning",
                   });
           return;
@@ -80,7 +80,7 @@ export default function Login({ logeadoHandler }) {
 
         if(!re.test(String(emailLogin).toLowerCase())){
           showMessage({
-                    message: invalidEmail[this.state.language],
+                    message: invalidEmail[language],
                     type: "danger",
                   });
           return
@@ -89,7 +89,7 @@ export default function Login({ logeadoHandler }) {
 
         if (passwordLogin === "") {
           showMessage({
-                    message: password[this.state.language]+' ' + required[this.state.language],
+                    message: password[language]+' ' + required[language],
                     type: "warning",
                   });
           return;
@@ -102,20 +102,19 @@ export default function Login({ logeadoHandler }) {
 
               try {
 
-                let Mensaje = Bienvenido[this.state.language] + ' ' + res.resultado.usu_nombre + ' ' + res.resultado.usu_apellido_paterno + ' ' + res.resultado.usu_apellido_materno
+                let Mensaje = Bienvenido[language] + ' ' + res.resultado.usu_nombre + ' ' + res.resultado.usu_apellido_paterno + ' ' + res.resultado.usu_apellido_materno
 
                 showMessage({
                   message: Mensaje,
                   type: "success",
                 });
 
+
+                /*logeadoHandler()
+                navigation.navigate("SettingsView");*/
+
                 setTimeout(
                   () => { RNRestart.Restart();
-                    this.setState({
-                      usuario: '',
-                      password: '',
-                      status: false
-                    })
                    },
                   1000
                 )
@@ -249,7 +248,7 @@ export default function Login({ logeadoHandler }) {
                             </Ripple>
                             <Ripple
                                 style={[styles.button, { backgroundColor: Colors.Primary }]}
-                                onPress={Logearse}
+                                onPress={()=>Logearse2()}
                             >
                                 <Text style={[styles.buttonText, { color: Colors.White }]}>{login[language]}</Text>
                                 <View style={{ width: 30 }} />
