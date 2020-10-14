@@ -39,6 +39,10 @@ import { Dictionary } from './src/utils/Dictionary';
 import { InfoUsuario } from './src/Services/Services';
 import NetInfo from "@react-native-community/netinfo";
 import RNRestart from 'react-native-restart'
+import SQLite from 'react-native-sqlite-storage';
+
+var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" },
+        this.openSuccess, this.openError);
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator();
@@ -69,14 +73,14 @@ export default class App extends Component {
   }
 
   handleConnectivityChange = (connection) => {
-    if(connection.isInternetReachable==false)
+    if(connection.isInternetReachable)
     {
         this.setState({
           conexion:true
         })
         this.loadSesion()
     }
-    else if(connection.isInternetReachable)
+    else if(connection.isInternetReachable==false)
     {
       this.setState({
         conexion:false
@@ -98,6 +102,7 @@ export default class App extends Component {
 
   getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')
+    if(this.state.conexion){
     InfoUsuario(token)
     .then((res) => {
         if(res.estatus==1){
@@ -121,6 +126,10 @@ export default class App extends Component {
           })
         }  
       })
+    }
+    else{
+      this.LoadUsuarioLocal(token)
+    }
   }
 
   loadSesion = async () => {
@@ -238,43 +247,57 @@ export default class App extends Component {
   LoadUsuarioLocal(CLVUsuario) 
   {
     try{
+      db.transaction((tx) => {
 
-            let usuario = "chuy@hotmail.com"
-            let password = "XYZ"
+      let sql = `SELECT * FROM Usuario`
+      console.warn(sql)
+      tx.executeSql(sql, [], (tx, results) => {
+        console.warn('Consulta OK')
+        console.warn(results)
 
-                    db.transaction((tx) => {
+        var len = results.rows.length;
 
-                    let sql = `Insert into Login (usuario, password)` + ` VALUES ("${usuario}","${password}");`
-                    let sql2 = `SELECT * FROM Usuario`
-                    let sql3 = `DELETE FROM Login`
+        const tempticket = [];
 
-                    console.warn(sql)
+        for (let i = 0; i < len; i++) {
+          let row = results.rows.item(i);
+          console.warn(row)
 
-                    tx.executeSql(sql2, [], (tx, results) => {
-                      console.warn('Consulta OK')
-                      console.warn(results)
+          this.setState({
+              logeado:true,
+              isLoading:false,
+              UsuNombre:row.FirstName,
+              UsuApellidoPaterno:row.FirstLastName,
+              UsuApelidoMaterno:row.LastName
+              //UsuFoto:result.UsuFoto+'?'+Math.random()
+            })
 
-                      var len = results.rows.length;
+          const lista =[
+            {
+              id: row.OnlineId,
+              name: row.FirstName,
+              last_name: row.FirstLastName,
+              last_name2: row.LastName,
+              nick_name: row.Nickname,
+              email: row.Email,
+              ghin_number: row.GhinNumber,
+              handicap: row.Handicap,
+              cellphone:row.Cellphone,
+              password:row.Password,
+              //photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
+            }]
 
-                      const tempticket = [];
-
-                      for (let i = 0; i < len; i++) {
-                        let row = results.rows.item(i);
-                        console.warn(row)
-                      }
-
-                      this.setState({
-                        Localidades: tempticket
-                      });
-
-                      console.warn(tempticket)
-                    });
-                    console.warn(tx)
-                  });
-                }
-                catch(e){
-                  console.warn(e)
-                }
+          this.setState({
+            userData: lista[0]
+          })
+        }
+      });
+      console.warn(tx)
+    }) 
+    }
+    catch(e){
+      console.warn(e)
+    }
   }
 
   closeSesion(props){

@@ -88,6 +88,7 @@ class SettingsView extends Component {
       bbWagerF9 : '',
       bbWagerB9 : '',
       bbWager18 : '',
+      btnAct: false
     }
 
     this.getUserData = this.getUserData.bind(this);
@@ -113,6 +114,12 @@ class SettingsView extends Component {
   };
 
    async componentDidMount() {
+    const actualizados = await AsyncStorage.getItem('actualizados')
+    if(actualizados=="false"){
+      this.setState({
+        btnAct: actualizados
+      })
+    }
     this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
    }
 
@@ -1140,6 +1147,10 @@ class SettingsView extends Component {
           <DragonButton title={save[language]} onPress={this.submit} />
         </View>
 
+        <View style={styles.bottomButtom}>
+          <DragonButton title={update[language]} onPress={this.Actualizar} />
+        </View>
+
       </KeyboardAvoidingView>
     );
   }
@@ -1241,7 +1252,7 @@ class SettingsView extends Component {
 
           const lista =[
             {
-              id: row.OnlineId,
+              id: row.UsuId,
               name: row.FirstName,
               last_name: row.FirstLastName,
               last_name2: row.LastName,
@@ -1283,7 +1294,7 @@ class SettingsView extends Component {
 
           this.setState({
             asHowAdvMove: row.HowAdvMove.toString(),
-            asHowManyStrokes: row.StrokesMovedPerRound,
+            asHowManyStrokes: row.StrokesMovedPerRound.toString(),
             asAdvMoves: row.AdvMovesOn9Holes.toString(),
             asDoesCarryMove: row.CarryMovesAdv.toString(),
             rabbit16: row.Rabbit1_6.toString(),
@@ -1331,165 +1342,170 @@ class SettingsView extends Component {
 
   getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')
-    InfoUsuario(token)
-    .then((res) => {
-        if(res.estatus==1){
+    const actualizados = await AsyncStorage.getItem('actualizados')
+    if(actualizados=="true"){
+      InfoUsuario(token)
+        .then((res) => {
+            if(res.estatus==1){
 
-          let snwUF = false
-          let snwTF = false
-          let _9holes = false
-          let carryMov = false
-          let carryOver = false
-          let lowedf9 = false
-          if(res.resultado.set_snw_use_factor==="\u0001") {snwUF=true} else {snwUF=false}
-          if(res.resultado.set_tmw_use_factor==="\u0001") {snwTF=true} else {snwTF=false}
-          if(res.resultado.set_adv_moves_on_9_holes==="\u0001") {_9holes=true} else {_9holes=false}
-          if(res.resultado.set_carry_moves_adv==="\u0001") {carryMov=true} else {carryMov=false}
-          if(res.resultado.set_skins_carry_over==="\u0001") {carryOver=true} else {carryOver=false}
-          if(res.resultado.set_lower_adv_f9==="\u0001") {lowedf9=true} else {lowedf9=false}
+              let snwUF = false
+              let snwTF = false
+              let _9holes = false
+              let carryMov = false
+              let carryOver = false
+              let lowedf9 = false
+              if(res.resultado.set_snw_use_factor==="\u0001") {snwUF=true} else {snwUF=false}
+              if(res.resultado.set_tmw_use_factor==="\u0001") {snwTF=true} else {snwTF=false}
+              if(res.resultado.set_adv_moves_on_9_holes==="\u0001") {_9holes=true} else {_9holes=false}
+              if(res.resultado.set_carry_moves_adv==="\u0001") {carryMov=true} else {carryMov=false}
+              if(res.resultado.set_skins_carry_over==="\u0001") {carryOver=true} else {carryOver=false}
+              if(res.resultado.set_lower_adv_f9==="\u0001") {lowedf9=true} else {lowedf9=false}
 
-            const lista =[
-            {
-              id: res.resultado.usu_id,
-              name: res.resultado.usu_nombre,
-              last_name: res.resultado.usu_apellido_paterno,
-              last_name2: res.resultado.usu_apellido_materno,
-              nick_name: res.resultado.usu_nickname,
-              email: res.resultado.usu_email,
-              ghin_number: 1,//res.resultado.usu_ghin_numero,
-              handicap: "1",//res.resultado.usu_handicap_index,
-              cellphone:res.resultado.usu_telefono,
-              password:res.resultado.usu_password,
-              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
-            }]
+                const lista =[
+                {
+                  id: res.resultado.usu_id,
+                  name: res.resultado.usu_nombre,
+                  last_name: res.resultado.usu_apellido_paterno,
+                  last_name2: res.resultado.usu_apellido_materno,
+                  nick_name: res.resultado.usu_nickname,
+                  email: res.resultado.usu_email,
+                  ghin_number: 1,//res.resultado.usu_ghin_numero,
+                  handicap: "1",//res.resultado.usu_handicap_index,
+                  cellphone:res.resultado.usu_telefono,
+                  password:res.resultado.usu_password,
+                  photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
+                }]
 
-            this.setState({
-            asHowAdvMove: res.resultado.set_how_adv_move,
-            asHowManyStrokes: res.resultado.set_strokes_moved_per_round,
-            asAdvMoves: _9holes,
-            asDoesCarryMove: carryMov,
-            rabbit16: res.resultado.set_rabbit_1_6.split('.')[0],
-            rabbit712: res.resultado.set_rabbit_7_12.split('.')[0],
-            rabbit1318: res.resultado.set_rabbit_13_18.split('.')[0],
-            medalF9: res.resultado.set_medal_play_f9.split('.')[0],
-            medalB9: res.resultado.set_medal_play_b9.split('.')[0],
-            medal18: res.resultado.set_medal_play_18.split('.')[0],
-            skins: res.resultado.set_skins.split('.')[0],
-            skinCarry: carryOver,
-            lowedAdv: res.lowedf9,
-            snwUseFactor: snwUF,
-            snwAutoPress: res.resultado.set_snw_automatic_press,
-            snwFront9: res.resultado.set_snw_front_9,
-            snwBack9: res.resultado.set_snw_back_9,
-            snwMatch: res.resultado.set_snw_match,
-            snwCarry: res.resultado.set_snw_carry,
-            snwMedal: res.resultado.set_snw_medal,
-            tnwUseFactor: snwTF,
-            tnwAutoPress: res.resultado.set_tmw_automatic_press,
-            tnwFront9: res.resultado.set_tmw_front_9,
-            tnwBack9: res.resultado.set_tmw_back_9,
-            tnwMatch: res.resultado.set_tmw_match,
-            tnwCarry: res.resultado.set_tmw_carry,
-            tnwMedal: res.resultado.set_tmw_medal,
-            tnwWhoGets: res.resultado.set_tmw_adv_strokes,
-            ebWager: res.resultado.set_eb_wager,
-            bbWagerF9: res.resultado.set_bbt_wager_f9,
-            bbWagerB9: res.resultado.set_bbt_wager_b9,
-            bbWager18: res.resultado.set_bbt_wager_18,
-            ssDoubleEagle: res.resultado.set_stableford_double_eagle,
-            ssEaglePoints: res.resultado.set_stableford_eagle,
-            ssBirdie: res.resultado.set_stableford_birdie,
-            ssPar: res.resultado.set_stableford_par,
-            ssBogey: res.resultado.set_stableford_bogey,
-            ssDoubleBogey: res.resultado.set_stableford_double_bogey,
-            status: false
-            //seePicker: res.resultado.usu_id
-          })
-          console.warn(res.resultado)
-          this.setState({
-            userData: lista[0]
-          })
+                this.setState({
+                asHowAdvMove: res.resultado.set_how_adv_move,
+                asHowManyStrokes: res.resultado.set_strokes_moved_per_round,
+                asAdvMoves: _9holes,
+                asDoesCarryMove: carryMov,
+                rabbit16: res.resultado.set_rabbit_1_6.split('.')[0],
+                rabbit712: res.resultado.set_rabbit_7_12.split('.')[0],
+                rabbit1318: res.resultado.set_rabbit_13_18.split('.')[0],
+                medalF9: res.resultado.set_medal_play_f9.split('.')[0],
+                medalB9: res.resultado.set_medal_play_b9.split('.')[0],
+                medal18: res.resultado.set_medal_play_18.split('.')[0],
+                skins: res.resultado.set_skins.split('.')[0],
+                skinCarry: carryOver,
+                lowedAdv: res.lowedf9,
+                snwUseFactor: snwUF,
+                snwAutoPress: res.resultado.set_snw_automatic_press,
+                snwFront9: res.resultado.set_snw_front_9,
+                snwBack9: res.resultado.set_snw_back_9,
+                snwMatch: res.resultado.set_snw_match,
+                snwCarry: res.resultado.set_snw_carry,
+                snwMedal: res.resultado.set_snw_medal,
+                tnwUseFactor: snwTF,
+                tnwAutoPress: res.resultado.set_tmw_automatic_press,
+                tnwFront9: res.resultado.set_tmw_front_9,
+                tnwBack9: res.resultado.set_tmw_back_9,
+                tnwMatch: res.resultado.set_tmw_match,
+                tnwCarry: res.resultado.set_tmw_carry,
+                tnwMedal: res.resultado.set_tmw_medal,
+                tnwWhoGets: res.resultado.set_tmw_adv_strokes,
+                ebWager: res.resultado.set_eb_wager,
+                bbWagerF9: res.resultado.set_bbt_wager_f9,
+                bbWagerB9: res.resultado.set_bbt_wager_b9,
+                bbWager18: res.resultado.set_bbt_wager_18,
+                ssDoubleEagle: res.resultado.set_stableford_double_eagle,
+                ssEaglePoints: res.resultado.set_stableford_eagle,
+                ssBirdie: res.resultado.set_stableford_birdie,
+                ssPar: res.resultado.set_stableford_par,
+                ssBogey: res.resultado.set_stableford_bogey,
+                ssDoubleBogey: res.resultado.set_stableford_double_bogey,
+                status: false
+                //seePicker: res.resultado.usu_id
+              })
+              console.warn(res.resultado)
+              this.setState({
+                userData: lista[0]
+              })
 
-        db.transaction((tx) => {
+            db.transaction((tx) => {
 
-          let sql = `Insert into Usuario (UsuId,FirstName,LastName,Email,Password,Cellphone,Nickname,GhinNumber,Handicap,Status,FirstLastName)VALUES("${lista[0].id}","${lista[0].name}","${lista[0].last_name2}","${lista[0].email}","
-          ${lista[0].password}","${lista[0].cellphone}","${lista[0].nick_name}","${lista[0].ghin_number}","${lista[0].handicap}","Local","${lista[0].last_name}");`
-          console.warn(sql)
-            tx.executeSql(
-              sql,
-              [],
-              (tx, results) => {
-                console.warn('Results', results);
-                if (results.rowsAffected > 0) {
-                  Alert.alert(
-                    'Success',
-                    'Settings Insert successfully',
-                    [
-                      {
-                        text: 'Ok',
-                        //onPress: () => navigation.navigate('HomeScreen'),
-                      },
-                    ],
-                    { cancelable: false }
-                  );
-                } else alert('Updation Failed');
-              }
-            );
-            console.warn(tx)
-          });
+              let sql = `Insert into Usuario (UsuId,FirstName,LastName,Email,Password,Cellphone,Nickname,GhinNumber,Handicap,Status,FirstLastName)VALUES("${lista[0].id}","${lista[0].name}","${lista[0].last_name2}","${lista[0].email}","
+              ${lista[0].password}","${lista[0].cellphone}","${lista[0].nick_name}","${lista[0].ghin_number}","${lista[0].handicap}","Local","${lista[0].last_name}");`
+              console.warn(sql)
+                tx.executeSql(
+                  sql,
+                  [],
+                  (tx, results) => {
+                    console.warn('Results', results);
+                    if (results.rowsAffected > 0) {
+                      console.warn("OK")
+                    } else alert('Updation Failed');
+                  }
+                );
+                console.warn(tx)
+              });
 
-        db.transaction((tx) => {
+            db.transaction((tx) => {
 
-          let sql = `Insert into Settings (usu_id,Lenguage,HowAdvMove,StrokesMovedPerRound,AdvMovesOn9Holes,CarryMovesAdv,Rabbit1_6,Rabbit7_12,Rabbit13_18,
-          MedalPlayF9,MedalPlayB9,MedalPlay18,Skins,SkinsCarryOver,LowerAdvF9,SNWAutomaticPress,SNWUseFactor,SNWFront9,SNWBack9,SNWMatch,SNWCarry,SNWMedal,
-          TMWAutomaticPress,TMWUseFactor,TMWFront9,TMWBack9,TMWMatch,MTWCarry,TMWMedal,TMWAdvStrokes,EBWager,BBTWagerF9,BBTWagerB9,BBTWager18,
-          StablefordDoubleEagle,StablefordEagle,StablefordBirdie,StablefordPar,StablefordBogey,StablefordDoubleBogey)` + ` VALUES ("${lista[0].id}","${this.state.language}","
-          ${res.resultado.set_how_adv_move}","${res.resultado.set_strokes_moved_per_round}","${_9holes}","${carryMov}","${res.resultado.set_rabbit_1_6.split('.')[0]}","
-          ${res.resultado.set_rabbit_7_12.split('.')[0]}","${res.resultado.set_rabbit_13_18.split('.')[0]}","${res.resultado.set_medal_play_f9.split('.')[0]}","
-          ${res.resultado.set_medal_play_b9.split('.')[0]}","${res.resultado.set_medal_play_18.split('.')[0]}","${res.resultado.set_skins.split('.')[0]}","
-          ${carryOver}","${res.lowedf9}","${res.resultado.set_snw_automatic_press}","${snwUF}","${res.resultado.set_snw_front_9}","${res.resultado.set_snw_back_9}","
-          ${res.resultado.set_snw_match}","${res.resultado.set_snw_carry}","${res.resultado.set_snw_medal}","${res.resultado.set_tmw_automatic_press}","${snwTF}","
-          ${res.resultado.set_tmw_front_9}","${res.resultado.set_tmw_back_9}","${res.resultado.set_tmw_match}","${res.resultado.set_tmw_carry}","
-          ${res.resultado.set_tmw_medal}","${res.resultado.set_tmw_adv_strokes}","${res.resultado.set_eb_wager}","${res.resultado.set_bbt_wager_f9}","
-          ${res.resultado.set_bbt_wager_b9}","${res.resultado.set_bbt_wager_18}","${res.resultado.set_stableford_double_eagle}","
-          ${res.resultado.set_stableford_eagle}","${res.resultado.set_stableford_birdie}","${res.resultado.set_stableford_par}","
-          ${res.resultado.set_stableford_bogey}","${res.resultado.set_stableford_double_bogey}");`
-            tx.executeSql(
-              sql,
-              [],
-              (tx, results) => {
-                console.warn('Results', results);
-                if (results.rowsAffected > 0) {
-                  Alert.alert(
-                    'Success',
-                    'Settings Insert successfully',
-                    [
-                      {
-                        text: 'Ok',
-                        //onPress: () => navigation.navigate('HomeScreen'),
-                      },
-                    ],
-                    { cancelable: false }
-                  );
-                } else alert('Updation Failed');
-              }
-            );
-          });
-        }  
-        else{
+              let sql = `Insert into Settings (usu_id,Lenguage,HowAdvMove,StrokesMovedPerRound,AdvMovesOn9Holes,CarryMovesAdv,Rabbit1_6,Rabbit7_12,Rabbit13_18,
+              MedalPlayF9,MedalPlayB9,MedalPlay18,Skins,SkinsCarryOver,LowerAdvF9,SNWAutomaticPress,SNWUseFactor,SNWFront9,SNWBack9,SNWMatch,SNWCarry,SNWMedal,
+              TMWAutomaticPress,TMWUseFactor,TMWFront9,TMWBack9,TMWMatch,MTWCarry,TMWMedal,TMWAdvStrokes,EBWager,BBTWagerF9,BBTWagerB9,BBTWager18,
+              StablefordDoubleEagle,StablefordEagle,StablefordBirdie,StablefordPar,StablefordBogey,StablefordDoubleBogey)` + ` VALUES ("${lista[0].id}","${this.state.language}","
+              ${res.resultado.set_how_adv_move}","${res.resultado.set_strokes_moved_per_round}","${_9holes}","${carryMov}","${res.resultado.set_rabbit_1_6.split('.')[0]}","
+              ${res.resultado.set_rabbit_7_12.split('.')[0]}","${res.resultado.set_rabbit_13_18.split('.')[0]}","${res.resultado.set_medal_play_f9.split('.')[0]}","
+              ${res.resultado.set_medal_play_b9.split('.')[0]}","${res.resultado.set_medal_play_18.split('.')[0]}","${res.resultado.set_skins.split('.')[0]}","
+              ${carryOver}","${res.lowedf9}","${res.resultado.set_snw_automatic_press}","${snwUF}","${res.resultado.set_snw_front_9}","${res.resultado.set_snw_back_9}","
+              ${res.resultado.set_snw_match}","${res.resultado.set_snw_carry}","${res.resultado.set_snw_medal}","${res.resultado.set_tmw_automatic_press}","${snwTF}","
+              ${res.resultado.set_tmw_front_9}","${res.resultado.set_tmw_back_9}","${res.resultado.set_tmw_match}","${res.resultado.set_tmw_carry}","
+              ${res.resultado.set_tmw_medal}","${res.resultado.set_tmw_adv_strokes}","${res.resultado.set_eb_wager}","${res.resultado.set_bbt_wager_f9}","
+              ${res.resultado.set_bbt_wager_b9}","${res.resultado.set_bbt_wager_18}","${res.resultado.set_stableford_double_eagle}","
+              ${res.resultado.set_stableford_eagle}","${res.resultado.set_stableford_birdie}","${res.resultado.set_stableford_par}","
+              ${res.resultado.set_stableford_bogey}","${res.resultado.set_stableford_double_bogey}");`
+                tx.executeSql(
+                  sql,
+                  [],
+                  (tx, results) => {
+                    console.warn('Results', results);
+                    if (results.rowsAffected > 0) {
+                      console.warn("OK")
+                    } else alert('Updation Failed');
+                  }
+                );
+              });
+            }  
+            else{
+                //setLoading(false)
+                showMessage({
+                    message: res.mensaje,
+                    type: 'info',
+                });
+            }
+        }).catch(error=>{
             //setLoading(false)
             showMessage({
-                message: res.mensaje,
-                type: 'info',
+                message: error,
+                type:'error',
             });
-        }
-    }).catch(error=>{
-        //setLoading(false)
-        showMessage({
-            message: error,
-            type:'error',
-        });
-    })
+        })
+    }
+    else{
+      Alert.alert(
+      "DragonGolf",
+      "¿Los datos no están actualizados en la base global, si continúa, usará la última versión de Settings",
+      [
+        {
+          text: "Actualizar",
+          onPress: () => {
+            this.Actualizar
+          },
+        },
+        {
+          text: "Continuar",
+          onPress: () => {
+            AsyncStorage.setItem('actualizados', "true");
+            this.getUserData()
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+    }
   }
 
   snwValidations = () => {
@@ -1859,7 +1875,120 @@ class SettingsView extends Component {
 
   }
 
-  submit = () => {
+  Actualizar = async () => {
+    db.transaction((tx) => {
+
+      let sql = `SELECT * FROM Settings`
+      console.warn(sql)
+      tx.executeSql(sql, [], (tx, results) => {
+        console.warn('Consulta OK')
+        console.warn(results)
+
+        var len = results.rows.length;
+
+        const tempticket = [];
+
+        for (let i = 0; i < len; i++) {
+          let row = results.rows.item(i);
+          console.warn(row)
+
+          let usu_id = row.usu_id
+          let Lenguage = row.Lenguage
+
+          this.setState({
+            asHowAdvMove: row.HowAdvMove.toString(),
+            asHowManyStrokes: row.StrokesMovedPerRound.toString(),
+            asAdvMoves: row.AdvMovesOn9Holes.toString(),
+            asDoesCarryMove: row.CarryMovesAdv.toString(),
+            rabbit16: row.Rabbit1_6.toString(),
+            rabbit712: row.Rabbit7_12.toString(),
+            rabbit1318: row.Rabbit13_18.toString(),
+            medalF9: row.MedalPlayF9.toString(),
+            medalB9: row.MedalPlayB9.toString(),
+            medal18: row.MedalPlay18.toString(),
+            skins: row.Skins.toString(),
+            skinCarry: row.SkinsCarryOver.toString(),
+            lowedAdv: row.LowerAdvF9.toString(),
+            snwUseFactor: row.SNWUseFactor.toString(),
+            snwAutoPress: row.SNWAutomaticPress.toString(),
+            snwFront9: row.SNWFront9.toString(),
+            snwBack9: row.SNWBack9.toString(),
+            snwMatch: row.SNWMatch.toString(),
+            snwCarry: row.SNWCarry.toString(),
+            snwMedal: row.SNWMedal.toString(),
+            tnwUseFactor: row.TMWUseFactor.toString(),
+            tnwAutoPress: row.TMWAutomaticPress.toString(),
+            tnwFront9: row.TMWFront9.toString(),
+            tnwBack9: row.TMWBack9.toString(),
+            tnwMatch: row.TMWMatch.toString(),
+            tnwCarry: row.MTWCarry.toString(),
+            tnwMedal: row.TMWMedal.toString(),
+            tnwWhoGets: row.TMWAdvStrokes.toString(),
+            ebWager: row.EBWager.toString(),
+            bbWagerF9: row.BBTWagerF9.toString(),
+            bbWagerB9: row.BBTWagerB9.toString(),
+            bbWager18: row.BBTWager18.toString(),
+            ssDoubleEagle: row.StablefordDoubleEagle.toString(),
+            ssEaglePoints: row.StablefordEagle.toString(),
+            ssBirdie: row.StablefordBirdie.toString(),
+            ssPar: row.StablefordPar.toString(),
+            ssBogey: row.StablefordBogey.toString(),
+            ssDoubleBogey: row.StablefordDoubleBogey.toString(),
+            status: false
+            //seePicker: res.resultado.usu_id
+          })
+
+          /*
+
+          updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
+            asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
+            gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
+            gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
+            snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
+            snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
+            tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
+            tnwData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
+            bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
+            sfsData.bogey,sfsData.double_bogey)
+            .then((res) => {
+              console.warn(res)
+              try{
+                if(res.estatus==1){
+                showMessage({
+                      message: res.mensaje,
+                      type: 'success',
+                  });
+                AsyncStorage.setItem('actualizados', "true");
+              }  
+              else{
+                  //setLoading(false)
+                  showMessage({
+                      message: res.mensaje,
+                      type: 'info',
+                  });
+              }
+              }catch(e){
+                showMessage({
+                  message: "No se actualizaron Settings global",
+                  type:'danger',
+              });
+                AsyncStorage.setItem('actualizados', "false");
+              }
+          }).catch(error=>{
+              //setLoading(false)
+              showMessage({
+                  message: error,
+                  type:'error',
+              });
+              AsyncStorage.setItem('actualizados', "false");
+          })*/
+        }
+      });
+      console.warn(tx)
+    })
+  }
+
+  submit = async () => {
 
       const {
         language,
@@ -2076,24 +2205,7 @@ class SettingsView extends Component {
 
       console.warn('t: '+tnwData.who_gets_the_adv_strokes)
 
-      updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
-      asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
-      gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
-      gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
-      snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
-      snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
-      tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
-      tnwData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
-      bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
-      sfsData.bogey,sfsData.double_bogey)
-      .then((res) => {
-        console.warn(res)
-        if(res.estatus==1){
-          showMessage({
-                message: res.mensaje,
-                type: 'success',
-            });
-          db.transaction((tx) => {
+      db.transaction((tx) => {
             tx.executeSql(
                `UPDATE Settings set Lenguage=?,HowAdvMove=?,StrokesMovedPerRound=?,AdvMovesOn9Holes=?,CarryMovesAdv=?,Rabbit1_6=?,Rabbit7_12=?,Rabbit13_18=?,MedalPlayF9=?,
               MedalPlayB9=?,MedalPlay18=?,Skins=?,SkinsCarryOver=?,LowerAdvF9=?,SNWAutomaticPress=?,SNWUseFactor=?,SNWFront9=?,SNWBack9=?,SNWMatch=?,SNWCarry=?,SNWMedal=?,
@@ -2108,21 +2220,35 @@ class SettingsView extends Component {
               (tx, results) => {
                 console.warn('Results', results);
                 if (results.rowsAffected > 0) {
-                  Alert.alert(
-                    'Success',
-                    'Settings updated successfully',
-                    [
-                      {
-                        text: 'Ok',
-                        //onPress: () => navigation.navigate('HomeScreen'),
-                      },
-                    ],
-                    { cancelable: false }
-                  );
+                  showMessage({
+                    message: "Settings guardados localmente",
+                    type: 'success',
+                });
                 } else alert('Updation Failed');
               }
             );
+            console.warn(tx)
           });
+
+      updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
+      asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
+      gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
+      gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
+      snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
+      snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
+      tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
+      tnwData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
+      bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
+      sfsData.bogey,sfsData.double_bogey)
+      .then((res) => {
+        console.warn(res)
+        try{
+          if(res.estatus==1){
+          showMessage({
+                message: res.mensaje,
+                type: 'success',
+            });
+          AsyncStorage.setItem('actualizados', "true");
         }  
         else{
             //setLoading(false)
@@ -2131,12 +2257,20 @@ class SettingsView extends Component {
                 type: 'info',
             });
         }
+        }catch(e){
+          showMessage({
+            message: "No se actualizaron Settings global",
+            type:'danger',
+        });
+          AsyncStorage.setItem('actualizados', "false");
+        }
     }).catch(error=>{
         //setLoading(false)
         showMessage({
             message: error,
             type:'error',
         });
+        AsyncStorage.setItem('actualizados', "false");
     })
   }
 }

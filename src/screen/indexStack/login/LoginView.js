@@ -98,9 +98,9 @@ export default function Login({ logeadoHandler }) {
         Logearse(emailLogin, passwordLogin)
           .then((res) => {
             console.warn(res)
-            if (res.estatus == 1) {
 
-              try {
+            try {
+              if (res.estatus == 1) {
 
                 let Mensaje = Bienvenido[language] + ' ' + res.resultado.usu_nombre + ' ' + res.resultado.usu_apellido_paterno + ' ' + res.resultado.usu_apellido_materno
 
@@ -120,8 +120,7 @@ export default function Login({ logeadoHandler }) {
                 )
 
                 AsyncStorage.setItem('usu_id', res.resultado.usu_id.toString());
-
-                   
+                AsyncStorage.setItem('actualizados', "true");
 
                 /*AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());
                 AsyncStorage.setItem('UsuVerContrasena', res.Result[0].UsuVerContrasena.toString());
@@ -154,15 +153,7 @@ export default function Login({ logeadoHandler }) {
                   type: "success",
                 });
 
-              */} catch (e) {
-                showMessage({
-                  message: e.toString(),
-                  type: "danger",
-                });
-                this.setState({
-                  status: false
-                })
-              }
+              */
             }
             else if (res.estatus == 2) {
               this.props.navigation.navigate('CambioContrasena', {Email:emailLogin})
@@ -179,6 +170,15 @@ export default function Login({ logeadoHandler }) {
                     type: "danger",
                   });
             }
+          } catch (e) {
+                showMessage({
+                  message: "Ocurrió un error, favor de intentar más tarde",
+                  type: "danger",
+                });
+                this.setState({
+                  status: false
+                })
+              }
           });
     }
 
@@ -255,7 +255,7 @@ export default function Login({ logeadoHandler }) {
                                 <Ionicon name="ios-arrow-forward" size={30} color={Colors.White} />
                             </Ripple>
                         </View>
-                        <TouchableOpacity style={{padding:10, alignSelf: 'center'}} onPress={()=>this.props.navigation.navigate('RecuperaContrasena', {language:language})}>
+                        <TouchableOpacity style={{padding:10, alignSelf: 'center'}} onPress={()=>navigation.navigate('RecuperaContrasena', {language:language})}>
                             <Text style={{color:Colors.Primary,fontWeight:'bold',fontSize:16}}>{Recupera[language]}</Text>
                         </TouchableOpacity>
                     </ScrollView>
