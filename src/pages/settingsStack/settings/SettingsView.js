@@ -114,10 +114,10 @@ class SettingsView extends Component {
   };
 
    async componentDidMount() {
-    const actualizados = await AsyncStorage.getItem('actualizados')
-    if(actualizados=="false"){
+    const actualizar = await AsyncStorage.getItem('actualizar')
+    if(actualizar=="false"){
       this.setState({
-        btnAct: actualizados
+        btnAct: false
       })
     }
     this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
@@ -209,7 +209,8 @@ class SettingsView extends Component {
       carryMove,
       match,
       money,
-      history
+      history,
+      update
     } = Dictionary;
 
     return (
@@ -1147,9 +1148,12 @@ class SettingsView extends Component {
           <DragonButton title={save[language]} onPress={this.submit} />
         </View>
 
-        <View style={styles.bottomButtom}>
-          <DragonButton title={update[language]} onPress={this.Actualizar} />
-        </View>
+        {
+          this.state.btnAct &&
+          <View style={styles.bottomButtom}>
+            <DragonButton title={update[language]} onPress={this.Actualizar} />
+          </View>
+        }
 
       </KeyboardAvoidingView>
     );
@@ -1342,8 +1346,9 @@ class SettingsView extends Component {
 
   getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')
-    const actualizados = await AsyncStorage.getItem('actualizados')
-    if(actualizados=="true"){
+    const actualizar = await AsyncStorage.getItem('actualizar')
+    console.warn("Act: " + actualizar)
+    if(actualizar=="false"){
       InfoUsuario(token)
         .then((res) => {
             if(res.estatus==1){
@@ -1487,7 +1492,7 @@ class SettingsView extends Component {
     else{
       Alert.alert(
       "DragonGolf",
-      "¿Los datos no están actualizados en la base global, si continúa, usará la última versión de Settings",
+      "¿Los datos no están actualizar en la base global, si continúa, usará la última versión de Settings",
       [
         {
           text: "Actualizar",
@@ -1498,7 +1503,7 @@ class SettingsView extends Component {
         {
           text: "Continuar",
           onPress: () => {
-            AsyncStorage.setItem('actualizados', "true");
+            AsyncStorage.setItem('actualizar', "false");
             this.getUserData()
           },
         },
@@ -1958,7 +1963,7 @@ class SettingsView extends Component {
                       message: res.mensaje,
                       type: 'success',
                   });
-                AsyncStorage.setItem('actualizados', "true");
+                AsyncStorage.setItem('actualizar', "true");
               }  
               else{
                   //setLoading(false)
@@ -1972,7 +1977,7 @@ class SettingsView extends Component {
                   message: "No se actualizaron Settings global",
                   type:'danger',
               });
-                AsyncStorage.setItem('actualizados', "false");
+                AsyncStorage.setItem('actualizar', "false");
               }
           }).catch(error=>{
               //setLoading(false)
@@ -1980,7 +1985,7 @@ class SettingsView extends Component {
                   message: error,
                   type:'error',
               });
-              AsyncStorage.setItem('actualizados', "false");
+              AsyncStorage.setItem('actualizar', "false");
           })*/
         }
       });
@@ -2248,7 +2253,10 @@ class SettingsView extends Component {
                 message: res.mensaje,
                 type: 'success',
             });
-          AsyncStorage.setItem('actualizados', "true");
+          AsyncStorage.setItem('actualizar', "true");
+          this.setState({
+            btnAct: true
+          })
         }  
         else{
             //setLoading(false)
@@ -2262,7 +2270,10 @@ class SettingsView extends Component {
             message: "No se actualizaron Settings global",
             type:'danger',
         });
-          AsyncStorage.setItem('actualizados', "false");
+          AsyncStorage.setItem('actualizar', "false");
+          this.setState({
+            btnAct: false
+          })
         }
     }).catch(error=>{
         //setLoading(false)
@@ -2270,7 +2281,10 @@ class SettingsView extends Component {
             message: error,
             type:'error',
         });
-        AsyncStorage.setItem('actualizados', "false");
+        AsyncStorage.setItem('actualizar', "false");
+        this.setState({
+          btnAct: false
+        })
     })
   }
 }
