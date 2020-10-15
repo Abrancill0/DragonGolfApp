@@ -66,8 +66,8 @@ export default class App extends Component {
       userData:[]
     }
 
-    this.loadSesion = this.loadSesion.bind(this)
-    this.getUserData = this.getUserData.bind(this)
+    //this.loadSesion = this.loadSesion.bind(this)
+    //this.getUserData = this.getUserData.bind(this)
 
 
   }

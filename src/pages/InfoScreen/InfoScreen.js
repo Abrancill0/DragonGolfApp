@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, Linking, ScrollView, View, TouchableOpacity } from 'react-native'
 import { Dictionary } from '../../utils/Dictionary';
+import  Colors  from '../../utils/Colors';
 import styles from './styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 

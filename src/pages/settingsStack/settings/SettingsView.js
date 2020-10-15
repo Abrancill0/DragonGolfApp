@@ -91,7 +91,7 @@ class SettingsView extends Component {
       btnAct: false
     }
 
-    this.getUserData = this.getUserData.bind(this);
+    //this.getUserData = this.getUserData.bind(this);
 
     this.inputs = {};
   }
@@ -115,9 +115,9 @@ class SettingsView extends Component {
 
    async componentDidMount() {
     const actualizar = await AsyncStorage.getItem('actualizar')
-    if(actualizar=="false"){
+    if(actualizar=="true"){
       this.setState({
-        btnAct: false
+        btnAct: true
       })
     }
     this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
@@ -1296,11 +1296,37 @@ class SettingsView extends Component {
           let usu_id = row.usu_id
           let Lenguage = row.Lenguage
 
+          let move9 = false
+          let moveAdv = false
+          let ScarryOver = false
+          let LAdvF9 = false
+          let UseFactorS = false
+          let UseFactorT = false
+
+          if(row.AdvMovesOn9Holes==1){
+            move9 = true
+          }
+          if(row.CarryMovesAdv==1){
+            moveAdv = true
+          }
+          if(row.SkinsCarryOver==1){
+            ScarryOver = true
+          }
+          if(row.LowerAdvF9==1){
+            LAdvF9 = true
+          }
+          if(row.SNWUseFactor==1){
+            UseFactorS = true
+          }
+          if(row.TMWUseFactor==1){
+            UseFactorT = true
+          }
+
           this.setState({
             asHowAdvMove: row.HowAdvMove.toString(),
-            asHowManyStrokes: row.StrokesMovedPerRound.toString(),
-            asAdvMoves: row.AdvMovesOn9Holes.toString(),
-            asDoesCarryMove: row.CarryMovesAdv.toString(),
+            asHowManyStrokes: row.StrokesMovedPerRound,
+            asAdvMoves: move9,
+            asDoesCarryMove: moveAdv,
             rabbit16: row.Rabbit1_6.toString(),
             rabbit712: row.Rabbit7_12.toString(),
             rabbit1318: row.Rabbit13_18.toString(),
@@ -1308,16 +1334,16 @@ class SettingsView extends Component {
             medalB9: row.MedalPlayB9.toString(),
             medal18: row.MedalPlay18.toString(),
             skins: row.Skins.toString(),
-            skinCarry: row.SkinsCarryOver.toString(),
-            lowedAdv: row.LowerAdvF9.toString(),
-            snwUseFactor: row.SNWUseFactor.toString(),
+            skinCarry: ScarryOver,
+            lowedAdv: LAdvF9,
+            snwUseFactor: UseFactorS,
             snwAutoPress: row.SNWAutomaticPress.toString(),
             snwFront9: row.SNWFront9.toString(),
             snwBack9: row.SNWBack9.toString(),
             snwMatch: row.SNWMatch.toString(),
             snwCarry: row.SNWCarry.toString(),
             snwMedal: row.SNWMedal.toString(),
-            tnwUseFactor: row.TMWUseFactor.toString(),
+            tnwUseFactor: UseFactorT,
             tnwAutoPress: row.TMWAutomaticPress.toString(),
             tnwFront9: row.TMWFront9.toString(),
             tnwBack9: row.TMWBack9.toString(),
@@ -1338,6 +1364,9 @@ class SettingsView extends Component {
             status: false
             //seePicker: res.resultado.usu_id
           })
+          console.warn("P1: " + row.AdvMovesOn9Holes)
+          console.warn("P2: " + row.StrokesMovedPerRound)
+          console.warn("P3: " + row.CarryMovesAdv)
         }
       });
       console.warn(tx)
@@ -1380,6 +1409,8 @@ class SettingsView extends Component {
                   password:res.resultado.usu_password,
                   photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
                 }]
+
+                console.warn(lista[0])
 
                 this.setState({
                 asHowAdvMove: res.resultado.set_how_adv_move,
@@ -1492,12 +1523,12 @@ class SettingsView extends Component {
     else{
       Alert.alert(
       "DragonGolf",
-      "¿Los datos no están actualizar en la base global, si continúa, usará la última versión de Settings",
+      "¿Los datos no están actualizados en la base global, si continúa, usará la última versión de Settings",
       [
         {
           text: "Actualizar",
           onPress: () => {
-            this.Actualizar
+            this.Actualizar()
           },
         },
         {
@@ -1505,6 +1536,9 @@ class SettingsView extends Component {
           onPress: () => {
             AsyncStorage.setItem('actualizar', "false");
             this.getUserData()
+            this.setState({
+              btnAct: false
+            })
           },
         },
       ],
@@ -1513,378 +1547,11 @@ class SettingsView extends Component {
     }
   }
 
-  snwValidations = () => {
-
-    const {
-      snwAutoPress,
-      snwFront9,
-      snwBack9,
-      snwMatch,
-      snwCarry,
-      snwMedal
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: autoPressOk } = Validations.intNumberValidation(snwAutoPress ? snwAutoPress : 1);
-    if (!autoPressOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} ${Dictionary.autoPress[language]} ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: front9Ok } = Validations.floatNumberValidation(snwFront9 ? snwFront9 : 1);
-    if (!front9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Front 9 ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: back9Ok } = Validations.floatNumberValidation(snwBack9 ? snwBack9 : 1);
-    if (!back9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Back 9 ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: matchOk } = Validations.floatNumberValidation(snwMatch ? snwMatch : 1);
-    if (!matchOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Match ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: carryOk } = Validations.floatNumberValidation(snwCarry ? snwCarry : 1);
-    if (!carryOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Carry ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: medalOk } = Validations.floatNumberValidation(snwMedal ? snwMedal : 1);
-    if (!medalOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    return true;
-
-  }
-
-  tnwValidations = () => {
-
-    const {
-      tnwAutoPress,
-      tnwBack9,
-      tnwCarry,
-      tnwFront9,
-      tnwMatch,
-      tnwMedal
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: autoPressOk } = Validations.intNumberValidation(tnwAutoPress ? tnwAutoPress : 1);
-    if (!autoPressOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} ${Dictionary.autoPress[language]} ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: front9Ok } = Validations.floatNumberValidation(tnwFront9 ? tnwFront9 : 1);
-    if (!front9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Front 9 ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: back9Ok } = Validations.floatNumberValidation(tnwBack9 ? tnwBack9 : 1);
-    if (!back9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Back 9 ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: matchOk } = Validations.floatNumberValidation(tnwMatch ? tnwMatch : 1);
-    if (!matchOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Match ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: carryOk } = Validations.floatNumberValidation(tnwCarry ? tnwCarry : 1);
-    if (!carryOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Carry ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: medalOk } = Validations.floatNumberValidation(tnwMedal ? tnwMedal : 1);
-    if (!medalOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    return true;
-
-  }
-
-  gsValidations = () => {
-
-    const {
-      rabbit16,
-      rabbit712,
-      rabbit1318,
-      medalF9,
-      medalB9,
-      medal18,
-      skins,
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: rabbit16Ok } = Validations.floatNumberValidation(rabbit16 ? rabbit16 : 1);
-    if (!rabbit16Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Rabbit 1-6 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: rabbit712Ok } = Validations.floatNumberValidation(rabbit712 ? rabbit712 : 1);
-    if (!rabbit712Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Rabbit 7-12 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: rabbit1318Ok } = Validations.floatNumberValidation(rabbit1318 ? rabbit1318 : 1);
-    if (!rabbit1318Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Rabbit 13-18 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: medalF9Ok } = Validations.floatNumberValidation(medalF9 ? medalF9 : 1);
-    if (!medalF9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal Play F9 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: medalB9Ok } = Validations.floatNumberValidation(medalB9 ? medalB9 : 1);
-    if (!medalB9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal Play B9 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: medal18Ok } = Validations.floatNumberValidation(medal18 ? medal18 : 1);
-    if (!medal18Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal Play 18 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: skinsOk } = Validations.floatNumberValidation(skins ? skins : 1);
-    if (!skinsOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Skins ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    return true;
-
-  }
-
-  ebValidations = () => {
-
-    const {
-      ebWager
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: ebWagerOk } = Validations.floatNumberValidation(ebWager ? ebWager : 1);
-    if (!ebWagerOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Wager ${Dictionary.from[language]} Extra Bets`
-      );
-      return false;
-    }
-
-    return true;
-
-  }
-
-  ssValidations = () => {
-
-    const {
-      ssDoubleEagle,
-      ssEaglePoints,
-      ssBirdie,
-      ssPar,
-      ssBogey,
-      ssDoubleBogey
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: ssDoubleEagleOk } = Validations.floatNumberValidation(ssDoubleEagle ? ssDoubleEagle : 1);
-    if (!ssDoubleEagleOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Double Eagle Points ${Dictionary.from[language]} Stableford Settings`
-      );
-      return false;
-    }
-
-    const { ok: ssEaglePointsOk } = Validations.floatNumberValidation(ssEaglePoints ? ssEaglePoints : 1);
-    if (!ssEaglePointsOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Eagle Points ${Dictionary.from[language]} Stableford Settings`
-      );
-      return false;
-    }
-
-    const { ok: ssBirdieOk } = Validations.floatNumberValidation(ssBirdie ? ssBirdie : 1);
-    if (!ssBirdieOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Birdie ${Dictionary.from[language]} Stableford Settings`
-      );
-      return false;
-    }
-
-    const { ok: ssParOk } = Validations.floatNumberValidation(ssPar ? ssPar : 1);
-    if (!ssParOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Par ${Dictionary.from[language]} Stableford Settings`
-      );
-      return false;
-    }
-
-    const { ok: ssBogeyOk } = Validations.floatNumberValidation(ssBogey ? ssBogey : 1);
-    if (!ssBogeyOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Bogey ${Dictionary.from[language]} Stableford Settings`
-      );
-      return false;
-    }
-
-    const { ok: ssDoubleBogeyOk } = Validations.floatNumberValidation(ssDoubleBogey ? ssDoubleBogey : 1);
-    if (!ssDoubleBogeyOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Double Bogey ${Dictionary.from[language]} Stableford Settings`
-      );
-      return false;
-    }
-
-    return true;
-  }
-
-  bbValidations = () => {
-
-    const {
-      bbWagerF9,
-      bbWagerB9,
-      bbWager18
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: bbWagerF9Ok } = Validations.floatNumberValidation(bbWagerF9 ? bbWagerF9 : 1);
-    if (!bbWagerF9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Wager F9 ${Dictionary.from[language]} Best Ball Teams`
-      );
-      return false;
-    }
-
-    const { ok: bbWagerB9Ok } = Validations.floatNumberValidation(bbWagerB9 ? bbWagerB9 : 1);
-    if (!bbWagerB9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Wager B9 ${Dictionary.from[language]} Best Ball Teams`
-      );
-      return false;
-    }
-
-    const { ok: bbWager18Ok } = Validations.floatNumberValidation(bbWager18 ? bbWager18 : 1);
-    if (!bbWager18Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Wager 18 ${Dictionary.from[language]} Best Ball Teams`
-      );
-      return false;
-    }
-
-    return true;
-
-  }
-
   Actualizar = async () => {
     db.transaction((tx) => {
 
       let sql = `SELECT * FROM Settings`
-      console.warn(sql)
+      console.warn("ACTU: " + sql)
       tx.executeSql(sql, [], (tx, results) => {
         console.warn('Consulta OK')
         console.warn(results)
@@ -1900,11 +1567,37 @@ class SettingsView extends Component {
           let usu_id = row.usu_id
           let Lenguage = row.Lenguage
 
+          let move9 = false
+          let moveAdv = false
+          let ScarryOver = false
+          let LAdvF9 = false
+          let UseFactorS = false
+          let UseFactorT = false
+
+          if(row.AdvMovesOn9Holes==1){
+            move9 = true
+          }
+          if(row.CarryMovesAdv==1){
+            moveAdv = true
+          }
+          if(row.SkinsCarryOver==1){
+            ScarryOver = true
+          }
+          if(row.LowerAdvF9==1){
+            LAdvF9 = true
+          }
+          if(row.SNWUseFactor==1){
+            UseFactorS = true
+          }
+          if(row.TMWUseFactor==1){
+            UseFactorT = true
+          }
+
           this.setState({
             asHowAdvMove: row.HowAdvMove.toString(),
-            asHowManyStrokes: row.StrokesMovedPerRound.toString(),
-            asAdvMoves: row.AdvMovesOn9Holes.toString(),
-            asDoesCarryMove: row.CarryMovesAdv.toString(),
+            asHowManyStrokes: row.StrokesMovedPerRound,
+            asAdvMoves: move9,
+            asDoesCarryMove: moveAdv,
             rabbit16: row.Rabbit1_6.toString(),
             rabbit712: row.Rabbit7_12.toString(),
             rabbit1318: row.Rabbit13_18.toString(),
@@ -1912,16 +1605,16 @@ class SettingsView extends Component {
             medalB9: row.MedalPlayB9.toString(),
             medal18: row.MedalPlay18.toString(),
             skins: row.Skins.toString(),
-            skinCarry: row.SkinsCarryOver.toString(),
-            lowedAdv: row.LowerAdvF9.toString(),
-            snwUseFactor: row.SNWUseFactor.toString(),
+            skinCarry: ScarryOver,
+            lowedAdv: LAdvF9,
+            snwUseFactor: UseFactorS,
             snwAutoPress: row.SNWAutomaticPress.toString(),
             snwFront9: row.SNWFront9.toString(),
             snwBack9: row.SNWBack9.toString(),
             snwMatch: row.SNWMatch.toString(),
             snwCarry: row.SNWCarry.toString(),
             snwMedal: row.SNWMedal.toString(),
-            tnwUseFactor: row.TMWUseFactor.toString(),
+            tnwUseFactor: UseFactorT,
             tnwAutoPress: row.TMWAutomaticPress.toString(),
             tnwFront9: row.TMWFront9.toString(),
             tnwBack9: row.TMWBack9.toString(),
@@ -1943,18 +1636,21 @@ class SettingsView extends Component {
             //seePicker: res.resultado.usu_id
           })
 
-          /*
+         
+          console.warn("P1: " + row.AdvMovesOn9Holes)
+          console.warn("P2: " + row.StrokesMovedPerRound)
+          console.warn("P3: " + row.CarryMovesAdv)
 
-          updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
-            asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
-            gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
-            gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
-            snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
-            snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
-            tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
-            tnwData.who_gets_the_adv_strokes,ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,
-            bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
-            sfsData.bogey,sfsData.double_bogey)
+          updateSettings(usu_id,Lenguage,row.HowAdvMove,row.StrokesMovedPerRound,row.AdvMovesOn9Holes,
+            row.CarryMovesAdv,row.Rabbit1_6,row.Rabbit7_12,row.Rabbit13_18,
+            row.MedalPlayF9,row.MedalPlayB9,row.MedalPlay18,row.Skins,
+            row.SkinsCarryOver,row.LowerAdvF9,row.SNWAutomaticPress, 
+            row.SNWUseFactor,row.SNWFront9,row.SNWBack9,row.SNWMatch,
+            row.SNWCarry,row.SNWMedal,row.TMWAutomaticPress, row.TMWUseFactor,
+            row.TMWFront9,row.TMWBack9,row.TMWMatch,row.MTWCarry,row.TMWMedal,
+            row.TMWAdvStrokes,row.EBWager,row.BBTWagerF9,row.BBTWagerB9,
+            row.BBTWager18,row.StablefordDoubleEagle,row.StablefordEagle,row.StablefordBirdie,row.StablefordPar,
+            row.StablefordBogey,row.StablefordDoubleBogey)
             .then((res) => {
               console.warn(res)
               try{
@@ -1963,7 +1659,10 @@ class SettingsView extends Component {
                       message: res.mensaje,
                       type: 'success',
                   });
-                AsyncStorage.setItem('actualizar', "true");
+                AsyncStorage.setItem('actualizar', "false");
+                this.setState({
+                  btnAct: false
+                })
               }  
               else{
                   //setLoading(false)
@@ -1977,16 +1676,16 @@ class SettingsView extends Component {
                   message: "No se actualizaron Settings global",
                   type:'danger',
               });
-                AsyncStorage.setItem('actualizar', "false");
+                AsyncStorage.setItem('actualizar', "true");
               }
           }).catch(error=>{
-              //setLoading(false)
+              //setLoading(true)
               showMessage({
                   message: error,
                   type:'error',
               });
-              AsyncStorage.setItem('actualizar', "false");
-          })*/
+              AsyncStorage.setItem('actualizar', "true");
+          })
         }
       });
       console.warn(tx)
@@ -2229,6 +1928,10 @@ class SettingsView extends Component {
                     message: "Settings guardados localmente",
                     type: 'success',
                 });
+                AsyncStorage.setItem('actualizar', "true");
+                this.setState({
+                  btnAct: true
+                })
                 } else alert('Updation Failed');
               }
             );
@@ -2253,9 +1956,9 @@ class SettingsView extends Component {
                 message: res.mensaje,
                 type: 'success',
             });
-          AsyncStorage.setItem('actualizar', "true");
+          AsyncStorage.setItem('actualizar', "false");
           this.setState({
-            btnAct: true
+            btnAct: false
           })
         }  
         else{
@@ -2270,9 +1973,9 @@ class SettingsView extends Component {
             message: "No se actualizaron Settings global",
             type:'danger',
         });
-          AsyncStorage.setItem('actualizar', "false");
+          AsyncStorage.setItem('actualizar', "true");
           this.setState({
-            btnAct: false
+            btnAct: true
           })
         }
     }).catch(error=>{
@@ -2281,9 +1984,9 @@ class SettingsView extends Component {
             message: error,
             type:'error',
         });
-        AsyncStorage.setItem('actualizar', "false");
+        AsyncStorage.setItem('actualizar', "true");
         this.setState({
-          btnAct: false
+          btnAct: true
         })
     })
   }
