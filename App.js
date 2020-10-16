@@ -19,6 +19,7 @@ import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
 import AddTee from './src/pages/coursesStack/addTee/AddTeeView'
+import AddHole from './src/pages/coursesStack/teeData/AddHoleView'
 import CreateCourse from './src/pages/coursesStack/addCourse/CreateCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
@@ -426,7 +427,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-      {/*<BottomTab.Screen name='SettingsView' component={SettingsView} 
+      <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -452,7 +453,7 @@ export default class App extends Component {
             }
           },
             
-          })} />*/}
+          })} />
           <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -545,6 +546,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='AddTee' component={AddTee}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='AddHole' component={AddHole}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

@@ -219,8 +219,8 @@ class SettingsView extends Component {
         <Spinner
             visible={this.state.status}
             color={Colors.Primary} />
-        <TouchableOpacity style={{padding:10,width:50}} onPress={()=> this.props.navigation.openDrawer()}>
-          <EntypoIcon name={'menu'} size={25} color={Colors.Primary} />
+        <TouchableOpacity style={{padding:20,width:50}} onPress={()=> this.props.navigation.openDrawer()}>
+          <EntypoIcon name={'menu'} size={30} color={Colors.Primary} />
         </TouchableOpacity>
           <Ripple
             style={styles.profileCard}

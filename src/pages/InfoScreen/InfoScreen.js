@@ -23,8 +23,8 @@ class InfoScreen extends Component {
 
         return (
             <View>
-                <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.goBack()}>
-                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
+                  <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
                 </TouchableOpacity>
             <ScrollView
                 style={{ paddingVertical: 15, paddingHorizontal: 20}}

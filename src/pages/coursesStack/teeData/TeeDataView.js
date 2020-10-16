@@ -23,7 +23,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaTees } from '../../../Services/Services'
+import { ListaHole } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class RoundsView extends Component {
@@ -34,7 +34,7 @@ class RoundsView extends Component {
       language: 'es',
       value: '',
       courses: [],
-      IDCourse: props.route.params.IDCourse
+      IDCourse: 6//props.route.params.IDCourse
     };
     
     this.arrayholder = [];
@@ -56,11 +56,11 @@ class RoundsView extends Component {
   }
 
   componentDidMount(){
-        this.ListadoTees()
+        this.ListadoHoles()
   }
 
-  ListadoTees = async () => {
-    ListaTees(this.state.IDCourse)
+  ListadoHoles = async () => {
+    ListaHole(this.state.IDCourse)
         .then((res) => {
           console.warn(res)
             /*if(res.estatus == 1){
@@ -236,7 +236,7 @@ class RoundsView extends Component {
             </TouchableOpacity>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddTee', {IDCourse:IDCourse})}>
+            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddHole', {IDCourse:IDCourse})}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -247,7 +247,7 @@ class RoundsView extends Component {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  this.ListadoTees()
+                  this.ListadoHoles()
                   this.setState({
                     value: ''
                   })

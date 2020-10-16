@@ -25,6 +25,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListaTees } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { ColorPicker, fromHsv } from 'react-native-color-picker'
+import styles from './styles';
 
 class RoundsView extends Component {
   constructor(props) {
@@ -33,7 +35,7 @@ class RoundsView extends Component {
       visible: true,
       language: 'es',
       value: '',
-      courses: [],
+      tees: [],
       IDCourse: props.route.params.IDCourse
     };
     
@@ -63,21 +65,21 @@ class RoundsView extends Component {
     ListaTees(this.state.IDCourse)
         .then((res) => {
           console.warn(res)
-            /*if(res.estatus == 1){
+            if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
                       id: item.IDCourse,
-                      nombre: item.Cou_Nombre,
-                      nombreCorto: item.Cou_NombreCorto,
-                      ciudad: item.Cou_Ciudad,
-                      pais: item.Cou_Pais
+                      nombre: item.Te_TeeName,
+                      slope: item.Te_Slope,
+                      rating: item.Te_Rating,
+                      teeColor: item.Te_TeeColor
                     }
                 ))
                 this.setState({
-                    courses: list
+                    tees: list
                 })
                 this.arrayholder = list;
-            }*/
+            }
         })
   }
 
@@ -218,7 +220,8 @@ class RoundsView extends Component {
     } = this.state;
 
     const {
-      emptyCourseList
+      emptyTeesList,
+      teeColor: teeColorText,
     } = Dictionary;
 
     return (
@@ -231,8 +234,8 @@ class RoundsView extends Component {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}}>
-              <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
@@ -254,7 +257,7 @@ class RoundsView extends Component {
                 }}
               />
             }
-            data={this.state.courses}
+            data={this.state.tees}
             renderItem={({item}) =>
               <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
                 <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
@@ -263,13 +266,17 @@ class RoundsView extends Component {
                     <View style={{flex:.85}}>
                       <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.pais}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Slope: ' + item.slope}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Rating: ' + item.rating}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Color: ' + item.teeColor}</Text>
+                        <View style={styles.teeColorView}>
+                          <Text style={styles.teeColorText}>{teeColorText[language]}</Text>
+                          <View style={[styles.colorSquare, { backgroundColor: item.teeColor }]} />
+                        </View>
                       </View>
                     </View>
                     <View style={{flex:.2,padding:5}}>
-                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> this.Elimina(item.id)}>
+                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} >
                           <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
                         </TouchableOpacity>
                       {/*<View style={{flex:.5}}>
@@ -285,7 +292,7 @@ class RoundsView extends Component {
               //ListHeaderComponent={this.renderHeader}
               ListEmptyComponent={
               <ListEmptyComponent
-                text={emptyCourseList[language]}
+                text={emptyTeesList[language]}
                 iconName="golf"
               />
             }

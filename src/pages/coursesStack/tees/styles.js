@@ -11,6 +11,16 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.Gray,
         paddingVertical: 5
     },
+    colorSquare: {
+        width: 15,
+        height: 15,
+        marginLeft: 10
+    },
+    teeColorView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
     teeNameView: {
         width: 70,
         height: '100%',

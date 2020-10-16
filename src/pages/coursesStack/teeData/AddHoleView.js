@@ -18,7 +18,6 @@ import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import { AltaTees } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const {
       teeName,
@@ -54,7 +53,7 @@ class AddTeeView extends Component {
         teeColor: 'red',
         modalColor: false,
         language: 'es',
-        IDCourse: props.route.params.IDCourse
+        IDCorse: props.route.params.IDCorse
       };
     //}
   }
@@ -85,9 +84,6 @@ class AddTeeView extends Component {
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
-          <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
-            <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
-          </TouchableOpacity>
           <View style={styles.formContainer}>
 
             <View style={styles.inputContainer}>
@@ -242,10 +238,8 @@ class AddTeeView extends Component {
       rating,
       teeColor,
       language,
-      IDCourse
+      IDCorse
     } = this.state;
-
-    console.warn(IDCourse)
 
     if (name === "") {
           showMessage({
@@ -269,7 +263,7 @@ class AddTeeView extends Component {
           return;
         }
 
-        AltaTees(name, slope, rating, teeColor, 0,0,0, IDCourse)
+        AltaTees(name, slope, rating, teeColor, 0,0,0, IDCorse)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -277,7 +271,7 @@ class AddTeeView extends Component {
                 message: "Tee creado correctamente",
                 type:'success',
             });
-            this.props.navigation.navigate("TeesView")
+            this.props.navigation.navigate("TeeDataView")
             }
         })
   }
