@@ -5,8 +5,11 @@ import {
   Animated,
   Dimensions,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
+  RefreshControl,
+  Text
 } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from '../../global/HeaderButton';
@@ -17,14 +20,22 @@ import HideItem from '../../global/HideItem';
 import Snackbar from 'react-native-snackbar';
 import Colors from '../../../utils/Colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import { FlatList } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
+import { ListaCampos } from '../../../Services/Services'
 
 class RoundsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: true,
-      language: 'es'
+      language: 'es',
+      value: '',
+      courses: []
     };
+    
+    this.arrayholder = [];
 
     //props.getCourses();
     this.isDeleting = false;
@@ -41,6 +52,108 @@ class RoundsView extends Component {
       }, 50);
     })
   }
+
+  componentDidMount(){
+        this.ListadoCourses()
+  }
+
+  ListadoCourses = async () => {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    ListaCampos(idUsu)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      nombre: item.Cou_Nombreo,
+                      nombreCorto: item.Cou_NombreCorto,
+                      ciudad: item.Cou_Ciudad,
+                      pais: item.Cou_Pais
+                    }
+                ))
+                this.setState({
+                    courses: list
+                })
+                this.arrayholder = list;
+            }
+        })
+  }
+
+  searchFilterFunction = text => {
+
+    this.setState({
+      value: text
+    });
+
+    const newData = this.arrayholder.filter(item => {
+    const itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+    const textData = text.toUpperCase();
+    return itemData.indexOf(textData) > -1;
+
+    });
+
+    console.warn(newData)
+
+    this.setState({ courses: newData });
+
+    
+  };
+
+   renderSeparator = () => {  
+        return (  
+            <View  
+                style={{  
+                    height: 1,  
+                    width: "100%",  
+                    backgroundColor: "#000",  
+                }}  
+            />  
+        );  
+    };
+
+    renderHeader = () => {
+
+    return (
+
+      <View>
+
+      <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>Buscar por: </Text>
+
+      <SearchBar
+        placeholder="Nombre..."
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
+      <SearchBar
+        placeholder="Nombre Corto..."
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
+      <SearchBar
+        placeholder="Ciudad..."
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
+      <SearchBar
+        placeholder="Pais..."
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
+      </View>
+    );
+  };
 
   static navigationOptions = ({ navigation }) => {
     const state = store.getState();
@@ -87,44 +200,67 @@ class RoundsView extends Component {
           barStyle="dark-content"
           translucent={false}
         />
-        <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.navigate('AddCourse')}>
-          <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-        </TouchableOpacity>
+
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{padding:20}}>
+              <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddCourse')}>
+              <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
         {this.rowTranslateAnimatedValues && visible &&
-          <SwipeListView
-            data={courses}
-            extraData={courses}
-            style={{ flex: 1, paddingVertical: 5 }}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
-              <CourseComponent
-                item={item}
-                height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 70],
-                })}
-                opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={false}
+                onRefresh={()=>{
+                  this.ListadoCourses()
+                  this.setState({
+                    value: ''
+                  })
+                }}
               />
-            )}
-            ListEmptyComponent={
+            }
+            data={this.state.courses}
+            renderItem={({item}) =>
+              <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
+                <View style={{flexDirection:'row',height:150,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
+                    <View style={{flex:.2,padding:5}}>
+                      <View style={{flex:.5}}>
+                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
+                      </View>
+                    </View>
+                    <View style={{flex:.85}}>
+                      <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Modelo: '+item.modelo}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Placas: '+item.placas}</Text>
+                      </View>
+                      <View style={{flex:.4,flexDirection:'row',justifyContent:'center'}}>
+                        <View style={{flex:.4,padding:5,justifyContent:'center'}}>
+                          <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
+                        </View>
+                        <View style={{justifyContent:'center'}}>
+                          <Text style={{ fontSize: 20, fontFamily: 'Montserrat',color:'#123c5b',fontWeight:'bold'}}>{item.hora}</Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+              </TouchableOpacity>
+              }
+              //ListHeaderComponent={this.renderHeader}
+              ListEmptyComponent={
               <ListEmptyComponent
                 text={emptyCourseList[language]}
                 iconName="golf"
               />
             }
-            renderHiddenItem={({ item }) => (
-              <HideItem
-                item={item}
-                height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 70],
-                })}
-                opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
-              />
-            )}
-            stopLeftSwipe={Dimensions.get('window').width * .5}
-            stopRightSwipe={-(Dimensions.get('window').width * .5)}
-            onSwipeValueChange={this.onSwipeValueChange}
           />}
       </View>
     );

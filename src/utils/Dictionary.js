@@ -118,6 +118,10 @@ export const Dictionary = {
         'en': 'Update',
         'es': 'Actualizar'
     },
+    create: {
+        'en': 'Create',
+        'es': 'Crear'
+    },
     //===========ImagePicker===============
     selectPhoto: {
         'en': 'Select Photo',

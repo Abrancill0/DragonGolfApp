@@ -16,6 +16,7 @@ import RegisterView from './src/screen/indexStack/register/RegisterView'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
+import CreateCourse from './src/pages/coursesStack/addCourse/CreateCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
 import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
@@ -422,7 +423,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-      <BottomTab.Screen name='SettingsView' component={SettingsView} 
+      {/*<BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -448,7 +449,7 @@ export default class App extends Component {
             }
           },
             
-          })} />
+          })} />*/}
           <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -529,6 +530,18 @@ export default class App extends Component {
               headerShown:false
           })} />
         <Stack.Screen name='AddCourse' component={AddCourse}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='CreateCourse' component={CreateCourse}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

@@ -1,4 +1,5 @@
 const RutaBase = 'http://trascenti.com/pruebasDragon/public/api/';
+const RutaBaseAB = 'http://13.90.32.51/DragonGolfBackEnd/api'
 
 export const Logearse = (email,password) => {
     const URL = RutaBase + "usuarios/login?usu_email=" + email+"&usu_password="+password ;
@@ -147,6 +148,46 @@ set_stableford_double_bogey) => {
                     set_stableford_par: set_stableford_par,
                     set_stableford_bogey: set_stableford_bogey,
                     set_stableford_double_bogey: set_stableford_double_bogey
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const ListaCampos = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListaCampos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const AltaCampo = (Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDUsuario) => {
+    const URL = RutaBaseAB + "/AltaCampo";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    Cou_Nombre: Cou_Nombre,
+                    Cou_NombreCorto: Cou_NombreCorto,
+                    Cou_Ciudad: Cou_Ciudad,
+                    Cou_Pais: Cou_Pais,
+                    IDUsuario: IDUsuario
                 }),
             })
             .then((response) => response.json())
