@@ -25,7 +25,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaCampos } from '../../../Services/Services'
+import { ListaCamposTodos } from '../../../Services/Services'
 import styles from './styles';
 import DragonButton from '../../global/DragonButton';
 
@@ -67,7 +67,7 @@ class RoundsView extends Component {
 
   ListadoCourses = async () => {
     let idUsu = await AsyncStorage.getItem('usu_id')
-    ListaCampos(idUsu)
+    ListaCamposTodos(idUsu)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
