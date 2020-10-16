@@ -15,7 +15,10 @@ import CambioContrasena from './src/screen/indexStack/login/CambioContrasena'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
+import TeesView from './src/pages/coursesStack/tees/TeesView'
+import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
+import AddTee from './src/pages/coursesStack/addTee/AddTeeView'
 import CreateCourse from './src/pages/coursesStack/addCourse/CreateCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
@@ -530,6 +533,42 @@ export default class App extends Component {
               headerShown:false
           })} />
         <Stack.Screen name='AddCourse' component={AddCourse}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='AddTee' component={AddTee}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='TeesView' component={TeesView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='TeeDataView' component={TeeDataView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

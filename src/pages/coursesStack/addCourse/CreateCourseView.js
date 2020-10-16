@@ -240,11 +240,12 @@ class AddCourseView extends Component {
         AltaCampo(name, shortName, city, country, token)
         .then((res) => {
           console.warn(res)
-            if(res.estatus == 1){
+            if(res.estatus > 0){
                 showMessage({
                 message: "Campo creado correctamente",
                 type:'success',
             });
+            this.props.navigation.navigate("TeesView", {IDCourse:res.estatus})
             }
         })
         }

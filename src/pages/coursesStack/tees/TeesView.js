@@ -1,161 +1,353 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Animated } from 'react-native';
+import {
+  View,
+  StatusBar,
+  Animated,
+  Dimensions,
+  Alert,
+  TouchableOpacity,
+  RefreshControl,
+  Text
+} from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { connect } from 'react-redux';
 import { Dictionary } from '../../../utils/Dictionary';
-import ListEmptyComponent from '../../global/ListEmptyComponent';
-import TeeComponent from './TeeComponent';
 import HeaderButton from '../../global/HeaderButton';
-import { actionGetTees, actionSetTees, actionDeleteTee } from '../../../store/actions';
+//import CourseComponent from './CourseComponent';
 import { NavigationEvents } from 'react-navigation';
+import ListEmptyComponent from '../../global/ListEmptyComponent';
 import HideItem from '../../global/HideItem';
 import Snackbar from 'react-native-snackbar';
 import Colors from '../../../utils/Colors';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import { FlatList } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
+import { ListaTees } from '../../../Services/Services'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-class TeesView extends Component {
+class RoundsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: true,
+      language: 'es',
+      value: '',
+      courses: [],
+      IDCourse: props.route.params.IDCourse
     };
+    
+    this.arrayholder = [];
 
-    this.getData();
-
+    //props.getCourses();
     this.isDeleting = false;
     this.isEditing = false;
     this.hideSnackbar = null;
 
-    this.rowTranslateAnimatedValues = null;
+    this.rowTranslateAnimatedValues = true;
 
     Dimensions.addEventListener('change', () => {
-      this.setState({visible: false});
+      this.setState({ visible: false });
       let timeout = setTimeout(() => {
-        this.setState({visible: true});
+        this.setState({ visible: true });
         clearTimeout(timeout);
-      }, 10);
-    });
+      }, 50);
+    })
   }
 
+  componentDidMount(){
+        this.ListadoTees()
+  }
+
+  ListadoTees = async () => {
+    ListaTees(this.state.IDCourse)
+        .then((res) => {
+          console.warn(res)
+            /*if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDCourse,
+                      nombre: item.Cou_Nombre,
+                      nombreCorto: item.Cou_NombreCorto,
+                      ciudad: item.Cou_Ciudad,
+                      pais: item.Cou_Pais
+                    }
+                ))
+                this.setState({
+                    courses: list
+                })
+                this.arrayholder = list;
+            }*/
+        })
+  }
+
+  searchFilterFunction = text => {
+
+    this.setState({
+      value: text
+    });
+
+    const newData = this.arrayholder.filter(item => {
+    const itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+    const textData = text.toUpperCase();
+    return itemData.indexOf(textData) > -1;
+
+    });
+
+    console.warn(newData)
+
+    this.setState({ courses: newData });
+
+    
+  };
+
+   renderSeparator = () => {  
+        return (  
+            <View  
+                style={{  
+                    height: 1,  
+                    width: "100%",  
+                    backgroundColor: "#000",  
+                }}  
+            />  
+        );  
+    };
+
+    renderHeader = () => {
+
+    return (
+
+      <View>
+
+      <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>Buscar por: </Text>
+
+      <SearchBar
+        placeholder="Nombre..."
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
+      <SearchBar
+        placeholder="Nombre Corto..."
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
+      <SearchBar
+        placeholder="Ciudad..."
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
+      <SearchBar
+        placeholder="Pais..."
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
+      </View>
+    );
+  };
+
   static navigationOptions = ({ navigation }) => {
-    const { state: { params: { courseId } } } = navigation;
+    const state = store.getState();
+    const language = state.reducerLanguage;
     return {
-      title: 'Tees: ' + navigation.getParam('Title'),
+      title: navigation.getParam('Title', Dictionary.courses[language]),
       headerRight: (
         <HeaderButton
           iconName="ios-add"
-          onPress={() => navigation.navigate('AddTeeView', { courseId: courseId })}
+          onPress={() => navigation.navigate('AddCourseView')}
         />
       )
     }
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.tees !== this.props.tees) {
+    if (nextProps.courses !== this.props.courses) {
       this.rowTranslateAnimatedValues = {}
-      nextProps.tees.map(item => {
+      nextProps.courses.map(item => {
         this.rowTranslateAnimatedValues[`${item.id}`] = new Animated.Value(1);
       });
     }
   }
 
-  render() {
+  Elimina(id){
+    Alert.alert(
+      "DragonGolf",
+      "¿Está seguro de eliminar este campo?",
+      [
+        {
+          text: "Cancelar",
+          style: 'cancel',
+        },
+        {
+          text: "Continuar",
+          onPress: () => {
+            EliminarCampo(id)
+              .then((res) => {
+                console.warn(res)
+                  if(res.estatus == 1){
+                  }
+              })
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  }
 
-    const {
-      language,
-      tees,
-      navigation
-    } = this.props;
+  render() {
 
     const {
       visible
     } = this.state;
 
+    const {
+      language,
+      courses,
+      IDCourse
+    } = this.state;
+
+    const {
+      emptyCourseList
+    } = Dictionary;
+
     return (
       <View style={{ flex: 1 }}>
-        <NavigationEvents
-          onWillFocus={this.getData}
+        <StatusBar
+          backgroundColor="#FFFFFF"
+          barStyle="dark-content"
+          translucent={false}
         />
+
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{padding:20}}>
+              <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddTee', {IDCourse:IDCourse})}>
+              <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
         {this.rowTranslateAnimatedValues && visible &&
-          <SwipeListView
-            data={tees}
-            extraData={tees}
-            style={{ flex: 1, paddingVertical: 5 }}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
-              <TeeComponent
-                item={item}
-                getData={this.getData.bind(this)}
-                title={navigation.getParam('Title')}
-                height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 70],
-                })}
-                opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
-              />
-            )}
-            ListEmptyComponent={
-              <ListEmptyComponent
-                text={Dictionary.emptyTeesList[language]}
-                iconName="filter"
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={false}
+                onRefresh={()=>{
+                  this.ListadoTees()
+                  this.setState({
+                    value: ''
+                  })
+                }}
               />
             }
-            renderHiddenItem={({ item }) => (
-              <HideItem
-                item={item}
-                height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 70],
-                })}
-                opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
+            data={this.state.courses}
+            renderItem={({item}) =>
+              <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
+                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
+                    
+                    <View style={{flex:.85}}>
+                      <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.pais}</Text>
+                      </View>
+                    </View>
+                    <View style={{flex:.2,padding:5}}>
+                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> this.Elimina(item.id)}>
+                          <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
+                        </TouchableOpacity>
+                      {/*<View style={{flex:.5}}>
+                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
+                      </View>*/}
+                      <View style={{flex:.5}}>
+                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
+                      </View>
+                    </View>
+                  </View>
+              </TouchableOpacity>
+              }
+              //ListHeaderComponent={this.renderHeader}
+              ListEmptyComponent={
+              <ListEmptyComponent
+                text={emptyCourseList[language]}
+                iconName="golf"
               />
-            )}
-            stopLeftSwipe={Dimensions.get('screen').width * .5}
-            stopRightSwipe={-(Dimensions.get('screen').width * .5)}
-            onSwipeValueChange={this.onSwipeValueChange}
+            }
           />}
       </View>
     );
   }
 
-  getData = () => {
-    const { navigation: { state: { params: { courseId } } } } = this.props;
-    if (courseId) {
-      this.props.resetTees();
-      this.props.getTees(courseId);
-    }
+  changeTitleText = () => {
+    this.props.navigation.setParams({
+      Title: Dictionary.courses[this.props.language]
+    });
   }
 
   onSwipeValueChange = (swipeData) => {
     const { key, value } = swipeData;
-    if (value > Dimensions.get('screen').width * .5 - 50 && !this.isEditing) {
-      this.editTee(key);
+    if (value > Dimensions.get('window').width * .5 - 50 && !this.isEditing) {
+      this.editCourse(key);
     }
 
-    if (value < -(Dimensions.get('screen').width * .5 - 1) && !this.isDeleting) {
+    if (value < -(Dimensions.get('window').width * .5 - 1) && !this.isDeleting) {
       clearInterval(this.hideSnackbar);
-      this.deleteTee(key);
+      this.deleteValidation(key);
     }
   }
 
-  editTee = (key) => {
+  editCourse = (key) => {
     this.isEditing = true;
-    const { tees } = this.props;
-    const index = tees.findIndex(item => item.id == key);
-    this.props.navigation.navigate('AddTeeView', {tee: tees[index]});
+    const { courses } = this.props;
+    const index = courses.findIndex(item => item.id == key);
+    this.props.navigation.navigate('AddCourseView', { course: courses[index] });
     this.isEditing = false;
   }
 
-  deleteTee = (key) => {
+  deleteValidation = (key) => {
+    this.isDeleting = true;
+    const courseidx = this.props.rounds.findIndex(item => item.course_id == key);
+    if (courseidx < 0) {
+      this.deleteCourse(key);
+    } else {
+      Alert.alert(
+        Dictionary.alert[this.props.language],
+        Dictionary.deleteCourseWithRound[this.props.language],
+        [
+          { text: Dictionary.cancel[this.props.language], style: 'cancel', onPress: _ => this.isDeleting = false },
+          { text: Dictionary.deleteAnyway[this.props.language], style: 'destructive', onPress: _ => this.deleteCourse(key) }
+        ],
+        {cancelable: false}
+      );
+    }
+  }
+
+  deleteCourse = (key) => {
     this.isDeleting = true;
     Animated.timing(this.rowTranslateAnimatedValues[key], { toValue: 0, duration: 200 }).start(() => {
-      let tees = this.props.tees;
-      const index = tees.findIndex(item => item.id == key);
+      const { courses } = this.props;
+      const index = courses.findIndex(item => item.id == key);
       this.hideSnackbar = setTimeout(() => {
         Snackbar.dismiss();
-        tees.splice(index, 1);
-        this.props.updateTees(tees);
-        this.props.deleteTee(key);
-        this.getData();
+        courses.splice(index, 1);
+        this.props.updateCourses(courses);
+        this.props.deleteCourse(key);
         this.isDeleting = false;
         console.log('terminó')
       }, 5000);
@@ -165,36 +357,15 @@ class TeesView extends Component {
         action: {
           text: Dictionary.undo[this.props.language],
           textColor: Colors.Secondary,
-          onPress: () => { 
+          onPress: () => {
             Animated.timing(this.rowTranslateAnimatedValues[key], { toValue: 1, duration: 200 }).start();
             this.isDeleting = false;
             clearTimeout(this.hideSnackbar);
-           },
+          },
         },
       });
     });
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-  tees: state.reducerTees,
-});
-
-const mapDispatchToProps = dispatch => ({
-  getTees: (value) => {
-    dispatch(actionGetTees(value));
-  },
-  updateTees: (values) => {
-    dispatch(actionSetTees(values));
-  },
-  resetTees: () => {
-    dispatch(actionSetTees([]));
-  },
-  deleteTee: (value) => {
-    dispatch(actionDeleteTee(value));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TeesView);
+export default RoundsView;

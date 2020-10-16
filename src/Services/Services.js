@@ -174,6 +174,24 @@ export const ListaCampos = (IDUsuario) => {
                 });
 };
 
+export const ListaTees = (IDCourse) => {
+    const URL = RutaBaseAB + "/ListaTees";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDCourse: IDCourse
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const AltaCampo = (Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDUsuario) => {
     const URL = RutaBaseAB + "/AltaCampo";
     return fetch(URL, {
@@ -188,6 +206,49 @@ export const AltaCampo = (Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDU
                     Cou_Ciudad: Cou_Ciudad,
                     Cou_Pais: Cou_Pais,
                     IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const AltaTees = (Te_TeeName, Te_Slope, Te_Rating, Te_TeeColor, Te_In, Te_Out, Te_Total, IDCourse) => {
+    const URL = RutaBaseAB + "/AltaTees";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    Te_TeeName: Te_TeeName,
+                    Te_Slope: Te_Slope,
+                    Te_Rating: Te_Rating,
+                    Te_TeeColor: Te_TeeColor,
+                    Te_In: Te_In,
+                    Te_Out: Te_Out,
+                    Te_Total: Te_Total,
+                    IDCourse: IDCourse,
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const EliminarCampo = (IDCourse) => {
+    const URL = RutaBaseAB + "/EliminarCampo";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDCourse: IDCourse
                 }),
             })
             .then((response) => response.json())

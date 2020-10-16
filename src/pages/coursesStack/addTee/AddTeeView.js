@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -11,20 +10,27 @@ import {
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import { ColorPicker, fromHsv } from 'react-native-color-picker'
-import store from '../../../store/store';
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
 import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
 import { NavigationEvents } from 'react-navigation';
-import * as Validations from '../../../utils/Validations';
-import { actionSaveTees, actionUpdateTee } from '../../../store/actions';
 import moment from 'moment';
+import { AltaTees } from '../../../Services/Services'
+import { showMessage } from "react-native-flash-message";
+
+const {
+      teeName,
+      teeColor: teeColorText,
+      save,
+      update,
+      required
+    } = Dictionary;
 
 class AddTeeView extends Component {
   constructor(props) {
     super(props);
-    let tee=props.navigation.getParam('tee');
+    /*let tee=props.navigation.getParam('tee');
     if(tee){
       this.state = {
         name: tee.name,
@@ -36,7 +42,7 @@ class AddTeeView extends Component {
         teeColor: tee.color,
         modalColor: false
       };
-    }else {
+    }else {*/
       this.state = {
         name: '',
         nameError: '',
@@ -45,9 +51,11 @@ class AddTeeView extends Component {
         rating: '',
         ratingError: '',
         teeColor: 'red',
-        modalColor: false
+        modalColor: false,
+        language: 'es',
+        IDCorse: props.route.params.IDCorse
       };
-    }
+    //}
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -69,27 +77,12 @@ class AddTeeView extends Component {
       rating,
       ratingError,
       teeColor,
-      modalColor
+      modalColor,
+      language
     } = this.state;
-
-    const {
-      language,
-    } = this.props;
-
-    const tee =this.props.navigation.getParam('tee');
-
-    const {
-      teeName,
-      teeColor: teeColorText,
-      save,
-      update,
-    } = Dictionary;
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
-        <NavigationEvents
-          onWillFocus={this.changeTitleText}
-        />
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
           <View style={styles.formContainer}>
 
@@ -243,57 +236,45 @@ class AddTeeView extends Component {
       name,
       slope,
       rating,
-      teeColor
+      teeColor,
+      language,
+      IDCorse
     } = this.state;
 
-    const { navigation: { state: { params: { courseId } } } } = this.props;
+    if (name === "") {
+          showMessage({
+                    message: teeName[language]+' ' + required[language],
+                    type: "warning",
+                  });
+          return;
+        }
+    if (slope === "") {
+          showMessage({
+                    message: 'Slope '+ required[language],
+                    type: "warning",
+                  });
+          return;
+        }
+    if (rating === "") {
+          showMessage({
+                    message: 'Rating ' + required[language],
+                    type: "warning",
+                  });
+          return;
+        }
 
-    const nameOk = this.nameValidation(name);
-    const slopeOk = this.slopeValidation(slope);
-    const ratingOk = this.ratingValidation(rating);
-
-    if (nameOk && slopeOk && ratingOk) {
-      let tee = this.props.navigation.getParam('tee');
-      if(tee){
-        const data = {
-          id: tee.id,
-          name,
-          slope,
-          rating,
-          course_id: tee.course_id,
-          color: teeColor,
-          id_sync: null,
-          ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss')
-        };
-        this.props.updateTee(data);
-      }else {
-        const data = {
-          name,
-          slope,
-          rating,
-          color: teeColor,
-          course_id: courseId,
-          id_sync: null,
-          ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss')
-        };
-        this.props.saveTee(data);
-      }
-    }
+        AltaTees(name, slope, rating, teeColor, 0,0,0, IDCorse)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                showMessage({
+                message: "Tee creado correctamente",
+                type:'success',
+            });
+            this.props.navigation.navigate("TeeDataView")
+            }
+        })
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-});
-
-const mapDispatchToProps = dispatch => ({
-  saveTee: (values) => {
-    dispatch(actionSaveTees(values));
-  },
-  updateTee: (values) => {
-    dispatch(actionUpdateTee(values));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddTeeView);
+export default AddTeeView;

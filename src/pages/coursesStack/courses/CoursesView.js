@@ -23,7 +23,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaCampos } from '../../../Services/Services'
+import { ListaCampos, EliminarCampo } from '../../../Services/Services'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class RoundsView extends Component {
   constructor(props) {
@@ -65,7 +66,8 @@ class RoundsView extends Component {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      nombre: item.Cou_Nombreo,
+                      id: item.IDCourse,
+                      nombre: item.Cou_Nombre,
                       nombreCorto: item.Cou_NombreCorto,
                       ciudad: item.Cou_Ciudad,
                       pais: item.Cou_Pais
@@ -178,6 +180,31 @@ class RoundsView extends Component {
     }
   }
 
+  Elimina(id){
+    Alert.alert(
+      "DragonGolf",
+      "¿Está seguro de eliminar este campo?",
+      [
+        {
+          text: "Cancelar",
+          style: 'cancel',
+        },
+        {
+          text: "Continuar",
+          onPress: () => {
+            EliminarCampo(id)
+              .then((res) => {
+                console.warn(res)
+                  if(res.estatus == 1){
+                  }
+              })
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  }
+
   render() {
 
     const {
@@ -229,26 +256,26 @@ class RoundsView extends Component {
             data={this.state.courses}
             renderItem={({item}) =>
               <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
-                <View style={{flexDirection:'row',height:150,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    <View style={{flex:.2,padding:5}}>
-                      <View style={{flex:.5}}>
-                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                      </View>
-                    </View>
+                    
                     <View style={{flex:.85}}>
                       <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Modelo: '+item.modelo}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Placas: '+item.placas}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.pais}</Text>
                       </View>
-                      <View style={{flex:.4,flexDirection:'row',justifyContent:'center'}}>
-                        <View style={{flex:.4,padding:5,justifyContent:'center'}}>
-                          <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
-                        </View>
-                        <View style={{justifyContent:'center'}}>
-                          <Text style={{ fontSize: 20, fontFamily: 'Montserrat',color:'#123c5b',fontWeight:'bold'}}>{item.hora}</Text>
-                        </View>
+                    </View>
+                    <View style={{flex:.2,padding:5}}>
+                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> this.Elimina(item.id)}>
+                          <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
+                        </TouchableOpacity>
+                      {/*<View style={{flex:.5}}>
+                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
+                      </View>*/}
+                      <View style={{flex:.5}}>
+                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
                       </View>
                     </View>
                   </View>

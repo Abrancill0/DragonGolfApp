@@ -20,7 +20,9 @@ import HideItem from '../../global/HideItem';
 import Snackbar from 'react-native-snackbar';
 import Colors from '../../../utils/Colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListaCampos } from '../../../Services/Services'
@@ -33,8 +35,12 @@ class RoundsView extends Component {
     this.state = {
       visible: true,
       language: 'es',
-      value: '',
-      courses: []
+      value1: '',
+      value2: '',
+      value3: '',
+      value4: '',
+      courses: [],
+      search: false
     };
     
     this.arrayholder = [];
@@ -67,7 +73,8 @@ class RoundsView extends Component {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      nombre: item.Cou_Nombreo,
+                      id: item.IDCourse,
+                      nombre: item.Cou_Nombre,
                       nombreCorto: item.Cou_NombreCorto,
                       ciudad: item.Cou_Ciudad,
                       pais: item.Cou_Pais
@@ -81,14 +88,38 @@ class RoundsView extends Component {
         })
   }
 
-  searchFilterFunction = text => {
+  searchFilterFunction = (text,busqueda) => {
 
-    this.setState({
-      value: text
-    });
+    console.warn(busqueda)
 
     const newData = this.arrayholder.filter(item => {
-    const itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+    let itemData = ""
+    switch(busqueda){
+      case 1:
+        this.setState({
+          value1: text
+        }); 
+        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+        break;
+      case 2:
+        this.setState({
+          value2: text
+        });  
+        itemData = `${item.nombreCorto} ${item.nombreCorto.toUpperCase()}`;
+        break;
+      case 3:
+        this.setState({
+          value3: text
+        }); 
+        itemData = `${item.ciudad} ${item.ciudad.toUpperCase()}`;
+        break;
+      case 4:
+        this.setState({
+          value4: text
+        }); 
+        itemData = `${item.pais} ${item.pais.toUpperCase()}`;
+        break;
+    }
     const textData = text.toUpperCase();
     return itemData.indexOf(textData) > -1;
 
@@ -107,7 +138,7 @@ class RoundsView extends Component {
                 style={{  
                     height: 1,  
                     width: "100%",  
-                    backgroundColor: "#000",  
+                    backgroundColor: "white",  
                 }}  
             />  
         );  
@@ -119,40 +150,83 @@ class RoundsView extends Component {
 
       <View>
 
-      <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>Buscar por: </Text>
+      <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+            <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+          </View>
+          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> this.setState({search:!this.state.search})}>
+              <Entypo name={this.state.search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
 
+      {this.state.search && <View>
       <SearchBar
-        placeholder="Nombre..."
-        lightTheme
-        round
-        onChangeText={text => this.searchFilterFunction(text)}
+        placeholder="Nombre"
+        onChangeText={text => this.searchFilterFunction(text, 1)}
         autoCorrect={false}
-        value={this.state.value}
+        value={this.state.value1}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.5}}
       />
       <SearchBar
-        placeholder="Nombre Corto..."
-        lightTheme
-        round
-        onChangeText={text => this.searchFilterFunction(text)}
+        placeholder="Nombre Corto"
+        onChangeText={text => this.searchFilterFunction(text, 2)}
         autoCorrect={false}
-        value={this.state.value}
+        value={this.state.value2}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.8}}
       />
       <SearchBar
-        placeholder="Ciudad..."
+        placeholder="Ciudad"
         lightTheme
         round
-        onChangeText={text => this.searchFilterFunction(text)}
+        onChangeText={text => this.searchFilterFunction(text, 3)}
         autoCorrect={false}
-        value={this.state.value}
+        value={this.state.value3}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Pais..."
+        placeholder="Pais"
         lightTheme
         round
-        onChangeText={text => this.searchFilterFunction(text)}
+        onChangeText={text => this.searchFilterFunction(text, 4)}
         autoCorrect={false}
-        value={this.state.value}
+        value={this.state.value4}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:1,
+        borderBottomWidth:2}}
       />
+      </View>}
       </View>
     );
   };
@@ -206,8 +280,8 @@ class RoundsView extends Component {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}}>
-              <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           {/*<View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
@@ -224,7 +298,10 @@ class RoundsView extends Component {
                 onRefresh={()=>{
                   this.ListadoCourses()
                   this.setState({
-                    value: ''
+                    value1: '',
+                    value2: '',
+                    value3: '',
+                    value4: ''
                   })
                 }}
               />
@@ -232,26 +309,23 @@ class RoundsView extends Component {
             data={this.state.courses}
             renderItem={({item}) =>
               <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
-                <View style={{flexDirection:'row',height:150,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    <View style={{flex:.2,padding:5}}>
-                      <View style={{flex:.5}}>
-                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                      </View>
-                    </View>
+                    
                     <View style={{flex:.85}}>
                       <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Modelo: '+item.modelo}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Placas: '+item.placas}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.pais}</Text>
                       </View>
-                      <View style={{flex:.4,flexDirection:'row',justifyContent:'center'}}>
-                        <View style={{flex:.4,padding:5,justifyContent:'center'}}>
-                          <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
-                        </View>
-                        <View style={{justifyContent:'center'}}>
-                          <Text style={{ fontSize: 20, fontFamily: 'Montserrat',color:'#123c5b',fontWeight:'bold'}}>{item.hora}</Text>
-                        </View>
+                    </View>
+                    <View style={{flex:.2,padding:5}}>
+                      {/*<View style={{flex:.5}}>
+                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
+                      </View>*/}
+                      <View style={{flex:.5}}>
+                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
                       </View>
                     </View>
                   </View>
