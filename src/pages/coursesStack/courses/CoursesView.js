@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StatusBar,
@@ -37,29 +37,8 @@ class RoundsView extends Component {
       courses: []
     };
     
-    this.arrayholder = [];
 
-    //props.getCourses();
-    this.isDeleting = false;
-    this.isEditing = false;
-    this.hideSnackbar = null;
-
-    this.rowTranslateAnimatedValues = true;
-
-    Dimensions.addEventListener('change', () => {
-      this.setState({ visible: false });
-      let timeout = setTimeout(() => {
-        this.setState({ visible: true });
-        clearTimeout(timeout);
-      }, 50);
-    })
-  }
-
-  componentDidMount(){
-        this.ListadoCourses()
-  }
-
-  ListadoCourses = async () => {
+  async function ListadoCourses() {
     let idUsu = await AsyncStorage.getItem('usu_id')
     ListaCampos(idUsu)
         .then((res) => {
@@ -74,19 +53,15 @@ class RoundsView extends Component {
                       pais: item.Cou_Pais
                     }
                 ))
-                this.setState({
-                    courses: list
-                })
-                this.arrayholder = list;
+                setCourses(list)
+                setArrayholder(list)
             }
         })
   }
 
-  searchFilterFunction = text => {
+  function searchFilterFunction(text) {
 
-    this.setState({
-      value: text
-    });
+    setValue(text)
 
     const newData = this.arrayholder.filter(item => {
     const itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
@@ -97,12 +72,12 @@ class RoundsView extends Component {
 
     console.warn(newData)
 
-    this.setState({ courses: newData });
+    setCourses(newData)
 
     
   };
 
-   renderSeparator = () => {  
+   function renderSeparator(){  
         return (  
             <View  
                 style={{  
@@ -114,7 +89,7 @@ class RoundsView extends Component {
         );  
     };
 
-    renderHeader = () => {
+    function renderHeader(){
 
     return (
 
@@ -128,7 +103,7 @@ class RoundsView extends Component {
         round
         onChangeText={text => this.searchFilterFunction(text)}
         autoCorrect={false}
-        value={this.state.value}
+        value={value}
       />
       <SearchBar
         placeholder="Nombre Corto..."
@@ -136,7 +111,7 @@ class RoundsView extends Component {
         round
         onChangeText={text => this.searchFilterFunction(text)}
         autoCorrect={false}
-        value={this.state.value}
+        value={value}
       />
       <SearchBar
         placeholder="Ciudad..."
@@ -144,7 +119,7 @@ class RoundsView extends Component {
         round
         onChangeText={text => this.searchFilterFunction(text)}
         autoCorrect={false}
-        value={this.state.value}
+        value={value}
       />
       <SearchBar
         placeholder="Pais..."
@@ -152,36 +127,14 @@ class RoundsView extends Component {
         round
         onChangeText={text => this.searchFilterFunction(text)}
         autoCorrect={false}
-        value={this.state.value}
+        value={value}
       />
       </View>
     );
   };
 
-  static navigationOptions = ({ navigation }) => {
-    const state = store.getState();
-    const language = state.reducerLanguage;
-    return {
-      title: navigation.getParam('Title', Dictionary.courses[language]),
-      headerRight: (
-        <HeaderButton
-          iconName="ios-add"
-          onPress={() => navigation.navigate('AddCourseView')}
-        />
-      )
-    }
-  };
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.courses !== this.props.courses) {
-      this.rowTranslateAnimatedValues = {}
-      nextProps.courses.map(item => {
-        this.rowTranslateAnimatedValues[`${item.id}`] = new Animated.Value(1);
-      });
-    }
-  }
-
-  Elimina(id){
+  function Elimina(id){
     Alert.alert(
       "DragonGolf",
       "¿Está seguro de eliminar este campo?",
@@ -197,6 +150,7 @@ class RoundsView extends Component {
               .then((res) => {
                 console.warn(res)
                   if(res.estatus == 1){
+                    ListadoCourses()
                   }
               })
           },
@@ -206,16 +160,6 @@ class RoundsView extends Component {
     );
   }
 
-  render() {
-
-    const {
-      visible
-    } = this.state;
-
-    const {
-      language,
-      courses
-    } = this.state;
 
     const {
       emptyCourseList
@@ -231,33 +175,29 @@ class RoundsView extends Component {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}}>
+            <TouchableOpacity style={{padding:20}} onPress={()=> navigation.openDrawer()}>
               <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddCourse')}>
+            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddCourse')}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
         </View>
-        {this.rowTranslateAnimatedValues && visible &&
           <SwipeListView
             refreshControl={
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  this.ListadoCourses()
-                  this.setState({
-                    value: ''
-                  })
+                  ListadoCourses()
+                  setValue('')
                 }}
               />
             }
-            data={this.state.courses}
-            extraData={this.state.courses}
+            data={courses}
             renderItem={({item}) =>
-              <Ripple style={{padding:10}} onPress={()=> this.props.navigation.navigate('TeesView', {IDCourse: item.id})}>
+              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
                 <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     
@@ -270,7 +210,7 @@ class RoundsView extends Component {
                       </View>
                     </View>
                     <View style={{flex:.2,padding:5}}>
-                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> this.Elimina(item.id)}>
+                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                           <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
                         </TouchableOpacity>
                       {/*<View style={{flex:.5}}>
@@ -281,7 +221,7 @@ class RoundsView extends Component {
                       </View>
                     </View>
                   </View>
-              </Ripple>
+              </TouchableOpacity>
               }
               //ListHeaderComponent={this.renderHeader}
               ListEmptyComponent={
@@ -292,84 +232,9 @@ class RoundsView extends Component {
             }
             stopLeftSwipe={Dimensions.get('window').width * .5}
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
-            onSwipeValueChange={this.onSwipeValueChange}
-          />}
+            //onSwipeValueChange={this.onSwipeValueChange}
+          />
       </View>
     );
-  }
-
-  changeTitleText = () => {
-    this.props.navigation.setParams({
-      Title: Dictionary.courses[this.props.language]
-    });
-  }
-
-  onSwipeValueChange = (swipeData) => {
-    const { key, value } = swipeData;
-    if (value > Dimensions.get('window').width * .5 - 50 && !this.isEditing) {
-      this.editCourse(key);
-    }
-
-    if (value < -(Dimensions.get('window').width * .5 - 1) && !this.isDeleting) {
-      clearInterval(this.hideSnackbar);
-      this.deleteValidation(key);
-    }
-  }
-
-  editCourse = (key) => {
-    this.isEditing = true;
-    const { courses } = this.props;
-    const index = courses.findIndex(item => item.id == key);
-    this.props.navigation.navigate('AddCourseView', { course: courses[index] });
-    this.isEditing = false;
-  }
-
-  deleteValidation = (key) => {
-    this.isDeleting = true;
-    const courseidx = this.props.rounds.findIndex(item => item.course_id == key);
-    if (courseidx < 0) {
-      this.deleteCourse(key);
-    } else {
-      Alert.alert(
-        Dictionary.alert[this.props.language],
-        Dictionary.deleteCourseWithRound[this.props.language],
-        [
-          { text: Dictionary.cancel[this.props.language], style: 'cancel', onPress: _ => this.isDeleting = false },
-          { text: Dictionary.deleteAnyway[this.props.language], style: 'destructive', onPress: _ => this.deleteCourse(key) }
-        ],
-        {cancelable: false}
-      );
-    }
-  }
-
-  deleteCourse = (key) => {
-    this.isDeleting = true;
-    Animated.timing(this.rowTranslateAnimatedValues[key], { toValue: 0, duration: 200 }).start(() => {
-      const { courses } = this.props;
-      const index = courses.findIndex(item => item.id == key);
-      this.hideSnackbar = setTimeout(() => {
-        Snackbar.dismiss();
-        courses.splice(index, 1);
-        this.props.updateCourses(courses);
-        this.props.deleteCourse(key);
-        this.isDeleting = false;
-        console.log('terminó')
-      }, 5000);
-      Snackbar.show({
-        text: `1 ${Dictionary.removed[this.props.language]}`,
-        duration: Snackbar.LENGTH_INDEFINITE,
-        action: {
-          text: Dictionary.undo[this.props.language],
-          textColor: Colors.Secondary,
-          onPress: () => {
-            Animated.timing(this.rowTranslateAnimatedValues[key], { toValue: 1, duration: 200 }).start();
-            this.isDeleting = false;
-            clearTimeout(this.hideSnackbar);
-          },
-        },
-      });
-    });
-  }
 }
 
-export default RoundsView;

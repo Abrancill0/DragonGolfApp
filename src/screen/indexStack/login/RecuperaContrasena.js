@@ -6,7 +6,7 @@ import {
   FilledTextField,
   OutlinedTextField,
 } from 'react-native-material-textfield';
-//import { OlvideContrasena } from '../Services/Services';
+import { OlvideContrasena } from '../../../Services/Services';
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart';
@@ -59,16 +59,18 @@ export default class Mascota extends Component {
 
         }
 
-    /*this.setState({
+    this.setState({
       status: true
-    })*/
+    })
 
-    /*OlvideContrasena(this.state.mail)
+    OlvideContrasena(this.state.mail)
       .then((res) => {
 
         this.setState({
             status:false
           })
+
+        console.warn(res)
 
         if (res.estatus == 1) {
 
@@ -84,7 +86,7 @@ export default class Mascota extends Component {
               });
         }
         this.props.navigation.goBack()
-      });*/
+      });
   }
 
   render() {
@@ -98,7 +100,7 @@ export default class Mascota extends Component {
         <View style={styles2.container}>
         <Spinner
             visible={this.state.status}
-            color='#104E81' />
+            color={Colors.Primary} />
         <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> this.props.navigation.goBack()}>
           <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
         </TouchableOpacity>

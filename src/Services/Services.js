@@ -47,6 +47,50 @@ export const Registro = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,us
         })
 };
 
+export const RegistroAB = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_email,usu_pass,usu_nickname,usu_telefono, usu_imagen) => {
+    const formData = new FormData();
+
+      formData.append('usu_nombre', usu_nombre);
+      formData.append('usu_apellido_paterno', usu_apellido_paterno);
+      formData.append('usu_apellido_materno', usu_apellido_materno);
+      formData.append('usu_email', usu_email);
+      formData.append('usu_pass', usu_pass);
+      formData.append('usu_nickname', usu_nickname);
+      formData.append('usu_telefono', usu_telefono);
+      formData.append('usu_imagen', usu_imagen);
+
+      const URL = RutaBaseAB + "/RegistrarUsuario";
+      return fetch(URL, {
+
+        method: 'POST',
+        body: formData
+      })
+        .then((response) => response.json())
+        .catch((error) => {
+          console.warn(error)
+        })
+};
+
+export const SubirImagenUsuario = (IDUsuario, file) => {
+
+  const formData = new FormData();
+
+  formData.append('IDUsuario', IDUsuario);
+
+  formData.append('file', file);
+
+  const url = RutaBaseAB + 'SubirImagenUsuario';
+  return fetch(url, {
+
+    method: 'POST',
+    body: formData
+  })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.warn(error)
+    })
+};
+
 export const Update = (usu_id,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_nickname,usu_telefono) => {
     const formData = new FormData();
 
@@ -308,6 +352,62 @@ export const EliminarCampo = (IDCourse) => {
                 },
                 body: JSON.stringify({
                     IDCourse: IDCourse
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const EliminarTees = (IDCourse, IDTees) => {
+    const URL = RutaBaseAB + "/EliminarTees";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDCourse: IDCourse,
+                    IDTees: IDTees
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const EliminarHoles = (IDHoles, IDTees) => {
+    const URL = RutaBaseAB + "/EliminarHoles";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDHoles: IDHoles,
+                    IDTees: IDTees
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const OlvideContrasena = (usuario) => {
+    const URL = RutaBaseAB + "/OlvideContrasena";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    usuario:usuario
                 }),
             })
             .then((response) => response.json())

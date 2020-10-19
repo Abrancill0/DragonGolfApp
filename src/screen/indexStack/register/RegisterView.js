@@ -20,7 +20,7 @@ import styles from './styles';
 import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
 import { showMessage } from "react-native-flash-message";
-import { Registro } from '../../../Services/Services'
+import { RegistroAB, SubirImagenUsuario } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const {
@@ -533,6 +533,40 @@ class RegisterView extends Component {
 
     //============= VALIDATIONS ==============
 
+    GuardarFoto = async (idUsuario) => {
+
+    if (this.state.profilePicture != null) {
+      SubirImagenUsuario(idUsuario, this.state.profilePicture)
+        .then((res) => {
+          console.warn(res)
+          if (res.estatus == 1) {
+
+               setTimeout(() => {
+                 showMessage({
+                  message: 'Foto subida correctamente',
+                  type: "success",
+                });
+               }, 1000)
+
+          }
+          else {
+            Alert.alert(
+              "Dragon Golf",
+              "Ocurrió un error al subir la Foto",
+              [
+                {
+                  text: "Aceptar",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+              ],
+              { cancelable: false }
+            );
+          }
+        });
+    }
+  }
+
     submit = () => {
         const {
             profilePicture,
@@ -614,10 +648,10 @@ class RegisterView extends Component {
               });
       return
     }
-      Registro(nameReg, lastNameReg, lastName2Reg, emailReg, passwordReg, nicknameReg, codeNumber + cellphone, profilePicture)
+      RegistroAB(nameReg, lastNameReg, lastName2Reg, emailReg, passwordReg, nicknameReg, codeNumber + cellphone, '')
       .then((res) => {
         console.warn(res)
-        if (res.estatus === 1) {
+        if (res.estatus != 0) {
 
           try {
            showMessage({
@@ -625,7 +659,7 @@ class RegisterView extends Component {
                 type: "success",
               });
 
-           //this.GuardarFoto()
+           this.GuardarFoto(res.estatus)
 
            setTimeout(() => {
                  this.props.navigation.navigate('Login');
