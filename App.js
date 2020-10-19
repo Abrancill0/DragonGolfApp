@@ -453,7 +453,7 @@ export default class App extends Component {
             }
           },
             
-          })} />
+          })} />*/}
           <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
