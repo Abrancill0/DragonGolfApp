@@ -6,9 +6,12 @@ import {
   TouchableOpacity,
   Modal,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Dimensions,
+  TextInput
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
+import HolesComponent from './HolesComponent';
 import { ColorPicker, fromHsv } from 'react-native-color-picker'
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
@@ -16,11 +19,11 @@ import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
-import { AltaTees } from '../../../Services/Services'
+import { AltaHoles } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 
 const {
-      teeName,
+      hole,
       teeColor: teeColorText,
       save,
       update,
@@ -44,16 +47,13 @@ class AddTeeView extends Component {
       };
     }else {*/
       this.state = {
-        name: '',
-        nameError: '',
-        slope: '',
-        slopeError: '',
-        rating: '',
-        ratingError: '',
-        teeColor: 'red',
-        modalColor: false,
+        holeAdd: '',
+        par: '',
+        adv: '',
+        yards: '',
         language: 'es',
-        IDCorse: props.route.params.IDCorse
+        IDTees: props.route.params.IDTees,
+        NameTee: props.route.params.NameTee
       };
     //}
   }
@@ -70,123 +70,88 @@ class AddTeeView extends Component {
   render() {
 
     const {
-      name,
-      nameError,
-      slope,
-      slopeError,
-      rating,
-      ratingError,
-      teeColor,
-      modalColor,
-      language
+      holeAdd,
+      par,
+      adv,
+      yards,
+      language,
     } = this.state;
 
     return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
-        <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
-          <View style={styles.formContainer}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'} >
+        <ScrollView
+          horizontal
+          style={{ alignSelf: 'center' }}
+          keyboardShouldPersistTaps='always'
+          keyboardDismissMode='none'
+          showsHorizontalScrollIndicator={false}
+          style={{width: '100%'}}
+        >
+          <View style={{width: Dimensions.get('screen').width, alignItems: 'center', marginTop:40}}>
+            <View style={styles.holesHeader}>
+              <View style={styles.rectangleElement}>
+                <Text style={styles.holeText}>Hole</Text>
+                <TextInput
+                        //ref={ref => inputs[`1:${item.index}`] = ref}
+                        tintColor={Colors.Primary}
+                        style={styles.input}
+                        maxLength={1}
+                        keyboardType="numeric"
+                        returnKeyType='done'
+                        value={holeAdd}
+                        onSubmitEditing={_ => this.focusNextInput(1)}
+                        onChangeText={text => this.setState({holeAdd:text})}
+                        blurOnSubmit={false}
+                    />
+              </View>
 
-            <View style={styles.inputContainer}>
-              <TextField
-                ref={ref => this.teeNameIn = ref}
-                label={teeName[language]}
-                tintColor={Colors.Primary}
-                autoCapitalize="words"
-                onChangeText={(name) => this.setState({ name })}
-                value={name}
-                error={nameError}
-                onSubmitEditing={({ nativeEvent: { text } }) => {
-                  if(this.nameValidation(text)){
-                    this.slopeIn.focus();
-                  }
-                }}
-                blurOnSubmit={false}
-              />
+              <View style={styles.rectangleElement}>
+                <Text style={styles.headerText}>Par</Text>
+                <TextInput
+                        //ref={ref => inputs[`1:${item.index}`] = ref}
+                        style={styles.input}
+                        maxLength={1}
+                        keyboardType="numeric"
+                        returnKeyType='done'
+                        value={par}
+                        onSubmitEditing={_ => this.focusNextInput(1)}
+                        onChangeText={text => this.setState({par:text})}
+                        blurOnSubmit={false}
+                    />
+              </View>
+
+              <View style={styles.rectangleElement}>
+                <Text style={styles.headerText}>Adv</Text>
+                <TextInput
+                        //ref={ref => inputs[`2:${item.index}`] = ref}
+                        style={styles.input}
+                        maxLength={2}
+                        keyboardType="numeric"
+                        returnKeyType='done'
+                        value={adv}
+                        onSubmitEditing={this.onSubmitAdv}
+                        onChangeText={text => this.setState({adv:text})}
+                        blurOnSubmit={false}
+                    />
+              </View>
+
+              <View style={styles.rectangleElement}>
+                <Text style={styles.headerText}>Yds</Text>
+                <TextInput
+                        //ref={ref => inputs[`3:${item.index}`] = ref}
+                        style={styles.input}
+                        maxLength={5}
+                        keyboardType="numeric"
+                        returnKeyType='done'
+                        value={yards}
+                        onSubmitEditing={this.onSubmitAdv}
+                        onChangeText={text => this.setState({yards:text})}
+                        //blurOnSubmit={item.index === 17}
+                    />
+              </View>
             </View>
-
-            <View style={[styles.inputContainer, { flexDirection: 'row', justifyContent: 'space-between' }]}>
-              <View style={styles.twoInputContainer}>
-                <TextField
-                  ref={ref => this.slopeIn = ref}
-                  label="Slope"
-                  tintColor={Colors.Primary}
-                  autoCapitalize="none"
-                  maxLength={5}
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  onChangeText={(slope) => this.setState({ slope })}
-                  value={slope}
-                  error={slopeError}
-                  onSubmitEditing={({ nativeEvent: { text } }) => {
-                    if(this.slopeValidation(text)){
-                      this.ratingIn.focus();
-                    }
-                  }}
-                  blurOnSubmit={false}
-                />
-              </View>
-              <View style={styles.twoInputContainer}>
-                <TextField
-                  ref={ref => this.ratingIn = ref}
-                  label="Rating"
-                  tintColor={Colors.Primary}
-                  autoCapitalize="none"
-                  maxLength={5}
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  onChangeText={(rating) => this.setState({ rating })}
-                  value={rating}
-                  error={ratingError}
-                  onSubmitEditing={({ nativeEvent: { text } }) => {
-                    if(this.ratingValidation(text)){
-                      this.ratingIn.blur();
-                    }
-                  }}
-                  blurOnSubmit={false}
-                />
-              </View>
-            </View>
-
-            <TouchableOpacity
-              style={styles.inputContainer}
-              onPress={() => this.setState({modalColor: true})}
-            >
-              <View style={styles.teeColorView}>
-                <Text style={styles.teeColorText}>{teeColorText[language]}</Text>
-                <View style={[styles.colorSquare, { backgroundColor: teeColor }]} />
-              </View>
-            </TouchableOpacity>
-
           </View>
         </ScrollView>
-
-        <Modal
-          style={{ flex: 1 }}
-          visible={modalColor}
-          transparent
-          onRequestClose={() => this.setState({modalColor: false})}
-          
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalColorPicker}>
-              <View style={styles.colorPickerView}>
-                <ColorPicker
-                  defaultColor={teeColor}
-                  onColorChange={this.onColorChange}
-                  style={{ flex: 1 }}
-                  onColorSelected={() => this.setState({modalColor: false})}
-                />
-              </View>
-              <TouchableOpacity
-                style={styles.modalOkButton}
-                onPress={() => this.setState({modalColor: false})}
-              >
-                <Text style={styles.modalOkText}>OK</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-
         <View style={styles.bottomButtom}>
           <DragonButton
             title={save[language]}
@@ -233,42 +198,58 @@ class AddTeeView extends Component {
   submit = () => {
 
     const {
-      name,
-      slope,
-      rating,
-      teeColor,
-      language,
-      IDCorse
+      NameTee,
+      holeAdd,
+      par,
+      adv,
+      yards,
+      IDTees,
+      language
     } = this.state;
 
-    if (name === "") {
+    if (holeAdd === "") {
           showMessage({
-                    message: teeName[language]+' ' + required[language],
+                    message: hole[language]+' ' + required[language],
                     type: "warning",
                   });
           return;
         }
-    if (slope === "") {
+    if (par === "") {
           showMessage({
-                    message: 'Slope '+ required[language],
+                    message: 'Par '+ required[language],
                     type: "warning",
                   });
           return;
         }
-    if (rating === "") {
+    if (adv === "") {
           showMessage({
-                    message: 'Rating ' + required[language],
+                    message: 'Adv ' + required[language],
                     type: "warning",
                   });
           return;
         }
 
-        AltaTees(name, slope, rating, teeColor, 0,0,0, IDCorse)
+    if (yards === "") {
+          showMessage({
+                    message: 'Yds ' + required[language],
+                    type: "warning",
+                  });
+          return;
+        }
+
+        console.warn(NameTee)
+        console.warn(IDTees)
+        console.warn(holeAdd)
+        console.warn(par)
+        console.warn(adv)
+        console.warn(yards)
+
+        AltaHoles(NameTee, holeAdd, par, adv, yards,IDTees)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 showMessage({
-                message: "Tee creado correctamente",
+                message: "Hole creado correctamente",
                 type:'success',
             });
             this.props.navigation.navigate("TeeDataView")

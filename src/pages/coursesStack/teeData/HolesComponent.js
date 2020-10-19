@@ -23,7 +23,7 @@ export default class HolesComponent extends Component {
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        ref={ref => inputs[`1:${item.index}`] = ref}
+                        //ref={ref => inputs[`1:${item.index}`] = ref}
                         style={styles.input}
                         maxLength={1}
                         keyboardType="numeric"
@@ -37,7 +37,7 @@ export default class HolesComponent extends Component {
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        ref={ref => inputs[`2:${item.index}`] = ref}
+                        //ref={ref => inputs[`2:${item.index}`] = ref}
                         style={styles.input}
                         maxLength={2}
                         keyboardType="numeric"
@@ -51,7 +51,7 @@ export default class HolesComponent extends Component {
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        ref={ref => inputs[`3:${item.index}`] = ref}
+                        //ref={ref => inputs[`3:${item.index}`] = ref}
                         style={styles.input}
                         maxLength={5}
                         keyboardType="numeric"

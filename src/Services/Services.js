@@ -210,6 +210,24 @@ export const ListaTees = (IDCourse) => {
                 });
 };
 
+export const ListaHole = (IDTees) => {
+    const URL = RutaBaseAB + "/ListaHole";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDTees: IDTees
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const AltaCampo = (Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDUsuario) => {
     const URL = RutaBaseAB + "/AltaCampo";
     return fetch(URL, {
@@ -249,6 +267,29 @@ export const AltaTees = (Te_TeeName, Te_Slope, Te_Rating, Te_TeeColor, Te_In, Te
                     Te_Out: Te_Out,
                     Te_Total: Te_Total,
                     IDCourse: IDCourse,
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const AltaHoles = (Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advantage, Ho_Yards, IDTees) => {
+    const URL = RutaBaseAB + "/AltaHoles";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    Ho_TeeName: Ho_TeeName,
+                    Ho_Hole: Ho_Hole,
+                    Ho_Par: Ho_Par,
+                    Ho_Advantage: Ho_Advantage,
+                    Ho_Yards: Ho_Yards,
+                    IDTees: IDTees,
                 }),
             })
             .then((response) => response.json())

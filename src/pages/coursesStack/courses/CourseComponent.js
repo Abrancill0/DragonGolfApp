@@ -10,7 +10,6 @@ import Ripple from 'react-native-material-ripple';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import * as NavigationService from '../../../routes/NavigationService';
 import Colors from '../../../utils/Colors';
-import Database from '../../../database/database';
 
 export default class CourseComponent extends Component {
 

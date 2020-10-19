@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        flexDirection: 'row',
+        flexDirection: 'column',
     },
     holeText: {
         fontSize: 19,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         width: '95%',
         height: '100%',
         borderWidth: 1,
-        borderColor: Colors.Gray,
+        borderColor: Colors.Primary,
         borderRadius: 7,
         paddingVertical: 0,
         paddingHorizontal: 5,
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 40
     },
     inputsView: {
         flexDirection: 'row',

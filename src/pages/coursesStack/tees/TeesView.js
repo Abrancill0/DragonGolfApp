@@ -68,7 +68,7 @@ class RoundsView extends Component {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDCourse,
+                      id: item.IDTees,
                       nombre: item.Te_TeeName,
                       slope: item.Te_Slope,
                       rating: item.Te_Rating,
@@ -259,8 +259,8 @@ class RoundsView extends Component {
             }
             data={this.state.tees}
             renderItem={({item}) =>
-              <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
-                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+              <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.navigate('TeeDataView', {IDTees: item.id, NameTee: item.nombre})}>
+                <View style={{flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     
                     <View style={{flex:.85}}>
@@ -268,10 +268,8 @@ class RoundsView extends Component {
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Slope: ' + item.slope}</Text>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Rating: ' + item.rating}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Color: ' + item.teeColor}</Text>
                         <View style={styles.teeColorView}>
-                          <Text style={styles.teeColorText}>{teeColorText[language]}</Text>
-                          <View style={[styles.colorSquare, { backgroundColor: item.teeColor }]} />
+                          <View style={[styles.colorSquare, { backgroundColor: item.teeColor, marginVertical:2 }]} />
                         </View>
                       </View>
                     </View>
@@ -281,10 +279,10 @@ class RoundsView extends Component {
                         </TouchableOpacity>
                       {/*<View style={{flex:.5}}>
                         <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                      </View>*/}
+                      </View>
                       <View style={{flex:.5}}>
                         <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
-                      </View>
+                      </View>*/}
                     </View>
                   </View>
               </TouchableOpacity>

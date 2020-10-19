@@ -25,6 +25,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListaCampos, EliminarCampo } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ripple from 'react-native-material-ripple';
 
 class RoundsView extends Component {
   constructor(props) {
@@ -241,7 +242,7 @@ class RoundsView extends Component {
           </View>
         </View>
         {this.rowTranslateAnimatedValues && visible &&
-          <FlatList
+          <SwipeListView
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -254,8 +255,9 @@ class RoundsView extends Component {
               />
             }
             data={this.state.courses}
+            extraData={this.state.courses}
             renderItem={({item}) =>
-              <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.navigate('TeesView', {IDCourse: item.id})}>
+              <Ripple style={{padding:10}} onPress={()=> this.props.navigation.navigate('TeesView', {IDCourse: item.id})}>
                 <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     
@@ -279,7 +281,7 @@ class RoundsView extends Component {
                       </View>
                     </View>
                   </View>
-              </TouchableOpacity>
+              </Ripple>
               }
               //ListHeaderComponent={this.renderHeader}
               ListEmptyComponent={
@@ -288,6 +290,9 @@ class RoundsView extends Component {
                 iconName="golf"
               />
             }
+            stopLeftSwipe={Dimensions.get('window').width * .5}
+            stopRightSwipe={-(Dimensions.get('window').width * .5)}
+            onSwipeValueChange={this.onSwipeValueChange}
           />}
       </View>
     );

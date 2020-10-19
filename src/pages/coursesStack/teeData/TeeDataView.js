@@ -1,30 +1,26 @@
 import React, { Component } from 'react';
 import {
   View,
-  StatusBar,
-  Animated,
-  Dimensions,
-  Alert,
+  Text,
+  ScrollView,
   TouchableOpacity,
-  RefreshControl,
-  Text
+  Modal,
+  KeyboardAvoidingView,
+  Platform,
+  Dimensions
 } from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import { TextField } from 'react-native-material-textfield';
+import HolesComponent from './HolesComponent';
+import { ColorPicker, fromHsv } from 'react-native-color-picker'
 import { Dictionary } from '../../../utils/Dictionary';
-import HeaderButton from '../../global/HeaderButton';
-//import CourseComponent from './CourseComponent';
-import { NavigationEvents } from 'react-navigation';
-import ListEmptyComponent from '../../global/ListEmptyComponent';
-import HideItem from '../../global/HideItem';
-import Snackbar from 'react-native-snackbar';
+import styles from './styles';
 import Colors from '../../../utils/Colors';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import { FlatList } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
+import DragonButton from '../../global/DragonButton';
+import { NavigationEvents } from 'react-navigation';
+import moment from 'moment';
 import { ListaHole } from '../../../Services/Services'
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { showMessage } from "react-native-flash-message";
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 class RoundsView extends Component {
   constructor(props) {
@@ -33,8 +29,9 @@ class RoundsView extends Component {
       visible: true,
       language: 'es',
       value: '',
-      courses: [],
-      IDCourse: 6//props.route.params.IDCourse
+      holes: [],
+      IDTees: props.route.params.IDTees,
+      NameTee: props.route.params.NameTee
     };
     
     this.arrayholder = [];
@@ -60,13 +57,13 @@ class RoundsView extends Component {
   }
 
   ListadoHoles = async () => {
-    ListaHole(this.state.IDCourse)
+    ListaHole(this.state.IDTees)
         .then((res) => {
           console.warn(res)
             /*if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDCourse,
+                      id: item.IDTees,
                       nombre: item.Cou_Nombre,
                       nombreCorto: item.Cou_NombreCorto,
                       ciudad: item.Cou_Ciudad,
@@ -208,89 +205,84 @@ class RoundsView extends Component {
   render() {
 
     const {
-      visible
+      visible,
+      holes
     } = this.state;
 
     const {
       language,
       courses,
-      IDCourse
+      IDTees,
+      NameTee
     } = this.state;
 
     const {
-      emptyCourseList
+      emptyHoles
     } = Dictionary;
 
     return (
-      <View style={{ flex: 1 }}>
-        <StatusBar
-          backgroundColor="#FFFFFF"
-          barStyle="dark-content"
-          translucent={false}
-        />
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'} >
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}}>
-              <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddHole', {IDCourse:IDCourse})}>
+            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddHole', {IDTees:IDTees, NameTee:NameTee})}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
         </View>
-        {this.rowTranslateAnimatedValues && visible &&
-          <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={false}
-                onRefresh={()=>{
-                  this.ListadoHoles()
-                  this.setState({
-                    value: ''
-                  })
-                }}
-              />
-            }
-            data={this.state.courses}
-            renderItem={({item}) =>
-              <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
-                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
-                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    
-                    <View style={{flex:.85}}>
-                      <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.pais}</Text>
-                      </View>
-                    </View>
-                    <View style={{flex:.2,padding:5}}>
-                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> this.Elimina(item.id)}>
-                          <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
-                        </TouchableOpacity>
-                      {/*<View style={{flex:.5}}>
-                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                      </View>*/}
-                      <View style={{flex:.5}}>
-                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
-                      </View>
-                    </View>
-                  </View>
-              </TouchableOpacity>
+
+        <ScrollView
+          horizontal
+          style={{ alignSelf: 'center' }}
+          keyboardShouldPersistTaps='always'
+          keyboardDismissMode='none'
+          showsHorizontalScrollIndicator={false}
+          style={{width: '100%'}}
+        >
+          <View style={{width: Dimensions.get('screen').width, alignItems: 'center'}}>
+            <View style={styles.holesHeader}>
+              <View style={styles.rectangleElement}>
+                <Text style={styles.holeText}>Hole</Text>
+              </View>
+
+              <View style={styles.rectangleElement}>
+                <Text style={styles.headerText}>Par</Text>
+              </View>
+
+              <View style={styles.rectangleElement}>
+                <Text style={styles.headerText}>Adv</Text>
+              </View>
+
+              <View style={styles.rectangleElement}>
+                <Text style={styles.headerText}>Yds</Text>
+              </View>
+            </View>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{width: '100%'}}
+              ref={ref => this.scroll = ref}
+            >
+              {holes.map(item => 
+                  <HolesComponent
+                    key={item.hole_number}
+                    item={item}
+                    changeValues={this.changeValues}
+                    existAdv={this.existAdv}
+                    inputs={this.inputs}
+                    language={language}
+                    scrollToEnd={_ => this.scroll.scrollToEnd()}
+                  />
+                )
               }
-              //ListHeaderComponent={this.renderHeader}
-              ListEmptyComponent={
-              <ListEmptyComponent
-                text={emptyCourseList[language]}
-                iconName="golf"
-              />
-            }
-          />}
-      </View>
+            </ScrollView>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 

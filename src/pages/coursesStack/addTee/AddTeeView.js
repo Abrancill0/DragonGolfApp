@@ -277,7 +277,7 @@ class AddTeeView extends Component {
                 message: "Tee creado correctamente",
                 type:'success',
             });
-            this.props.navigation.navigate("TeesView")
+            this.props.navigation.navigate("TeeDataView")
             }
         })
   }

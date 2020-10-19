@@ -443,6 +443,10 @@ export const Dictionary = {
         'en': 'There are no Bets yet',
         'es': 'Aún no hay apuestas'
     },
+    emptyHoles: {
+        'en': 'There are no Holes yet',
+        'es': 'Aún no hay hoyos'
+    },
     //===========Save===============
     save: {
         'en': 'Save',
