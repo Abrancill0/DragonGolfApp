@@ -26,16 +26,22 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { ListaCampos, EliminarCampo } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
+import { useNavigation } from "@react-navigation/native";
 
-class RoundsView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: true,
-      language: 'es',
-      value: '',
-      courses: []
-    };
+export default function RoundsView(route) {
+
+    const navigation = useNavigation();
+    const [courses, setCourses] = useState([]);
+    const [arrayholder, setArrayholder] = useState([]);
+    const [value, setValue] = useState('');
+    const [language, setLanguage] = useState('es');
+        useEffect(() => {
+         const unsubscribe = navigation.addListener("focus", () => {
+        ListadoCourses();
+          });
+
+        return unsubscribe;
+      }, [navigation]);
     
 
   async function ListadoCourses() {
