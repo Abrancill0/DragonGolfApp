@@ -27,14 +27,19 @@ import { ListaCampos, EliminarCampo } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
+import Entypo from 'react-native-vector-icons/Entypo';
 
 export default function RoundsView(route) {
 
     const navigation = useNavigation();
     const [courses, setCourses] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
-    const [value, setValue] = useState('');
+    const [value1, setValue1] = useState('');
+    const [value2, setValue2] = useState('');
+    const [value3, setValue3] = useState('');
+    const [value4, setValue4] = useState('');
     const [language, setLanguage] = useState('es');
+    const [search, setSearch] = useState(false);
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
         ListadoCourses();
@@ -68,18 +73,34 @@ export default function RoundsView(route) {
         })
   }
 
-  function searchFilterFunction(text) {
+  function searchFilterFunction(text,busqueda){
 
-    setValue(text)
+    //console.warn(busqueda)
 
-    const newData = this.arrayholder.filter(item => {
-    const itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+    const newData = arrayholder.filter(item => {
+    let itemData = ""
+    switch(busqueda){
+      case 1:
+        setValue1(text) 
+        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+        break;
+      case 2:
+        setValue2(text) 
+        itemData = `${item.nombreCorto} ${item.nombreCorto.toUpperCase()}`;
+        break;
+      case 3:
+        setValue3(text) 
+        itemData = `${item.ciudad} ${item.ciudad.toUpperCase()}`;
+        break;
+      case 4:
+        setValue4(text) 
+        itemData = `${item.pais} ${item.pais.toUpperCase()}`;
+        break;
+    }
     const textData = text.toUpperCase();
     return itemData.indexOf(textData) > -1;
 
     });
-
-    console.warn(newData)
 
     setCourses(newData)
 
@@ -104,40 +125,83 @@ export default function RoundsView(route) {
 
       <View>
 
-      <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>Buscar por: </Text>
+      <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+            <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+          </View>
+          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
+              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
 
+      {search && <View>
       <SearchBar
-        placeholder="Nombre..."
-        lightTheme
-        round
-        onChangeText={text => this.searchFilterFunction(text)}
+        placeholder="Nombre"
+        onChangeText={text => searchFilterFunction(text, 1)}
         autoCorrect={false}
-        value={value}
+        value={value1}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.5}}
       />
       <SearchBar
-        placeholder="Nombre Corto..."
-        lightTheme
-        round
-        onChangeText={text => this.searchFilterFunction(text)}
+        placeholder="Nombre Corto"
+        onChangeText={text => searchFilterFunction(text, 2)}
         autoCorrect={false}
-        value={value}
+        value={value2}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.8}}
       />
       <SearchBar
-        placeholder="Ciudad..."
+        placeholder="Ciudad"
         lightTheme
         round
-        onChangeText={text => this.searchFilterFunction(text)}
+        onChangeText={text => searchFilterFunction(text, 3)}
         autoCorrect={false}
-        value={value}
+        value={value3}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Pais..."
+        placeholder="Pais"
         lightTheme
         round
-        onChangeText={text => this.searchFilterFunction(text)}
+        onChangeText={text => searchFilterFunction(text, 4)}
         autoCorrect={false}
-        value={value}
+        value={value4}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:1,
+        borderBottomWidth:2}}
       />
+      </View>}
       </View>
     );
   };
@@ -200,7 +264,10 @@ export default function RoundsView(route) {
                 refreshing={false}
                 onRefresh={()=>{
                   ListadoCourses()
-                  setValue('')
+                  setValue1('')
+                  setValue2('')
+                  setValue3('')
+                  setValue4('')
                 }}
               />
             }
@@ -214,8 +281,7 @@ export default function RoundsView(route) {
                       <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.pais}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}, {item.pais}</Text>
                       </View>
                     </View>
                     <View style={{flex:.2,padding:5}}>
@@ -232,7 +298,7 @@ export default function RoundsView(route) {
                   </View>
               </TouchableOpacity>
               }
-              //ListHeaderComponent={this.renderHeader}
+              ListHeaderComponent={renderHeader}
               ListEmptyComponent={
               <ListEmptyComponent
                 text={emptyCourseList[language]}

@@ -26,7 +26,7 @@ import moment from 'moment';
 import { RadioButton } from 'react-native-paper';
 import Details from '../../../utils/Details';
 import AsyncStorage from '@react-native-community/async-storage';
-import { InfoUsuario, updateSettings } from '../../../Services/Services'
+import { InfoUsuarioAB, updateSettingsAB } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 // import * as Animatable from 'react-native-animatable';
 import SQLite from 'react-native-sqlite-storage';
@@ -219,7 +219,7 @@ class SettingsView extends Component {
         <Spinner
             visible={this.state.status}
             color={Colors.Primary} />
-        <TouchableOpacity style={{padding:20,width:50}} onPress={()=> this.props.navigation.openDrawer()}>
+        <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.openDrawer()}>
           <EntypoIcon name={'menu'} size={30} color={Colors.Primary} />
         </TouchableOpacity>
           <Ripple
@@ -1378,83 +1378,72 @@ class SettingsView extends Component {
     const actualizar = await AsyncStorage.getItem('actualizar')
     console.warn("Act: " + actualizar)
     if(actualizar=="false"){
-      InfoUsuario(token)
+      InfoUsuarioAB(token)
         .then((res) => {
+          console.warn(res)
             if(res.estatus==1){
-
-              let snwUF = false
-              let snwTF = false
-              let _9holes = false
-              let carryMov = false
-              let carryOver = false
-              let lowedf9 = false
-              if(res.resultado.set_snw_use_factor==="\u0001") {snwUF=true} else {snwUF=false}
-              if(res.resultado.set_tmw_use_factor==="\u0001") {snwTF=true} else {snwTF=false}
-              if(res.resultado.set_adv_moves_on_9_holes==="\u0001") {_9holes=true} else {_9holes=false}
-              if(res.resultado.set_carry_moves_adv==="\u0001") {carryMov=true} else {carryMov=false}
-              if(res.resultado.set_skins_carry_over==="\u0001") {carryOver=true} else {carryOver=false}
-              if(res.resultado.set_lower_adv_f9==="\u0001") {lowedf9=true} else {lowedf9=false}
 
                 const lista =[
                 {
-                  id: res.resultado.usu_id,
-                  name: res.resultado.usu_nombre,
-                  last_name: res.resultado.usu_apellido_paterno,
-                  last_name2: res.resultado.usu_apellido_materno,
-                  nick_name: res.resultado.usu_nickname,
-                  email: res.resultado.usu_email,
-                  ghin_number: 1,//res.resultado.usu_ghin_numero,
-                  handicap: "1",//res.resultado.usu_handicap_index,
-                  cellphone:res.resultado.usu_telefono,
-                  password:res.resultado.usu_password,
-                  photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
+                  idSettings: res.Result[0].IDSettings,
+                  id: res.Result[0].usu_id,
+                  name: res.Result[0].usu_nombre,
+                  last_name: res.Result[0].usu_apellido_paterno,
+                  last_name2: res.Result[0].usu_apellido_materno,
+                  nick_name: res.Result[0].usu_nickname,
+                  email: res.Result[0].usu_email,
+                  ghin_number: 1,//res.Result[0].usu_ghin_numero,
+                  handicap: "1",//res.Result[0].usu_handicap_index,
+                  cellphone:res.Result[0].usu_telefono,
+                  password:res.Result[0].usu_password,
+                  photo: 'http://trascenti.com/pruebasDragon/public/' + res.Result[0].usu_imagen
                 }]
 
-                console.warn(lista[0])
+                //console.warn(lista[0])
 
                 this.setState({
-                asHowAdvMove: res.resultado.set_how_adv_move,
-                asHowManyStrokes: res.resultado.set_strokes_moved_per_round,
-                asAdvMoves: _9holes,
-                asDoesCarryMove: carryMov,
-                rabbit16: res.resultado.set_rabbit_1_6.split('.')[0],
-                rabbit712: res.resultado.set_rabbit_7_12.split('.')[0],
-                rabbit1318: res.resultado.set_rabbit_13_18.split('.')[0],
-                medalF9: res.resultado.set_medal_play_f9.split('.')[0],
-                medalB9: res.resultado.set_medal_play_b9.split('.')[0],
-                medal18: res.resultado.set_medal_play_18.split('.')[0],
-                skins: res.resultado.set_skins.split('.')[0],
-                skinCarry: carryOver,
-                lowedAdv: res.lowedf9,
-                snwUseFactor: snwUF,
-                snwAutoPress: res.resultado.set_snw_automatic_press,
-                snwFront9: res.resultado.set_snw_front_9,
-                snwBack9: res.resultado.set_snw_back_9,
-                snwMatch: res.resultado.set_snw_match,
-                snwCarry: res.resultado.set_snw_carry,
-                snwMedal: res.resultado.set_snw_medal,
-                tnwUseFactor: snwTF,
-                tnwAutoPress: res.resultado.set_tmw_automatic_press,
-                tnwFront9: res.resultado.set_tmw_front_9,
-                tnwBack9: res.resultado.set_tmw_back_9,
-                tnwMatch: res.resultado.set_tmw_match,
-                tnwCarry: res.resultado.set_tmw_carry,
-                tnwMedal: res.resultado.set_tmw_medal,
-                tnwWhoGets: res.resultado.set_tmw_adv_strokes,
-                ebWager: res.resultado.set_eb_wager,
-                bbWagerF9: res.resultado.set_bbt_wager_f9,
-                bbWagerB9: res.resultado.set_bbt_wager_b9,
-                bbWager18: res.resultado.set_bbt_wager_18,
-                ssDoubleEagle: res.resultado.set_stableford_double_eagle,
-                ssEaglePoints: res.resultado.set_stableford_eagle,
-                ssBirdie: res.resultado.set_stableford_birdie,
-                ssPar: res.resultado.set_stableford_par,
-                ssBogey: res.resultado.set_stableford_bogey,
-                ssDoubleBogey: res.resultado.set_stableford_double_bogey,
+                asHowAdvMove: res.Result[0].set_how_adv_move,
+                asHowManyStrokes: res.Result[0].set_strokes_moved_per_round,
+                asAdvMoves: res.Result[0].set_adv_moves_on_9_holes,
+                asDoesCarryMove: res.Result[0].set_carry_moves_adv,
+                rabbit16: res.Result[0].set_rabbit_1_6,
+                rabbit712: res.Result[0].set_rabbit_7_12,
+                rabbit1318: res.Result[0].set_rabbit_13_18,
+                medalF9: res.Result[0].set_medal_play_f9,
+                medalB9: res.Result[0].set_medal_play_b9,
+                medal18: res.Result[0].set_medal_play_18,
+                skins: res.Result[0].set_skins,
+                skinCarry: res.Result[0].set_skins_carry_over,
+                lowedAdv: res.Result[0].set_lower_adv_f9,
+                snwUseFactor: res.Result[0].set_snw_use_factor,
+                snwAutoPress: res.Result[0].set_snw_automatic_press,
+                snwFront9: res.Result[0].set_snw_front_9,
+                snwBack9: res.Result[0].set_snw_back_9,
+                snwMatch: res.Result[0].set_snw_match,
+                snwCarry: res.Result[0].set_snw_carry,
+                snwMedal: res.Result[0].set_snw_medal,
+                tnwUseFactor: res.Result[0].set_tmw_use_factor,
+                tnwAutoPress: res.Result[0].set_tmw_automatic_press,
+                tnwFront9: res.Result[0].set_tmw_front_9,
+                tnwBack9: res.Result[0].set_tmw_back_9,
+                tnwMatch: res.Result[0].set_tmw_match,
+                tnwCarry: res.Result[0].set_tmw_carry,
+                tnwMedal: res.Result[0].set_tmw_medal,
+                tnwWhoGets: res.Result[0].set_tmw_adv_strokes,
+                ebWager: res.Result[0].set_eb_wager,
+                bbWagerF9: res.Result[0].set_bbt_wager_f9,
+                bbWagerB9: res.Result[0].set_bbt_wager_b9,
+                bbWager18: res.Result[0].set_bbt_wager_18,
+                ssDoubleEagle: res.Result[0].set_stableford_double_eagle,
+                ssEaglePoints: res.Result[0].set_stableford_eagle,
+                ssBirdie: res.Result[0].set_stableford_birdie,
+                ssPar: res.Result[0].set_stableford_par,
+                ssBogey: res.Result[0].set_stableford_bogey,
+                ssDoubleBogey: res.Result[0].set_stableford_double_bogey,
                 status: false
-                //seePicker: res.resultado.usu_id
+                //seePicker: res.Result[0].usu_id
               })
-              console.warn(res.resultado)
+              console.warn(res.Result[0])
               this.setState({
                 userData: lista[0]
               })
@@ -1479,10 +1468,10 @@ class SettingsView extends Component {
 
             db.transaction((tx) => {
 
-              let sql = `Insert into Settings (usu_id,Lenguage,HowAdvMove,StrokesMovedPerRound,AdvMovesOn9Holes,CarryMovesAdv,Rabbit1_6,Rabbit7_12,Rabbit13_18,
+              let sql = `Insert into Settings (idSettings,usu_id,Lenguage,HowAdvMove,StrokesMovedPerRound,AdvMovesOn9Holes,CarryMovesAdv,Rabbit1_6,Rabbit7_12,Rabbit13_18,
               MedalPlayF9,MedalPlayB9,MedalPlay18,Skins,SkinsCarryOver,LowerAdvF9,SNWAutomaticPress,SNWUseFactor,SNWFront9,SNWBack9,SNWMatch,SNWCarry,SNWMedal,
               TMWAutomaticPress,TMWUseFactor,TMWFront9,TMWBack9,TMWMatch,MTWCarry,TMWMedal,TMWAdvStrokes,EBWager,BBTWagerF9,BBTWagerB9,BBTWager18,
-              StablefordDoubleEagle,StablefordEagle,StablefordBirdie,StablefordPar,StablefordBogey,StablefordDoubleBogey)` + ` VALUES ("${lista[0].id}","${this.state.language}","
+              StablefordDoubleEagle,StablefordEagle,StablefordBirdie,StablefordPar,StablefordBogey,StablefordDoubleBogey)` + ` VALUES ("${lista[0].idSettings}","${lista[0].id}","${this.state.language}","
               ${res.resultado.set_how_adv_move}","${res.resultado.set_strokes_moved_per_round}","${_9holes}","${carryMov}","${res.resultado.set_rabbit_1_6.split('.')[0]}","
               ${res.resultado.set_rabbit_7_12.split('.')[0]}","${res.resultado.set_rabbit_13_18.split('.')[0]}","${res.resultado.set_medal_play_f9.split('.')[0]}","
               ${res.resultado.set_medal_play_b9.split('.')[0]}","${res.resultado.set_medal_play_18.split('.')[0]}","${res.resultado.set_skins.split('.')[0]}","
@@ -1594,6 +1583,7 @@ class SettingsView extends Component {
           }
 
           this.setState({
+            idSettings: row.idSettings,
             asHowAdvMove: row.HowAdvMove.toString(),
             asHowManyStrokes: row.StrokesMovedPerRound,
             asAdvMoves: move9,
@@ -1641,7 +1631,7 @@ class SettingsView extends Component {
           console.warn("P2: " + row.StrokesMovedPerRound)
           console.warn("P3: " + row.CarryMovesAdv)
 
-          updateSettings(usu_id,Lenguage,row.HowAdvMove,row.StrokesMovedPerRound,row.AdvMovesOn9Holes,
+          updateSettingsAB(row.idSettings, usu_id,Lenguage,row.HowAdvMove,row.StrokesMovedPerRound,row.AdvMovesOn9Holes,
             row.CarryMovesAdv,row.Rabbit1_6,row.Rabbit7_12,row.Rabbit13_18,
             row.MedalPlayF9,row.MedalPlayB9,row.MedalPlay18,row.Skins,
             row.SkinsCarryOver,row.LowerAdvF9,row.SNWAutomaticPress, 
@@ -1824,6 +1814,7 @@ class SettingsView extends Component {
       const { userData } = this.state;
 
       let data = {
+        user_settings: userData.idSettings,
         user_id: userData.id,
         asData,
         snwData,
@@ -1911,11 +1902,11 @@ class SettingsView extends Component {
 
       db.transaction((tx) => {
             tx.executeSql(
-               `UPDATE Settings set Lenguage=?,HowAdvMove=?,StrokesMovedPerRound=?,AdvMovesOn9Holes=?,CarryMovesAdv=?,Rabbit1_6=?,Rabbit7_12=?,Rabbit13_18=?,MedalPlayF9=?,
+               `UPDATE Settings set idSettings=?,Lenguage=?,HowAdvMove=?,StrokesMovedPerRound=?,AdvMovesOn9Holes=?,CarryMovesAdv=?,Rabbit1_6=?,Rabbit7_12=?,Rabbit13_18=?,MedalPlayF9=?,
               MedalPlayB9=?,MedalPlay18=?,Skins=?,SkinsCarryOver=?,LowerAdvF9=?,SNWAutomaticPress=?,SNWUseFactor=?,SNWFront9=?,SNWBack9=?,SNWMatch=?,SNWCarry=?,SNWMedal=?,
           TMWAutomaticPress=?,TMWUseFactor=?,TMWFront9=?,TMWBack9=?,TMWMatch=?,MTWCarry=?,TMWMedal=?,TMWAdvStrokes=?,EBWager=?,BBTWagerF9=?,BBTWagerB9=?,BBTWager18=?,
           StablefordDoubleEagle=?,StablefordEagle=?,StablefordBirdie=?,StablefordPar=?,StablefordBogey=?,StablefordDoubleBogey=? where usu_id=?`,
-              [language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,
+              [data.idSettings,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,
               gsDataPlayer.rabbit_13_18, gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,gsData.skinCarry,
               gsData.lowedAdv,snwData.automatic_presses_every, snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,snwData.carry,snwData.medal,
               tnwData.automatic_presses_every, tnwData.useFactor,tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,tnwData.who_gets_the_adv_strokes,
@@ -1938,7 +1929,7 @@ class SettingsView extends Component {
             console.warn(tx)
           });
 
-      updateSettings(data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
+      updateSettingsAB(data.idSettings,data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
       gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
       gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 

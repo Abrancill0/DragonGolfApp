@@ -121,12 +121,16 @@ export default class Mascota extends Component {
                     </View>
                     <View style={styles.inputContainer}>
                       <TextField
+                        ref={ref => this.emailInput = ref}
                         label={email[language]}
                         tintColor={Colors.Primary}
                         autoCapitalize="none"
                         autoCompleteType='email'
                         keyboardType="email-address"
                         onChangeText={(mail) => this.setState({ mail })}
+                        onSubmitEditing={({nativeEvent: {text}}) => {
+                          this.emailInput.blur();
+                        }}
                       />
                     </View>
                   </View>

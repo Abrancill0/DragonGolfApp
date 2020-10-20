@@ -19,7 +19,9 @@ import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
 import AddTee from './src/pages/coursesStack/addTee/AddTeeView'
+import EditTee from './src/pages/coursesStack/addTee/EditTeeView'
 import AddHole from './src/pages/coursesStack/teeData/AddHoleView'
+import EditHole from './src/pages/coursesStack/teeData/EditHoleView'
 import CreateCourse from './src/pages/coursesStack/addCourse/CreateCourseView'
 import EditCourse from './src/pages/coursesStack/addCourse/EditCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
@@ -428,7 +430,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-      {/*<BottomTab.Screen name='SettingsView' component={SettingsView} 
+      <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -454,7 +456,7 @@ export default class App extends Component {
             }
           },
             
-          })} />*/}
+          })} />
           <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -558,7 +560,31 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+          <Stack.Screen name='EditTee' component={EditTee}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
           <Stack.Screen name='AddHole' component={AddHole}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='EditHole' component={EditHole}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

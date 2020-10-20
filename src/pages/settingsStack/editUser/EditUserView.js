@@ -165,8 +165,8 @@ class EditUserView extends Component {
                     barStyle="dark-content"
                     translucent={false}
                 />
-                <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.goBack()}>
-                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
+                  <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
                 </TouchableOpacity>
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
                     <ScrollView style={{ flex: 1, paddingTop: 20 }} keyboardShouldPersistTaps='handled'>
@@ -191,9 +191,7 @@ class EditUserView extends Component {
                                     onChangeText={(nameReg) => this.setState({ nameReg })}
                                     error={nameError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.nameValidation(text)) {
-                                            this.focusNextField('lastName');
-                                        }
+                                        this.focusNextField('lastName');
                                     }}
                                     blurOnSubmit={false}
                                 />
@@ -209,9 +207,7 @@ class EditUserView extends Component {
                                     onChangeText={(lastNameReg) => this.setState({ lastNameReg })}
                                     error={lastNameError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.lastNameValidation(text)) {
-                                            this.focusNextField('email');
-                                        }
+                                        this.focusNextField('lastName2');
                                     }}
                                     blurOnSubmit={false}
                                 />
@@ -227,9 +223,7 @@ class EditUserView extends Component {
                                     onChangeText={(lastName2Reg) => this.setState({ lastName2Reg })}
                                     error={lastNameError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.lastNameValidation(text)) {
-                                            this.focusNextField('email');
-                                        }
+                                        this.focusNextField('nickname');
                                     }}
                                     blurOnSubmit={false}
                                 />
@@ -248,9 +242,7 @@ class EditUserView extends Component {
                                     onChangeText={(emailReg) => this.setState({ emailReg })}
                                     error={emailError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.emailValidation(text)) {
                                             this.focusNextField('nickname');
-                                        }
                                     }}
                                     blurOnSubmit={false}
                                 />
@@ -267,9 +259,7 @@ class EditUserView extends Component {
                                     onChangeText={(nickname) => this.setState({ nicknameReg: nickname.toUpperCase() })}
                                     error={nicknameError}
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.nicknameValidation(text)) {
-                                            this.focusNextField('cellphone');
-                                        }
+                                        this.focusNextField('cellphone');
                                     }}
                                     blurOnSubmit={false}
                                 />
@@ -322,9 +312,7 @@ class EditUserView extends Component {
                                         error={cellphoneError}
                                         returnKeyType='done'
                                         onSubmitEditing={({ nativeEvent: { text } }) => {
-                                            if (this.cellphoneValidation(text)) {
-                                                this.focusNextField('ghin');
-                                            }
+                                            this.focusNextField('ghin');
                                         }}
                                         blurOnSubmit={false}
                                     />
@@ -343,9 +331,7 @@ class EditUserView extends Component {
                                     error={ghinError}
                                     returnKeyType='done'
                                     onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.ghinValidation(text)) {
-                                            this.focusNextField('handicap');
-                                        }
+                                        this.focusNextField('handicap');
                                     }}
                                     blurOnSubmit={false}
                                 />
@@ -362,9 +348,7 @@ class EditUserView extends Component {
                                     returnKeyType='done'
                                     onChangeText={(handicap) => this.setState({ handicap })}
                                     error={handicapError} onSubmitEditing={({ nativeEvent: { text } }) => {
-                                        if (this.handicapValidation(text)) {
-                                            this.inputs['handicap'].blur();
-                                        }
+                                        this.inputs['handicap'].blur();
                                     }}
                                     blurOnSubmit={false}
                                 />

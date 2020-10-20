@@ -19,9 +19,8 @@ import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
-import { AltaHoles } from '../../../Services/Services'
+import { ActualizarHoles } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const {
       hole,
@@ -48,10 +47,11 @@ class AddTeeView extends Component {
       };
     }else {*/
       this.state = {
-        holeAdd: '',
-        par: '',
-        adv: '',
-        yards: '',
+        IDHoles: props.route.params.IDHoles,
+        holeAdd: props.route.params.Hole.toString().toString(),
+        par: props.route.params.Par.toString(),
+        adv: props.route.params.Adv.toString(),
+        yards: props.route.params.Yds.toString(),
         language: 'es',
         IDTees: props.route.params.IDTees,
         NameTee: props.route.params.NameTee
@@ -80,18 +80,6 @@ class AddTeeView extends Component {
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'} >
-      <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
-              <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-          {/*<View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddCourse')}>
-              <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>*/}
-        </View>
         <ScrollView
           horizontal
           style={{ alignSelf: 'center' }}
@@ -217,7 +205,8 @@ class AddTeeView extends Component {
       adv,
       yards,
       IDTees,
-      language
+      language,
+      IDHoles
     } = this.state;
 
     if (holeAdd === "") {
@@ -257,12 +246,12 @@ class AddTeeView extends Component {
         console.warn(adv)
         console.warn(yards)
 
-        AltaHoles(NameTee, holeAdd, par, adv, yards,IDTees)
+        ActualizarHoles(IDTees, NameTee, holeAdd, par, adv, yards,IDHoles)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 showMessage({
-                message: "Hole creado correctamente",
+                message: "Hole editado correctamente",
                 type:'success',
             });
             this.props.navigation.navigate("TeeDataView")

@@ -16,7 +16,7 @@ import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
-import { AltaTees } from '../../../Services/Services'
+import { ActualizarTees } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -45,13 +45,14 @@ class AddTeeView extends Component {
       };
     }else {*/
       this.state = {
-        name: '',
+        IDTees: props.route.params.IDTees,
+        name: props.route.params.Nombre,
         nameError: '',
-        slope: '',
+        slope: props.route.params.Slope,
         slopeError: '',
-        rating: '',
+        rating: props.route.params.Rating,
         ratingError: '',
-        teeColor: 'red',
+        teeColor: props.route.params.Color,
         modalColor: false,
         language: 'es',
         IDCourse: props.route.params.IDCourse
@@ -237,6 +238,7 @@ class AddTeeView extends Component {
   submit = () => {
 
     const {
+      IDTees,
       name,
       slope,
       rating,
@@ -269,21 +271,15 @@ class AddTeeView extends Component {
           return;
         }
 
-        AltaTees(name, slope, rating, teeColor, 0,0,0, IDCourse)
+        ActualizarTees(IDTees, name, slope, rating, teeColor, 0,0,0, IDCourse)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 showMessage({
-                message: "Tee creado correctamente",
+                message: "Tee editado correctamente",
                 type:'success',
             });
             this.props.navigation.navigate("TeesView", {IDCourse:IDCourse})
-            }
-            else{
-              showMessage({
-                message: "El nombre de Tee ya existe",
-                type:'danger',
-              });
             }
         })
   }

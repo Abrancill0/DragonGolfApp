@@ -166,6 +166,9 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     onChangeText={(nameReg) => this.setState({ nameReg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.lastNameIn.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -175,15 +178,21 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     onChangeText={(lastNameReg) => this.setState({ lastNameReg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.lastNameIn2.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    ref={ref => this.lastNameIn = ref}
+                                    ref={ref => this.lastNameIn2 = ref}
                                     label={lastName2[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="words"
                                     onChangeText={(lastName2Reg) => this.setState({ lastName2Reg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.emailIn.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -194,6 +203,9 @@ class RegisterView extends Component {
                                     keyboardType="email-address"
                                     autoCapitalize="none"
                                     onChangeText={(emailReg) => this.setState({ emailReg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.nicknameIn.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -204,6 +216,9 @@ class RegisterView extends Component {
                                     autoCapitalize="characters"
                                     maxLength={5}
                                     onChangeText={(nickname) => this.setState({ nicknameReg: nickname.toUpperCase() })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.phoneIn.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.phoneInputContainer}>
@@ -251,6 +266,9 @@ class RegisterView extends Component {
                                         onKeyPress={({ nativeEvent: { key } }) => this.setState({ deleting: key === 'Backspace' })}
                                         onChangeText={this.formatCellphone}
                                         value={cellphone}
+                                        onSubmitEditing={({nativeEvent: {text}}) => {
+                                            this.passIn.focus();
+                                        }}
                                     />
                                 </View>
                             </View>
@@ -284,6 +302,9 @@ class RegisterView extends Component {
                                     secureTextEntry={!seePassword}
                                     autoCapitalize="none"
                                     onChangeText={(passwordReg) => this.setState({ passwordReg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.passIn2.focus();
+                                    }}
                                 />
                                 <TouchableOpacity
                                     style={styles.showPasswordButton}
@@ -294,12 +315,15 @@ class RegisterView extends Component {
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    ref={ref => this.passIn = ref}
+                                    ref={ref => this.passIn2 = ref}
                                     label={confirmPassword[language]}
                                     tintColor={Colors.Primary}
                                     secureTextEntry={!confirmseePassword}
                                     autoCapitalize="none"
                                     onChangeText={(confirmPasswordReg) => this.setState({ confirmPasswordReg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.passIn2.blur();
+                                    }}
                                 />
                                 <TouchableOpacity
                                     style={styles.showPasswordButton}

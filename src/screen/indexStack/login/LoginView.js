@@ -22,7 +22,7 @@ import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
 import { HomeTab } from '../../../routes/HomeTab';
 import { NavigationEvents } from 'react-navigation';
-import { Logearse } from '../../../Services/Services'
+import { LogearseAB } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
@@ -46,7 +46,6 @@ const {
 export default function Login({ logeadoHandler }) {
   const navigation = useNavigation();
 
-  const [isloading, setLoading] = useState(false);
   const [emailLogin, setemailLogin] = useState("");
   const [re, setre] = useState(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   const [passwordLogin, setpasswordLogin] = useState("");
@@ -68,7 +67,7 @@ export default function Login({ logeadoHandler }) {
         navigation.navigate('RegisterView', { language: language });
     }
 
-    function Logearse2() {
+    function Logearse() {
 
         if (emailLogin === "") {
           showMessage({
@@ -95,15 +94,16 @@ export default function Login({ logeadoHandler }) {
           return;
         }
 
-        Logearse(emailLogin, passwordLogin)
+        LogearseAB(emailLogin, passwordLogin)
           .then((res) => {
             console.warn(res)
 
             try {
               if (res.estatus == 1) {
 
-                let Mensaje = Bienvenido[language] + ' ' + res.resultado.usu_nombre + ' ' + res.resultado.usu_apellido_paterno + ' ' + res.resultado.usu_apellido_materno
+                let Mensaje = Bienvenido[language] + ' ' + res.Result[0].usu_nombre + ' ' + res.Result[0].usu_apellido_paterno + ' ' + res.Result[0].usu_apellido_materno
 
+                console.warn(Mensaje)
                 showMessage({
                   message: Mensaje,
                   type: "success",
@@ -119,7 +119,7 @@ export default function Login({ logeadoHandler }) {
                   1000
                 )
 
-                AsyncStorage.setItem('usu_id', res.resultado.usu_id.toString());
+                AsyncStorage.setItem('usu_id', res.Result[0].IDUsuario.toString());
                 AsyncStorage.setItem('actualizar', "false");
 
                 /*AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());
@@ -151,33 +151,25 @@ export default function Login({ logeadoHandler }) {
                 showMessage({
                   message: Mensaje,
                   type: "success",
-                });
+                });*/
 
-              */
+              
             }
             else if (res.estatus == 2) {
               this.props.navigation.navigate('CambioContrasena', {Email:emailLogin})
-              this.setState({
-                status: false
-              })
             }
             else {
-              this.setState({
-                status: false
-              })
               showMessage({
                     message: res.mensaje,
                     type: "danger",
                   });
             }
           } catch (e) {
+            console.warn(e)
                 showMessage({
-                  message: "Ocurrió un error, favor de intentar más tarde",
+                  message: "Ocurrió un error, favor de intentar más tarde" + e,
                   type: "danger",
                 });
-                this.setState({
-                  status: false
-                })
               }
           });
     }
@@ -225,17 +217,23 @@ export default function Login({ logeadoHandler }) {
                                     autoCompleteType='email'
                                     keyboardType="email-address"
                                     onChangeText={(email) => setemailLogin(email)}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        passInput.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    //ref={ref => this.passInput = ref}
+                                    ref={ref => passInput = ref}
                                     label={password[language]}
                                     tintColor={Colors.Primary}
                                     secureTextEntry
                                     autoCompleteType='password'
                                     autoCapitalize="none"
                                     onChangeText={(password) => setpasswordLogin(password)}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        passInput.blur();
+                                    }}
                                 />
                             </View>
                         </View>
@@ -248,7 +246,7 @@ export default function Login({ logeadoHandler }) {
                             </Ripple>
                             <Ripple
                                 style={[styles.button, { backgroundColor: Colors.Primary }]}
-                                onPress={()=>Logearse2()}
+                                onPress={()=>Logearse()}
                             >
                                 <Text style={[styles.buttonText, { color: Colors.White }]}>{login[language]}</Text>
                                 <View style={{ width: 30 }} />

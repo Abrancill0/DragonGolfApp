@@ -245,7 +245,7 @@ class AddCourseView extends Component {
                 message: "Campo creado correctamente",
                 type:'success',
             });
-            this.props.navigation.navigate("TeesView", {IDCourse:res.estatus})
+            this.props.navigation.navigate("CoursesView")
             }
         })
         }

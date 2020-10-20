@@ -157,10 +157,10 @@ export default function RoundsView(route) {
                     </TouchableOpacity>
                     {/*<View style={{flex:.5}}>
                       <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                    </View>
-                    <View style={{flex:.5}}>
-                      <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
                     </View>*/}
+                    <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditHole', {IDTees: IDTees, NameTee:NameTee, Hole: item.hole_number, Par: item.par, Adv: item.adv, Yds: item.yards, IDHoles: item.id})}>
+                      <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
+                    </TouchableOpacity>
                   </View>
                 </View>
                 )

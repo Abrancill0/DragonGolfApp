@@ -134,7 +134,7 @@ export default function RoundsView(route) {
             data={tees}
             renderItem={({item}) =>
               <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('TeeDataView', {IDTees: item.id, NameTee: item.nombre})}>
-                <View style={{flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                <View style={{flexDirection:'row',height:90,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     
                     <View style={{flex:.85}}>
@@ -153,10 +153,10 @@ export default function RoundsView(route) {
                         </TouchableOpacity>
                       {/*<View style={{flex:.5}}>
                         <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                      </View>
-                      <View style={{flex:.5}}>
-                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
                       </View>*/}
+                      <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditTee', {IDTees:item.id ,IDCourse: IDCourse, Nombre: item.nombre, Slope: item.slope, Rating: item.rating, Color: item.teeColor})}>
+                        <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
+                      </TouchableOpacity>
                     </View>
                   </View>
               </TouchableOpacity>
