@@ -49,6 +49,7 @@ export default function RoundsView(route) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
+                      id: item.IDHoles,
                       hole_number: item.Ho_Hole,
                       par: item.Ho_Par,
                       adv: item.Ho_Advantage,
@@ -56,6 +57,9 @@ export default function RoundsView(route) {
                     }
                 ))
                 setHoles(list)
+            }
+            else{
+              setHoles([])
             }
         })
   }
@@ -148,7 +152,7 @@ export default function RoundsView(route) {
                     language={language}
                   />
                   <View>
-                    <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(IDTees,item.hole_number)}>
+                    <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(IDTees,item.id)}>
                       <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
                     </TouchableOpacity>
                     {/*<View style={{flex:.5}}>

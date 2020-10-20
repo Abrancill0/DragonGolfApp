@@ -294,6 +294,29 @@ export const AltaCampo = (Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDU
                 });
 };
 
+export const ActualizaCampo = (IDCourse, Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDUsuario) => {
+    const URL = RutaBaseAB + "/ActualizarCampos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDCourse: IDCourse,
+                    Cou_Nombre: Cou_Nombre,
+                    Cou_NombreCorto: Cou_NombreCorto,
+                    Cou_Ciudad: Cou_Ciudad,
+                    Cou_Pais: Cou_Pais,
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const AltaTees = (Te_TeeName, Te_Slope, Te_Rating, Te_TeeColor, Te_In, Te_Out, Te_Total, IDCourse) => {
     const URL = RutaBaseAB + "/AltaTees";
     return fetch(URL, {

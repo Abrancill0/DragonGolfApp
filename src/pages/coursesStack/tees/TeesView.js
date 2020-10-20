@@ -63,6 +63,9 @@ export default function RoundsView(route) {
                 ))
                 setTees(list)
             }
+            else{
+              setTees([])
+            }
         })
   }
 

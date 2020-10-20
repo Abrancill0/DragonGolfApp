@@ -62,6 +62,9 @@ export default function RoundsView(route) {
                 setCourses(list)
                 setArrayholder(list)
             }
+            else{
+              setCourses([])
+            }
         })
   }
 
@@ -220,11 +223,11 @@ export default function RoundsView(route) {
                           <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
                         </TouchableOpacity>
                       {/*<View style={{flex:.5}}>
-                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                      </View>*/}
-                      <View style={{flex:.5}}>
                         <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
-                      </View>
+                      </View>*/}
+                      <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
+                        <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
+                      </TouchableOpacity>
                     </View>
                   </View>
               </TouchableOpacity>

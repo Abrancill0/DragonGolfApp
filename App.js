@@ -21,6 +21,7 @@ import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
 import AddTee from './src/pages/coursesStack/addTee/AddTeeView'
 import AddHole from './src/pages/coursesStack/teeData/AddHoleView'
 import CreateCourse from './src/pages/coursesStack/addCourse/CreateCourseView'
+import EditCourse from './src/pages/coursesStack/addCourse/EditCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
 import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
@@ -594,6 +595,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='CreateCourse' component={CreateCourse}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='EditCourse' component={EditCourse}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
