@@ -21,7 +21,7 @@ import { Dictionary } from '../../../utils/Dictionary';
 import DragonButton from '../../global/DragonButton';
 import FormatCellphone from '../../../utils/FormatCellphone';
 import moment from 'moment';
-import { Update, Update2 } from '../../../Services/Services'
+import { Update } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -80,7 +80,7 @@ class EditUserView extends Component {
             cellphoneError: '',
             ghin: ghin_number,
             ghinError: '',
-            //handicap: handicap.toString(),
+            handicap: handicap.toString(),
             handicapError: '',
             deleting: false,
             re : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -564,6 +564,40 @@ class EditUserView extends Component {
 
     //============= VALIDATIONS ==============
 
+    GuardarFoto = async (idUsuario) => {
+
+    if (this.state.profilePicture != null) {
+      SubirImagenUsuario(idUsuario, this.state.profilePicture)
+        .then((res) => {
+          console.warn(res)
+          if (res.estatus == 1) {
+
+               setTimeout(() => {
+                 showMessage({
+                  message: 'Foto subida correctamente',
+                  type: "success",
+                });
+               }, 1000)
+
+          }
+          else {
+            Alert.alert(
+              "Dragon Golf",
+              "Ocurrió un error al subir la Foto",
+              [
+                {
+                  text: "Aceptar",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+              ],
+              { cancelable: false }
+            );
+          }
+        });
+    }
+  }
+
     submit = () => {
         const {
             id,
@@ -631,19 +665,18 @@ class EditUserView extends Component {
       return
     }
 
-    let foto
-
-    if(profilePicture.name==undefined){
-        Update(id, nameReg, lastNameReg, lastName2Reg, nicknameReg, codeNumber + cellphone)
-          .then((res) => {
+    Update(id, nameReg, lastNameReg, lastName2Reg, emailReg, nicknameReg, codeNumber + cellphone)
+        .then((res) => {
             console.warn(res)
             if (res.estatus === 1) {
 
               try {
                showMessage({
-                    message: 'Registro guardado correctamente',
+                    message: 'Usuario editado correctamente',
                     type: "success",
                   });
+
+               this.GuardarFoto(id)
 
                 this.props.route.params.getUserData()
 
@@ -667,44 +700,7 @@ class EditUserView extends Component {
                     type: "warning",
                   });
             }
-          });
-    }
-    else{
-        Update2(id, nameReg, lastNameReg, lastName2Reg, nicknameReg, codeNumber + cellphone, profilePicture)
-          .then((res) => {
-            console.warn(res)
-            if (res.estatus === 1) {
-
-              try {
-               showMessage({
-                    message: 'Registro guardado correctamente',
-                    type: "success",
-                  });
-
-               //this.GuardarFoto()
-
-               /*setTimeout(
-                      () => { RNRestart.Restart();
-                       },
-                      1000
-                    )*/
-
-              } catch (e) {
-
-                showMessage({
-                    message: 'Ocurrió un error, favor de intentar más tarde',
-                    type: "danger",
-                  });
-              }
-            }
-            else {
-              showMessage({
-                    message: res.mensaje,
-                    type: "warning",
-                  });
-            }
-          });
-        } 
+        });
     }
 
 }

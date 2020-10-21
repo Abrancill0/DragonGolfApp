@@ -22,6 +22,8 @@ import { Dictionary } from '../../../utils/Dictionary';
 import { showMessage } from "react-native-flash-message";
 import { RegistroAB, SubirImagenUsuario } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import RNRestart from 'react-native-restart'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const {
             photo,
@@ -261,7 +263,7 @@ class RegisterView extends Component {
                                         label={cellphoneText[language]}
                                         tintColor={Colors.Primary}
                                         keyboardType="phone-pad"
-                                        maxLength={14}
+                                        maxLength={10}
                                         autoCapitalize="none"
                                         onKeyPress={({ nativeEvent: { key } }) => this.setState({ deleting: key === 'Backspace' })}
                                         onChangeText={this.formatCellphone}
@@ -591,7 +593,7 @@ class RegisterView extends Component {
     }
   }
 
-    submit = () => {
+    submit = async () => {
         const {
             profilePicture,
             nameReg,
@@ -672,10 +674,10 @@ class RegisterView extends Component {
               });
       return
     }
-      RegistroAB(nameReg, lastNameReg, lastName2Reg, emailReg, passwordReg, nicknameReg, codeNumber + cellphone, '')
+      RegistroAB(nameReg, lastNameReg, lastName2Reg, emailReg, passwordReg, nicknameReg, codeNumber + cellphone)
       .then((res) => {
         console.warn(res)
-        if (res.estatus != 0) {
+        if (res.estatus == 1) {
 
           try {
            showMessage({
@@ -683,16 +685,23 @@ class RegisterView extends Component {
                 type: "success",
               });
 
-           this.GuardarFoto(res.estatus)
+           console.warn(res.Result[0].IDUsuario)
 
-           setTimeout(() => {
-                 this.props.navigation.navigate('Login');
-               }, 2000)
+           this.GuardarFoto(res.Result[0].IDUsuario)
+
+           setTimeout(
+                  () => { RNRestart.Restart();
+                   },
+                  2000
+                )
+
+                AsyncStorage.setItem('usu_id', res.Result[0].IDUsuario.toString());
+                AsyncStorage.setItem('actualizar', "false");
 
           } catch (e) {
 
             showMessage({
-                message: 'Ocurrió un error, favor de intentar más tarde',
+                message: 'Ocurrió un error, favor de intentar más tarde' + e,
                 type: "danger",
               });
           }

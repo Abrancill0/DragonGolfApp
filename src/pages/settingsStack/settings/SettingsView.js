@@ -34,8 +34,7 @@ import EntypoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from 'react-native-loading-spinner-overlay';
 import NetInfo from "@react-native-community/netinfo";
 
-var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" },
-        this.openSuccess, this.openError);
+var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" });
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
 
@@ -1266,7 +1265,7 @@ class SettingsView extends Component {
               handicap: row.Handicap,
               cellphone:row.Cellphone,
               password:row.Password,
-              //photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
+              //photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.Result[0].usu_imagen
             }]
 
           this.setState({
@@ -1362,7 +1361,7 @@ class SettingsView extends Component {
             ssBogey: row.StablefordBogey.toString(),
             ssDoubleBogey: row.StablefordDoubleBogey.toString(),
             status: false
-            //seePicker: res.resultado.usu_id
+            //seePicker: res.Result[0].usu_id
           })
           console.warn("P1: " + row.AdvMovesOn9Holes)
           console.warn("P2: " + row.StrokesMovedPerRound)
@@ -1386,7 +1385,7 @@ class SettingsView extends Component {
                 const lista =[
                 {
                   idSettings: res.Result[0].IDSettings,
-                  id: res.Result[0].usu_id,
+                  id: res.Result[0].IDUsuario,
                   name: res.Result[0].usu_nombre,
                   last_name: res.Result[0].usu_apellido_paterno,
                   last_name2: res.Result[0].usu_apellido_materno,
@@ -1396,7 +1395,7 @@ class SettingsView extends Component {
                   handicap: "1",//res.Result[0].usu_handicap_index,
                   cellphone:res.Result[0].usu_telefono,
                   password:res.Result[0].usu_password,
-                  photo: 'http://trascenti.com/pruebasDragon/public/' + res.Result[0].usu_imagen
+                  photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.Result[0].usu_imagen
                 }]
 
                 //console.warn(lista[0])
@@ -1472,16 +1471,16 @@ class SettingsView extends Component {
               MedalPlayF9,MedalPlayB9,MedalPlay18,Skins,SkinsCarryOver,LowerAdvF9,SNWAutomaticPress,SNWUseFactor,SNWFront9,SNWBack9,SNWMatch,SNWCarry,SNWMedal,
               TMWAutomaticPress,TMWUseFactor,TMWFront9,TMWBack9,TMWMatch,MTWCarry,TMWMedal,TMWAdvStrokes,EBWager,BBTWagerF9,BBTWagerB9,BBTWager18,
               StablefordDoubleEagle,StablefordEagle,StablefordBirdie,StablefordPar,StablefordBogey,StablefordDoubleBogey)` + ` VALUES ("${lista[0].idSettings}","${lista[0].id}","${this.state.language}","
-              ${res.resultado.set_how_adv_move}","${res.resultado.set_strokes_moved_per_round}","${_9holes}","${carryMov}","${res.resultado.set_rabbit_1_6.split('.')[0]}","
-              ${res.resultado.set_rabbit_7_12.split('.')[0]}","${res.resultado.set_rabbit_13_18.split('.')[0]}","${res.resultado.set_medal_play_f9.split('.')[0]}","
-              ${res.resultado.set_medal_play_b9.split('.')[0]}","${res.resultado.set_medal_play_18.split('.')[0]}","${res.resultado.set_skins.split('.')[0]}","
-              ${carryOver}","${res.lowedf9}","${res.resultado.set_snw_automatic_press}","${snwUF}","${res.resultado.set_snw_front_9}","${res.resultado.set_snw_back_9}","
-              ${res.resultado.set_snw_match}","${res.resultado.set_snw_carry}","${res.resultado.set_snw_medal}","${res.resultado.set_tmw_automatic_press}","${snwTF}","
-              ${res.resultado.set_tmw_front_9}","${res.resultado.set_tmw_back_9}","${res.resultado.set_tmw_match}","${res.resultado.set_tmw_carry}","
-              ${res.resultado.set_tmw_medal}","${res.resultado.set_tmw_adv_strokes}","${res.resultado.set_eb_wager}","${res.resultado.set_bbt_wager_f9}","
-              ${res.resultado.set_bbt_wager_b9}","${res.resultado.set_bbt_wager_18}","${res.resultado.set_stableford_double_eagle}","
-              ${res.resultado.set_stableford_eagle}","${res.resultado.set_stableford_birdie}","${res.resultado.set_stableford_par}","
-              ${res.resultado.set_stableford_bogey}","${res.resultado.set_stableford_double_bogey}");`
+              ${res.Result[0].set_how_adv_move}","${res.Result[0].set_strokes_moved_per_round}","${_9holes}","${carryMov}","${res.Result[0].set_rabbit_1_6.split('.')[0]}","
+              ${res.Result[0].set_rabbit_7_12.split('.')[0]}","${res.Result[0].set_rabbit_13_18.split('.')[0]}","${res.Result[0].set_medal_play_f9.split('.')[0]}","
+              ${res.Result[0].set_medal_play_b9.split('.')[0]}","${res.Result[0].set_medal_play_18.split('.')[0]}","${res.Result[0].set_skins.split('.')[0]}","
+              ${carryOver}","${res.lowedf9}","${res.Result[0].set_snw_automatic_press}","${snwUF}","${res.Result[0].set_snw_front_9}","${res.Result[0].set_snw_back_9}","
+              ${res.Result[0].set_snw_match}","${res.Result[0].set_snw_carry}","${res.Result[0].set_snw_medal}","${res.Result[0].set_tmw_automatic_press}","${snwTF}","
+              ${res.Result[0].set_tmw_front_9}","${res.Result[0].set_tmw_back_9}","${res.Result[0].set_tmw_match}","${res.Result[0].set_tmw_carry}","
+              ${res.Result[0].set_tmw_medal}","${res.Result[0].set_tmw_adv_strokes}","${res.Result[0].set_eb_wager}","${res.Result[0].set_bbt_wager_f9}","
+              ${res.Result[0].set_bbt_wager_b9}","${res.Result[0].set_bbt_wager_18}","${res.Result[0].set_stableford_double_eagle}","
+              ${res.Result[0].set_stableford_eagle}","${res.Result[0].set_stableford_birdie}","${res.Result[0].set_stableford_par}","
+              ${res.Result[0].set_stableford_bogey}","${res.Result[0].set_stableford_double_bogey}");`
                 tx.executeSql(
                   sql,
                   [],
@@ -1623,7 +1622,7 @@ class SettingsView extends Component {
             ssBogey: row.StablefordBogey.toString(),
             ssDoubleBogey: row.StablefordDoubleBogey.toString(),
             status: false
-            //seePicker: res.resultado.usu_id
+            //seePicker: res.Result[0].usu_id
           })
 
          
@@ -1929,7 +1928,11 @@ class SettingsView extends Component {
             console.warn(tx)
           });
 
-      updateSettingsAB(data.idSettings,data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
+      console.warn("S: "+data.user_settings)
+      console.warn("U: "+data.user_id)
+      console.warn("R: "+gsDataPlayer.rabbit_1_6)
+
+      updateSettingsAB(data.user_settings,data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
       gsDataPlayer.medal_play_f9,gsDataPlayer.medal_play_b9,gsDataPlayer.medal_play_18,gsDataPlayer.skins,
       gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
@@ -1944,7 +1947,7 @@ class SettingsView extends Component {
         try{
           if(res.estatus==1){
           showMessage({
-                message: res.mensaje,
+                message: "Settings guardados correctamente",
                 type: 'success',
             });
           AsyncStorage.setItem('actualizar', "false");

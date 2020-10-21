@@ -30,6 +30,7 @@ import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView
 import FlashMessage from "react-native-flash-message";
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { showMessage } from "react-native-flash-message";
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -44,13 +45,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from './src/utils/Colors';
 import { Dictionary } from './src/utils/Dictionary';
-import { InfoUsuario } from './src/Services/Services';
+import { InfoUsuarioAB } from './src/Services/Services';
 import NetInfo from "@react-native-community/netinfo";
 import RNRestart from 'react-native-restart'
 import SQLite from 'react-native-sqlite-storage';
 
-var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" },
-        this.openSuccess, this.openError);
+var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" });
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator();
@@ -111,7 +111,7 @@ export default class App extends Component {
   getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')
     if(this.state.conexion){
-    InfoUsuario(token)
+    InfoUsuarioAB(token)
     .then((res) => {
         if(res.estatus==1){
 
@@ -126,7 +126,7 @@ export default class App extends Component {
               ghin_number: res.resultado.usu_ghin_numero,
               handicap: res.resultado.usu_handicap_index,
               cellphone:res.resultado.usu_telefono,
-              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen,
+              photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.resultado.usu_imagen,
               language: res.resultado.set_idioma.substring(0,2)
             }]
             this.setState({
@@ -172,11 +172,11 @@ export default class App extends Component {
 
   LoadUsuario(CLVUsuario) 
   {
-    InfoUsuario(CLVUsuario)
+    InfoUsuarioAB(CLVUsuario)
     .then((res) => {
         if(res.estatus==1){
           console.warn(res)
-            let result=res.resultado
+            let result=res.Result[0]
             this.setState({
               logeado:true,
               isLoading:false,
@@ -187,34 +187,38 @@ export default class App extends Component {
             })
             const lista =[
             {
-              id: res.resultado.usu_id,
-              name: res.resultado.usu_nombre,
-              last_name: res.resultado.usu_apellido_paterno,
-              last_name2: res.resultado.usu_apellido_materno,
-              nick_name: res.resultado.usu_nickname,
-              email: res.resultado.usu_email,
-              ghin_number: res.resultado.usu_ghin_numero,
-              handicap: res.resultado.usu_handicap_index,
-              cellphone:res.resultado.usu_telefono,
-              language: res.resultado.set_idioma,
-              photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen,
-              language: res.resultado.set_idioma.substring(0,2)
+              id: result.usu_id,
+              name: result.usu_nombre,
+              last_name: result.usu_apellido_paterno,
+              last_name2: result.usu_apellido_materno,
+              nick_name: result.usu_nickname,
+              email: result.usu_email,
+              ghin_number: result.usu_ghin_numero,
+              handicap: result.usu_handicap_index,
+              cellphone:result.usu_telefono,
+              language: result.set_idioma,
+              photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + result.usu_imagen,
+              language: result.set_idioma.substring(0,2)
             }]
             this.setState({
             userData: lista[0]
           })
         }  
         else{
-            setLoading(false)
+            this.setState({
+              isLoading:false
+            })
             showMessage({
                 message: res.mensaje,
                 type: 'info',
             });
         }
     }).catch(error=>{
-        setLoading(false)
+        this.setState({
+          isLoading:false
+        })
         showMessage({
-            message: "Error de conexión",
+            message: "Error de conexión" + error,
             type:'error',
         });
     })
@@ -292,7 +296,7 @@ export default class App extends Component {
               handicap: row.Handicap,
               cellphone:row.Cellphone,
               password:row.Password,
-              //photo: 'http://trascenti.com/pruebasDragon/public/' + res.resultado.usu_imagen
+              //photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.resultado.usu_imagen
             }]
 
           this.setState({
