@@ -51,12 +51,13 @@ class EditUserView extends Component {
         console.warn(getUserData)
         console.warn(props.route.params.language)
         console.warn(getUserData)
+        let cellphone2 = '52' + cellphone;
         //let formatted = '';
         //let pureCell = '';
         //if (cellphone.length > 10) {
-          let  pureCell = cellphone.substr(2,cellphone.length);
+          let  pureCell = cellphone2.substr(2,cellphone2.length);
         //}
-        let formatted = cellphone.substr(0, 2);
+        let formatted = cellphone2.substr(0, 2);
         //pureCell = FormatCellphone(pureCell);
         this.state = {
             language:props.route.params.language,

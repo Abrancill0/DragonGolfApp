@@ -25,7 +25,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaCamposTodos } from '../../../Services/Services'
+import { ListaCamposTodos, CopiarCampo } from '../../../Services/Services'
 import styles from './styles';
 import DragonButton from '../../global/DragonButton';
 
@@ -63,6 +63,38 @@ class RoundsView extends Component {
 
   componentDidMount(){
         this.ListadoCourses()
+  }
+
+  Agrega = async (idCourse) => {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    Alert.alert(
+      "DragonGolf",
+      "¿Desea agregar este campo a su lista de favoritos?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {
+          },
+        },
+        {
+          text: "Agregar",
+          onPress: () => {
+            CopiarCampo(idCourse,idUsu)
+                .then((res) => {
+                  console.warn(res)
+                    if(res.estatus == 1){
+                      showMessage({
+                        message: "Campo agregado correctamente",
+                        type:'success',
+                      });
+                      this.props.navigation.navigate("CoursesView")
+                    }
+                })
+          },
+        }
+      ],
+      { cancelable: false }
+    );
   }
 
   ListadoCourses = async () => {
@@ -324,9 +356,9 @@ class RoundsView extends Component {
                       {/*<View style={{flex:.5}}>
                         <Fontisto name={'world'} size={30} color={Colors.Primary} />
                       </View>*/}
-                      <View style={{flex:.5}}>
-                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
-                      </View>
+                      <TouchableOpacity style={{flex:.5}} onPress={()=> this.Agrega(item.id)}>
+                        <Fontisto name={'cloud-down'} size={30} color={Colors.Primary} />
+                      </TouchableOpacity>
                     </View>
                   </View>
               </TouchableOpacity>

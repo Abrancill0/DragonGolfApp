@@ -338,6 +338,25 @@ export const ListaCamposTodos = (IDUsuario) => {
                 });
 };
 
+export const CopiarCampo = (IDCourse, IDUsuario) => {
+    const URL = RutaBaseAB + "/CopiarCampo";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDCourse: IDCourse,
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaTees = (IDCourse) => {
     const URL = RutaBaseAB + "/ListaTees";
     return fetch(URL, {
