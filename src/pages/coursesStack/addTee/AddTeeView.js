@@ -87,7 +87,10 @@ class AddTeeView extends Component {
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
           <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
             <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
-          </TouchableOpacity>
+          </TouchableOpacity> 
+          <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+            <Text style={{ fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Tee</Text>
+          </View>
           <View style={styles.formContainer}>
 
             <View style={styles.inputContainer}>
@@ -100,9 +103,7 @@ class AddTeeView extends Component {
                 value={name}
                 error={nameError}
                 onSubmitEditing={({ nativeEvent: { text } }) => {
-                  if(this.nameValidation(text)){
                     this.slopeIn.focus();
-                  }
                 }}
                 blurOnSubmit={false}
               />
@@ -122,9 +123,7 @@ class AddTeeView extends Component {
                   value={slope}
                   error={slopeError}
                   onSubmitEditing={({ nativeEvent: { text } }) => {
-                    if(this.slopeValidation(text)){
                       this.ratingIn.focus();
-                    }
                   }}
                   blurOnSubmit={false}
                 />
@@ -142,9 +141,7 @@ class AddTeeView extends Component {
                   value={rating}
                   error={ratingError}
                   onSubmitEditing={({ nativeEvent: { text } }) => {
-                    if(this.ratingValidation(text)){
                       this.ratingIn.blur();
-                    }
                   }}
                   blurOnSubmit={false}
                 />

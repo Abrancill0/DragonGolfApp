@@ -96,7 +96,10 @@ class AddCourseView extends Component {
                 <View style={{ flex: 1 }}>
                 <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
                   <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
-                </TouchableOpacity>
+                </TouchableOpacity> 
+                  <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+                  <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Course</Text>
+                  </View>
                     <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>
                             <View style={styles.inputContainer}>

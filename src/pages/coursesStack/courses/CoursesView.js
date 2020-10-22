@@ -40,6 +40,7 @@ export default function RoundsView(route) {
     const [value4, setValue4] = useState('');
     const [language, setLanguage] = useState('es');
     const [search, setSearch] = useState(false);
+    const [visible, setVisible] = useState(true);
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
         ListadoCourses();
@@ -75,8 +76,6 @@ export default function RoundsView(route) {
 
   function searchFilterFunction(text,busqueda){
 
-    //console.warn(busqueda)
-
     const newData = arrayholder.filter(item => {
     let itemData = ""
     switch(busqueda){
@@ -101,10 +100,7 @@ export default function RoundsView(route) {
     return itemData.indexOf(textData) > -1;
 
     });
-
     setCourses(newData)
-
-    
   };
 
    function renderSeparator(){  
@@ -139,7 +135,7 @@ export default function RoundsView(route) {
       {search && <View>
       <SearchBar
         placeholder="Nombre"
-        onChangeText={text => searchFilterFunction(text, 1)}
+        onChangeText={(text) => searchFilterFunction(text,1)}
         autoCorrect={false}
         value={value1}
         inputContainerStyle={{backgroundColor: 'white'}}
@@ -154,7 +150,7 @@ export default function RoundsView(route) {
       />
       <SearchBar
         placeholder="Nombre Corto"
-        onChangeText={text => searchFilterFunction(text, 2)}
+        onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
         value={value2}
         inputContainerStyle={{backgroundColor: 'white'}}
@@ -171,7 +167,7 @@ export default function RoundsView(route) {
         placeholder="Ciudad"
         lightTheme
         round
-        onChangeText={text => searchFilterFunction(text, 3)}
+        onChangeText={(text) => searchFilterFunction(text,3)}
         autoCorrect={false}
         value={value3}
         inputContainerStyle={{backgroundColor: 'white'}}
@@ -188,7 +184,7 @@ export default function RoundsView(route) {
         placeholder="Pais"
         lightTheme
         round
-        onChangeText={text => searchFilterFunction(text, 4)}
+        onChangeText={(text) => searchFilterFunction(text,4)}
         autoCorrect={false}
         value={value4}
         inputContainerStyle={{backgroundColor: 'white'}}
@@ -247,17 +243,21 @@ export default function RoundsView(route) {
         />
 
         <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
             <TouchableOpacity style={{padding:20}} onPress={()=> navigation.openDrawer()}>
               <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>My Courses</Text>
+          </View>
+          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddCourse')}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
         </View>
+        { visible &&
           <SwipeListView
             refreshControl={
               <RefreshControl
@@ -308,7 +308,7 @@ export default function RoundsView(route) {
             stopLeftSwipe={Dimensions.get('window').width * .5}
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
-          />
+          />}
       </View>
     );
 }

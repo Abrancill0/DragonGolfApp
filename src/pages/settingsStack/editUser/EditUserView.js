@@ -51,7 +51,7 @@ class EditUserView extends Component {
         console.warn(getUserData)
         console.warn(props.route.params.language)
         console.warn(getUserData)
-        let cellphone2 = '52' + cellphone;
+        let cellphone2 = cellphone;
         //let formatted = '';
         //let pureCell = '';
         //if (cellphone.length > 10) {
@@ -291,7 +291,7 @@ class EditUserView extends Component {
                                                 });
                                             }}
                                             value={codeNumber}
-                                            maxLength={6}
+                                            maxLength={2}
                                             autoCapitalize="none"
                                             error={codeError}
                                             onSubmitEditing={({ nativeEvent: { text } }) => this.codeValidation(text)}
@@ -305,7 +305,7 @@ class EditUserView extends Component {
                                         label={cellphoneText[language]}
                                         tintColor={Colors.Primary}
                                         keyboardType="phone-pad"
-                                        maxLength={14}
+                                        maxLength={10}
                                         autoCapitalize="none"
                                         onKeyPress={({ nativeEvent: { key } }) => this.setState({ deleting: key === 'Backspace' })}
                                         onChangeText={this.formatCellphone}
@@ -672,7 +672,7 @@ class EditUserView extends Component {
 
               try {
                showMessage({
-                    message: 'Usuario editado correctamente',
+                    message: 'Usuario actualizado correctamente',
                     type: "success",
                   });
 

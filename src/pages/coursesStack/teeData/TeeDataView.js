@@ -98,12 +98,15 @@ export default function RoundsView(route) {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'} >
 
         <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
             <TouchableOpacity style={{padding:20}} onPress={()=> navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+          </View> 
+            <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+              <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Holes</Text>
+            </View>
+          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddHole', {IDTees:IDTees, NameTee:NameTee})}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>

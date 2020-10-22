@@ -81,10 +81,13 @@ class AddTeeView extends Component {
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'} >
       <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
             <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
+          </View> 
+          <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+            <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Hole</Text>
           </View>
           {/*<View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddCourse')}>
@@ -105,14 +108,16 @@ class AddTeeView extends Component {
               <View style={styles.rectangleElement}>
                 <Text style={styles.holeText}>Hole</Text>
                 <TextInput
-                        //ref={ref => inputs[`1:${item.index}`] = ref}
+                        ref={ref => this.hole = ref}
                         tintColor={Colors.Primary}
                         style={styles.input}
                         maxLength={1}
                         keyboardType="numeric"
                         returnKeyType='done'
                         value={holeAdd}
-                        onSubmitEditing={_ => this.focusNextInput(1)}
+                        onSubmitEditing={({nativeEvent: {text}}) => {
+                          this.par.focus();
+                        }}
                         onChangeText={text => this.setState({holeAdd:text})}
                         blurOnSubmit={false}
                     />
@@ -121,13 +126,15 @@ class AddTeeView extends Component {
               <View style={styles.rectangleElement}>
                 <Text style={styles.headerText}>Par</Text>
                 <TextInput
-                        //ref={ref => inputs[`1:${item.index}`] = ref}
+                        ref={ref => this.par = ref}
                         style={styles.input}
                         maxLength={1}
                         keyboardType="numeric"
                         returnKeyType='done'
                         value={par}
-                        onSubmitEditing={_ => this.focusNextInput(1)}
+                        onSubmitEditing={({nativeEvent: {text}}) => {
+                          this.adv.focus();
+                        }}
                         onChangeText={text => this.setState({par:text})}
                         blurOnSubmit={false}
                     />
@@ -136,13 +143,15 @@ class AddTeeView extends Component {
               <View style={styles.rectangleElement}>
                 <Text style={styles.headerText}>Adv</Text>
                 <TextInput
-                        //ref={ref => inputs[`2:${item.index}`] = ref}
+                        ref={ref => this.adv = ref}
                         style={styles.input}
                         maxLength={2}
                         keyboardType="numeric"
                         returnKeyType='done'
                         value={adv}
-                        onSubmitEditing={this.onSubmitAdv}
+                        onSubmitEditing={({nativeEvent: {text}}) => {
+                          this.yds.focus();
+                        }}
                         onChangeText={text => this.setState({adv:text})}
                         blurOnSubmit={false}
                     />
@@ -151,13 +160,15 @@ class AddTeeView extends Component {
               <View style={styles.rectangleElement}>
                 <Text style={styles.headerText}>Yds</Text>
                 <TextInput
-                        //ref={ref => inputs[`3:${item.index}`] = ref}
+                        ref={ref => this.yds = ref}
                         style={styles.input}
                         maxLength={5}
                         keyboardType="numeric"
                         returnKeyType='done'
                         value={yards}
-                        onSubmitEditing={this.onSubmitAdv}
+                        onSubmitEditing={({nativeEvent: {text}}) => {
+                          this.yds.blur();
+                        }}
                         onChangeText={text => this.setState({yards:text})}
                         //blurOnSubmit={item.index === 17}
                     />

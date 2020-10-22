@@ -48,7 +48,7 @@ class SettingsView extends Component {
       userData: [],
       language:'en',
       asHowAdvMove : 'Match',
-      asHowManyStrokes : '0.50',
+      asHowManyStrokes : '0.5',
       asAdvMoves : false,
       asDoesCarryMove : false,
       rabbit16 : '',
@@ -321,27 +321,27 @@ class SettingsView extends Component {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <View style={styles.radioButtonView}>
-                  <RadioButton value="0.50" color={Colors.Primary} />
+                  <RadioButton value="0.5" color={Colors.Primary} />
                   <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '0.50' })}
+                    onPress={() => this.setState({ asHowManyStrokes: '0.5' })}
                   >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '0.50' ? Colors.Primary : Colors.Black }]}>0.5</Text>
+                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '0.5' ? Colors.Primary : Colors.Black }]}>0.5</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.radioButtonView}>
-                  <RadioButton value="1.00" color={Colors.Primary} />
+                  <RadioButton value="1" color={Colors.Primary} />
                   <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '1.00' })}
+                    onPress={() => this.setState({ asHowManyStrokes: '1' })}
                   >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '1.00' ? Colors.Primary : Colors.Black }]}>1</Text>
+                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '1' ? Colors.Primary : Colors.Black }]}>1</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.radioButtonView}>
-                  <RadioButton value="2.00" color={Colors.Primary} />
+                  <RadioButton value="2" color={Colors.Primary} />
                   <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '2.00' })}
+                    onPress={() => this.setState({ asHowManyStrokes: '2' })}
                   >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '2.00' ? Colors.Primary : Colors.Black }]}>2</Text>
+                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '2' ? Colors.Primary : Colors.Black }]}>2</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -1323,7 +1323,7 @@ class SettingsView extends Component {
 
           this.setState({
             asHowAdvMove: row.HowAdvMove.toString(),
-            asHowManyStrokes: row.StrokesMovedPerRound,
+            asHowManyStrokes: row.StrokesMovedPerRound.toString(),
             asAdvMoves: move9,
             asDoesCarryMove: moveAdv,
             rabbit16: row.Rabbit1_6.toString(),
@@ -1394,7 +1394,7 @@ class SettingsView extends Component {
                   ghin_number: 1,//res.Result[0].usu_ghin_numero,
                   handicap: "1",//res.Result[0].usu_handicap_index,
                   cellphone:res.Result[0].usu_telefono,
-                  password:res.Result[0].usu_password,
+                  password:res.Result[0].usu_pass,
                   photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.Result[0].usu_imagen
                 }]
 
@@ -1402,43 +1402,43 @@ class SettingsView extends Component {
 
                 this.setState({
                 asHowAdvMove: res.Result[0].set_how_adv_move,
-                asHowManyStrokes: res.Result[0].set_strokes_moved_per_round,
+                asHowManyStrokes: res.Result[0].set_strokes_moved_per_round.toString(),
                 asAdvMoves: res.Result[0].set_adv_moves_on_9_holes,
                 asDoesCarryMove: res.Result[0].set_carry_moves_adv,
-                rabbit16: res.Result[0].set_rabbit_1_6,
-                rabbit712: res.Result[0].set_rabbit_7_12,
-                rabbit1318: res.Result[0].set_rabbit_13_18,
-                medalF9: res.Result[0].set_medal_play_f9,
-                medalB9: res.Result[0].set_medal_play_b9,
-                medal18: res.Result[0].set_medal_play_18,
-                skins: res.Result[0].set_skins,
+                rabbit16: res.Result[0].set_rabbit_1_6.toString(),
+                rabbit712: res.Result[0].set_rabbit_7_12.toString(),
+                rabbit1318: res.Result[0].set_rabbit_13_18.toString(),
+                medalF9: res.Result[0].set_medal_play_f9.toString(),
+                medalB9: res.Result[0].set_medal_play_b9.toString(),
+                medal18: res.Result[0].set_medal_play_18.toString(),
+                skins: res.Result[0].set_skins.toString(),
                 skinCarry: res.Result[0].set_skins_carry_over,
                 lowedAdv: res.Result[0].set_lower_adv_f9,
                 snwUseFactor: res.Result[0].set_snw_use_factor,
-                snwAutoPress: res.Result[0].set_snw_automatic_press,
-                snwFront9: res.Result[0].set_snw_front_9,
-                snwBack9: res.Result[0].set_snw_back_9,
-                snwMatch: res.Result[0].set_snw_match,
-                snwCarry: res.Result[0].set_snw_carry,
-                snwMedal: res.Result[0].set_snw_medal,
+                snwAutoPress: res.Result[0].set_snw_automatic_press.toString(),
+                snwFront9: res.Result[0].set_snw_front_9.toString(),
+                snwBack9: res.Result[0].set_snw_back_9.toString(),
+                snwMatch: res.Result[0].set_snw_match.toString(),
+                snwCarry: res.Result[0].set_snw_carry.toString(),
+                snwMedal: res.Result[0].set_snw_medal.toString(),
                 tnwUseFactor: res.Result[0].set_tmw_use_factor,
-                tnwAutoPress: res.Result[0].set_tmw_automatic_press,
-                tnwFront9: res.Result[0].set_tmw_front_9,
-                tnwBack9: res.Result[0].set_tmw_back_9,
-                tnwMatch: res.Result[0].set_tmw_match,
-                tnwCarry: res.Result[0].set_tmw_carry,
-                tnwMedal: res.Result[0].set_tmw_medal,
+                tnwAutoPress: res.Result[0].set_tmw_automatic_press.toString(),
+                tnwFront9: res.Result[0].set_tmw_front_9.toString(),
+                tnwBack9: res.Result[0].set_tmw_back_9.toString(),
+                tnwMatch: res.Result[0].set_tmw_match.toString(),
+                tnwCarry: res.Result[0].set_tmw_carry.toString(),
+                tnwMedal: res.Result[0].set_tmw_medal.toString(),
                 tnwWhoGets: res.Result[0].set_tmw_adv_strokes,
-                ebWager: res.Result[0].set_eb_wager,
-                bbWagerF9: res.Result[0].set_bbt_wager_f9,
-                bbWagerB9: res.Result[0].set_bbt_wager_b9,
-                bbWager18: res.Result[0].set_bbt_wager_18,
-                ssDoubleEagle: res.Result[0].set_stableford_double_eagle,
-                ssEaglePoints: res.Result[0].set_stableford_eagle,
-                ssBirdie: res.Result[0].set_stableford_birdie,
-                ssPar: res.Result[0].set_stableford_par,
-                ssBogey: res.Result[0].set_stableford_bogey,
-                ssDoubleBogey: res.Result[0].set_stableford_double_bogey,
+                ebWager: res.Result[0].set_eb_wager.toString(),
+                bbWagerF9: res.Result[0].set_bbt_wager_f9.toString(),
+                bbWagerB9: res.Result[0].set_bbt_wager_b9.toString(),
+                bbWager18: res.Result[0].set_bbt_wager_18.toString(),
+                ssDoubleEagle: res.Result[0].set_stableford_double_eagle.toString(),
+                ssEaglePoints: res.Result[0].set_stableford_eagle.toString(),
+                ssBirdie: res.Result[0].set_stableford_birdie.toString(),
+                ssPar: res.Result[0].set_stableford_par.toString(),
+                ssBogey: res.Result[0].set_stableford_bogey.toString(),
+                ssDoubleBogey: res.Result[0].set_stableford_double_bogey.toString(),
                 status: false
                 //seePicker: res.Result[0].usu_id
               })
@@ -1584,7 +1584,7 @@ class SettingsView extends Component {
           this.setState({
             idSettings: row.idSettings,
             asHowAdvMove: row.HowAdvMove.toString(),
-            asHowManyStrokes: row.StrokesMovedPerRound,
+            asHowManyStrokes: row.StrokesMovedPerRound.toString(),
             asAdvMoves: move9,
             asDoesCarryMove: moveAdv,
             rabbit16: row.Rabbit1_6.toString(),

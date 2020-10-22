@@ -28,6 +28,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { ListaCamposTodos, CopiarCampo } from '../../../Services/Services'
 import styles from './styles';
 import DragonButton from '../../global/DragonButton';
+import { showMessage } from "react-native-flash-message";
 
 class RoundsView extends Component {
   constructor(props) {
@@ -311,10 +312,13 @@ class RoundsView extends Component {
         />
 
         <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
             <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
+          </View> 
+          <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>All Courses</Text>
           </View>
           {/*<View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddCourse')}>
