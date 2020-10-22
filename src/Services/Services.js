@@ -128,7 +128,7 @@ export const SubirImagenUsuario = (IDUsuario, file) => {
     })
 };
 
-export const Update = (IDUsuario,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_email,usu_nickname,usu_telefono) => {
+export const Update = (IDUsuario,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_email,usu_nickname,usu_telefono,usu_ghinnumber,usu_handicapindex) => {
     const URL = RutaBaseAB + "/ActualizarUsuario";
     return fetch(URL, {
       method: "POST",
@@ -143,7 +143,9 @@ export const Update = (IDUsuario,usu_nombre,usu_apellido_paterno,usu_apellido_ma
         usu_apellido_materno: usu_apellido_materno,
         usu_email: usu_email,
         usu_nickname: usu_nickname,
-        usu_telefono: usu_telefono
+        usu_telefono: usu_telefono,
+        usu_ghinnumber: usu_ghinnumber,
+        usu_handicapindex: usu_handicapindex
       }),
     })
     .then((response) => response.json())

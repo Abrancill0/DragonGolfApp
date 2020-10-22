@@ -258,6 +258,85 @@ export default function RoundsView(route) {
           </View>
         </View>
         { visible &&
+          <View>
+
+      <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+            <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+          </View>
+          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
+              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+      {search && <View>
+      <SearchBar
+        placeholder="Nombre"
+        onChangeText={(text) => searchFilterFunction(text,1)}
+        autoCorrect={false}
+        value={value1}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.5}}
+      />
+      <SearchBar
+        placeholder="Nombre Corto"
+        onChangeText={(text) => searchFilterFunction(text,2)}
+        autoCorrect={false}
+        value={value2}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.8}}
+      />
+      <SearchBar
+        placeholder="Ciudad"
+        lightTheme
+        round
+        onChangeText={(text) => searchFilterFunction(text,3)}
+        autoCorrect={false}
+        value={value3}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:1}}
+      />
+      <SearchBar
+        placeholder="Pais"
+        lightTheme
+        round
+        onChangeText={(text) => searchFilterFunction(text,4)}
+        autoCorrect={false}
+        value={value4}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:1,
+        borderBottomWidth:2}}
+      />
+      </View>}
           <SwipeListView
             refreshControl={
               <RefreshControl
@@ -298,7 +377,8 @@ export default function RoundsView(route) {
                   </View>
               </TouchableOpacity>
               }
-              ListHeaderComponent={renderHeader}
+              keyExtractor={item=>item.id}
+              //ListHeaderComponent={renderHeader}
               ListEmptyComponent={
               <ListEmptyComponent
                 text={emptyCourseList[language]}
@@ -308,7 +388,10 @@ export default function RoundsView(route) {
             stopLeftSwipe={Dimensions.get('window').width * .5}
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
-          />}
+          />
+        
+      </View>}
+
       </View>
     );
 }

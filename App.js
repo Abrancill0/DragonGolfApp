@@ -117,17 +117,17 @@ export default class App extends Component {
 
             const lista =[
             {
-              id: res.resultado.usu_id,
-              name: res.resultado.usu_nombre,
-              last_name: res.resultado.usu_apellido_paterno,
-              last_name2: res.resultado.usu_apellido_materno,
-              nick_name: res.resultado.usu_nickname,
-              email: res.resultado.usu_email,
-              ghin_number: res.resultado.usu_ghin_numero,
-              handicap: res.resultado.usu_handicap_index,
-              cellphone:res.resultado.usu_telefono,
-              photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.resultado.usu_imagen,
-              language: res.resultado.set_idioma.substring(0,2)
+              id: res.Result[0].IDUsuario,
+              name: res.Result[0].usu_nombre,
+              last_name: res.Result[0].usu_apellido_paterno,
+              last_name2: res.Result[0].usu_apellido_materno,
+              nick_name: res.Result[0].usu_nickname,
+              email: res.Result[0].usu_email,
+              ghin_number: res.Result[0].usu_ghinnumber,
+              handicap: res.Result[0].usu_handicapindex,
+              cellphone:res.Result[0].usu_telefono,
+              photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen,
+              language: res.Result[0].set_idioma
             }]
             this.setState({
             userData: lista[0]
@@ -193,12 +193,12 @@ export default class App extends Component {
               last_name2: result.usu_apellido_materno,
               nick_name: result.usu_nickname,
               email: result.usu_email,
-              ghin_number: result.usu_ghin_numero,
-              handicap: result.usu_handicap_index,
+              ghin_number: result.usu_ghinnumber,
+              handicap: result.usu_handicapindex,
               cellphone:result.usu_telefono,
               language: result.set_idioma,
-              photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + result.usu_imagen,
-              language: result.set_idioma.substring(0,2)
+              photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + result.usu_imagen,
+              //language: result.set_idioma.substring(0,2)
             }]
             this.setState({
             userData: lista[0]
@@ -296,7 +296,7 @@ export default class App extends Component {
               handicap: row.Handicap,
               cellphone:row.Cellphone,
               password:row.Password,
-              //photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.resultado.usu_imagen
+              //photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen
             }]
 
           this.setState({

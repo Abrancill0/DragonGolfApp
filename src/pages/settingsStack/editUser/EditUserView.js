@@ -21,7 +21,7 @@ import { Dictionary } from '../../../utils/Dictionary';
 import DragonButton from '../../global/DragonButton';
 import FormatCellphone from '../../../utils/FormatCellphone';
 import moment from 'moment';
-import { Update } from '../../../Services/Services'
+import { Update, SubirImagenUsuario } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -78,7 +78,7 @@ class EditUserView extends Component {
             codeError: '',
             cellphone: pureCell,
             cellphoneError: '',
-            ghin: ghin_number,
+            ghin: ghin_number.toString(),
             ghinError: '',
             handicap: handicap.toString(),
             handicapError: '',
@@ -665,7 +665,7 @@ class EditUserView extends Component {
       return
     }
 
-    Update(id, nameReg, lastNameReg, lastName2Reg, emailReg, nicknameReg, codeNumber + cellphone)
+    Update(id, nameReg, lastNameReg, lastName2Reg, emailReg, nicknameReg, codeNumber + cellphone, ghin,handicap)
         .then((res) => {
             console.warn(res)
             if (res.estatus === 1) {

@@ -1265,7 +1265,7 @@ class SettingsView extends Component {
               handicap: row.Handicap,
               cellphone:row.Cellphone,
               password:row.Password,
-              //photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.Result[0].usu_imagen
+              //photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen
             }]
 
           this.setState({
@@ -1391,11 +1391,11 @@ class SettingsView extends Component {
                   last_name2: res.Result[0].usu_apellido_materno,
                   nick_name: res.Result[0].usu_nickname,
                   email: res.Result[0].usu_email,
-                  ghin_number: 1,//res.Result[0].usu_ghin_numero,
-                  handicap: "1",//res.Result[0].usu_handicap_index,
+                  ghin_number: res.Result[0].usu_ghinnumber,
+                  handicap: res.Result[0].usu_handicapindex,
                   cellphone:res.Result[0].usu_telefono,
                   password:res.Result[0].usu_pass,
-                  photo: 'http://13.90.32.51/DragonGolfBackEnd/api/images' + res.Result[0].usu_imagen
+                  photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen
                 }]
 
                 //console.warn(lista[0])
