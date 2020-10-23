@@ -25,9 +25,11 @@ import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListaCampos, EliminarCampo } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
+import styles from './styles';
 
 export default function RoundsView(route) {
 
@@ -43,14 +45,14 @@ export default function RoundsView(route) {
     const [visible, setVisible] = useState(true);
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
-        ListadoCourses();
+        //ListadoCourses();
           });
 
         return unsubscribe;
       }, [navigation]);
     
 
-  async function ListadoCourses() {
+  /*async function ListadoCourses() {
     let idUsu = await AsyncStorage.getItem('usu_id')
     ListaCampos(idUsu)
         .then((res) => {
@@ -72,7 +74,7 @@ export default function RoundsView(route) {
               setCourses([])
             }
         })
-  }
+  }*/
 
   function searchFilterFunction(text,busqueda){
 
@@ -219,7 +221,7 @@ export default function RoundsView(route) {
               .then((res) => {
                 console.warn(res)
                   if(res.estatus == 1){
-                    ListadoCourses()
+                    //ListadoCourses()
                   }
               })
           },
@@ -342,7 +344,7 @@ export default function RoundsView(route) {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  ListadoCourses()
+                  //ListadoCourses()
                   setValue1('')
                   setValue2('')
                   setValue3('')
@@ -380,10 +382,10 @@ export default function RoundsView(route) {
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}
               ListEmptyComponent={
-              <ListEmptyComponent
-                text={emptyPlayerList[language]}
-                iconName="golf"
-              />
+              <View style={styles.emptyView}>
+                  <FontAwesome5 name={"user-friends"} size={50} color="red" />
+                <Text style={styles.emptyText}>{emptyPlayerList[language]}</Text>
+              </View>
             }
             stopLeftSwipe={Dimensions.get('window').width * .5}
             stopRightSwipe={-(Dimensions.get('window').width * .5)}

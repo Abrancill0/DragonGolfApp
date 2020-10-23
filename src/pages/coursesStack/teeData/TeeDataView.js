@@ -42,11 +42,11 @@ export default function RoundsView(route) {
           });
 
         return unsubscribe;
-      }, [navigation]);
+      }, [holes]);
     
 
   async function ListadoHoles() {
-    let list = [];
+    /*let list = [];
     for (var i = 0; i < 18; i++) {
       list.push({
         index: i,
@@ -59,8 +59,8 @@ export default function RoundsView(route) {
         //ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       });
     }
-    setHoles(list)
-    /*ListaHole(IDTees)
+    setHoles(list)*/
+    ListaHole(IDTees)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -78,19 +78,13 @@ export default function RoundsView(route) {
             else{
               setHoles([])
             }
-        })*/
+        })
   }
 
   function change(data,x,y){
-    console.warn('data: '+data)
-    console.warn('x: '+x)
-    console.warn('y: '+y)
     let list = holes
-    console.warn(list)
     list[x][y] = data
-    console.warn(list)
     setHoles(list)
-    //console.warn(holes)
   }
 
   function guardar(){
@@ -154,11 +148,11 @@ export default function RoundsView(route) {
             </View>
             <SwipeListView
             data={holes}
-            renderItem={({item}) =>
+            renderItem={ (item) => (
               <View style={{flexDirection:'row'}}>
                   <View style={styles.holesHeader}>
                 <View style={styles.rectangleElement}>
-                    <Text style={styles.holeNumber}>{item.hole_number}</Text>
+                    <Text style={styles.holeNumber}>{item.item.hole_number}</Text>
                 </View>
 
                 <View style={styles.rectangleElement}>
@@ -169,8 +163,8 @@ export default function RoundsView(route) {
                         maxLength={1}
                         keyboardType="numeric"
                         returnKeyType='done'
-                        value={item.par}
-                        onChangeText={(par) => change(par,item.index,'par')}
+                        value={item.item.par.toString()}
+                        onChangeText={(par) => change(par,item.item.hole_number-1,'par')}
                         selectTextOnFocus={true}
                     />
                 </View>
@@ -183,8 +177,8 @@ export default function RoundsView(route) {
                         maxLength={2}
                         keyboardType="numeric"
                         returnKeyType='done'
-                        value={item.adv}
-                        onChangeText={(adv) => change(adv,item.index,'adv')}
+                        value={item.item.adv.toString()}
+                        onChangeText={(adv) => change(adv,item.item.hole_number-1,'adv')}
                         selectTextOnFocus={true}
                     />
                 </View>
@@ -197,14 +191,14 @@ export default function RoundsView(route) {
                         maxLength={5}
                         keyboardType="numeric"
                         returnKeyType='done'
-                        value={item.yards}
-                        onChangeText={(yards) => change(yards,item.index,'yards')}
+                        value={item.item.yards.toString()}
+                        onChangeText={(yards) => change(yards,item.item.hole_number-1,'yards')}
                         selectTextOnFocus={true}
                     />
                 </View>
             </View>
                 </View>
-              }
+              )}
           />
           <View style={styles.bottomButtom}>
             <DragonButton title={save[language]} onPress={()=>guardar()} />

@@ -312,7 +312,7 @@ class RegisterView extends Component {
                         </View>
                     </ScrollView>
                         <View style={[styles.bottomButtom, {paddingTop:10}]}>
-                            <DragonButton title={create[language]} onPress={this.submit} />
+                            <DragonButton title={create[language]} /*onPress={this.submit}*/ />
                         </View>
                 </KeyboardAvoidingView>
             </View>

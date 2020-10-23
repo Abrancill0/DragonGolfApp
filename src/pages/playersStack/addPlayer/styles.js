@@ -6,6 +6,18 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
+    emptyView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 80
+    },
+    emptyText: {
+        fontSize: 16,
+        color: 'red',
+        fontWeight: 'bold',
+        marginTop: 10
+    },
     inputContainer: {
         width: '80%',
         height: 70,

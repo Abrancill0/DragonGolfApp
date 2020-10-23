@@ -22,7 +22,7 @@ import Colors from '../../../utils/Colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListaCamposTodos, CopiarCampo } from '../../../Services/Services'
@@ -63,7 +63,7 @@ class RoundsView extends Component {
   }
 
   componentDidMount(){
-        this.ListadoCourses()
+        //this.ListadoCourses()
   }
 
   Agrega = async (idCourse) => {
@@ -98,7 +98,7 @@ class RoundsView extends Component {
     );
   }
 
-  ListadoCourses = async () => {
+  /*ListadoCourses = async () => {
     let idUsu = await AsyncStorage.getItem('usu_id')
     ListaCamposTodos(idUsu)
         .then((res) => {
@@ -119,7 +119,7 @@ class RoundsView extends Component {
                 this.arrayholder = list;
             }
         })
-  }
+  }*/
 
   searchFilterFunction = (text,busqueda) => {
 
@@ -332,7 +332,7 @@ class RoundsView extends Component {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  this.ListadoCourses()
+                  //this.ListadoCourses()
                   this.setState({
                     value1: '',
                     value2: '',
@@ -369,10 +369,10 @@ class RoundsView extends Component {
               }
               ListHeaderComponent={this.renderHeader}
               ListEmptyComponent={
-              <ListEmptyComponent
-                text={emptyPlayerList[language]}
-                iconName="golf"
-              />
+              <View style={styles.emptyView}>
+                  <FontAwesome5 name={"user-friends"} size={50} color="red" />
+                <Text style={styles.emptyText}>{emptyPlayerList[language]}</Text>
+              </View>
             }
           />}
           <View style={styles.bottomButtom}>

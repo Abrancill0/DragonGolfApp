@@ -16,6 +16,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    emptyView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 80
+    },
+    emptyText: {
+        fontSize: 16,
+        color: 'red',
+        fontWeight: 'bold',
+        marginTop: 10
+    },
     nameView: {
         flexDirection: 'row',
         flex: 1,
