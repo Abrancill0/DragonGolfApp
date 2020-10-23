@@ -1459,7 +1459,7 @@ class SettingsView extends Component {
                     console.warn('Results', results);
                     if (results.rowsAffected > 0) {
                       console.warn("OK")
-                    } else alert('Updation Failed');
+                    } else console.warn('Updation Failed');
                   }
                 );
                 console.warn(tx)

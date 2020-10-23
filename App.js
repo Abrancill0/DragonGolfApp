@@ -15,14 +15,17 @@ import CambioContrasena from './src/screen/indexStack/login/CambioContrasena'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
+import PlayersView from './src/pages/playersStack/players/PlayersView'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
+import AddPlayer from './src/pages/playersStack/addPlayer/AddPlayerView'
 import AddTee from './src/pages/coursesStack/addTee/AddTeeView'
 import EditTee from './src/pages/coursesStack/addTee/EditTeeView'
 import AddHole from './src/pages/coursesStack/teeData/AddHoleView'
 import EditHole from './src/pages/coursesStack/teeData/EditHoleView'
 import CreateCourse from './src/pages/coursesStack/addCourse/CreateCourseView'
+import CreatePlayer from './src/pages/playersStack/addPlayer/CreatePlayer'
 import EditCourse from './src/pages/coursesStack/addCourse/EditCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
@@ -434,7 +437,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-      <BottomTab.Screen name='SettingsView' component={SettingsView} 
+      {/*<BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -460,7 +463,7 @@ export default class App extends Component {
             }
           },
             
-          })} />
+          })} />*/}
           <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -480,6 +483,33 @@ export default class App extends Component {
                 <View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <MaterialCommunityIcons
                     name='golf'
+                    color={Colors.Black}
+                    size={20} />
+              </View>
+              )
+            }
+          },
+            
+          })} />
+        <BottomTab.Screen name='PlayersView' component={PlayersView} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='user-friends'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>
+              )
+            }else
+            {
+              return(
+                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='user-friends'
                     color={Colors.Black}
                     size={20} />
               </View>
@@ -541,6 +571,18 @@ export default class App extends Component {
               headerShown:false
           })} />
         <Stack.Screen name='AddCourse' component={AddCourse}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='AddPlayer' component={AddPlayer}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
@@ -625,6 +667,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='CreateCourse' component={CreateCourse}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='CreatePlayer' component={CreatePlayer}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

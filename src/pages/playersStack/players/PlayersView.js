@@ -1,215 +1,398 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StatusBar,
+  Animated,
   Dimensions,
-  Animated
+  Alert,
+  TouchableOpacity,
+  RefreshControl,
+  Text
 } from 'react-native';
-import store from '../../../store/store';
-import { connect } from 'react-redux';
-import { NavigationEvents } from 'react-navigation';
+import { SearchBar } from 'react-native-elements';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from '../../global/HeaderButton';
-import PlayerComponent from './PlayerComponent';
-import { actionGetPlayers, actionSetPlayers, actionDeletePlayer } from '../../../store/actions';
+//import CourseComponent from './CourseComponent';
+import { NavigationEvents } from 'react-navigation';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
-import { SwipeListView } from 'react-native-swipe-list-view';
 import HideItem from '../../global/HideItem';
-import { showMessage } from 'react-native-flash-message';
 import Snackbar from 'react-native-snackbar';
 import Colors from '../../../utils/Colors';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import { FlatList } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
+import { ListaCampos, EliminarCampo } from '../../../Services/Services'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ripple from 'react-native-material-ripple';
+import { useNavigation } from "@react-navigation/native";
+import Entypo from 'react-native-vector-icons/Entypo';
 
-class PlayersView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: true,
-    };
+export default function RoundsView(route) {
 
-    props.getPlayers();
+    const navigation = useNavigation();
+    const [courses, setCourses] = useState([]);
+    const [arrayholder, setArrayholder] = useState([]);
+    const [value1, setValue1] = useState('');
+    const [value2, setValue2] = useState('');
+    const [value3, setValue3] = useState('');
+    const [value4, setValue4] = useState('');
+    const [language, setLanguage] = useState('es');
+    const [search, setSearch] = useState(false);
+    const [visible, setVisible] = useState(true);
+        useEffect(() => {
+         const unsubscribe = navigation.addListener("focus", () => {
+        ListadoCourses();
+          });
 
-    this.isDeleting = false;
-    this.isEditing = false;
+        return unsubscribe;
+      }, [navigation]);
+    
 
-    this.hideSnackbar = null;
-
-    this.rowTranslateAnimatedValues = null;
-
-    Dimensions.addEventListener('change', () => {
-      this.setState({visible: false});
-      let timeout = setTimeout(() => {
-        this.setState({visible: true});
-        clearTimeout(timeout);
-      }, 50);
-    })
+  async function ListadoCourses() {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    ListaCampos(idUsu)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDCourse,
+                      nombre: item.Cou_Nombre,
+                      nombreCorto: item.Cou_NombreCorto,
+                      ciudad: item.Cou_Ciudad,
+                      pais: item.Cou_Pais
+                    }
+                ))
+                setCourses(list)
+                setArrayholder(list)
+            }
+            else{
+              setCourses([])
+            }
+        })
   }
 
-  static navigationOptions = ({ navigation }) => {
-    const state = store.getState();
-    const language = state.reducerLanguage;
-    return {
-      title: navigation.getParam('Title', Dictionary.players[language]),
-      headerRight: (
-        <HeaderButton
-          iconName="ios-add"
-          onPress={() => navigation.navigate('AddPlayerView')}
-        />
-      )
+  function searchFilterFunction(text,busqueda){
+
+    const newData = arrayholder.filter(item => {
+    let itemData = ""
+    switch(busqueda){
+      case 1:
+        setValue1(text) 
+        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+        break;
+      case 2:
+        setValue2(text) 
+        itemData = `${item.nombreCorto} ${item.nombreCorto.toUpperCase()}`;
+        break;
+      case 3:
+        setValue3(text) 
+        itemData = `${item.ciudad} ${item.ciudad.toUpperCase()}`;
+        break;
+      case 4:
+        setValue4(text) 
+        itemData = `${item.pais} ${item.pais.toUpperCase()}`;
+        break;
     }
+    const textData = text.toUpperCase();
+    return itemData.indexOf(textData) > -1;
+
+    });
+    setCourses(newData)
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.players !== this.props.players) {
-      this.rowTranslateAnimatedValues = {}
-      nextProps.players.map(item => {
-        this.rowTranslateAnimatedValues[`${item.id}`] = new Animated.Value(1);
-      });
-    }
+   function renderSeparator(){  
+        return (  
+            <View  
+                style={{  
+                    height: 1,  
+                    width: "100%",  
+                    backgroundColor: "#000",  
+                }}  
+            />  
+        );  
+    };
+
+    function renderHeader(){
+
+    return (
+
+      <View>
+
+      <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+            <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+          </View>
+          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
+              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+      {search && <View>
+      <SearchBar
+        placeholder="Nombre"
+        onChangeText={(text) => searchFilterFunction(text,1)}
+        autoCorrect={false}
+        value={value1}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.5}}
+      />
+      <SearchBar
+        placeholder="Nombre Corto"
+        onChangeText={(text) => searchFilterFunction(text,2)}
+        autoCorrect={false}
+        value={value2}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.8}}
+      />
+      <SearchBar
+        placeholder="Ciudad"
+        lightTheme
+        round
+        onChangeText={(text) => searchFilterFunction(text,3)}
+        autoCorrect={false}
+        value={value3}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:1}}
+      />
+      <SearchBar
+        placeholder="Pais"
+        lightTheme
+        round
+        onChangeText={(text) => searchFilterFunction(text,4)}
+        autoCorrect={false}
+        value={value4}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:1,
+        borderBottomWidth:2}}
+      />
+      </View>}
+      </View>
+    );
+  };
+
+
+  function Elimina(id){
+    Alert.alert(
+      "DragonGolf",
+      "¿Está seguro de eliminar este campo?",
+      [
+        {
+          text: "Cancelar",
+          style: 'cancel',
+        },
+        {
+          text: "Continuar",
+          onPress: () => {
+            EliminarCampo(id)
+              .then((res) => {
+                console.warn(res)
+                  if(res.estatus == 1){
+                    ListadoCourses()
+                  }
+              })
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   }
 
-  render() {
 
     const {
-      visible
-    } = this.state;
-
-    const {
-      language,
-      players
-    } = this.props;
+      emptyPlayerList
+    } = Dictionary;
 
     return (
       <View style={{ flex: 1 }}>
-        <NavigationEvents
-          onWillFocus={this.changeTitleText}
-        />
         <StatusBar
           backgroundColor="#FFFFFF"
           barStyle="dark-content"
           translucent={false}
         />
-        {this.rowTranslateAnimatedValues && visible && <SwipeListView
-          data={players}
-          extraData={players}
-          keyExtractor={(item) => item.id.toString()}
-          style={{ flex: 1, paddingVertical: 5 }}
-          renderItem={({ item }) => (
-            <PlayerComponent
-              item={item}
-              height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 70],
-              })}
-              opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
-            />
-          )}
-          ListEmptyComponent={
-            <ListEmptyComponent
-              text={Dictionary.emptyPlayerList[language]}
-              iconName="user-friends"
-              iconFamily='font-awesome'
-            />
-          }
-          renderHiddenItem={({ item }) => (
-            <HideItem
-              item={item}
-              height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 70],
-              })}
-              opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
-            />
-          )
-          }
-          stopLeftSwipe={Dimensions.get('window').width * .5}
-          stopRightSwipe={-(Dimensions.get('window').width * .5)}
-          onSwipeValueChange={this.onSwipeValueChange}
-        />}
+
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{padding:20}} onPress={()=> navigation.openDrawer()}>
+              <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Friends</Text>
+          </View>
+          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
+              <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        { visible &&
+          <View>
+
+      <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+            <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+          </View>
+          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
+              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+      {search && <View>
+      <SearchBar
+        placeholder="Nombre"
+        onChangeText={(text) => searchFilterFunction(text,1)}
+        autoCorrect={false}
+        value={value1}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.5}}
+      />
+      <SearchBar
+        placeholder="Nombre Corto"
+        onChangeText={(text) => searchFilterFunction(text,2)}
+        autoCorrect={false}
+        value={value2}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.8}}
+      />
+      <SearchBar
+        placeholder="Ciudad"
+        lightTheme
+        round
+        onChangeText={(text) => searchFilterFunction(text,3)}
+        autoCorrect={false}
+        value={value3}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:1}}
+      />
+      <SearchBar
+        placeholder="Pais"
+        lightTheme
+        round
+        onChangeText={(text) => searchFilterFunction(text,4)}
+        autoCorrect={false}
+        value={value4}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:1,
+        borderBottomWidth:2}}
+      />
+      </View>}
+          <SwipeListView
+            refreshControl={
+              <RefreshControl
+                refreshing={false}
+                onRefresh={()=>{
+                  ListadoCourses()
+                  setValue1('')
+                  setValue2('')
+                  setValue3('')
+                  setValue4('')
+                }}
+              />
+            }
+            data={courses}
+            renderItem={({item}) =>
+              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
+                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
+                    
+                    <View style={{flex:.85}}>
+                      <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}, {item.pais}</Text>
+                      </View>
+                    </View>
+                    <View style={{flex:.2,padding:5}}>
+                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
+                          <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
+                        </TouchableOpacity>
+                      {/*<View style={{flex:.5}}>
+                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
+                      </View>*/}
+                      <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
+                        <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+              </TouchableOpacity>
+              }
+              keyExtractor={item=>item.id}
+              //ListHeaderComponent={renderHeader}
+              ListEmptyComponent={
+              <ListEmptyComponent
+                text={emptyPlayerList[language]}
+                iconName="golf"
+              />
+            }
+            stopLeftSwipe={Dimensions.get('window').width * .5}
+            stopRightSwipe={-(Dimensions.get('window').width * .5)}
+            //onSwipeValueChange={this.onSwipeValueChange}
+          />
+        
+      </View>}
+
       </View>
     );
-  }
-
-  changeTitleText = () => {
-    this.props.navigation.setParams({
-      Title: Dictionary.players[this.props.language]
-    });
-  }
-
-  onSwipeValueChange = (swipeData) => {
-    const { key, value } = swipeData;
-    if (value > Dimensions.get('window').width * .5 - 50 && !this.isEditing) {
-      this.editPlayer(key);
-    }
-
-    if (value < -(Dimensions.get('window').width * .5 - 1) && !this.isDeleting) {
-      clearInterval(this.hideSnackbar);
-      this.deletePlayer(key);
-    }
-  }
-
-  editPlayer = (key) => {
-    this.isEditing = true;
-    const { players } = this.props;
-    const index = players.findIndex(item => item.id == key);
-    this.props.navigation.navigate('EditPlayerView', { item: players[index] });
-    this.isEditing = false;
-  }
-
-  deletePlayer = (key) => {
-    if (key != 1) {
-      this.isDeleting = true;
-      Animated.timing(this.rowTranslateAnimatedValues[key], { toValue: 0, duration: 200 }).start(() => {
-        const { players } = this.props;
-        const index = players.findIndex(item => item.id == key);
-        this.hideSnackbar = setTimeout(() => {
-          Snackbar.dismiss();
-          players.splice(index, 1);
-          this.props.deletePlayer(key);
-          this.props.getPlayers();
-          this.isDeleting = false;
-          console.log('terminó');
-        }, 5000);
-        Snackbar.show({
-          text: `1 ${Dictionary.removed[this.props.language]}`,
-          duration: Snackbar.LENGTH_INDEFINITE,
-          action: {
-            text: Dictionary.undo[this.props.language],
-            textColor: Colors.Secondary,
-            onPress: () => {
-              Animated.timing(this.rowTranslateAnimatedValues[key], { toValue: 1, duration: 200 }).start();
-              this.isDeleting = false;
-              clearTimeout(this.hideSnackbar);
-            },
-          },
-        });
-      });
-    }else{
-      showMessage({
-        message: Dictionary.cannotDelete[this.props.language],
-        type: 'warning',
-        icon: 'warning'
-      });
-    }
-
-  }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-  players: state.reducerPlayers
-});
-
-const mapDispatchToProps = dispatch => ({
-  getPlayers: () => {
-    dispatch(actionGetPlayers());
-  },
-  updatePlayers: (values) => {
-    dispatch(actionSetPlayers(values));
-  },
-  deletePlayer: (value) => {
-    dispatch(actionDeletePlayer(value));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlayersView);

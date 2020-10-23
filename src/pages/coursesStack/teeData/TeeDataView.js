@@ -8,7 +8,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
-  Alert
+  Alert,
+  TextInput
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import HolesComponent from './HolesComponent';
@@ -43,7 +44,21 @@ export default function RoundsView(route) {
     
 
   async function ListadoHoles() {
-    ListaHole(IDTees)
+    let list = [];
+    for (var i = 0; i < 18; i++) {
+      list.push({
+        index: i,
+        par: '2',
+        hole_number: (i + 1).toString(),
+        adv: '',
+        yards: '',
+        tee_id: IDTees,
+        id_sync: null,
+        ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+      });
+    }
+    setHoles(list)
+    /*ListaHole(IDTees)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -61,7 +76,7 @@ export default function RoundsView(route) {
             else{
               setHoles([])
             }
-        })
+        })*/
   }
 
   function Elimina(IDTees,id){
@@ -149,22 +164,61 @@ export default function RoundsView(route) {
             >
               {holes.map(item => 
                 <View style={{flex:1, flexDirection:'row',alignItems: 'center'}}>
-                  <HolesComponent
-                    key={item.hole_number}
-                    item={item}
-                    language={language}
-                  />
-                  <View>
+                  <View style={styles.inputsView}>
+                <View style={styles.rectangleElement}>
+                    <Text style={styles.holeNumber}>{item.hole_number}</Text>
+                </View>
+
+                <View style={styles.rectangleElement}>
+                    <TextInput
+                        editable={false}
+                        color={'black'}
+                        style={[styles.input,{marginTop:-5}]}
+                        maxLength={1}
+                        keyboardType="numeric"
+                        returnKeyType='done'
+                        value={item.par.toString()}
+                        blurOnSubmit={false}
+                    />
+                </View>
+
+                <View style={styles.rectangleElement}>
+                    <TextInput
+                        editable={false}
+                        color={'black'}
+                        style={[styles.input,{marginTop:-5}]}
+                        maxLength={2}
+                        keyboardType="numeric"
+                        returnKeyType='done'
+                        value={item.adv.toString()}
+                        blurOnSubmit={false}
+                    />
+                </View>
+
+                <View style={styles.rectangleElement}>
+                    <TextInput
+                        editable={false}
+                        color={'black'}
+                        style={[styles.input,{marginTop:-5}]}
+                        maxLength={5}
+                        keyboardType="numeric"
+                        returnKeyType='done'
+                        value={item.yards.toString()}
+                        blurOnSubmit={false}
+                    />
+                </View>
+            </View>
+                  {/*<View>
                     <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(IDTees,item.id)}>
                       <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
                     </TouchableOpacity>
                     {/*<View style={{flex:.5}}>
                       <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                    </View>*/}
+                    </View>
                     <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditHole', {IDTees: IDTees, NameTee:NameTee, Hole: item.hole_number, Par: item.par, Adv: item.adv, Yds: item.yards, IDHoles: item.id})}>
                       <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
                     </TouchableOpacity>
-                  </View>
+                  </View>*/}
                 </View>
                 )
               }
