@@ -376,7 +376,7 @@ class RoundsView extends Component {
             }
           />}
           <View style={styles.bottomButtom}>
-            <DragonButton title={create[language]} onPress={()=>this.props.navigation.navigate('CreatePlayer', { language: language })} />
+            <DragonButton title={create[language]} onPress={()=>this.props.navigation.navigate('RegisterPlayer', {language:language})} />
           </View>
       </View>
     );

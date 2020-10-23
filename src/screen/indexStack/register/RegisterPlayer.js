@@ -24,6 +24,7 @@ import { RegistroAB, SubirImagenUsuario } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
+import DragonButton from '../../../pages/global/DragonButton';
 
 const {
             photo,
@@ -39,13 +40,13 @@ const {
             password,
             confirmPassword,
             haveAccount,
-            signIn,
+            create,
             required,
-            invalidEmail,
-            dontMatch
+            strokes,
+            difTees
         } = Dictionary;
 
-class CreatePlayerView extends Component {
+class RegisterView extends Component {
 
     constructor(props) {
         super(props);
@@ -85,6 +86,38 @@ class CreatePlayerView extends Component {
         title: Dictionary.signUp[language],
     });
 
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (this.props.signUpError !== nextProps.signUpError) {
+            if (nextProps.signUpError) {
+                Alert.alert(
+                    nextProps.signUpError.message,
+                    nextProps.signUpError.error,
+                    [{
+                        text: 'Ok', onPress: () => {
+                            this.props.changeLoading(false);
+                            this.props.resetSignUpError();
+                        }
+                    }]
+                );
+                if (nextProps.signUpError.error === Dictionary.emailTaken[this.props.language]) {
+                    this.setState({
+                        emailError: Dictionary.emailTaken[this.props.language],
+                    });
+                }
+                if (nextProps.signUpError.error === Dictionary.ghinNumberTaken[this.props.language]) {
+                    this.setState({
+                        ghinError: Dictionary.ghinNumberTaken[this.props.language],
+                    });
+                }
+                if (nextProps.signUpError.error === Dictionary.nicknameTaken[this.props.language]) {
+                    this.setState({
+                        nicknameError: Dictionary.nicknameTaken[this.props.language],
+                    });
+                }
+            }
+        }
+    }
+
     render() {
 
         const {
@@ -115,10 +148,13 @@ class CreatePlayerView extends Component {
                     translucent={false}
                 />
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
-                    <ScrollView style={{ flex: 1, paddingTop: 20 }} keyboardShouldPersistTaps='handled'>
+                    <ScrollView style={{ flex: 1, paddingTop: 20}} keyboardShouldPersistTaps='handled'>
                         <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> this.props.navigation.goBack()}>
                           <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> 
+                          <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+                            <Text style={{ paddingBottom:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Player</Text>
+                          </View>
                         <TouchableOpacity
                             style={styles.imagePicker}
                             onPress={this.pickImage}
@@ -162,19 +198,6 @@ class CreatePlayerView extends Component {
                                     onChangeText={(lastName2Reg) => this.setState({ lastName2Reg })}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
                                         this.emailIn.focus();
-                                    }}
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <TextField
-                                    ref={ref => this.emailIn = ref}
-                                    label={email[language]}
-                                    tintColor={Colors.Primary}
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-                                    onChangeText={(emailReg) => this.setState({ emailReg })}
-                                    onSubmitEditing={({nativeEvent: {text}}) => {
-                                        this.nicknameIn.focus();
                                     }}
                                 />
                             </View>
@@ -242,7 +265,7 @@ class CreatePlayerView extends Component {
                                     />
                                 </View>
                             </View>
-                            {/*<View style={styles.inputContainer}>
+                            <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.ghinIn = ref}
                                     label={ghinNumber[language]}
@@ -263,63 +286,34 @@ class CreatePlayerView extends Component {
                                     autoCapitalize="none"
                                     onChangeText={(handicap) => this.setState({ handicap })}
                                 />
-                            </View>*/}
-                            <View style={styles.inputContainer}>
-                                <TextField
-                                    ref={ref => this.passIn = ref}
-                                    label={password[language]}
-                                    tintColor={Colors.Primary}
-                                    secureTextEntry={!seePassword}
-                                    autoCapitalize="none"
-                                    onChangeText={(passwordReg) => this.setState({ passwordReg })}
-                                    onSubmitEditing={({nativeEvent: {text}}) => {
-                                        this.passIn2.focus();
-                                    }}
-                                />
-                                <TouchableOpacity
-                                    style={styles.showPasswordButton}
-                                    onPress={() => this.setState({ seePassword: !seePassword })}
-                                >
-                                    <Ionicon name={seePassword ? 'ios-eye' : 'ios-eye-off'} size={25} color={seePassword ? Colors.Primary : Colors.Primary} />
-                                </TouchableOpacity>
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    ref={ref => this.passIn2 = ref}
-                                    label={confirmPassword[language]}
+                                    ref={ref => this.ghinIn = ref}
+                                    label={strokes[language]}
+                                    maxLength={7}
                                     tintColor={Colors.Primary}
-                                    secureTextEntry={!confirmseePassword}
+                                    keyboardType="number-pad"
                                     autoCapitalize="none"
-                                    onChangeText={(confirmPasswordReg) => this.setState({ confirmPasswordReg })}
-                                    onSubmitEditing={({nativeEvent: {text}}) => {
-                                        this.passIn2.blur();
-                                    }}
+                                    onChangeText={(ghin) => this.setState({ ghin })}
                                 />
-                                <TouchableOpacity
-                                    style={styles.showPasswordButton}
-                                    onPress={() => this.setState({ confirmseePassword: !confirmseePassword })}
-                                >
-                                    <Ionicon name={confirmseePassword ? 'ios-eye' : 'ios-eye-off'} size={25} color={confirmseePassword ? Colors.Primary : Colors.Primary} />
-                                </TouchableOpacity>
                             </View>
-                        </View>
-                        <View style={styles.buttonsView}>
-                            <Ripple
-                                style={[styles.button, { backgroundColor: Colors.Gray }]}
-                                onPress={this.haveAnAccountAction}
-                            >
-                                <Text style={styles.buttonText}>{haveAccount[language]}</Text>
-                            </Ripple>
-                            <Ripple
-                                style={[styles.button, { backgroundColor: Colors.Primary }]}
-                                onPress={this.submit}
-                            >
-                                <Text style={[styles.buttonText, { color: Colors.White }]}>{signIn[language]}</Text>
-                                <View style={{ width: 15 }} />
-                                <Ionicon name="ios-arrow-forward" size={30} color={Colors.White} />
-                            </Ripple>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.handicapIn = ref}
+                                    label={difTees[language]}
+                                    tintColor={Colors.Primary}
+                                    keyboardType="numeric"
+                                    maxLength={5}
+                                    autoCapitalize="none"
+                                    onChangeText={(handicap) => this.setState({ handicap })}
+                                />
+                            </View>
                         </View>
                     </ScrollView>
+                        <View style={[styles.bottomButtom, {paddingTop:10}]}>
+                            <DragonButton title={create[language]} onPress={this.submit} />
+                        </View>
                 </KeyboardAvoidingView>
             </View>
         )
@@ -594,50 +588,9 @@ class CreatePlayerView extends Component {
       return
     }
 
-    if (emailReg == '') {
-      showMessage({
-                message: email[language] + ' ' + required[language],
-                type: "warning",
-              });
-      return
-    }
-
-    if(!this.state.re.test(String(emailReg).toLowerCase())){
-      showMessage({
-                message: invalidEmail[language],
-                type: "danger",
-              });
-      return
-
-    }
-
     if (nicknameReg == '') {
       showMessage({
                 message: nickname[language] + ' ' +required[language],
-                type: "warning",
-              });
-      return
-    }
-
-    if (passwordReg == '') {
-      showMessage({
-                message: password[language] + ' ' + required[language],
-                type: "warning",
-              });
-      return
-    }
-
-    if (confirmPasswordReg == '') {
-      showMessage({
-                message: confirmPassword[language],
-                type: "warning",
-              });
-      return
-    }
-
-    if (passwordReg != confirmPasswordReg) {
-      showMessage({
-                message: dontMatch[language],
                 type: "warning",
               });
       return
@@ -685,4 +638,4 @@ class CreatePlayerView extends Component {
 
 }
 
-export default CreatePlayerView;
+export default RegisterView;

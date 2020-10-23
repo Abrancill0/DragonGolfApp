@@ -25,7 +25,7 @@ import EditTee from './src/pages/coursesStack/addTee/EditTeeView'
 import AddHole from './src/pages/coursesStack/teeData/AddHoleView'
 import EditHole from './src/pages/coursesStack/teeData/EditHoleView'
 import CreateCourse from './src/pages/coursesStack/addCourse/CreateCourseView'
-import CreatePlayer from './src/pages/playersStack/addPlayer/CreatePlayer'
+import RegisterPlayer from './src/screen/indexStack/register/RegisterPlayer'
 import EditCourse from './src/pages/coursesStack/addCourse/EditCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
@@ -678,7 +678,7 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
-          <Stack.Screen name='CreatePlayer' component={CreatePlayer}
+          <Stack.Screen name='RegisterPlayer' component={RegisterPlayer}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

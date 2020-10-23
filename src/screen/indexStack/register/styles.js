@@ -44,6 +44,12 @@ const styles = StyleSheet.create({
         paddingBottom: 50
 
     },
+    bottomButtom: {
+        width: '100%',
+        height: 55,
+        paddingVertical: 10,
+        paddingHorizontal: 20
+    },
     button: {
         paddingHorizontal: 10,
         paddingVertical: 7,

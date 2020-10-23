@@ -25,6 +25,8 @@ import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { FlatList } from 'react-native-gesture-handler';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 export default function RoundsView(route) {
 
@@ -53,8 +55,8 @@ export default function RoundsView(route) {
         adv: '',
         yards: '',
         tee_id: IDTees,
-        id_sync: null,
-        ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+        //id_sync: null,
+        //ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       });
     }
     setHoles(list)
@@ -79,34 +81,28 @@ export default function RoundsView(route) {
         })*/
   }
 
-  function Elimina(IDTees,id){
-    Alert.alert(
-      "DragonGolf",
-      "¿Está seguro de eliminar este hoyo?",
-      [
-        {
-          text: "Cancelar",
-          style: 'cancel',
-        },
-        {
-          text: "Continuar",
-          onPress: () => {
-            EliminarHoles(id,IDTees)
-              .then((res) => {
-                console.warn(res)
-                  if(res.estatus == 1){
-                    ListadoHoles()
-                  }
-              })
-          },
-        },
-      ],
-      { cancelable: false }
-    );
+  function change(data,x,y){
+    console.warn('data: '+data)
+    console.warn('x: '+x)
+    console.warn('y: '+y)
+    let list = holes
+    console.warn(list)
+    list[x][y] = data
+    console.warn(list)
+    setHoles(list)
+    //console.warn(holes)
+  }
+
+  function guardar(){
+    showMessage({
+                message: "Holes guardados correctamente",
+                type:'success',
+            });
   }
 
     const {
-      emptyHoles
+      emptyHoles,
+      save
     } = Dictionary;
 
     return (
@@ -121,22 +117,20 @@ export default function RoundsView(route) {
             <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
               <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Holes</Text>
             </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddHole', {IDTees:IDTees, NameTee:NameTee})}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>
+          </View>*/}
         </View>
 
         <ScrollView
           horizontal
-          style={{ alignSelf: 'center' }}
           keyboardShouldPersistTaps='always'
           keyboardDismissMode='none'
           showsHorizontalScrollIndicator={false}
-          style={{width: '100%'}}
         >
-          <View style={{width: Dimensions.get('screen').width, alignItems: 'center'}}>
+          <View style={{flex:1, marginLeft:50}}>
             <View style={styles.holesHeader}>
               <View style={styles.rectangleElement}>
                 <Text style={styles.holeText}>Hole</Text>
@@ -158,71 +152,63 @@ export default function RoundsView(route) {
                 <Text style={styles.headerText}></Text>
               </View>
             </View>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              style={{width: Dimensions.get('screen').width}}
-            >
-              {holes.map(item => 
-                <View style={{flex:1, flexDirection:'row',alignItems: 'center'}}>
-                  <View style={styles.inputsView}>
+            <SwipeListView
+            data={holes}
+            renderItem={({item}) =>
+              <View style={{flexDirection:'row'}}>
+                  <View style={styles.holesHeader}>
                 <View style={styles.rectangleElement}>
                     <Text style={styles.holeNumber}>{item.hole_number}</Text>
                 </View>
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        editable={false}
+                        selectionColor={Colors.Secondary}
                         color={'black'}
                         style={[styles.input,{marginTop:-5}]}
                         maxLength={1}
                         keyboardType="numeric"
                         returnKeyType='done'
-                        value={item.par.toString()}
-                        blurOnSubmit={false}
+                        value={item.par}
+                        onChangeText={(par) => change(par,item.index,'par')}
+                        selectTextOnFocus={true}
                     />
                 </View>
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        editable={false}
+                        selectionColor={Colors.Secondary}
                         color={'black'}
                         style={[styles.input,{marginTop:-5}]}
                         maxLength={2}
                         keyboardType="numeric"
                         returnKeyType='done'
-                        value={item.adv.toString()}
-                        blurOnSubmit={false}
+                        value={item.adv}
+                        onChangeText={(adv) => change(adv,item.index,'adv')}
+                        selectTextOnFocus={true}
                     />
                 </View>
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        editable={false}
+                        selectionColor={Colors.Secondary}
                         color={'black'}
                         style={[styles.input,{marginTop:-5}]}
                         maxLength={5}
                         keyboardType="numeric"
                         returnKeyType='done'
-                        value={item.yards.toString()}
-                        blurOnSubmit={false}
+                        value={item.yards}
+                        onChangeText={(yards) => change(yards,item.index,'yards')}
+                        selectTextOnFocus={true}
                     />
                 </View>
             </View>
-                  {/*<View>
-                    <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(IDTees,item.id)}>
-                      <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
-                    </TouchableOpacity>
-                    {/*<View style={{flex:.5}}>
-                      <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                    </View>
-                    <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditHole', {IDTees: IDTees, NameTee:NameTee, Hole: item.hole_number, Par: item.par, Adv: item.adv, Yds: item.yards, IDHoles: item.id})}>
-                      <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
-                    </TouchableOpacity>
-                  </View>*/}
                 </View>
-                )
               }
-            </ScrollView>
+          />
+          <View style={styles.bottomButtom}>
+            <DragonButton title={save[language]} onPress={()=>guardar()} />
+          </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
