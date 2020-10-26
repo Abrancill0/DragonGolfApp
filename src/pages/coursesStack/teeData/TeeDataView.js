@@ -32,6 +32,7 @@ export default function RoundsView(route) {
 
     const navigation = useNavigation();
     const [holes, setHoles] = useState([]);
+    const [holesAux, setHolesAux] = useState([]);
     const [IDTees, setIDTees] = useState(route.route.params.IDTees);
     const [NameTee, setNameTee] = useState(route.route.params.NameTee);
     const [value, setValue] = useState('');
@@ -42,7 +43,7 @@ export default function RoundsView(route) {
           });
 
         return unsubscribe;
-      }, [holes]);
+      }, [navigation]);
     
 
   async function ListadoHoles() {
@@ -74,9 +75,11 @@ export default function RoundsView(route) {
                     }
                 ))
                 setHoles(list)
+                setHolesAux(list)
             }
             else{
               setHoles([])
+              setHolesAux([])
             }
         })
   }
@@ -84,8 +87,42 @@ export default function RoundsView(route) {
   function change(data,x,y){
     let list = holes
     list[x][y] = data
-    setHoles(list)
+    setHolesAux(list)
   }
+
+  function onSubmitAdv(index){
+    let adv = holes[index]['adv']
+    console.warn(adv)
+        if (!existAdv(index, adv) || !adv) focusNextInput(1,index);
+        else {
+            showMessage({
+                message: Dictionary.advRepeat[language],
+                type: 'warning',
+                icon: 'warning',
+            });
+            setTimeout(_ => holes[`1:${index}`].focus(), 100);
+        }
+    }
+
+  function existAdv(index, adv){
+    for (let i = 0; i < holes.length; i++) {
+      if(i != index){
+        if(adv == holes[i].adv){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function focusNextInput(column, index){
+        console.warn('['+column+']['+index+']')
+        if (index === 17) {
+            holes[`${column + 1}:0`].focus();
+        } else {
+            holes[`${column}:${index + 1}`].focus();
+        }
+    }
 
   function guardar(){
     showMessage({
@@ -146,8 +183,8 @@ export default function RoundsView(route) {
                 <Text style={styles.headerText}></Text>
               </View>
             </View>
-            <SwipeListView
-            data={holes}
+            <FlatList
+            data={holesAux}
             renderItem={ (item) => (
               <View style={{flexDirection:'row'}}>
                   <View style={styles.holesHeader}>
@@ -157,43 +194,53 @@ export default function RoundsView(route) {
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        selectionColor={Colors.Secondary}
-                        color={'black'}
-                        style={[styles.input,{marginTop:-5}]}
-                        maxLength={1}
-                        keyboardType="numeric"
-                        returnKeyType='done'
-                        value={item.item.par.toString()}
-                        onChangeText={(par) => change(par,item.item.hole_number-1,'par')}
-                        selectTextOnFocus={true}
+                      ref={ref => holes[`0:${item.item.hole_number-1}`] = ref}
+                      selectionColor={Colors.Secondary}
+                      color={'black'}
+                      style={[styles.input,{marginTop:-5}]}
+                      maxLength={1}
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      value={item.item.par.toString()}
+                      onChangeText={(par) => change(par,item.item.hole_number-1,'par')}
+                      selectTextOnFocus={true}
+                      onSubmitEditing={_ => focusNextInput(0,item.item.hole_number-1)}
                     />
                 </View>
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        selectionColor={Colors.Secondary}
-                        color={'black'}
-                        style={[styles.input,{marginTop:-5}]}
-                        maxLength={2}
-                        keyboardType="numeric"
-                        returnKeyType='done'
-                        value={item.item.adv.toString()}
-                        onChangeText={(adv) => change(adv,item.item.hole_number-1,'adv')}
-                        selectTextOnFocus={true}
+                      ref={ref => holes[`1:${item.hole_number-1}`] = ref}
+                      selectionColor={Colors.Secondary}
+                      color={'black'}
+                      style={[styles.input,{marginTop:-5}]}
+                      maxLength={2}
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      value={item.item.adv.toString()}
+                      onChangeText={(adv) => change(adv,item.item.hole_number-1,'adv')}
+                      selectTextOnFocus={true}
+                      onSubmitEditing={onSubmitAdv(item.item.hole_number-1)}
                     />
                 </View>
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                        selectionColor={Colors.Secondary}
-                        color={'black'}
-                        style={[styles.input,{marginTop:-5}]}
-                        maxLength={5}
-                        keyboardType="numeric"
-                        returnKeyType='done'
-                        value={item.item.yards.toString()}
-                        onChangeText={(yards) => change(yards,item.item.hole_number-1,'yards')}
-                        selectTextOnFocus={true}
+                      ref={ref => holes[`2:${item.hole_number-1}`] = ref}
+                      selectionColor={Colors.Secondary}
+                      color={'black'}
+                      style={[styles.input,{marginTop:-5}]}
+                      maxLength={5}
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      value={item.item.yards.toString()}
+                      onChangeText={(yards) => change(yards,item.item.hole_number-1,'yards')}
+                      selectTextOnFocus={true}
+                      onSubmitEditing={_ => {
+                        if (item.hole_number-1 < 17) {
+                          focusNextInput(2,item.item.hole_number-1);
+                        }
+                      }}
                     />
                 </View>
             </View>

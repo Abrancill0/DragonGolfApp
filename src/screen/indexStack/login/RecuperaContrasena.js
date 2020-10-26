@@ -70,6 +70,8 @@ export default class Mascota extends Component {
             status:false
           })
 
+        console.warn(this.state.mail)
+
         console.warn(res)
 
         if (res.estatus == 1) {

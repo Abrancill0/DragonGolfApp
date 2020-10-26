@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
     Text,
     View,
@@ -46,6 +46,9 @@ const {
 export default function Login({ logeadoHandler }) {
   const navigation = useNavigation();
 
+  const refInput = useRef();
+  const passInput = useRef();
+
   const [emailLogin, setemailLogin] = useState("");
   const [re, setre] = useState(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   const [passwordLogin, setpasswordLogin] = useState("");
@@ -65,6 +68,14 @@ export default function Login({ logeadoHandler }) {
   function createAnAccountAction() {
         Keyboard.dismiss();
         navigation.navigate('RegisterView', { language: language });
+    }
+
+    function recupera(){
+      setemailLogin("");
+      setpasswordLogin("");
+      refInput.current.clear();
+      passInput.current.clear();
+      navigation.navigate("RecuperaContrasena", {language:language})
     }
 
     function Logearse() {
@@ -93,6 +104,9 @@ export default function Login({ logeadoHandler }) {
                   });
           return;
         }
+
+        console.warn(emailLogin)
+        console.warn(passwordLogin)
 
         LogearseAB(emailLogin, passwordLogin)
           .then((res) => {
@@ -157,6 +171,10 @@ export default function Login({ logeadoHandler }) {
             }
             else if (res.estatus == 2) {
               this.props.navigation.navigate('CambioContrasena', {Email:emailLogin})
+              setemailLogin("");
+              setpasswordLogin("");
+              refInput.current.clear();
+              passInput.current.clear();
             }
             else {
               showMessage({
@@ -210,7 +228,7 @@ export default function Login({ logeadoHandler }) {
                         <View style={styles.formContainer}>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    //ref={ref => this.emailInput = ref}
+                                    ref={refInput}
                                     label={email[language]}
                                     tintColor={Colors.Primary}
                                     autoCapitalize="none"
@@ -218,13 +236,14 @@ export default function Login({ logeadoHandler }) {
                                     keyboardType="email-address"
                                     onChangeText={(email) => setemailLogin(email)}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
-                                        passInput.focus();
+                                        //passInput.focus();
                                     }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    ref={ref => passInput = ref}
+                                    //ref={ref => passInput = ref}
+                                    ref={passInput}
                                     label={password[language]}
                                     tintColor={Colors.Primary}
                                     secureTextEntry
@@ -232,7 +251,7 @@ export default function Login({ logeadoHandler }) {
                                     autoCapitalize="none"
                                     onChangeText={(password) => setpasswordLogin(password)}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
-                                        passInput.blur();
+                                        //passInput.blur();
                                     }}
                                 />
                             </View>
@@ -253,7 +272,7 @@ export default function Login({ logeadoHandler }) {
                                 <Ionicon name="ios-arrow-forward" size={30} color={Colors.White} />
                             </Ripple>
                         </View>
-                        <TouchableOpacity style={{padding:10, alignSelf: 'center'}} onPress={()=>navigation.navigate('RecuperaContrasena', {language:language})}>
+                        <TouchableOpacity style={{padding:10, alignSelf: 'center'}} onPress={()=>recupera()}>
                             <Text style={{color:Colors.Primary,fontWeight:'bold',fontSize:16}}>{Recupera[language]}</Text>
                         </TouchableOpacity>
                     </ScrollView>
