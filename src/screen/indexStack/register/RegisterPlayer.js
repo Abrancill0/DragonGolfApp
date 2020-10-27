@@ -55,6 +55,8 @@ class RegisterView extends Component {
             profilePicture: null,
             phoneCode: '+52',
             codeNumber: '52',
+            strokesReg:'',
+            difTeesReg:'',
             nameReg: '',
             nameError: '',
             lastNameReg: '',
@@ -203,6 +205,18 @@ class RegisterView extends Component {
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
+                                    ref={ref => this.emailIn = ref}
+                                    label={email[language]}
+                                    tintColor={Colors.Primary}
+                                    autoCapitalize="words"
+                                    onChangeText={(emailReg) => this.setState({ emailReg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.nicknameIn.focus();
+                                    }}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextField
                                     ref={ref => this.nicknameIn = ref}
                                     label={nickname[language]}
                                     tintColor={Colors.Primary}
@@ -260,7 +274,7 @@ class RegisterView extends Component {
                                         onChangeText={this.formatCellphone}
                                         value={cellphone}
                                         onSubmitEditing={({nativeEvent: {text}}) => {
-                                            this.passIn.focus();
+                                            this.ghinIn.focus();
                                         }}
                                     />
                                 </View>
@@ -274,6 +288,9 @@ class RegisterView extends Component {
                                     keyboardType="number-pad"
                                     autoCapitalize="none"
                                     onChangeText={(ghin) => this.setState({ ghin })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.handicapIn.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
@@ -285,28 +302,37 @@ class RegisterView extends Component {
                                     maxLength={5}
                                     autoCapitalize="none"
                                     onChangeText={(handicap) => this.setState({ handicap })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.strokesIn.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    ref={ref => this.ghinIn = ref}
+                                    ref={ref => this.strokesIn = ref}
                                     label={strokes[language]}
                                     maxLength={7}
                                     tintColor={Colors.Primary}
                                     keyboardType="number-pad"
                                     autoCapitalize="none"
-                                    onChangeText={(ghin) => this.setState({ ghin })}
+                                    onChangeText={(strokesReg) => this.setState({ strokesReg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.difTeesIn.focus();
+                                    }}
                                 />
                             </View>
                             <View style={styles.inputContainer}>
                                 <TextField
-                                    ref={ref => this.handicapIn = ref}
+                                    ref={ref => this.difTeesIn = ref}
                                     label={difTees[language]}
                                     tintColor={Colors.Primary}
                                     keyboardType="numeric"
                                     maxLength={5}
                                     autoCapitalize="none"
-                                    onChangeText={(handicap) => this.setState({ handicap })}
+                                    onChangeText={(difTeesReg) => this.setState({ difTeesReg })}
+                                    onSubmitEditing={({nativeEvent: {text}}) => {
+                                        this.difTeesIn.blur();
+                                    }}
                                 />
                             </View>
                         </View>
@@ -337,36 +363,6 @@ class RegisterView extends Component {
             { cancelable: false }
           )
         }, 100)
-
-         /*
-        const options = {
-            title: Dictionary.selectPhoto[this.props.language],
-            takePhotoButtonTitle: Dictionary.takePhoto[this.props.language],
-            chooseFromLibraryButtonTitle: Dictionary.selectPhoto[this.props.language],
-            cancelButtonTitle: Dictionary.cancel[this.props.language],
-            mediaType: 'photo',
-            allowsEditing: true,
-        };
-
-        ImagePicker.showImagePicker(options, (response) => {
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                const source = { uri: response.uri };
-
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-                this.setState({
-                    profilePicture: source,
-                });
-            }
-        });*/
     }
 
      _openGalley() {

@@ -25,7 +25,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaJugadores, CopiarCampo } from '../../../Services/Services'
+import { ListaJugadores, AltaAmigos } from '../../../Services/Services'
 import styles from './styles';
 import DragonButton from '../../global/DragonButton';
 import { showMessage } from "react-native-flash-message";
@@ -66,7 +66,7 @@ class RoundsView extends Component {
         this.ListadoJugadores()
   }
 
-  Agrega = async (idCourse) => {
+  Agrega = async (IDUsuarioFav) => {
     let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
@@ -80,15 +80,15 @@ class RoundsView extends Component {
         {
           text: "Agregar",
           onPress: () => {
-            CopiarCampo(idCourse,idUsu)
+            AltaAmigos(IDUsuarioFav,idUsu,1)
                 .then((res) => {
                   console.warn(res)
                     if(res.estatus == 1){
                       showMessage({
-                        message: "Campo agregado correctamente",
+                        message: "Jugador agregado correctamente",
                         type:'success',
                       });
-                      this.props.navigation.navigate("CoursesView")
+                      this.props.navigation.navigate("PlayersView")
                     }
                 })
           },
@@ -106,11 +106,11 @@ class RoundsView extends Component {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDCourse,
-                      nombre: item.Cou_Nombre,
-                      nombreCorto: item.Cou_NombreCorto,
-                      ciudad: item.Cou_Ciudad,
-                      pais: item.Cou_Pais
+                      id: item.IDUsuario,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      email: item.usu_email
                     }
                 ))
                 this.setState({
@@ -138,19 +138,19 @@ class RoundsView extends Component {
         this.setState({
           value2: text
         });  
-        itemData = `${item.nombreCorto} ${item.nombreCorto.toUpperCase()}`;
+        itemData = `${item.apellido} ${item.apellido.toUpperCase()}`;
         break;
       case 3:
         this.setState({
           value3: text
         }); 
-        itemData = `${item.ciudad} ${item.ciudad.toUpperCase()}`;
+        itemData = `${item.nickname} ${item.nickname.toUpperCase()}`;
         break;
       case 4:
         this.setState({
           value4: text
         }); 
-        itemData = `${item.pais} ${item.pais.toUpperCase()}`;
+        itemData = `${item.email} ${item.email.toUpperCase()}`;
         break;
     }
     const textData = text.toUpperCase();
@@ -211,7 +211,7 @@ class RoundsView extends Component {
         borderBottomWidth:0.5}}
       />
       <SearchBar
-        placeholder="Nombre Corto"
+        placeholder="Apellido"
         onChangeText={text => this.searchFilterFunction(text, 2)}
         autoCorrect={false}
         value={this.state.value2}
@@ -226,7 +226,7 @@ class RoundsView extends Component {
         borderBottomWidth:0.8}}
       />
       <SearchBar
-        placeholder="Ciudad"
+        placeholder="Nickname"
         lightTheme
         round
         onChangeText={text => this.searchFilterFunction(text, 3)}
@@ -243,7 +243,7 @@ class RoundsView extends Component {
         borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Pais"
+        placeholder="Email"
         lightTheme
         round
         onChangeText={text => this.searchFilterFunction(text, 4)}
@@ -351,9 +351,9 @@ class RoundsView extends Component {
                     <View style={{flex:.85}}>
                       <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.pais}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.apellido}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nickname}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.email}</Text>
                       </View>
                     </View>
                     <View style={{flex:.2,padding:5}}>

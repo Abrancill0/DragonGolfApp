@@ -19,9 +19,9 @@ import Colors from '../../../utils/Colors';
 import styles from './styles';
 import { setLanguage, getSessionToken } from '../../../utils/Session';
 import DragonButton from '../../global/DragonButton';
-import FormatCellphone from '../../../utils/FormatCellphone';
 import Ripple from 'react-native-material-ripple';
 //import * as Validations from '../../../utils/Validations';
+import FormatCellphone from '../../../utils/FormatCellphone';
 import moment from 'moment';
 import { RadioButton } from 'react-native-paper';
 import Details from '../../../utils/Details';
@@ -242,7 +242,7 @@ class SettingsView extends Component {
                 </View>
                 <View>
                   <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{userData ? userData.email : 'example@mail.com'}</Text>
-                  <Text style={styles.textLink} ellipsizeMode="tail">{userData.cellphone}</Text>
+                  <Text style={styles.textLink} ellipsizeMode="tail">{userData.cellphoneAux}</Text>
                 </View>
               </View>
             </View>
@@ -1218,22 +1218,20 @@ class SettingsView extends Component {
     });
   }
 
-  /*formatCellphone = () => {
-    if (this.props.userData) {
-      let { userData: { cellphone } } = this.props;
+  formatCellphone = (cellphone) => {
       let formatted = '';
       let pureCell = '';
-      if (cellphone.length > 10) {
-        pureCell = cellphone.substr(cellphone.length - 10);
+      console.warn('ce: ' + cellphone)
+      if (cellphone.length > 2) {
+        pureCell = cellphone.substr(2,cellphone.length);
+        formatted = '+' + cellphone.substr(0,2);
+        formatted += ' ' + FormatCellphone(pureCell);
       }
-
-      formatted = cellphone.substr(0, cellphone.length - 10);
-
-      formatted += ' ' + FormatCellphone(pureCell);
-
+      else{
+        formatted = '+' + cellphone
+      }
       return formatted;
-    }
-  }*/
+  }
 
   getUserDataLocal = async () => {
 
@@ -1394,6 +1392,7 @@ class SettingsView extends Component {
                   ghin_number: res.Result[0].usu_ghinnumber,
                   handicap: res.Result[0].usu_handicapindex,
                   cellphone:res.Result[0].usu_telefono,
+                  cellphoneAux:this.formatCellphone(res.Result[0].usu_telefono),
                   password:res.Result[0].usu_pass,
                   photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen
                 }]

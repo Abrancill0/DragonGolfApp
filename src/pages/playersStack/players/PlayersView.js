@@ -265,7 +265,7 @@ export default function RoundsView(route) {
                 }}
               />
             }
-            data={courses}
+            data={players}
             renderItem={({item}) =>
               <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
                 <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>

@@ -301,6 +301,62 @@ export const ListaCampos = (IDUsuario) => {
                 });
 };
 
+export const ListaAmigos = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListaAmigos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const ListaJugadores = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListaJugadores";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const AltaAmigos = (IDUsuarioFav,IDUsuario,Fav_Status) => {
+    const URL = RutaBaseAB + "/AltaAmigos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuarioFav: IDUsuarioFav,
+                    IDUsuario: IDUsuario,
+                    Fav_Status: Fav_Status
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaCamposTodos = (IDUsuario) => {
     const URL = RutaBaseAB + "/ListaCamposTodos";
     return fetch(URL, {

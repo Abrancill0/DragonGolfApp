@@ -566,37 +566,42 @@ class EditUserView extends Component {
 
     GuardarFoto = async (idUsuario) => {
 
-    if (this.state.profilePicture != null) {
-      SubirImagenUsuario(idUsuario, this.state.profilePicture)
-        .then((res) => {
-          console.warn(res)
-          if (res.estatus == 1) {
+        try{
+            if (this.state.profilePicture.name != null) {
+              SubirImagenUsuario(idUsuario, this.state.profilePicture)
+                .then((res) => {
+                  console.warn(res)
+                  if (res.estatus == 1) {
 
-               setTimeout(() => {
-                 showMessage({
-                  message: 'Foto subida correctamente',
-                  type: "success",
+                       setTimeout(() => {
+                         showMessage({
+                          message: 'Foto subida correctamente',
+                          type: "success",
+                        });
+                       }, 1000)
+
+                  }
+                  else {
+                    Alert.alert(
+                      "Dragon Golf",
+                      "Ocurrió un error al subir la Foto",
+                      [
+                        {
+                          text: "Aceptar",
+                          onPress: () => console.log("Cancel Pressed"),
+                          style: "cancel"
+                        },
+                      ],
+                      { cancelable: false }
+                    );
+                  }
                 });
-               }, 1000)
-
-          }
-          else {
-            Alert.alert(
-              "Dragon Golf",
-              "Ocurrió un error al subir la Foto",
-              [
-                {
-                  text: "Aceptar",
-                  onPress: () => console.log("Cancel Pressed"),
-                  style: "cancel"
-                },
-              ],
-              { cancelable: false }
-            );
-          }
-        });
+            }
+        }
+        catch(e){
+            console.warn(e)
+        }
     }
-  }
 
     submit = () => {
         const {
