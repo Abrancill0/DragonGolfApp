@@ -23,7 +23,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaCampos, EliminarCampo } from '../../../Services/Services'
+import { ListaAmigos, EliminarCampo } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -34,7 +34,7 @@ import styles from './styles';
 export default function RoundsView(route) {
 
     const navigation = useNavigation();
-    const [courses, setCourses] = useState([]);
+    const [players, setPlayers] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
@@ -45,36 +45,36 @@ export default function RoundsView(route) {
     const [visible, setVisible] = useState(true);
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
-        //ListadoCourses();
+        ListadoJugadores();
           });
 
         return unsubscribe;
       }, [navigation]);
     
 
-  /*async function ListadoCourses() {
+  async function ListadoJugadores() {
     let idUsu = await AsyncStorage.getItem('usu_id')
-    ListaCampos(idUsu)
+    ListaAmigos(idUsu)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDCourse,
-                      nombre: item.Cou_Nombre,
-                      nombreCorto: item.Cou_NombreCorto,
-                      ciudad: item.Cou_Ciudad,
-                      pais: item.Cou_Pais
+                      id: item.IDUsuario,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      email: item.usu_email
                     }
                 ))
-                setCourses(list)
+                setPlayers(list)
                 setArrayholder(list)
             }
             else{
-              setCourses([])
+              setPlayers([])
             }
         })
-  }*/
+  }
 
   function searchFilterFunction(text,busqueda){
 
@@ -87,22 +87,22 @@ export default function RoundsView(route) {
         break;
       case 2:
         setValue2(text) 
-        itemData = `${item.nombreCorto} ${item.nombreCorto.toUpperCase()}`;
+        itemData = `${item.apellido} ${item.apellido.toUpperCase()}`;
         break;
       case 3:
         setValue3(text) 
-        itemData = `${item.ciudad} ${item.ciudad.toUpperCase()}`;
+        itemData = `${item.nickname} ${item.nickname.toUpperCase()}`;
         break;
       case 4:
         setValue4(text) 
-        itemData = `${item.pais} ${item.pais.toUpperCase()}`;
+        itemData = `${item.email} ${item.email.toUpperCase()}`;
         break;
     }
     const textData = text.toUpperCase();
     return itemData.indexOf(textData) > -1;
 
     });
-    setCourses(newData)
+    setPlayers(newData)
   };
 
    function renderSeparator(){  
@@ -116,93 +116,6 @@ export default function RoundsView(route) {
             />  
         );  
     };
-
-    function renderHeader(){
-
-    return (
-
-      <View>
-
-      <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
-          </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
-              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-      {search && <View>
-      <SearchBar
-        placeholder="Nombre"
-        onChangeText={(text) => searchFilterFunction(text,1)}
-        autoCorrect={false}
-        value={value1}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.5}}
-      />
-      <SearchBar
-        placeholder="Nombre Corto"
-        onChangeText={(text) => searchFilterFunction(text,2)}
-        autoCorrect={false}
-        value={value2}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.8}}
-      />
-      <SearchBar
-        placeholder="Ciudad"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,3)}
-        autoCorrect={false}
-        value={value3}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:1}}
-      />
-      <SearchBar
-        placeholder="Pais"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,4)}
-        autoCorrect={false}
-        value={value4}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:1,
-        borderBottomWidth:2}}
-      />
-      </View>}
-      </View>
-    );
-  };
 
 
   function Elimina(id){
@@ -290,7 +203,7 @@ export default function RoundsView(route) {
         borderBottomWidth:0.5}}
       />
       <SearchBar
-        placeholder="Nombre Corto"
+        placeholder="Apellido"
         onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
         value={value2}
@@ -305,7 +218,7 @@ export default function RoundsView(route) {
         borderBottomWidth:0.8}}
       />
       <SearchBar
-        placeholder="Ciudad"
+        placeholder="Nickname"
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,3)}
@@ -322,7 +235,7 @@ export default function RoundsView(route) {
         borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Pais"
+        placeholder="Email"
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,4)}
@@ -361,8 +274,8 @@ export default function RoundsView(route) {
                     <View style={{flex:.85}}>
                       <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}, {item.pais}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.apellido}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nickname}, {item.email}</Text>
                       </View>
                     </View>
                     <View style={{flex:.2,padding:5}}>
@@ -372,7 +285,7 @@ export default function RoundsView(route) {
                       {/*<View style={{flex:.5}}>
                         <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
                       </View>*/}
-                      <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
+                      <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, Apellido: item.apellido, Nickname: item.nickname, Email: item.email})}>
                         <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
                       </TouchableOpacity>
                     </View>
@@ -380,7 +293,6 @@ export default function RoundsView(route) {
               </TouchableOpacity>
               }
               keyExtractor={item=>item.id}
-              //ListHeaderComponent={renderHeader}
               ListEmptyComponent={
               <View style={styles.emptyView}>
                   <FontAwesome5 name={"user-friends"} size={50} color="red" />
