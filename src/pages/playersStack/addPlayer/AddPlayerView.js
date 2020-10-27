@@ -25,7 +25,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaCamposTodos, CopiarCampo } from '../../../Services/Services'
+import { ListaJugadores, CopiarCampo } from '../../../Services/Services'
 import styles from './styles';
 import DragonButton from '../../global/DragonButton';
 import { showMessage } from "react-native-flash-message";
@@ -63,7 +63,7 @@ class RoundsView extends Component {
   }
 
   componentDidMount(){
-        //this.ListadoCourses()
+        this.ListadoJugadores()
   }
 
   Agrega = async (idCourse) => {
@@ -98,9 +98,9 @@ class RoundsView extends Component {
     );
   }
 
-  /*ListadoCourses = async () => {
+  ListadoJugadores = async () => {
     let idUsu = await AsyncStorage.getItem('usu_id')
-    ListaCamposTodos(idUsu)
+    ListaJugadores(idUsu)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -119,7 +119,7 @@ class RoundsView extends Component {
                 this.arrayholder = list;
             }
         })
-  }*/
+  }
 
   searchFilterFunction = (text,busqueda) => {
 
@@ -332,7 +332,7 @@ class RoundsView extends Component {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  //this.ListadoCourses()
+                  this.ListadoJugadores()
                   this.setState({
                     value1: '',
                     value2: '',
