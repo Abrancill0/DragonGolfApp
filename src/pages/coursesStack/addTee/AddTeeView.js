@@ -269,7 +269,7 @@ class AddTeeView extends Component {
         AltaTees(name, slope, rating, teeColor, 0,0,0, IDCourse)
         .then((res) => {
           console.warn(res)
-            if(res.estatus == 1){
+            if(res.estatus != 0){
                 showMessage({
                 message: "Tee creado correctamente",
                 type:'success',

@@ -116,6 +116,7 @@ export default function RoundsView(route) {
   }
 
   function focusNextInput(column, index){
+    console.warn(holes[`${column + 1}:0`])
         console.warn('['+column+']['+index+']')
         if (index === 17) {
             holes[`${column + 1}:0`].focus();
@@ -137,7 +138,7 @@ export default function RoundsView(route) {
     } = Dictionary;
 
     return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'} >
+      <View style={{ flex: 1 }} behavior='padding'  enabled={Platform.OS === 'ios'} >
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
@@ -210,7 +211,7 @@ export default function RoundsView(route) {
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                      ref={ref => holes[`1:${item.hole_number-1}`] = ref}
+                      ref={ref => holes[`1:${item.item.hole_number-1}`] = ref}
                       selectionColor={Colors.Secondary}
                       color={'black'}
                       style={[styles.input,{marginTop:-5}]}
@@ -220,13 +221,13 @@ export default function RoundsView(route) {
                       value={item.item.adv.toString()}
                       onChangeText={(adv) => change(adv,item.item.hole_number-1,'adv')}
                       selectTextOnFocus={true}
-                      onSubmitEditing={onSubmitAdv(item.item.hole_number-1)}
+                      onSubmitEditing={()=>onSubmitAdv(item.item.hole_number-1)}
                     />
                 </View>
 
                 <View style={styles.rectangleElement}>
                     <TextInput
-                      ref={ref => holes[`2:${item.hole_number-1}`] = ref}
+                      ref={ref => holes[`2:${item.item.hole_number-1}`] = ref}
                       selectionColor={Colors.Secondary}
                       color={'black'}
                       style={[styles.input,{marginTop:-5}]}
@@ -237,7 +238,7 @@ export default function RoundsView(route) {
                       onChangeText={(yards) => change(yards,item.item.hole_number-1,'yards')}
                       selectTextOnFocus={true}
                       onSubmitEditing={_ => {
-                        if (item.hole_number-1 < 17) {
+                        if (item.item.hole_number-1 < 17) {
                           focusNextInput(2,item.item.hole_number-1);
                         }
                       }}
@@ -252,7 +253,7 @@ export default function RoundsView(route) {
           </View>
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </View>
     );
 }
 
