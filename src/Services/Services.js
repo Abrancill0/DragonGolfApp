@@ -357,6 +357,25 @@ export const AltaAmigos = (IDUsuarioFav,IDUsuario,Fav_Status) => {
                 });
 };
 
+export const QuitarAmigos = (IDUsuarioFav,IDUsuario) => {
+    const URL = RutaBaseAB + "/QuitarAmigos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuarioFav: IDUsuarioFav,
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaCamposTodos = (IDUsuario) => {
     const URL = RutaBaseAB + "/ListaCamposTodos";
     return fetch(URL, {
@@ -573,7 +592,7 @@ export const ActualizarHoles = (IDTees, Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advantag
                 });
 };
 
-export const EliminarCampo = (IDCourse) => {
+export const EliminarCampo = (IDCourse, Tipo, IDUsuario) => {
     const URL = RutaBaseAB + "/EliminarCampo";
     return fetch(URL, {
                 method: "POST",
@@ -582,7 +601,9 @@ export const EliminarCampo = (IDCourse) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDCourse: IDCourse
+                    IDCourse: IDCourse,
+                    Tipo: Tipo,
+                    IDUsuario: IDUsuario
                 }),
             })
             .then((response) => response.json())

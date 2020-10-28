@@ -25,7 +25,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaJugadores, AltaAmigos } from '../../../Services/Services'
+import { ListaJugadores, AltaAmigos, QuitarAmigos } from '../../../Services/Services'
 import styles from './styles';
 import DragonButton from '../../global/DragonButton';
 import { showMessage } from "react-native-flash-message";
@@ -70,7 +70,7 @@ class RoundsView extends Component {
     let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
-      "¿Desea agregar este campo a su lista de favoritos?",
+      "¿Desea agregar este jugador a su lista de amigos?",
       [
         {
           text: "Cancelar",
@@ -86,6 +86,38 @@ class RoundsView extends Component {
                     if(res.estatus == 1){
                       showMessage({
                         message: "Jugador agregado correctamente",
+                        type:'success',
+                      });
+                      this.props.navigation.navigate("PlayersView")
+                    }
+                })
+          },
+        }
+      ],
+      { cancelable: false }
+    );
+  }
+
+  Elimina = async (IDUsuarioFav) => {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    Alert.alert(
+      "DragonGolf",
+      "¿Desea eliminar este jugador de su lista de amigos?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {
+          },
+        },
+        {
+          text: "Eliminar",
+          onPress: () => {
+            QuitarAmigos(IDUsuarioFav,idUsu)
+                .then((res) => {
+                  console.warn(res)
+                    if(res.estatus == 1){
+                      showMessage({
+                        message: "Jugador eliminado correctamente",
                         type:'success',
                       });
                       this.props.navigation.navigate("PlayersView")
@@ -344,8 +376,12 @@ class RoundsView extends Component {
             }
             data={this.state.courses}
             renderItem={({item}) =>
-              <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
-                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+            <View style={{flex:.2,padding:5}}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+              <TouchableOpacity activeOpacity={0} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
+                <View style={{width: ScreenWidth,flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     
                     <View style={{flex:.85}}>
@@ -357,15 +393,19 @@ class RoundsView extends Component {
                       </View>
                     </View>
                     <View style={{flex:.2,padding:5}}>
-                      {/*<View style={{flex:.5}}>
-                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                      </View>*/}
                       <TouchableOpacity style={{flex:.5}} onPress={()=> this.Agrega(item.id)}>
                         <Fontisto name={'cloud-down'} size={30} color={Colors.Primary} />
                       </TouchableOpacity>
                     </View>
                   </View>
               </TouchableOpacity>
+            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
+                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
               }
               ListHeaderComponent={this.renderHeader}
               ListEmptyComponent={

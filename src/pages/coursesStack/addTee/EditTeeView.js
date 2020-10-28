@@ -89,6 +89,9 @@ class AddTeeView extends Component {
           <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
             <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
           </TouchableOpacity>
+          <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+            <Text style={{ fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Edit Tee</Text>
+          </View>
           <View style={styles.formContainer}>
 
             <View style={styles.inputContainer}>

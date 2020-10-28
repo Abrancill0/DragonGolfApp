@@ -7,7 +7,8 @@ import {
   Alert,
   TouchableOpacity,
   RefreshControl,
-  Text
+  Text,
+  ScrollView
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -38,6 +39,7 @@ export default function RoundsView(route) {
     const [arrayholder, setArrayholder] = useState([]);
     const [value, setValue] = useState('');
     const [language, setLanguage] = useState('es');
+    const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
         ListadoTees();
@@ -58,7 +60,10 @@ export default function RoundsView(route) {
                       nombre: item.Te_TeeName,
                       slope: item.Te_Slope,
                       rating: item.Te_Rating,
-                      teeColor: item.Te_TeeColor
+                      teeColor: item.Te_TeeColor,
+                      front: item.Te_In,
+                      back: item.Te_Out,
+                      total: item.Te_Total
                     }
                 ))
                 setTees(list)
@@ -136,33 +141,43 @@ export default function RoundsView(route) {
             }
             data={tees}
             renderItem={({item}) =>
-              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('TeeDataView', {IDTees: item.id, NameTee: item.nombre})}>
-                <View style={{flexDirection:'row',height:90,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+            <View style={{flex:.2,padding:5}}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeeDataView', {IDTees: item.id, NameTee: item.nombre})}>
+                <View style={{width: ScreenWidth,flexDirection:'row',height:90,backgroundColor:'#f1f2f2',marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     
-                    <View style={{flex:.85}}>
-                      <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Slope: ' + item.slope}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Rating: ' + item.rating}</Text>
-                        <View style={styles.teeColorView}>
+                    <View style={{flex:1}}>
+                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
+                        <View style={{flex:.4}}>
+                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Slope: ' + item.slope}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Rating: ' + item.rating}</Text>
+                        </View>
+                        <View style={{flex:.4}}>
+                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Front: ' + item.front}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Back: ' + item.back}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Total: ' + item.total}</Text>
+                        </View>
+                        <View style={[styles.teeColorView],{flex:.2}}>
                           <View style={[styles.colorSquare, { backgroundColor: item.teeColor, marginVertical:2 }]} />
                         </View>
                       </View>
                     </View>
-                    <View style={{flex:.2,padding:5}}>
-                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(IDCourse,item.id)}>
-                          <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
-                        </TouchableOpacity>
-                      {/*<View style={{flex:.5}}>
-                        <Fontisto name={'world'} size={30} color={Colors.Primary} />
-                      </View>*/}
-                      <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditTee', {IDTees:item.id ,IDCourse: IDCourse, Nombre: item.nombre, Slope: item.slope, Rating: item.rating, Color: item.teeColor})}>
-                        <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
-                      </TouchableOpacity>
-                    </View>
                   </View>
               </TouchableOpacity>
+            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditTee', {IDTees:item.id ,IDCourse: IDCourse, Nombre: item.nombre, Slope: item.slope, Rating: item.rating, Color: item.teeColor})}>
+                <FontAwesome name={'edit'} size={30} color={Colors.White} />
+              </TouchableOpacity>
+              <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(IDCourse,item.id)}>
+                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
               }
               //ListHeaderComponent={this.renderHeader}
               ListEmptyComponent={

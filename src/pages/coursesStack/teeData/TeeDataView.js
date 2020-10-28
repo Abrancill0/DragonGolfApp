@@ -37,6 +37,8 @@ export default function RoundsView(route) {
     const [NameTee, setNameTee] = useState(route.route.params.NameTee);
     const [value, setValue] = useState('');
     const [language, setLanguage] = useState('es');
+
+    const [dataInState, setDataInState] = useState([]);
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
         ListadoHoles();
@@ -87,7 +89,15 @@ export default function RoundsView(route) {
   function change(data,x,y){
     let list = holes
     list[x][y] = data
-    setHolesAux(list)
+    setDataInState([...dataInState, holes]);
+     let dataSource = [];
+    console.warn(holes)
+    for (var i =0 ; i <= holes.length-1; i++) {
+            dataSource.push(Object.values(holes[i]))
+    }
+    console.warn(dataSource)
+        
+    //setHoles(list)
   }
 
   function onSubmitAdv(index){
@@ -185,7 +195,7 @@ export default function RoundsView(route) {
               </View>
             </View>
             <FlatList
-            data={holesAux}
+            data={holes}
             renderItem={ (item) => (
               <View style={{flexDirection:'row'}}>
                   <View style={styles.holesHeader}>

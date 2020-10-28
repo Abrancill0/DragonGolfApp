@@ -7,7 +7,8 @@ import {
   Alert,
   TouchableOpacity,
   RefreshControl,
-  Text
+  Text,
+  ScrollView
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -28,6 +29,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export default function RoundsView(route) {
 
@@ -41,6 +43,8 @@ export default function RoundsView(route) {
     const [language, setLanguage] = useState('es');
     const [search, setSearch] = useState(false);
     const [visible, setVisible] = useState(true);
+    const [Leido, setLeido] = useState(true);
+    const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
         ListadoCourses();
@@ -62,7 +66,8 @@ export default function RoundsView(route) {
                       nombre: item.Cou_Nombre,
                       nombreCorto: item.Cou_NombreCorto,
                       ciudad: item.Cou_Ciudad,
-                      pais: item.Cou_Pais
+                      pais: item.Cou_Pais,
+                      tipo: item.Tipo
                     }
                 ))
                 setCourses(list)
@@ -203,7 +208,9 @@ export default function RoundsView(route) {
   };
 
 
-  function Elimina(id){
+  async function Elimina(id, tipo){
+    console.warn(tipo)
+    let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
       "¿Está seguro de eliminar este campo?",
@@ -215,7 +222,7 @@ export default function RoundsView(route) {
         {
           text: "Continuar",
           onPress: () => {
-            EliminarCampo(id)
+            EliminarCampo(id, tipo, idUsu)
               .then((res) => {
                 console.warn(res)
                   if(res.estatus == 1){
@@ -352,30 +359,32 @@ export default function RoundsView(route) {
             }
             data={courses}
             renderItem={({item}) =>
-              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
-                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
-                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    
-                    <View style={{flex:.85}}>
-                      <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}, {item.pais}</Text>
-                      </View>
-                    </View>
                     <View style={{flex:.2,padding:5}}>
-                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
-                          <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
-                        </TouchableOpacity>
-                      {/*<View style={{flex:.5}}>
-                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
-                      </View>*/}
-                      <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
-                        <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
-                      </TouchableOpacity>
+                        <ScrollView
+                          horizontal={true}
+                          showsHorizontalScrollIndicator={false}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
+                            <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10}}>
+                              <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
+                                <View style={{flex:.85}}>
+                                  <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
+                                    <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nombreCorto}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}, {item.pais}</Text>
+                                  </View>
+                                </View>
+                              </View>
+                          </TouchableOpacity>
+                          <View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
+                          <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
+                            <FontAwesome name={'edit'} size={30} color={Colors.White} />
+                          </TouchableOpacity>
+                          <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id, item.tipo)}>
+                            <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+                          </TouchableOpacity>
+                          </View>
+                          </ScrollView>
                     </View>
-                  </View>
-              </TouchableOpacity>
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}
