@@ -20,7 +20,7 @@ import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
-import { ListaHole, EliminarHoles } from '../../../Services/Services'
+import { ListaHole, ActualizarHoles } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
@@ -90,14 +90,6 @@ export default function RoundsView(route) {
     let list = holes
     list[x][y] = data
     setDataInState([...dataInState, holes]);
-     let dataSource = [];
-    console.warn(holes)
-    for (var i =0 ; i <= holes.length-1; i++) {
-            dataSource.push(Object.values(holes[i]))
-    }
-    console.warn(dataSource)
-        
-    //setHoles(list)
   }
 
   function onSubmitAdv(index){
@@ -136,10 +128,29 @@ export default function RoundsView(route) {
     }
 
   function guardar(){
-    showMessage({
+    let dataSource = [];
+    for (var i =0 ; i <= holes.length-1; i++) {
+            dataSource.push(Object.values(holes[i]))
+    }
+    console.warn(IDTees)
+    console.warn(NameTee)
+    console.warn(dataSource)
+    ActualizarHoles(IDTees, NameTee, dataSource, 1)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){      
+              showMessage({
                 message: "Holes guardados correctamente",
                 type:'success',
-            });
+              });
+            }
+            else{
+              showMessage({
+                message: "Ocurrió un error, intente más tarde",
+                type:'danger',
+              });
+            }
+        })
   }
 
     const {

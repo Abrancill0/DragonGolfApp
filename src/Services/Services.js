@@ -376,6 +376,27 @@ export const QuitarAmigos = (IDUsuarioFav,IDUsuario) => {
                 });
 };
 
+export const ActualizarHoles = (IDTees,Ho_TeeName,Arreglo,Ho_Hole) => {
+    const URL = RutaBaseAB + "/ActualizarHoles";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDTees: IDTees,
+                    Ho_TeeName: Ho_TeeName,
+                    Arreglo: Arreglo,
+                    Ho_Hole: Ho_Hole
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaCamposTodos = (IDUsuario) => {
     const URL = RutaBaseAB + "/ListaCamposTodos";
     return fetch(URL, {
@@ -568,7 +589,7 @@ export const AltaHoles = (Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advantage, Ho_Yards, I
                 });
 };
 
-export const ActualizarHoles = (IDTees, Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advantage, Ho_Yards, IDHoles) => {
+export const ActualizarHoles2 = (IDTees, Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advantage, Ho_Yards, IDHoles) => {
     const URL = RutaBaseAB + "/ActualizarHoles";
     return fetch(URL, {
                 method: "POST",

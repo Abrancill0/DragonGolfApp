@@ -7,7 +7,8 @@ import {
   Alert,
   TouchableOpacity,
   RefreshControl,
-  Text
+  Text,
+  ScrollView
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -23,13 +24,14 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, EliminarCampo } from '../../../Services/Services'
+import { ListaAmigos, QuitarAmigos } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from './styles';
+import { showMessage } from "react-native-flash-message";
 
 export default function RoundsView(route) {
 
@@ -41,6 +43,7 @@ export default function RoundsView(route) {
     const [value3, setValue3] = useState('');
     const [value4, setValue4] = useState('');
     const [language, setLanguage] = useState('es');
+    const ScreenWidth = Dimensions.get("window").width;
     const [search, setSearch] = useState(false);
     const [visible, setVisible] = useState(true);
         useEffect(() => {
@@ -74,6 +77,38 @@ export default function RoundsView(route) {
               setPlayers([])
             }
         })
+  }
+
+  async function Elimina(IDUsuarioFav){
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    Alert.alert(
+      "DragonGolf",
+      "¿Desea eliminar este jugador de su lista de amigos?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {
+          },
+        },
+        {
+          text: "Eliminar",
+          onPress: () => {
+            QuitarAmigos(IDUsuarioFav,idUsu)
+                .then((res) => {
+                  console.warn(res)
+                    if(res.estatus == 1){
+                      showMessage({
+                        message: "Jugador eliminado correctamente",
+                        type:'success',
+                      });
+                      ListadoJugadores()
+                    }
+                })
+          },
+        }
+      ],
+      { cancelable: false }
+    );
   }
 
   function searchFilterFunction(text,busqueda){
@@ -116,34 +151,6 @@ export default function RoundsView(route) {
             />  
         );  
     };
-
-
-  function Elimina(id){
-    Alert.alert(
-      "DragonGolf",
-      "¿Está seguro de eliminar este campo?",
-      [
-        {
-          text: "Cancelar",
-          style: 'cancel',
-        },
-        {
-          text: "Continuar",
-          onPress: () => {
-            EliminarCampo(id)
-              .then((res) => {
-                console.warn(res)
-                  if(res.estatus == 1){
-                    //ListadoCourses()
-                  }
-              })
-          },
-        },
-      ],
-      { cancelable: false }
-    );
-  }
-
 
     const {
       emptyPlayerList
@@ -257,7 +264,7 @@ export default function RoundsView(route) {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  //ListadoCourses()
+                  ListadoJugadores()
                   setValue1('')
                   setValue2('')
                   setValue3('')
@@ -267,30 +274,32 @@ export default function RoundsView(route) {
             }
             data={players}
             renderItem={({item}) =>
-              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
-                <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+            <View style={{flex:.2,padding:5}}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+              <TouchableOpacity activeOpacity={0}>
+                <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    
-                    <View style={{flex:.85}}>
-                      <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
+                    <View style={{flex:1}}>
+                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
+                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
                         <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.apellido}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nickname}, {item.email}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.nickname}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.email}</Text>
                       </View>
-                    </View>
-                    <View style={{flex:.2,padding:5}}>
-                        <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
-                          <FontAwesome name={'trash-o'} size={30} color={Colors.Primary} />
-                        </TouchableOpacity>
-                      {/*<View style={{flex:.5}}>
-                        <Fontisto name={'world-o'} size={30} color={Colors.Primary} />
-                      </View>*/}
-                      <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, Apellido: item.apellido, Nickname: item.nickname, Email: item.email})}>
-                        <FontAwesome name={'edit'} size={30} color={Colors.Primary} />
-                      </TouchableOpacity>
+                      </View>
                     </View>
                   </View>
               </TouchableOpacity>
+            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
+                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
               }
               keyExtractor={item=>item.id}
               ListEmptyComponent={
