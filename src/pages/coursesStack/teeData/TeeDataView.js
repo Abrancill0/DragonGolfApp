@@ -35,6 +35,7 @@ export default function RoundsView(route) {
     const [holesAux, setHolesAux] = useState([]);
     const [IDTees, setIDTees] = useState(route.route.params.IDTees);
     const [NameTee, setNameTee] = useState(route.route.params.NameTee);
+    const [IDCourse, setIDCourse] = useState(route.route.params.IDCourse);
     const [value, setValue] = useState('');
     const [language, setLanguage] = useState('es');
 
@@ -118,8 +119,8 @@ export default function RoundsView(route) {
   }
 
   function focusNextInput(column, index){
-    console.warn(holes[`${column + 1}:0`])
-        console.warn('['+column+']['+index+']')
+    //console.warn(holes[`${column + 1}:0`])
+        //console.warn('['+column+']['+index+']')
         if (index === 17) {
             holes[`${column + 1}:0`].focus();
         } else {
@@ -128,21 +129,23 @@ export default function RoundsView(route) {
     }
 
   function guardar(){
+    console.warn(holes)
     let dataSource = [];
     for (var i =0 ; i <= holes.length-1; i++) {
-            dataSource.push(Object.values(holes[i]))
+            dataSource.push('{'+Object.values(holes[i])+'}')
     }
     console.warn(IDTees)
     console.warn(NameTee)
-    console.warn(dataSource)
-    ActualizarHoles(IDTees, NameTee, dataSource, 1)
+    console.warn('['+dataSource.toString()+']')
+    ActualizarHoles(IDTees, '['+dataSource.toString()+']')
         .then((res) => {
-          console.warn(res)
+          console.warn('r: '+res)
             if(res.estatus == 1){      
               showMessage({
                 message: "Holes guardados correctamente",
                 type:'success',
               });
+              navigation.navigate('TeesView', {IDCourse:IDCourse})
             }
             else{
               showMessage({
@@ -159,11 +162,11 @@ export default function RoundsView(route) {
     } = Dictionary;
 
     return (
-      <View style={{ flex: 1 }} behavior='padding'  enabled={Platform.OS === 'ios'} >
+      <ScrollView style={{ flex: 1 }}>
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}} onPress={()=> navigation.goBack()}>
+            <TouchableOpacity style={{margin:30}} onPress={()=> navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
@@ -176,13 +179,6 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>*/}
         </View>
-
-        <ScrollView
-          horizontal
-          keyboardShouldPersistTaps='always'
-          keyboardDismissMode='none'
-          showsHorizontalScrollIndicator={false}
-        >
           <View style={{flex:1, marginLeft:50}}>
             <View style={styles.holesHeader}>
               <View style={styles.rectangleElement}>
@@ -273,8 +269,7 @@ export default function RoundsView(route) {
             <DragonButton title={save[language]} onPress={()=>guardar()} />
           </View>
           </View>
-        </ScrollView>
-      </View>
+      </ScrollView>
     );
 }
 

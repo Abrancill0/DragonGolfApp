@@ -60,6 +60,7 @@ export default function RoundsView(route) {
                       nombre: item.Te_TeeName,
                       slope: item.Te_Slope,
                       rating: item.Te_Rating,
+                      par: item.Te_Par,
                       teeColor: item.Te_TeeColor,
                       front: item.Te_In,
                       back: item.Te_Out,
@@ -116,7 +117,7 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}} onPress={()=> navigation.goBack()}>
+            <TouchableOpacity style={{margin:30}} onPress={()=> navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
@@ -124,7 +125,7 @@ export default function RoundsView(route) {
           <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Tees</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>
+            <TouchableOpacity style={{margin:30, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -145,7 +146,7 @@ export default function RoundsView(route) {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeeDataView', {IDTees: item.id, NameTee: item.nombre})}>
+              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeeDataView', {IDTees: item.id, NameTee: item.nombre,IDCourse: IDCourse})}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:90,backgroundColor:'#f1f2f2',marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     
@@ -155,6 +156,7 @@ export default function RoundsView(route) {
                           <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
                           <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Slope: ' + item.slope}</Text>
                           <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Rating: ' + item.rating}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Par: ' + item.par}</Text>
                         </View>
                         <View style={{flex:.4}}>
                           <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Front: ' + item.front}</Text>

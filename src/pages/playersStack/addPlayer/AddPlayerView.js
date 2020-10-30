@@ -313,7 +313,7 @@ class RoundsView extends Component {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
+            <TouchableOpacity style={{margin:30}} onPress={()=> this.props.navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
@@ -344,7 +344,7 @@ class RoundsView extends Component {
             }
             data={this.state.courses}
             renderItem={({item}) =>
-            <TouchableOpacity style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
+            <View style={{padding:10}} /*onPress={()=> this.props.navigation.navigate('DetallePlacas', {nombre:item.nombre, modelo:item.modelo, placas:item.placas, hora:item.hora, latitud:item.latitud, longitud:item.longitud})}*/>
                 <View style={{flexDirection:'row',height:100,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:.85}}>
@@ -361,7 +361,7 @@ class RoundsView extends Component {
                       </TouchableOpacity>
                     </View>
                   </View>
-              </TouchableOpacity>
+              </View>
               }
               ListHeaderComponent={this.renderHeader}
               ListEmptyComponent={

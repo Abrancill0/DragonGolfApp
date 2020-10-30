@@ -85,7 +85,7 @@ class AddTeeView extends Component {
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
-          <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
+          <TouchableOpacity style={{margin:30}} onPress={()=> this.props.navigation.goBack()}>
             <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
           </TouchableOpacity> 
           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>

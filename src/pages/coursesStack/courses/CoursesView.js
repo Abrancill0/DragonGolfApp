@@ -251,7 +251,7 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}} onPress={()=> navigation.openDrawer()}>
+            <TouchableOpacity style={{margin:30}} onPress={()=> navigation.openDrawer()}>
               <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -259,13 +259,13 @@ export default function RoundsView(route) {
           <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>My Courses</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddCourse')}>
+            <TouchableOpacity style={{margin:30, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddCourse')}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
         </View>
         { visible &&
-          <View>
+          <ScrollView>
 
       <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
@@ -373,6 +373,11 @@ export default function RoundsView(route) {
                                     <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{item.ciudad}, {item.pais}</Text>
                                   </View>
                                 </View>
+                              <View style={{flex:.2,padding:5}}>
+                              <View style={{flex:.5}}>
+                                    <Fontisto name={item.tipo=='Copia'?'cloud-down':'cloud-up'} size={30} color={Colors.Primary} />
+                              </View>
+                            </View>
                               </View>
                           </TouchableOpacity>
                           <View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
@@ -399,7 +404,7 @@ export default function RoundsView(route) {
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         
-      </View>}
+      </ScrollView>}
 
       </View>
     );

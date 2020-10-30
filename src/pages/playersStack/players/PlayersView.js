@@ -166,7 +166,7 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{padding:20}} onPress={()=> navigation.openDrawer()}>
+            <TouchableOpacity style={{margin:30}} onPress={()=> navigation.openDrawer()}>
               <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -174,13 +174,13 @@ export default function RoundsView(route) {
           <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Friends</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
+            <TouchableOpacity style={{margin:30, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
         </View>
         { visible &&
-          <View>
+          <ScrollView>
 
       <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
@@ -278,7 +278,7 @@ export default function RoundsView(route) {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0}>
+              <View activeOpacity={0}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>
@@ -292,7 +292,7 @@ export default function RoundsView(route) {
                       </View>
                     </View>
                   </View>
-              </TouchableOpacity>
+              </View>
             <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
@@ -313,7 +313,7 @@ export default function RoundsView(route) {
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         
-      </View>}
+      </ScrollView>}
 
       </View>
     );

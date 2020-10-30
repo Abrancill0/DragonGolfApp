@@ -376,7 +376,7 @@ export const QuitarAmigos = (IDUsuarioFav,IDUsuario) => {
                 });
 };
 
-export const ActualizarHoles = (IDTees,Ho_TeeName,Arreglo,Ho_Hole) => {
+export const ActualizarHoles = (IDTees,Arreglo) => {
     const URL = RutaBaseAB + "/ActualizarHoles";
     return fetch(URL, {
                 method: "POST",
@@ -386,9 +386,7 @@ export const ActualizarHoles = (IDTees,Ho_TeeName,Arreglo,Ho_Hole) => {
                 },
                 body: JSON.stringify({
                     IDTees: IDTees,
-                    Ho_TeeName: Ho_TeeName,
-                    Arreglo: Arreglo,
-                    Ho_Hole: Ho_Hole
+                    Arreglo: Arreglo
                 }),
             })
             .then((response) => response.json())

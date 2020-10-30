@@ -166,7 +166,7 @@ class EditUserView extends Component {
                     barStyle="dark-content"
                     translucent={false}
                 />
-                <TouchableOpacity style={{padding:20}} onPress={()=> this.props.navigation.goBack()}>
+                <TouchableOpacity style={{margin:30}} onPress={()=> this.props.navigation.goBack()}>
                   <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
                 </TouchableOpacity>
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
@@ -669,6 +669,8 @@ class EditUserView extends Component {
               });
       return
     }
+
+    console.warn(handicap)
 
     Update(id, nameReg, lastNameReg, lastName2Reg, emailReg, nicknameReg, codeNumber + cellphone, ghin,handicap)
         .then((res) => {
