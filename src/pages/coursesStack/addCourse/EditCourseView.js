@@ -99,7 +99,7 @@ class AddCourseView extends Component {
                   <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
                 </TouchableOpacity>
                 <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-                    <Text style={{ fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Edit Course</Text>
+                    <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Edit Course</Text>
                 </View>
                     <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>

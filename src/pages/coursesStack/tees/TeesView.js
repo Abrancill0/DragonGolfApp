@@ -122,7 +122,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View> 
           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Tees</Text>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Tees</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:30, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>
@@ -153,15 +153,15 @@ export default function RoundsView(route) {
                     <View style={{flex:1}}>
                       <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
                         <View style={{flex:.4}}>
-                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Slope: ' + item.slope}</Text>
-                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Rating: ' + item.rating}</Text>
-                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Par: ' + item.par}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Slope: ' + item.slope}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Rating: ' + item.rating}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Par: ' + item.par}</Text>
                         </View>
                         <View style={{flex:.4}}>
-                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Front: ' + item.front}</Text>
-                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Back: ' + item.back}</Text>
-                          <Text style={{ fontSize: 13, fontFamily: 'Montserrat', color:'#123c5b'}}>{'Total: ' + item.total}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Front: ' + item.front}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Back: ' + item.back}</Text>
+                          <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Total: ' + item.total}</Text>
                         </View>
                         <View style={[styles.teeColorView],{flex:.2}}>
                           <View style={[styles.colorSquare, { backgroundColor: item.teeColor, marginVertical:2 }]} />

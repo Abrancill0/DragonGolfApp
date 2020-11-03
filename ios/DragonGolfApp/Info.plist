@@ -45,7 +45,7 @@
 	<string>This app requires access to the photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>bank gothic light bt.ttf</string>
+		<string>BankGothic Lt BT.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>

@@ -397,7 +397,7 @@ export default class SubirEncuestas extends Component {
               disabled={habilitaBoton}
               loading ={procesaBoton}
               buttonStyle={{ backgroundColor: "#337FC1", borderRadius: 15 }}
-              titleStyle={{ fontFamily: 'MyriadPro-Bold', textAlignVertical: 'bottom', fontSize: 20 }}
+              titleStyle={{ fontFamily: 'BankGothic Lt BT', textAlignVertical: 'bottom', fontSize: 20 }}
               onPress={this.clicked} />
 
           </View>

@@ -584,7 +584,7 @@ class EditUserView extends Component {
                   else {
                     Alert.alert(
                       "Dragon Golf",
-                      "Ocurrió un error al subir la Foto",
+                      res.mensaje,
                       [
                         {
                           text: "Aceptar",
@@ -599,7 +599,18 @@ class EditUserView extends Component {
             }
         }
         catch(e){
-            console.warn(e)
+            Alert.alert(
+                "Dragon Golf",
+                e,
+                [
+                  {
+                    text: "Aceptar",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                ],
+                { cancelable: false }
+              );
         }
     }
 
