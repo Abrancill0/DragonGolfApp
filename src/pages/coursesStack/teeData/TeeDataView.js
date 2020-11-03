@@ -88,9 +88,17 @@ export default function RoundsView(route) {
   }
 
   function change(data,x,y){
-    let list = holes
-    list[x][y] = data
-    setDataInState([...dataInState, holes]);
+    if(data<=18 && data>=0){
+      let list = holes
+      list[x][y] = data
+      setDataInState([...dataInState, holes]);
+    }
+    else{
+      showMessage({
+        message: "Valor no permitido",
+          type:'warning',
+      });
+    }
   }
 
   function onSubmitAdv(index){
@@ -129,15 +137,49 @@ export default function RoundsView(route) {
     }
 
   function guardar(){
-    console.warn(holes)
-    let dataSource = [];
-    for (var i =0 ; i <= holes.length-1; i++) {
-            dataSource.push('{'+Object.values(holes[i])+'}')
+
+    var x = []
+
+    for(var i=0;i<holes.length;i++){
+      x.push(holes[i].adv)
     }
-    console.warn(IDTees)
-    console.warn(NameTee)
-    console.warn('['+dataSource.toString()+']')
-    ActualizarHoles(IDTees, '['+dataSource.toString()+']')
+
+    
+    var elementos = x;
+    var repetidos = [];
+    var temporal = [];
+
+    elementos.forEach((value,index)=>{
+      temporal = Object.assign([],elementos); //Copiado de elemento
+      console.warn(temporal)
+      temporal.splice(index,1); //Se elimina el elemnto q se compara
+      console.warn(temporal)
+      /**
+       * Se busca en temporal el elemento, y en repetido para 
+       * ver si esta ingresado al array. indexOf returna
+       * -1 si el elemento no se encuetra
+       **/
+       console.warn(value)
+      if(temporal.indexOf(value.toString())!=-1 && repetidos.indexOf(value.toString())==-1)      repetidos.push(value);
+    });
+
+    console.warn(repetidos);
+    if(repetidos.length>0){
+      showMessage({
+                message: "Las ventajas no se deben de repetir",
+                type:'warning',
+              });
+    }
+    else{
+
+      let dataSource = [];
+      for (var i =0 ; i <= holes.length-1; i++) {
+              dataSource.push('{'+Object.values(holes[i])+'}')
+      }
+      console.warn(IDTees)
+      console.warn(NameTee)
+      console.warn('['+dataSource.toString()+']')
+      ActualizarHoles(IDTees, '['+dataSource.toString()+']')
         .then((res) => {
           console.warn('r: '+res)
             if(res.estatus == 1){      
@@ -154,6 +196,7 @@ export default function RoundsView(route) {
               });
             }
         })
+      }
   }
 
     const {

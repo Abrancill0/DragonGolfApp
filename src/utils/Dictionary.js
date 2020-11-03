@@ -75,8 +75,8 @@ export const Dictionary = {
         'es': 'Nombre'
     },
     lastName: {
-        'en': 'First Last Name',
-        'es': 'Apellido Paterno'
+        'en': 'Last Name',
+        'es': 'Apellidos'
     },
     lastName2: {
         'en': 'Second Last Name',

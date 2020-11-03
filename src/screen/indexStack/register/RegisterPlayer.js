@@ -20,7 +20,7 @@ import styles from './styles';
 import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
 import { showMessage } from "react-native-flash-message";
-import { RegistroAB, SubirImagenUsuario } from '../../../Services/Services'
+import { CrearInvitados, SubirImagenUsuario } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
@@ -55,8 +55,8 @@ class RegisterView extends Component {
             profilePicture: null,
             phoneCode: '+52',
             codeNumber: '52',
-            strokesReg:'',
-            difTeesReg:'',
+            strokesReg:'0',
+            difTeesReg:'0',
             nameReg: '',
             nameError: '',
             lastNameReg: '',
@@ -69,9 +69,9 @@ class RegisterView extends Component {
             codeError: '',
             cellphone: '',
             cellphoneError: '',
-            ghin: '',
+            ghin: '0',
             ghinError: '',
-            handicap: '',
+            handicap: '0',
             handicapError: '',
             passwordReg: '',
             passwordError: '',
@@ -138,7 +138,7 @@ class RegisterView extends Component {
             handicapError,
             passwordError,
             confirmPasswordError,
-            seePassword,
+            strokesReg,
             confirmseePassword
         } = this.state
 
@@ -191,7 +191,7 @@ class RegisterView extends Component {
                                     }}
                                 />
                             </View>
-                            <View style={styles.inputContainer}>
+                            {/*<View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.lastNameIn2 = ref}
                                     label={lastName2[language]}
@@ -214,7 +214,7 @@ class RegisterView extends Component {
                                         this.nicknameIn.focus();
                                     }}
                                 />
-                            </View>
+                            </View>*/}
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.nicknameIn = ref}
@@ -228,7 +228,7 @@ class RegisterView extends Component {
                                     }}
                                 />
                             </View>
-                            <View style={styles.phoneInputContainer}>
+                            {/*<View style={styles.phoneInputContainer}>
                                 <View style={{ width: 90, flexDirection: 'row' }}>
                                     <View style={{ width: 30, justifyContent: 'center' }}>
                                         <PhoneInput
@@ -278,7 +278,7 @@ class RegisterView extends Component {
                                         }}
                                     />
                                 </View>
-                            </View>
+                            </View>*/}
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.ghinIn = ref}
@@ -312,6 +312,7 @@ class RegisterView extends Component {
                                     ref={ref => this.strokesIn = ref}
                                     label={strokes[language]}
                                     maxLength={7}
+                                    value={strokesReg}
                                     tintColor={Colors.Primary}
                                     keyboardType="number-pad"
                                     autoCapitalize="none"
@@ -321,7 +322,7 @@ class RegisterView extends Component {
                                     }}
                                 />
                             </View>
-                            <View style={styles.inputContainer}>
+                            <View style={[styles.inputContainer,{marginBottom:40}]}>
                                 <TextField
                                     ref={ref => this.difTeesIn = ref}
                                     label={difTees[language]}
@@ -338,7 +339,7 @@ class RegisterView extends Component {
                         </View>
                     </ScrollView>
                         <View style={[styles.bottomButtom, {paddingTop:10}]}>
-                            <DragonButton title={create[language]} /*onPress={this.submit}*/ />
+                            <DragonButton title={create[language]} onPress={this.submit} />
                         </View>
                 </KeyboardAvoidingView>
             </View>
@@ -552,6 +553,8 @@ class RegisterView extends Component {
   }
 
     submit = async () => {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    console.warn(idUsu)
         const {
             profilePicture,
             nameReg,
@@ -563,8 +566,8 @@ class RegisterView extends Component {
             cellphone,
             ghin,
             handicap,
-            passwordReg,
-            confirmPasswordReg,
+            strokesReg,
+            difTeesReg,
             language
         } = this.state;
 
@@ -591,7 +594,7 @@ class RegisterView extends Component {
               });
       return
     }
-      RegistroAB(nameReg, lastNameReg, lastName2Reg, emailReg, passwordReg, nicknameReg, codeNumber + cellphone)
+      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicap, ghin, strokesReg, difTeesReg, idUsu)
       .then((res) => {
         console.warn(res)
         if (res.estatus == 1) {

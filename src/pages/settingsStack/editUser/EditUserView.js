@@ -213,7 +213,7 @@ class EditUserView extends Component {
                                     blurOnSubmit={false}
                                 />
                             </View>
-                            <View style={styles.inputContainer}>
+                            {/*<View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.inputs['lastName2'] = ref}
                                     label={lastName2[language]}
@@ -228,7 +228,7 @@ class EditUserView extends Component {
                                     }}
                                     blurOnSubmit={false}
                                 />
-                            </View>
+                            </View>*/}
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.inputs['email'] = ref}

@@ -185,7 +185,7 @@ class RegisterView extends Component {
                                     }}
                                 />
                             </View>
-                            <View style={styles.inputContainer}>
+                            {/*<View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.lastNameIn2 = ref}
                                     label={lastName2[language]}
@@ -196,7 +196,7 @@ class RegisterView extends Component {
                                         this.emailIn.focus();
                                     }}
                                 />
-                            </View>
+                            </View>*/}
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.emailIn = ref}
