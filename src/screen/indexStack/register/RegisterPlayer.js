@@ -14,7 +14,7 @@ import {
 import { TextField } from 'react-native-material-textfield';
 import Ripple from 'react-native-material-ripple';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from "react-native-image-picker";
 import PhoneInput from 'react-native-phone-input'
 import styles from './styles';
 import Colors from '../../../utils/Colors';
@@ -25,6 +25,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
 import DragonButton from '../../../pages/global/DragonButton';
+import ImageResizer from "react-native-image-resizer";
 
 const {
             photo,
@@ -71,7 +72,7 @@ class RegisterView extends Component {
             cellphoneError: '',
             ghin: '0',
             ghinError: '',
-            handicap: '0',
+            handicapReg: '0',
             handicapError: '',
             passwordReg: '',
             passwordError: '',
@@ -135,11 +136,11 @@ class RegisterView extends Component {
             cellphone,
             cellphoneError,
             ghinError,
-            handicapError,
-            passwordError,
+            handicapReg,
+            difTeesReg,
             confirmPasswordError,
             strokesReg,
-            confirmseePassword
+            ghin
         } = this.state
 
         return (
@@ -151,8 +152,8 @@ class RegisterView extends Component {
                 />
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
                     <ScrollView style={{ flex: 1, paddingTop: 20}} keyboardShouldPersistTaps='handled'>
-                        <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> this.props.navigation.goBack()}>
-                          <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+                        <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+                          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
                         </TouchableOpacity> 
                           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
                             <Text style={{ paddingBottom:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Player</Text>
@@ -187,7 +188,7 @@ class RegisterView extends Component {
                                     autoCapitalize="words"
                                     onChangeText={(lastNameReg) => this.setState({ lastNameReg })}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
-                                        this.lastNameIn2.focus();
+                                        this.nicknameIn.focus();
                                     }}
                                 />
                             </View>
@@ -224,7 +225,7 @@ class RegisterView extends Component {
                                     maxLength={5}
                                     onChangeText={(nickname) => this.setState({ nicknameReg: nickname.toUpperCase() })}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
-                                        this.phoneIn.focus();
+                                        this.ghinIn.focus();
                                     }}
                                 />
                             </View>
@@ -284,6 +285,9 @@ class RegisterView extends Component {
                                     ref={ref => this.ghinIn = ref}
                                     label={ghinNumber[language]}
                                     maxLength={7}
+                                    value={ghin}
+                                    selectTextOnFocus={true}
+                                    selectionColor={Colors.Secondary}
                                     tintColor={Colors.Primary}
                                     keyboardType="number-pad"
                                     autoCapitalize="none"
@@ -300,8 +304,11 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     keyboardType="numeric"
                                     maxLength={5}
+                                    value={handicapReg}
+                                    selectTextOnFocus={true}
+                                    selectionColor={Colors.Secondary}
                                     autoCapitalize="none"
-                                    onChangeText={(handicap) => this.setState({ handicap })}
+                                    onChangeText={(handicapReg) => this.setState({ handicapReg })}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
                                         this.strokesIn.focus();
                                     }}
@@ -313,6 +320,8 @@ class RegisterView extends Component {
                                     label={strokes[language]}
                                     maxLength={7}
                                     value={strokesReg}
+                                    selectTextOnFocus={true}
+                                    selectionColor={Colors.Secondary}
                                     tintColor={Colors.Primary}
                                     keyboardType="number-pad"
                                     autoCapitalize="none"
@@ -329,6 +338,9 @@ class RegisterView extends Component {
                                     tintColor={Colors.Primary}
                                     keyboardType="numeric"
                                     maxLength={5}
+                                    value={difTeesReg}
+                                    selectTextOnFocus={true}
+                                    selectionColor={Colors.Secondary}
                                     autoCapitalize="none"
                                     onChangeText={(difTeesReg) => this.setState({ difTeesReg })}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
@@ -368,88 +380,128 @@ class RegisterView extends Component {
 
      _openGalley() {
 
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {
-        let bytes = image.size
-        console.warn(bytes)
-        if (bytes >= 5242880) {
-          setTimeout(() => {
-            Alert.alert(
-              'La imagen debe pesar menos de 5mb',
-              '',
-              [
-                { text: 'Aceptar', style: 'Cancelar' },
-              ],
-              { cancelable: true }
-            )
-          }, 100)
-          this.setState({
-            status: false
-          })
-        }
-        else {
+        const options = {
+          title: "Selected",
+          storageOptions: {
+            skipBackup: true,
+            path: "images",
+          },
+          takePhotoButtonTitle: "Tomar fotografia",
+          chooseFromLibraryButtonTitle: "Seleccionar de la libreria",
+        };
 
-          let path = image.path
-          let NombreArchivo = path.split('Pictures/');
-          let name = NombreArchivo[1];
-          console.warn(name)
-            this.setState({
-              status: false,
-              foto: path,
-              profilePicture: {
-                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
-                type: 'image/jepg',
-                name: name
-              }
-            });
+    ImagePicker.launchImageLibrary(options,(response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+      } else {
+        let compressFormat = "JPEG";
+        let quality = 80;
+        let rotation = 0;
+        let newWidth = 0;
+        let newHeight = 0;
+        if (response.width > response.height) {
+          newWidth = 500;
+          newHeight = response.height;
         }
-    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
+        if (response.height > response.width) {
+          newWidth = 500;
+          newHeight = 750;
+        }
+        if (response.height == response.width) {
+          (newWidth = 500), (newHeight = 500);
+        }
+
+        ImageResizer.createResizedImage(
+          response.uri,
+          newWidth,
+          newHeight,
+          compressFormat,
+          quality,
+          rotation,
+          null
+        )
+          .then((response2) => {
+                this.setState({
+                  profilePicture: {
+                    uri:
+                    Platform.OS === "android"
+                      ? response2.uri
+                      : response2.uri.replace("file://", ""),
+                    type: 'image/jepg',
+                    name: response.fileName
+                  }
+                });
+            })
+          .catch((err) => {
+            showMessage({
+              message: err.toString(),
+              type: "info",
+            });
+          });
+      }
+    });
   }
 
   _openCamera() {
 
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {
-        let bytes = image.size
-        console.warn(bytes)
-        if (bytes >= 5242880) {
-          setTimeout(() => {
-            Alert.alert(
-              'La imagen debe pesar menos de 5mb',
-              '',
-              [
-                { text: 'Aceptar', style: 'Cancelar' },
-              ],
-              { cancelable: true }
-            )
-          }, 100)
-          this.setState({
-            status: false
-          })
-        }
-        else {
+    const options = {
+      title: "Selected",
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+      takePhotoButtonTitle: "Tomar fotografia",
+      chooseFromLibraryButtonTitle: "Seleccionar de la libreria",
+    };
 
-          let path = image.path
-          let NombreArchivo = path.split('Pictures/');
-          let name = NombreArchivo[1];
-          console.warn(name)
-            this.setState({
-              status: false,
-              foto: path,
-              profilePicture: {
-                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
-                type: 'image/jepg',
-                name: name
-              }
-            });
+    ImagePicker.launchCamera(options,(response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+      } else {
+        let compressFormat = "JPEG";
+        let quality = 80;
+        let rotation = 0;
+        let newWidth = 0;
+        let newHeight = 0;
+        if (response.isVertical) {
+          newWidth = 500;
+          newHeight = response.height;
         }
-    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
+        if (!response.isVertical) {
+          newWidth = 500;
+          newHeight = 750;
+          rotation = 90;
+        }
+
+        ImageResizer.createResizedImage(
+          response.uri,
+          newWidth,
+          newHeight,
+          compressFormat,
+          quality,
+          rotation,
+          null
+        )
+          .then((response2) => {
+                this.setState({
+                  profilePicture: {
+                    uri:
+                    Platform.OS === "android"
+                      ? response2.uri
+                      : response2.uri.replace("file://", ""),
+                    type: 'image/jepg',
+                    name: response.fileName
+                  }
+                });
+          })
+          .catch((err) => {
+            showMessage({
+              message: err.toString(),
+              type: "info",
+            });
+          });
+      }
+    });
   }
 
     formatCellphone = (cellphone) => {
@@ -565,7 +617,7 @@ class RegisterView extends Component {
             codeNumber,
             cellphone,
             ghin,
-            handicap,
+            handicapReg,
             strokesReg,
             difTeesReg,
             language
@@ -594,29 +646,30 @@ class RegisterView extends Component {
               });
       return
     }
-      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicap, ghin, strokesReg, difTeesReg, idUsu)
+    console.warn(nameReg)
+    console.warn(lastNameReg)
+    console.warn(nicknameReg)
+    console.warn(handicapReg)
+    console.warn(ghin)
+    console.warn(strokesReg)
+    console.warn(difTeesReg)
+    console.warn(idUsu)
+      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicapReg, ghin, strokesReg, difTeesReg, idUsu)
       .then((res) => {
         console.warn(res)
         if (res.estatus == 1) {
 
           try {
            showMessage({
-                message: 'Registro guardado correctamente',
+                message: 'Invitado guardado correctamente',
                 type: "success",
               });
 
-           console.warn(res.Result[0].IDUsuario)
+           console.warn(res.idusuario)
 
-           this.GuardarFoto(res.Result[0].IDUsuario)
+           this.GuardarFoto(res.idusuario)
 
-           setTimeout(
-                  () => { RNRestart.Restart();
-                   },
-                  2000
-                )
-
-                AsyncStorage.setItem('usu_id', res.Result[0].IDUsuario.toString());
-                AsyncStorage.setItem('actualizar', "false");
+           this.props.navigation.navigate("PlayersView")
 
           } catch (e) {
 

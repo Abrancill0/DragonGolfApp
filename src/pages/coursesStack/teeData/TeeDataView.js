@@ -27,6 +27,7 @@ import { useNavigation } from "@react-navigation/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { FlatList } from 'react-native-gesture-handler';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import InputScrollView from "react-native-input-scroll-view";
 
 export default function RoundsView(route) {
 
@@ -205,7 +206,7 @@ export default function RoundsView(route) {
     } = Dictionary;
 
     return (
-      <ScrollView style={{ flex: 1 }}>
+      <InputScrollView style={{ flex: 1 }}>
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
@@ -312,7 +313,7 @@ export default function RoundsView(route) {
             <DragonButton title={save[language]} onPress={()=>guardar()} />
           </View>
           </View>
-      </ScrollView>
+      </InputScrollView>
     );
 }
 

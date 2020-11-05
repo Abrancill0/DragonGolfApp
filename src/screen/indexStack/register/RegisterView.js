@@ -14,7 +14,7 @@ import {
 import { TextField } from 'react-native-material-textfield';
 import Ripple from 'react-native-material-ripple';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from "react-native-image-picker";
 import PhoneInput from 'react-native-phone-input'
 import styles from './styles';
 import Colors from '../../../utils/Colors';
@@ -24,6 +24,7 @@ import { RegistroAB, SubirImagenUsuario } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
+import ImageResizer from "react-native-image-resizer";
 
 const {
             photo,
@@ -409,88 +410,129 @@ class RegisterView extends Component {
 
      _openGalley() {
 
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {
-        let bytes = image.size
-        console.warn(bytes)
-        if (bytes >= 5242880) {
-          setTimeout(() => {
-            Alert.alert(
-              'La imagen debe pesar menos de 5mb',
-              '',
-              [
-                { text: 'Aceptar', style: 'Cancelar' },
-              ],
-              { cancelable: true }
-            )
-          }, 100)
-          this.setState({
-            status: false
-          })
-        }
-        else {
+        const options = {
+          title: "Selected",
+          storageOptions: {
+            skipBackup: true,
+            path: "images",
+          },
+          takePhotoButtonTitle: "Tomar fotografia",
+          chooseFromLibraryButtonTitle: "Seleccionar de la libreria",
+        };
 
-          let path = image.path
-          let NombreArchivo = path.split('Pictures/');
-          let name = NombreArchivo[1];
-          console.warn(name)
-            this.setState({
-              status: false,
-              foto: path,
-              profilePicture: {
-                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
-                type: 'image/jepg',
-                name: name
-              }
-            });
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+      } else {
+        let compressFormat = "JPEG";
+        let quality = 80;
+        let rotation = 0;
+        let newWidth = 0;
+        let newHeight = 0;
+        if (response.width > response.height) {
+          newWidth = 500;
+          newHeight = response.height;
         }
-    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
+        if (response.height > response.width) {
+          newWidth = 500;
+          newHeight = 750;
+        }
+        if (response.height == response.width) {
+          (newWidth = 500), (newHeight = 500);
+        }
+
+        ImageResizer.createResizedImage(
+          response.uri,
+          newWidth,
+          newHeight,
+          compressFormat,
+          quality,
+          rotation,
+          null
+        )
+          .then((response2) => {
+                this.setState({
+                  profilePicture: {
+                    uri:
+                    Platform.OS === "android"
+                      ? response2.uri
+                      : response2.uri.replace("file://", ""),
+                    type: 'image/jepg',
+                    name: response.fileName
+                  }
+                });
+            })
+          .catch((err) => {
+            showMessage({
+              message: err.toString(),
+              type: "info",
+            });
+          });
+      }
+    });
   }
 
   _openCamera() {
 
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {
-        let bytes = image.size
-        console.warn(bytes)
-        if (bytes >= 5242880) {
-          setTimeout(() => {
-            Alert.alert(
-              'La imagen debe pesar menos de 5mb',
-              '',
-              [
-                { text: 'Aceptar', style: 'Cancelar' },
-              ],
-              { cancelable: true }
-            )
-          }, 100)
-          this.setState({
-            status: false
-          })
-        }
-        else {
+    const options = {
+      title: "Selected",
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+      takePhotoButtonTitle: "Tomar fotografia",
+      chooseFromLibraryButtonTitle: "Seleccionar de la libreria",
+    };
 
-          let path = image.path
-          let NombreArchivo = path.split('Pictures/');
-          let name = NombreArchivo[1];
-          console.warn(name)
-            this.setState({
-              status: false,
-              foto: path,
-              profilePicture: {
-                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
-                type: 'image/jepg',
-                name: name
-              }
-            });
+    ImagePicker.launchCamera(options, (response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+        RNToasty.Error({ title: response.error });
+      } else {
+        let compressFormat = "JPEG";
+        let quality = 80;
+        let rotation = 0;
+        let newWidth = 0;
+        let newHeight = 0;
+        if (response.isVertical) {
+          newWidth = 500;
+          newHeight = response.height;
         }
-    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
+        if (!response.isVertical) {
+          newWidth = 500;
+          newHeight = 750;
+          rotation = 90;
+        }
+
+        ImageResizer.createResizedImage(
+          response.uri,
+          newWidth,
+          newHeight,
+          compressFormat,
+          quality,
+          rotation,
+          null
+        )
+          .then((response2) => {
+                this.setState({
+                  profilePicture: {
+                    uri:
+                    Platform.OS === "android"
+                      ? response2.uri
+                      : response2.uri.replace("file://", ""),
+                    type: 'image/jepg',
+                    name: response.fileName
+                  }
+                });
+          })
+          .catch((err) => {
+            showMessage({
+              message: err.toString(),
+              type: "info",
+            });
+          });
+      }
+    });
   }
 
     formatCellphone = (cellphone) => {
@@ -701,7 +743,7 @@ class RegisterView extends Component {
           } catch (e) {
 
             showMessage({
-                message: 'Ocurrió un error, favor de intentar más tarde' + e,
+                message: 'Ocurrió un error, favor de intentar más tarde',
                 type: "danger",
               });
           }

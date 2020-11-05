@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
   RefreshControl,
   Text,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, ButtonGroup } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from '../../global/HeaderButton';
@@ -24,7 +25,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, QuitarAmigos } from '../../../Services/Services'
+import { ListaAmigos, QuitarAmigos, ListaInvitados, ListaTodos } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -46,13 +47,46 @@ export default function RoundsView(route) {
     const ScreenWidth = Dimensions.get("window").width;
     const [search, setSearch] = useState(false);
     const [visible, setVisible] = useState(true);
+    const buttons = ['Todos', 'Amigos', 'Invitados']
+    const BlankProfile = require('../../../../assets/globals/blank-profile.png');
+    const [selectedIndex, setSelectedIndex] = useState(0)
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
-        ListadoJugadores();
+          if(setSelectedIndex==0)
+            ListadoTodos();
+          if(setSelectedIndex==1)
+            ListadoJugadores();
+          if(setSelectedIndex==2)
+            ListadoInvitados();
           });
 
         return unsubscribe;
       }, [navigation]);
+
+  async function ListadoTodos() {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    ListaTodos(idUsu)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDUsuario,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      ghinnumber: item.usu_ghinnumber,
+                      photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.usu_imagen
+                    }
+                ))
+                setPlayers(list)
+                setArrayholder(list)
+            }
+            else{
+              setPlayers([])
+            }
+        })
+  }
     
 
   async function ListadoJugadores() {
@@ -67,7 +101,8 @@ export default function RoundsView(route) {
                       nombre: item.usu_nombre,
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
-                      email: item.usu_email
+                      ghinnumber: item.usu_ghinnumber,
+                      photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.usu_imagen
                     }
                 ))
                 setPlayers(list)
@@ -77,6 +112,55 @@ export default function RoundsView(route) {
               setPlayers([])
             }
         })
+  }
+
+  async function ListadoInvitados() {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    ListaInvitados(idUsu)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDUsuario,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      ghinnumber: item.usu_ghinnumber,
+                      photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.usu_imagen
+                    }
+                ))
+                setPlayers(list)
+                setArrayholder(list)
+            }
+            else{
+              setPlayers([])
+              setArrayholder([])
+            }
+        })
+  }
+
+  function updateIndex(selectedIndex) {
+
+    console.warn(selectedIndex)
+
+    setSelectedIndex(selectedIndex)
+    setValue1('')
+    setValue2('')
+    setValue3('')
+    setValue4('')
+    setSearch(false)
+
+    if (selectedIndex == 0) {
+      ListadoTodos()
+    }
+
+    if (selectedIndex == 1) {
+      ListadoJugadores()
+    }
+    if (selectedIndex == 2) {
+        ListadoInvitados()
+    }
   }
 
   async function Elimina(IDUsuarioFav){
@@ -130,7 +214,7 @@ export default function RoundsView(route) {
         break;
       case 4:
         setValue4(text) 
-        itemData = `${item.email} ${item.email.toUpperCase()}`;
+        itemData = `${item.ghinnumber} ${item.ghinnumber.toUpperCase()}`;
         break;
     }
     const textData = text.toUpperCase();
@@ -166,21 +250,29 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:30}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
+              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
           <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Friends</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:30, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
-              <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
+              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
         </View>
         { visible &&
           <ScrollView>
+
+        <ButtonGroup
+              onPress={updateIndex}
+              selectedIndex={selectedIndex}
+              buttons={buttons}
+              selectedButtonStyle={{backgroundColor:Colors.Primary}}
+              containerStyle={{ height: 50 }}
+            />
 
       <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
@@ -242,7 +334,7 @@ export default function RoundsView(route) {
         borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Email"
+        placeholder="Ghin"
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,4)}
@@ -264,7 +356,12 @@ export default function RoundsView(route) {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  ListadoJugadores()
+                  if(selectedIndex==0)
+                    ListadoTodos()
+                  if(selectedIndex==1)
+                    ListadoJugadores()
+                  if(selectedIndex==2)
+                    ListadoInvitados()
                   setValue1('')
                   setValue2('')
                   setValue3('')
@@ -287,12 +384,23 @@ export default function RoundsView(route) {
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nickname}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.email}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
+                      </View>
+                      <View>
+                        <Image
+                          source={item.photo ? { uri: item.photo } : BlankProfile }
+                          style={{
+                            alignSelf:'center',
+                            width: 60,
+                            height: 60,
+                            borderRadius: 30
+                          }}
+                        />
+                      </View>
                       </View>
                       </View>
                     </View>
                   </View>
-              </View>
             <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />

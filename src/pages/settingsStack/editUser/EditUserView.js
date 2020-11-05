@@ -12,7 +12,8 @@ import {
     Platform
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from "react-native-image-picker";
+import ImageResizer from "react-native-image-resizer";
 import PhoneInput from 'react-native-phone-input'
 import styles from './styles';
 import Colors from '../../../utils/Colors';
@@ -166,8 +167,8 @@ class EditUserView extends Component {
                     barStyle="dark-content"
                     translucent={false}
                 />
-                <TouchableOpacity style={{margin:30}} onPress={()=> this.props.navigation.goBack()}>
-                  <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+                <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
                 </TouchableOpacity>
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
                     <ScrollView style={{ flex: 1, paddingTop: 20 }} keyboardShouldPersistTaps='handled'>
@@ -466,24 +467,17 @@ class EditUserView extends Component {
               null
             )
               .then((response2) => {
-                let uri = response2.uri;
-                console.warn(response2.fileName);
                 this.setState({
-                  isloading: false,
-                  evidencia: uri,
-                  archivo_evidencia: {
+                  profilePicture: {
                     uri:
-                      Platform.OS === "android"
-                        ? response2.uri
-                        : response2.uri.replace("file://", ""),
-                    type: "image/jpeg",
-                    name:
-                      Platform.OS === "android"
-                        ? response.fileName
-                        : "evidencia.jpg",
-                  },
+                    Platform.OS === "android"
+                      ? response2.uri
+                      : response2.uri.replace("file://", ""),
+                    type: 'image/jepg',
+                    name: response.fileName
+                  }
                 });
-              })
+            })
               .catch((err) => {
                 this.setState({
                   isloading: false,
@@ -539,24 +533,17 @@ class EditUserView extends Component {
               null
             )
               .then((response2) => {
-                let uri = response2.uri;
-                console.warn(response2.size);
                 this.setState({
-                  isloading: false,
-                  evidencia: uri,
-                  archivo_evidencia: {
+                  profilePicture: {
                     uri:
-                      Platform.OS === "android"
-                        ? response2.uri
-                        : response2.uri.replace("file://", ""),
-                    type: "image/jpeg",
-                    name:
-                      Platform.OS === "android"
-                        ? response.fileName
-                        : "evidencia.jpg",
-                  },
+                    Platform.OS === "android"
+                      ? response2.uri
+                      : response2.uri.replace("file://", ""),
+                    type: 'image/jepg',
+                    name: response.fileName
+                  }
                 });
-              })
+            })
               .catch((err) => {
                 this.setState({
                   isloading: false,

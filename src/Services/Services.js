@@ -108,6 +108,31 @@ export const RegistroAB = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,
     });
 };
 
+export const CrearInvitados = (usu_nombre,usu_apellido_paterno,usu_nickname,usu_handicapindex,usu_ghinnumber,usu_golpesventaja,usu_diferenciatee,IDUsuarioCrea) => {
+    const URL = RutaBaseAB + "/CrearInvitados";
+    return fetch(URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usu_nombre: usu_nombre,
+        usu_apellido_paterno: usu_apellido_paterno,
+        usu_nickname: usu_nickname,
+        usu_handicapindex: usu_handicapindex,
+        usu_ghinnumber: usu_ghinnumber,
+        usu_golpesventaja: usu_golpesventaja,
+        usu_diferenciatee: usu_diferenciatee,
+        IDUsuarioCrea: IDUsuarioCrea
+      }),
+    })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.warn(error);
+    });
+};
+
 export const SubirImagenUsuario = (IDUsuario, file) => {
 
   const formData = new FormData();
@@ -301,8 +326,44 @@ export const ListaCampos = (IDUsuario) => {
                 });
 };
 
+export const ListaTodos = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListaTodos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaAmigos = (IDUsuario) => {
     const URL = RutaBaseAB + "/ListaAmigos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const ListaInvitados = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListadoInvitados";
     return fetch(URL, {
                 method: "POST",
                 headers: {

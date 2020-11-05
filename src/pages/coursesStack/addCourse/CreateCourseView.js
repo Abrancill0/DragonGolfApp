@@ -94,8 +94,8 @@ class AddCourseView extends Component {
         return (
             <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
                 <View style={{ flex: 1 }}>
-                <TouchableOpacity style={{margin:30}} onPress={()=> this.props.navigation.goBack()}>
-                  <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+                <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
                 </TouchableOpacity> 
                   <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
                   <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Course</Text>

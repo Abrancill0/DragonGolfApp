@@ -313,8 +313,8 @@ class RoundsView extends Component {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:30}} onPress={()=> this.props.navigation.goBack()}>
-              <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
