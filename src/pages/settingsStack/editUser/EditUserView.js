@@ -420,91 +420,153 @@ class EditUserView extends Component {
         });*/
     }
 
-     _openGalley() {
-
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {
-        let bytes = image.size
-        console.warn(bytes)
-        if (bytes >= 5242880) {
-          setTimeout(() => {
-            Alert.alert(
-              'La imagen debe pesar menos de 5mb',
-              '',
-              [
-                { text: 'Aceptar', style: 'Cancelar' },
-              ],
-              { cancelable: true }
-            )
-          }, 100)
-          this.setState({
-            status: false
-          })
-        }
-        else {
-
-          let path = image.path
-          let NombreArchivo = path.split('Pictures/');
-          let name = NombreArchivo[1];
-          console.warn(name)
+    _openGalley(foto) {
+        const options = {
+          title: "Selected",
+          storageOptions: {
+            skipBackup: true,
+            path: "images",
+          },
+          takePhotoButtonTitle: "Tomar fotografia",
+          chooseFromLibraryButtonTitle: "Seleccionar de la libreria",
+        };
+    
+        ImagePicker.launchImageLibrary(options, (response) => {
+          if (response.didCancel) {
+          } else if (response.error) {
+            RNToasty.Error({ title: response.error });
+          } else {
             this.setState({
-              status: false,
-              foto: path,
-              profilePicture: {
-                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
-                type: 'image/jepg',
-                name: name
-              }
+              isloading: true,
             });
-        }
-    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
-  }
-
-  _openCamera() {
-
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true
-    }).then(image => {
-        let bytes = image.size
-        console.warn(bytes)
-        if (bytes >= 5242880) {
-          setTimeout(() => {
-            Alert.alert(
-              'La imagen debe pesar menos de 5mb',
-              '',
-              [
-                { text: 'Aceptar', style: 'Cancelar' },
-              ],
-              { cancelable: true }
+            let compressFormat = "JPEG";
+            let quality = 80;
+            let rotation = 0;
+            let newWidth = 0;
+            let newHeight = 0;
+            if (response.width > response.height) {
+              newWidth = 500;
+              newHeight = response.height;
+            }
+            if (response.height > response.width) {
+              newWidth = 500;
+              newHeight = 750;
+            }
+            if (response.height == response.width) {
+              (newWidth = 500), (newHeight = 500);
+            }
+    
+            ImageResizer.createResizedImage(
+              response.uri,
+              newWidth,
+              newHeight,
+              compressFormat,
+              quality,
+              rotation,
+              null
             )
-          }, 100)
-          this.setState({
-            status: false
-          })
-        }
-        else {
-
-          let path = image.path
-          let NombreArchivo = path.split('Pictures/');
-          let name = NombreArchivo[1];
-          console.warn(name)
+              .then((response2) => {
+                let uri = response2.uri;
+                console.warn(response2.fileName);
+                this.setState({
+                  isloading: false,
+                  evidencia: uri,
+                  archivo_evidencia: {
+                    uri:
+                      Platform.OS === "android"
+                        ? response2.uri
+                        : response2.uri.replace("file://", ""),
+                    type: "image/jpeg",
+                    name:
+                      Platform.OS === "android"
+                        ? response.fileName
+                        : "evidencia.jpg",
+                  },
+                });
+              })
+              .catch((err) => {
+                this.setState({
+                  isloading: false,
+                });
+                RNToasty.Error({ title: "Error, imagen no permitida" });
+              });
+          }
+          this.setState({ status: false });
+        });
+      }
+    
+      _openCamera() {
+        const options = {
+          title: "Selected",
+          storageOptions: {
+            skipBackup: true,
+            path: "images",
+          },
+          takePhotoButtonTitle: "Tomar fotografia",
+          chooseFromLibraryButtonTitle: "Seleccionar de la libreria",
+        };
+    
+        ImagePicker.launchCamera(options, (response) => {
+          if (response.didCancel) {
+          } else if (response.error) {
+            RNToasty.Error({ title: response.error });
+          } else {
             this.setState({
-              status: false,
-              foto: path,
-              profilePicture: {
-                uri: Platform.OS === "android" ? path : path.replace("file://", ""),
-                type: 'image/jepg',
-                name: name
-              }
+              isloading: true,
             });
-        }
-    }).catch((err) => { console.warn("openCamera catch" + err.toString()) });
-  }
+            let compressFormat = "JPEG";
+            let quality = 80;
+            let rotation = 0;
+            let newWidth = 0;
+            let newHeight = 0;
+            if (response.isVertical) {
+              newWidth = 500;
+              newHeight = response.height;
+            }
+            if (!response.isVertical) {
+              newWidth = 500;
+              newHeight = 750;
+              rotation = 90;
+            }
+    
+            ImageResizer.createResizedImage(
+              response.uri,
+              newWidth,
+              newHeight,
+              compressFormat,
+              quality,
+              rotation,
+              null
+            )
+              .then((response2) => {
+                let uri = response2.uri;
+                console.warn(response2.size);
+                this.setState({
+                  isloading: false,
+                  evidencia: uri,
+                  archivo_evidencia: {
+                    uri:
+                      Platform.OS === "android"
+                        ? response2.uri
+                        : response2.uri.replace("file://", ""),
+                    type: "image/jpeg",
+                    name:
+                      Platform.OS === "android"
+                        ? response.fileName
+                        : "evidencia.jpg",
+                  },
+                });
+              })
+              .catch((err) => {
+                this.setState({
+                  isloading: false,
+                });
+                RNToasty.Error({ title: "Error, imagen no permitida" });
+              });
+          }
+          this.setState({ status: false });
+        });
+      }
 
     formatCellphone = (cellphone) => {
         //Filter only numbers from the input
