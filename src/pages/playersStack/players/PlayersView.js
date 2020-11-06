@@ -52,12 +52,8 @@ export default function RoundsView(route) {
     const [selectedIndex, setSelectedIndex] = useState(0)
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
-          if(setSelectedIndex==0)
             ListadoTodos();
-          if(setSelectedIndex==1)
-            ListadoJugadores();
-          if(setSelectedIndex==2)
-            ListadoInvitados();
+            setSelectedIndex(0)
           });
 
         return unsubscribe;
@@ -65,6 +61,7 @@ export default function RoundsView(route) {
 
   async function ListadoTodos() {
     let idUsu = await AsyncStorage.getItem('usu_id')
+    console.warn(idUsu)
     ListaTodos(idUsu)
         .then((res) => {
           console.warn(res)
@@ -393,7 +390,8 @@ export default function RoundsView(route) {
                             alignSelf:'center',
                             width: 60,
                             height: 60,
-                            borderRadius: 30
+                            borderRadius: 30,
+                            marginHorizontal:30
                           }}
                         />
                       </View>

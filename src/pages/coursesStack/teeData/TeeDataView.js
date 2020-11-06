@@ -89,7 +89,12 @@ export default function RoundsView(route) {
   }
 
   function change(data,x,y){
-    if(data<=18 && data>=0){
+    if(data<=18 && data>=0 && y=='adv'){
+      let list = holes
+      list[x][y] = data
+      setDataInState([...dataInState, holes]);
+    }
+    else if(y !='adv'){
       let list = holes
       list[x][y] = data
       setDataInState([...dataInState, holes]);

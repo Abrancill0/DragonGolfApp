@@ -362,7 +362,7 @@ export const ListaAmigos = (IDUsuario) => {
                 });
 };
 
-export const ListaInvitados = (IDUsuario) => {
+export const ListaInvitados = (IDUsuarioCrea) => {
     const URL = RutaBaseAB + "/ListadoInvitados";
     return fetch(URL, {
                 method: "POST",
@@ -371,7 +371,7 @@ export const ListaInvitados = (IDUsuario) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDUsuario: IDUsuario
+                    IDUsuarioCrea: IDUsuarioCrea
                 }),
             })
             .then((response) => response.json())
