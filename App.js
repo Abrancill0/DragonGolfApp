@@ -147,7 +147,7 @@ export default class App extends Component {
 
     try {
         let IDUsuario = await AsyncStorage.getItem('usu_id')
-        console.warn(IDUsuario)
+        //console.warn(IDUsuario)
         if (IDUsuario != null )
         {
           this.setState({
@@ -178,7 +178,7 @@ export default class App extends Component {
     InfoUsuarioAB(CLVUsuario)
     .then((res) => {
         if(res.estatus==1){
-          console.warn(res)
+          //console.warn(res)
             let result=res.Result[0]
             this.setState({
               logeado:true,
@@ -190,7 +190,7 @@ export default class App extends Component {
             })
             const lista =[
             {
-              id: result.usu_id,
+              id: result.IDUsuario,
               name: result.usu_nombre,
               last_name: result.usu_apellido_paterno,
               last_name2: result.usu_apellido_materno,
@@ -203,6 +203,7 @@ export default class App extends Component {
               photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + result.usu_imagen,
               //language: result.set_idioma.substring(0,2)
             }]
+            console.warn(result)
             this.setState({
             userData: lista[0]
           })
@@ -233,7 +234,7 @@ export default class App extends Component {
 
     try {
         let IDUsuario = await AsyncStorage.getItem('usu_id')
-        console.warn(IDUsuario)
+        //console.warn(IDUsuario)
         if (IDUsuario != null )
         {
           this.setState({
@@ -265,10 +266,10 @@ export default class App extends Component {
       db.transaction((tx) => {
 
       let sql = `SELECT * FROM Usuario`
-      console.warn(sql)
+      //console.warn(sql)
       tx.executeSql(sql, [], (tx, results) => {
-        console.warn('Consulta OK')
-        console.warn(results)
+        //console.warn('Consulta OK')
+        //console.warn(results)
 
         var len = results.rows.length;
 
@@ -276,7 +277,7 @@ export default class App extends Component {
 
         for (let i = 0; i < len; i++) {
           let row = results.rows.item(i);
-          console.warn(row)
+          //console.warn(row)
 
           this.setState({
               logeado:true,
@@ -307,11 +308,11 @@ export default class App extends Component {
           })
         }
       });
-      console.warn(tx)
+      //console.warn(tx)
     }) 
     }
     catch(e){
-      console.warn(e)
+      //console.warn(e)
     }
   }
 
@@ -335,7 +336,7 @@ export default class App extends Component {
 
   render() {
 
-    console.warn(this.state.logeado)
+    //console.warn(this.state.logeado)
 
     const DrawerContent2 = props => {
       return (

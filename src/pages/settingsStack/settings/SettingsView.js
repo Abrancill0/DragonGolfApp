@@ -1160,7 +1160,7 @@ class SettingsView extends Component {
 
   changeSNUseFactor = (snwUseFactor) => {
     const state = this.state;
-    console.warn(snwUseFactor)
+    //console.warn(snwUseFactor)
     state.snwUseFactor = snwUseFactor;
     if (state.snwFront9 && state.snwFront9 != 0) {
       if (snwUseFactor) {
@@ -1177,7 +1177,7 @@ class SettingsView extends Component {
     }
 
     this.setState(state);
-    console.warn(state.snwUseFactor)
+    //console.warn(state.snwUseFactor)
   }
 
   changeTNUseFactor = (tnwUseFactor) => {
@@ -1221,7 +1221,7 @@ class SettingsView extends Component {
   formatCellphone = (cellphone) => {
       let formatted = '';
       let pureCell = '';
-      console.warn('ce: ' + cellphone)
+      //console.warn('ce: ' + cellphone)
       if (cellphone.length > 2) {
         pureCell = cellphone.substr(2,cellphone.length);
         formatted = '+' + cellphone.substr(0,2);
@@ -1238,10 +1238,10 @@ class SettingsView extends Component {
     db.transaction((tx) => {
 
       let sql = `SELECT * FROM Usuario`
-      console.warn(sql)
+      //console.warn(sql)
       tx.executeSql(sql, [], (tx, results) => {
-        console.warn('Consulta OK')
-        console.warn(results)
+        //console.warn('Consulta OK')
+        //console.warn(results)
 
         var len = results.rows.length;
 
@@ -1249,7 +1249,7 @@ class SettingsView extends Component {
 
         for (let i = 0; i < len; i++) {
           let row = results.rows.item(i);
-          console.warn(row)
+          //console.warn(row)
 
           const lista =[
             {
@@ -1271,16 +1271,16 @@ class SettingsView extends Component {
           })
         }
       });
-      console.warn(tx)
+      //console.warn(tx)
     }) 
 
     db.transaction((tx) => {
 
       let sql = `SELECT * FROM Settings`
-      console.warn(sql)
+      //console.warn(sql)
       tx.executeSql(sql, [], (tx, results) => {
-        console.warn('Consulta OK')
-        console.warn(results)
+        //console.warn('Consulta OK')
+        //console.warn(results)
 
         var len = results.rows.length;
 
@@ -1288,7 +1288,7 @@ class SettingsView extends Component {
 
         for (let i = 0; i < len; i++) {
           let row = results.rows.item(i);
-          console.warn(row)
+          //console.warn(row)
 
           let usu_id = row.usu_id
           let Lenguage = row.Lenguage
@@ -1361,23 +1361,23 @@ class SettingsView extends Component {
             status: false
             //seePicker: res.Result[0].usu_id
           })
-          console.warn("P1: " + row.AdvMovesOn9Holes)
-          console.warn("P2: " + row.StrokesMovedPerRound)
-          console.warn("P3: " + row.CarryMovesAdv)
+          //console.warn("P1: " + row.AdvMovesOn9Holes)
+          //console.warn("P2: " + row.StrokesMovedPerRound)
+          //console.warn("P3: " + row.CarryMovesAdv)
         }
       });
-      console.warn(tx)
+      //console.warn(tx)
     })
   }
 
   getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')
     const actualizar = await AsyncStorage.getItem('actualizar')
-    console.warn("Act: " + actualizar)
+    //console.warn("Act: " + actualizar)
     if(actualizar=="false"){
       InfoUsuarioAB(token)
         .then((res) => {
-          console.warn(res)
+          //console.warn(res)
             if(res.estatus==1){
 
                 const lista =[
@@ -1397,7 +1397,7 @@ class SettingsView extends Component {
                   photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen
                 }]
 
-                //console.warn(lista[0])
+                ////console.warn(lista[0])
 
                 this.setState({
                 asHowAdvMove: res.Result[0].set_how_adv_move,
@@ -1441,7 +1441,7 @@ class SettingsView extends Component {
                 status: false
                 //seePicker: res.Result[0].usu_id
               })
-              console.warn(res.Result[0])
+              //console.warn(res.Result[0])
               this.setState({
                 userData: lista[0]
               })
@@ -1450,18 +1450,18 @@ class SettingsView extends Component {
 
               let sql = `Insert into Usuario (UsuId,FirstName,LastName,Email,Password,Cellphone,Nickname,GhinNumber,Handicap,Status,FirstLastName)VALUES("${lista[0].id}","${lista[0].name}","${lista[0].last_name2}","${lista[0].email}","
               ${lista[0].password}","${lista[0].cellphone}","${lista[0].nick_name}","${lista[0].ghin_number}","${lista[0].handicap}","Local","${lista[0].last_name}");`
-              console.warn(sql)
+              //console.warn(sql)
                 tx.executeSql(
                   sql,
                   [],
                   (tx, results) => {
-                    console.warn('Results', results);
+                    //console.warn('Results', results);
                     if (results.rowsAffected > 0) {
-                      console.warn("OK")
+                      //console.warn("OK")
                     } else console.warn('Updation Failed');
                   }
                 );
-                console.warn(tx)
+                //console.warn(tx)
               });
 
             db.transaction((tx) => {
@@ -1484,9 +1484,9 @@ class SettingsView extends Component {
                   sql,
                   [],
                   (tx, results) => {
-                    console.warn('Results', results);
+                    //console.warn('Results', results);
                     if (results.rowsAffected > 0) {
-                      console.warn("OK")
+                      //console.warn("OK")
                     } else console.warn('Updation Failed');
                   }
                 );
@@ -1538,10 +1538,10 @@ class SettingsView extends Component {
     db.transaction((tx) => {
 
       let sql = `SELECT * FROM Settings`
-      console.warn("ACTU: " + sql)
+      //console.warn("ACTU: " + sql)
       tx.executeSql(sql, [], (tx, results) => {
-        console.warn('Consulta OK')
-        console.warn(results)
+        //console.warn('Consulta OK')
+        //console.warn(results)
 
         var len = results.rows.length;
 
@@ -1549,7 +1549,7 @@ class SettingsView extends Component {
 
         for (let i = 0; i < len; i++) {
           let row = results.rows.item(i);
-          console.warn(row)
+          //console.warn(row)
 
           let usu_id = row.usu_id
           let Lenguage = row.Lenguage
@@ -1625,9 +1625,9 @@ class SettingsView extends Component {
           })
 
          
-          console.warn("P1: " + row.AdvMovesOn9Holes)
-          console.warn("P2: " + row.StrokesMovedPerRound)
-          console.warn("P3: " + row.CarryMovesAdv)
+          //console.warn("P1: " + row.AdvMovesOn9Holes)
+          //console.warn("P2: " + row.StrokesMovedPerRound)
+          //console.warn("P3: " + row.CarryMovesAdv)
 
           updateSettingsAB(row.idSettings, usu_id,Lenguage,row.HowAdvMove,row.StrokesMovedPerRound,row.AdvMovesOn9Holes,
             row.CarryMovesAdv,row.Rabbit1_6,row.Rabbit7_12,row.Rabbit13_18,
@@ -1640,7 +1640,7 @@ class SettingsView extends Component {
             row.BBTWager18,row.StablefordDoubleEagle,row.StablefordEagle,row.StablefordBirdie,row.StablefordPar,
             row.StablefordBogey,row.StablefordDoubleBogey)
             .then((res) => {
-              console.warn(res)
+              //console.warn(res)
               try{
                 if(res.estatus==1){
                 showMessage({
@@ -1676,7 +1676,7 @@ class SettingsView extends Component {
           })
         }
       });
-      console.warn(tx)
+      //console.warn(tx)
     })
   }
 
@@ -1694,7 +1694,7 @@ class SettingsView extends Component {
         snwValueFactor,
       } = this.state;
 
-      console.warn(snwUseFactor)
+      //console.warn(snwUseFactor)
 
       const snwData = {
         useFactor: snwUseFactor ? 1 : 0,
@@ -1719,7 +1719,7 @@ class SettingsView extends Component {
         tnwValueFactor
       } = this.state;
 
-      //console.warn(tnwWhoGets)
+      ////console.warn(tnwWhoGets)
 
       const tnwData = {
         useFactor: tnwUseFactor ? 1 : 0,
@@ -1896,7 +1896,7 @@ class SettingsView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      console.warn('t: '+tnwData.who_gets_the_adv_strokes)
+      //console.warn('t: '+tnwData.who_gets_the_adv_strokes)
 
       db.transaction((tx) => {
             tx.executeSql(
@@ -1911,7 +1911,7 @@ class SettingsView extends Component {
               ebPlayerData.wager,bbPlayerData.wager_f9,bbPlayerData.wager_b9,bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,
               sfsData.birdie,sfsData.par,sfsData.bogey,sfsData.double_bogey, data.user_id],
               (tx, results) => {
-                console.warn('Results', results);
+                //console.warn('Results', results);
                 if (results.rowsAffected > 0) {
                   showMessage({
                     message: "Settings guardados localmente",
@@ -1924,12 +1924,12 @@ class SettingsView extends Component {
                 } else console.warn('Updation Failed');
               }
             );
-            console.warn(tx)
+            //console.warn(tx)
           });
 
-      console.warn("S: "+data.user_settings)
-      console.warn("U: "+data.user_id)
-      console.warn("R: "+gsDataPlayer.rabbit_1_6)
+      //console.warn("S: "+data.user_settings)
+      //console.warn("U: "+data.user_id)
+      //console.warn("R: "+gsDataPlayer.rabbit_1_6)
 
       updateSettingsAB(data.user_settings,data.user_id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsDataPlayer.rabbit_1_6,gsDataPlayer.rabbit_7_12,gsDataPlayer.rabbit_13_18,
@@ -1942,7 +1942,7 @@ class SettingsView extends Component {
       bbPlayerData.wager_18,sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
       sfsData.bogey,sfsData.double_bogey)
       .then((res) => {
-        console.warn(res)
+        //console.warn(res)
         try{
           if(res.estatus==1){
           showMessage({

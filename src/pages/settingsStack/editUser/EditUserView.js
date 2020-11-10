@@ -49,9 +49,9 @@ class EditUserView extends Component {
         super(props);
         const { cellphone, email, ghin_number, handicap, id, id_sync, last_name, last_name2, name, nick_name, photo, ultimate_sync } = props.route.params.userData;
         const {getUserData} = props.route.params.getUserData
-        console.warn(getUserData)
-        console.warn(props.route.params.language)
-        console.warn(getUserData)
+        console.warn(id)
+        //console.warn(props.route.params.language)
+        //console.warn(getUserData)
         let cellphone2 = cellphone;
         //let formatted = '';
         //let pureCell = '';
@@ -680,6 +680,8 @@ class EditUserView extends Component {
             confirmPasswordReg,
             language
         } = this.state;
+
+        console.warn(id)
 
         if (nameReg == '') {
       showMessage({
