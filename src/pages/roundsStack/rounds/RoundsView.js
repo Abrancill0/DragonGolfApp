@@ -5,8 +5,11 @@ import {
   Dimensions,
   Animated,
   Platform,
-  NativeModules
+  NativeModules,
+  TouchableOpacity,
+  Text
 } from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { Dictionary } from '../../../utils/Dictionary';
 import { NavigationEvents } from 'react-navigation';
 import HeaderButton from '../../global/HeaderButton';
@@ -23,6 +26,7 @@ class RoundsView extends Component {
 
     this.state = {
       visible: true,
+      language: 'es'
     };
 
     //props.setForceInset('always');
@@ -44,19 +48,6 @@ class RoundsView extends Component {
 
   }
 
-  static navigationOptions = ({ navigation }) => {
-    const language = 'es';
-    return {
-      title: navigation.getParam('Title', Dictionary.rounds[language]),
-      headerRight: (
-        <HeaderButton
-          iconName="ios-add"
-          onPress={() => navigation.navigate('CoursesView')}
-        />
-      )
-    }
-  };
-
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.rounds !== this.props.rounds) {
       this.rowTranslateAnimatedValues = {}
@@ -69,12 +60,12 @@ class RoundsView extends Component {
   render() {
 
     const {
-      visible
+      visible,
+      language
     } = this.state;
 
     const {
       rounds,
-      language,
       courses,
       setRound,
       setCourse,
@@ -89,7 +80,21 @@ class RoundsView extends Component {
           barStyle="dark-content"
           translucent={false}
         />
-        {this.rowTranslateAnimatedValues && visible &&
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.openDrawer()}>
+              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>My Rounds</Text>
+          </View>
+          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('CoursesViewRounds')}>
+              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
           <SwipeListView
             data={rounds}
             extraData={rounds}
@@ -130,7 +135,7 @@ class RoundsView extends Component {
             disableRightSwipe
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             onSwipeValueChange={this.onSwipeValueChange}
-          />}
+          />
       </View>
     );
   }

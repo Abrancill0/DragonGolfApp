@@ -61,7 +61,7 @@ export default function Login({ logeadoHandler }) {
   }
 
   function changeLanguage(language) {
-        console.warn(language)
+        //console.warn(language)
         setlanguage(language)
     }
 
@@ -105,19 +105,19 @@ export default function Login({ logeadoHandler }) {
           return;
         }
 
-        console.warn(emailLogin)
-        console.warn(passwordLogin)
+        //console.warn(emailLogin)
+        //console.warn(passwordLogin)
 
         LogearseAB(emailLogin, passwordLogin)
           .then((res) => {
-            console.warn(res)
+            //console.warn(res)
 
             try {
               if (res.estatus == 1) {
 
                 let Mensaje = Bienvenido[language] + ' ' + res.Result[0].usu_nombre + ' ' + res.Result[0].usu_apellido_paterno + ' ' + res.Result[0].usu_apellido_materno
 
-                console.warn(Mensaje)
+                //console.warn(Mensaje)
                 showMessage({
                   message: Mensaje,
                   type: "success",
@@ -183,7 +183,7 @@ export default function Login({ logeadoHandler }) {
                   });
             }
           } catch (e) {
-            console.warn(e)
+            //console.warn(e)
                 showMessage({
                   message: "Ocurrió un error, favor de intentar más tarde" + e,
                   type: "danger",

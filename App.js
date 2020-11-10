@@ -13,13 +13,16 @@ import Login from './src/screen/indexStack/login/LoginView'
 import RecuperaContrasena from './src/screen/indexStack/login/RecuperaContrasena'
 import CambioContrasena from './src/screen/indexStack/login/CambioContrasena'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
+import RoundTab from './src/routes/RoundTab'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
+import CoursesViewRounds from './src/pages/roundsStack/courses/CoursesViewRound'
 import PlayersView from './src/pages/playersStack/players/PlayersView'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
 import AddPlayer from './src/pages/playersStack/addPlayer/AddPlayerView'
+import PlayerInfo from './src/pages/playersStack/playerInfo/PlayerInfoView'
 import AddTee from './src/pages/coursesStack/addTee/AddTeeView'
 import EditTee from './src/pages/coursesStack/addTee/EditTeeView'
 import AddHole from './src/pages/coursesStack/teeData/AddHoleView'
@@ -37,7 +40,7 @@ import { showMessage } from "react-native-flash-message";
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import RoundsStack from './src/routes/RoundsStack';
+import RoundsStack from './src/pages/roundsStack/rounds/RoundsView';
 //import PlayersStack from './PlayersStack';
 //import CoursesStack from './CoursesStack';
 //import SettingsStack from './SettingsStack';
@@ -89,26 +92,19 @@ export default class App extends Component {
         this.setState({
           conexion:true
         })
-        this.loadSesion()
+        //this.loadSesion()
     }
     else if(connection.isInternetReachable==false)
     {
       this.setState({
         conexion:false
       })
-        this.loadSesionLocal()
+        //this.loadSesionLocal()
     }
   };
 
   componentDidMount() {
-    this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
-  }
-
-  componentWillUnmount() {
-    if (this.netinfoUnsubscribe) {
-      this.netinfoUnsubscribe();
-      this.netinfoUnsubscribe = null;
-    }
+    this.loadSesion()//this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
   }
 
   getUserData = async () => {
@@ -203,7 +199,7 @@ export default class App extends Component {
               photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + result.usu_imagen,
               //language: result.set_idioma.substring(0,2)
             }]
-            console.warn(result)
+            //console.warn(result)
             this.setState({
             userData: lista[0]
           })
@@ -336,26 +332,14 @@ export default class App extends Component {
 
   render() {
 
-    //console.warn(this.state.logeado)
-
-    const DrawerContent2 = props => {
-      return (
-        <View></View>
-      )
-    }
-
 
     const DrawerContent = props => {
       const {
         userData
       } = this.state;
       return (
-
         <View style={{flex:1}}>
           <View style={{height:'90%',padding:20}}>
-              {
-              this.state.logeado
-              ?
               <View style={{height:'25%',borderBottomWidth:1,borderBottomColor:Colors.Primary,marginBottom:10}}>
                   <TouchableOpacity style={{marginBottom:20,alignItems:'center'}} onPress={() => props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})}>
                       <Image
@@ -371,12 +355,6 @@ export default class App extends Component {
                 </View>
                 </TouchableOpacity>
               </View>
-              :
-              null
-              }
-              {
-              this.state.logeado
-              ?
               <View>
               <TouchableOpacity  style={{width:'100%',flexDirection:'row',alignItems:'center'}}>
                   <View style={{flex:.1}}>
@@ -401,13 +379,7 @@ export default class App extends Component {
                 </View>
               </TouchableOpacity> 
               </View>
-               :
-               null
-               }
           </View>
-          {
-          this.state.logeado
-          ?
           <TouchableOpacity 
             activeOpacity={0.8}
             onPress={() => this.closeSesion(props)}
@@ -421,24 +393,19 @@ export default class App extends Component {
                 onPress={() => this.closeSesion(props)}
                 labelStyle={{color:'white'}} />
               </View> 
-          </TouchableOpacity>
-          :
-          null
-          }
-              
+          </TouchableOpacity> 
         </View>
-       
       )
     }
 
     createHomeDrawer = () =>
-      <Drawer.Navigator drawerContent={props => this.state.activo?<DrawerContent {...props} />:null} >
+      <Drawer.Navigator drawerType='back' drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name='createHomeStack' children={createHomeStack} options={{ title: 'Inicio' }} />
       </Drawer.Navigator>
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-      <BottomTab.Screen name='SettingsView' component={SettingsView} 
+          <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -463,7 +430,6 @@ export default class App extends Component {
               )
             }
           },
-            
           })} />
           <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
@@ -490,7 +456,6 @@ export default class App extends Component {
               )
             }
           },
-            
           })} />
         <BottomTab.Screen name='PlayersView' component={PlayersView} 
           options={({ route }) => ({
@@ -517,7 +482,32 @@ export default class App extends Component {
               )
             }
           },
-            
+          })} />
+        <BottomTab.Screen name='RoundsStack' component={RoundsStack} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>
+              )
+            }else
+            {
+              return(
+                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Black}
+                    size={20} />
+              </View>
+              )
+            }
+          },
           })} />
       </BottomTab.Navigator>
     
@@ -571,6 +561,18 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+        <Stack.Screen name='RoundTab' component={RoundTab}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
         <Stack.Screen name='AddCourse' component={AddCourse}
           options={({ route }) => ({
             headerBackTitle: '',
@@ -584,6 +586,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='AddPlayer' component={AddPlayer}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='PlayerInfo' component={PlayerInfo}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
@@ -703,6 +717,18 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+          <Stack.Screen name='CoursesViewRounds' component={CoursesViewRounds}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
           <Stack.Screen name='InfoScreen' component={InfoScreen}
           options={({ route }) => ({
             headerBackTitle: '',
@@ -735,7 +761,7 @@ export default class App extends Component {
     }
     return (
       <NavigationContainer>
-      {
+      {/*
         !this.state.conexion
         ?
         <View style={{height:25,backgroundColor:'#DC3A20',justifyContent:'center',alignItems:'center'}}>
@@ -743,7 +769,7 @@ export default class App extends Component {
         </View>
         :
         null
-        }
+        */}
         <Stack.Navigator
          headerMode="none">
           <Drawer.Screen name='Home' children={createHomeDrawer} options={{ title: 'Dragon Golf' }} />

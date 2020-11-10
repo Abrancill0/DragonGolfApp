@@ -25,7 +25,6 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
 import ImageResizer from "react-native-image-resizer";
-
 const {
             photo,
             name,

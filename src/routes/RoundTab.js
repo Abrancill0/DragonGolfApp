@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Text, Platform } from 'react-native';
 import ConfigRoundStack from './ConfigRoundStack';
-import RoundPlayerStack from './RoundPlayerStack';
-import ScoreStack from './ScoreStack';
-import BetsStack from './BetsStack';
-import MoreStack from './MoreStack';
+//import RoundPlayerStack from './RoundPlayerStack';
+//import ScoreStack from './ScoreStack';
+//import BetsStack from './BetsStack';
+//import MoreStack from './MoreStack';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../utils/Colors';
-import store from '../store/store';
 import { Dictionary } from '../utils/Dictionary';
 import ConfigRoundView from '../pages/roundsStack/configRound/ConfigRoundView';
 
@@ -18,8 +17,7 @@ const RoundTab = createMaterialTopTabNavigator(
         ConfigRoundStack: {
             screen: ConfigRoundStack,
             navigationOptions: ({ navigation }) => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{ fontSize: 12 }} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.round[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -33,11 +31,10 @@ const RoundTab = createMaterialTopTabNavigator(
                 }
             }
         },
-        RoundPlayerStack: {
+        /*RoundPlayerStack: {
             screen: RoundPlayerStack,
             navigationOptions: () => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{ fontSize: 12 }} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.players[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -50,7 +47,7 @@ const RoundTab = createMaterialTopTabNavigator(
                 }
             }
         },
-        ScoreStack: {
+        /*ScoreStack: {
             screen: ScoreStack,
             navigationOptions: () => {
                 return {
@@ -68,8 +65,7 @@ const RoundTab = createMaterialTopTabNavigator(
         BetsStack: {
             screen: BetsStack,
             navigationOptions: () => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{ fontSize: 12 }} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.bets[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -85,8 +81,7 @@ const RoundTab = createMaterialTopTabNavigator(
         MoreStack: {
             screen: MoreStack,
             navigationOptions: () => {
-                const state = store.getState();
-                const language = state.reducerLanguage;
+                const language = 'es'
                 return {
                     tabBarLabel: <Text style={{ fontSize: 12 }} numberOfLines={1} adjustsFontSizeToFit>{Dictionary.more[language]}</Text>,
                     tabBarIcon: ({ focused }) => (
@@ -98,7 +93,7 @@ const RoundTab = createMaterialTopTabNavigator(
                     ),
                 }
             }
-        }
+        }*/
     },
     {
         initialRouteName: "ConfigRoundStack",

@@ -13,7 +13,6 @@ import {
   ScrollView,
   Alert
 } from 'react-native';
-import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { RadioButton } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
@@ -24,9 +23,7 @@ import { Dictionary } from '../../../utils/Dictionary';
 import FormatCellphone from '../../../utils/FormatCellphone';
 import HeaderButton from '../../global/HeaderButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import * as Validations from '../../../utils/Validations';
 import moment from 'moment';
-import { actionSaveSNWPlayer, actionGetSNWPlayer, actionGetTNWPlayer, actionSaveTNWPlayer, actionGetGS, actionSaveGS, actionGetEB, actionSaveEB, actionGetAS, actionSaveAS, actionGetBB, actionSaveBB } from '../../../store/actions';
 import Details from '../../../utils/Details';
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
@@ -35,6 +32,7 @@ class PlayerInfoView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      item: props.route.params.item,
       asCollapsed: true,
       advantageMove: '',
       strokesPerRound: null,
@@ -72,16 +70,11 @@ class PlayerInfoView extends Component {
       ebWager: '',
       bbtWagerF9: '',
       bbtWagerB9: '',
-      bbtWager18: ''
+      bbtWager18: '',
+      language: 'es'
     };
 
-    const { id } = props.navigation.getParam('item');
-    props.getSNW(id);
-    props.getTNW(id);
-    props.getGS(id);
-    props.getEB(id);
-    props.getAS(id);
-    props.getBB(id);
+    console.warn('item: ' + this.state.item)
 
     this.inputs = {};
   }
@@ -99,117 +92,10 @@ class PlayerInfoView extends Component {
     }
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.snwData !== this.props.snwData) {
-      const { snwData } = nextProps;
-      try {
-        this.setState({
-          snwAutoPressesEvery: snwData.automatic_presses_every.toString(),
-          snwUseFactor: snwData.use_factor === 'factor',
-          snwFront9: snwData.use_factor === 'factor' ? snwData.cantidad.toString() : snwData.front_9.toString(),
-          snwBack9: snwData.back_9.toString(),
-          snwMatch: snwData.match.toString(),
-          snwCarry: snwData.carry.toString(),
-          snwMedal: snwData.medal.toString(),
-        });
-      } catch (error) {
-        console.log('====================================');
-        console.log(error + ' file: PlayerInfoView, line: 107');
-        console.log('====================================');
-      }
-    }
-
-    if (nextProps.tnwData !== this.props.tnwData) {
-      const { tnwData } = nextProps;
-      try {
-        this.setState({
-          tnwUseFactor: tnwData.use_factor === 'factor',
-          tnwFront9: tnwData.use_factor === 'factor' ? tnwData.cantidad.toString() : tnwData.front_9.toString(),
-          tnwAutoPressesEvery: tnwData.automatic_presses_every.toString(),
-          tnwBack9: tnwData.back_9.toString(),
-          tnwMatch: tnwData.match.toString(),
-          tnwCarry: tnwData.carry.toString(),
-          tnwMedal: tnwData.medal.toString(),
-          whoGetAdvStrokes: tnwData.who_gets_the_adv_strokes.toString(),
-        });
-      } catch (error) {
-        console.log('====================================');
-        console.log(error + ' file: PlayerInfoView, line: 125');
-        console.log('====================================');
-      }
-    }
-
-    if (nextProps.gsData !== this.props.gsData) {
-      const { gsData } = nextProps;
-      try {
-        this.setState({
-          rabbit16: gsData.rabbit_1_6.toString(),
-          rabbit712: gsData.rabbit_7_12.toString(),
-          rabbit1318: gsData.rabbit_13_18.toString(),
-          medalF9: gsData.medal_play_f9.toString(),
-          medalB9: gsData.medal_play_b9.toString(),
-          medal18: gsData.medal_play_18.toString(),
-          skins: gsData.skins.toString(),
-          skinCarryOver: gsData.skins_carry_over ? true : false,
-          lowedAdv: gsData.lowed_adv_on_f9 ? true : false,
-        });
-      } catch (error) {
-        console.log('====================================');
-        console.log(error + ' file: PlayerInfoView, line: 147');
-        console.log('====================================');
-      }
-    }
-
-    if (nextProps.ebData !== this.props.ebData) {
-      const { ebData } = nextProps;
-      try {
-        this.setState({
-          ebWager: ebData.wager.toString(),
-        });
-      } catch (error) {
-        console.log('====================================');
-        console.log(error + ' file: PlayerInfoView, line: 162');
-        console.log('====================================');
-      }
-    }
-
-    if (nextProps.asData !== this.props.asData) {
-      const { asData } = nextProps;
-      try {
-        this.setState({
-          advantageMove: asData.advantage_move.toString(),
-          strokesPerRound: asData.strokes_moved_per_round.toString(),
-          advMovesHoles: asData.adv_mov_if_only_9_holes ? true : false,
-          carryMoveAdv: asData.does_the_carry_move ? true : false,
-        });
-      } catch (error) {
-        console.log('====================================');
-        console.log(error + ' file: PlayerInfoView, line: 176');
-        console.log('====================================');
-      }
-    }
-
-    if (nextProps.bbData !== this.props.bbData) {
-      const { bbData } = nextProps;
-      try {
-        this.setState({
-          bbtWagerF9: bbData.wager_f9.toString(),
-          bbtWagerB9: bbData.wager_b9.toString(),
-          bbtWager18: bbData.wager_18.toString(),
-        });
-      } catch (error) {
-        console.log('====================================');
-        console.log(error + ' file: PlayerInfoView, line: 196');
-        console.log('====================================');
-      }
-    }
-  }
-
   render() {
 
-    const { navigation: { state: { params: { item } } } } = this.props;
-
     const {
+      item,
       asCollapsed,
       advantageMove,
       strokesPerRound,
@@ -248,12 +134,8 @@ class PlayerInfoView extends Component {
       bbtWagerF9,
       bbtWagerB9,
       bbtWager18,
+      language
     } = this.state;
-
-    const {
-      language,
-      navigation
-    } = this.props;
 
     const {
       ghinNumber,
@@ -295,12 +177,12 @@ class PlayerInfoView extends Component {
                     <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{item.email}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL('tel://' + item.cellphone)}>
-                    <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone()}</Text>
+                    <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone(item.cellphone)}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={{ flex: 1, height: '100%', alignItems: 'flex-end' }}>
-                {item.id !== 1 && <TouchableOpacity onPress={_ => navigation.navigate('HistoryScreen', { playerId: item.id })}>
+                {item.id !== 1 && <TouchableOpacity /*onPress={_ => navigation.navigate('HistoryScreen', { playerId: item.id })}*/>
                   <MaterialIcons name='history' size={25} color={Colors.Black} />
                 </TouchableOpacity>}
               </View>
@@ -981,7 +863,7 @@ class PlayerInfoView extends Component {
         </ScrollView>
 
         <View style={styles.bottomButtom}>
-          <DragonButton title={save[language]} onPress={this.submit} />
+          <DragonButton title={save[language]} /*onPress={this.submit}*/ />
         </View>
 
       </KeyboardAvoidingView>
@@ -1032,253 +914,23 @@ class PlayerInfoView extends Component {
     this.inputs[field].focus();
   }
 
-  formatCellphone = () => {
-    let { navigation: { state: { params: { item: { cellphone } } } } } = this.props;
+  formatCellphone = (cellphone) => {
+    console.warn(cellphone)
     let formatted = '';
-    let pureCell = '';
-    if (cellphone.length > 10) {
-      pureCell = cellphone.substr(cellphone.length - 10);
-    }
-
-    formatted = cellphone.substr(0, cellphone.length - 10);
-
-    formatted += ' ' + FormatCellphone(pureCell);
-
-    return formatted;
-  }
-
-  snwValidations = () => {
-
-    const {
-      snwAutoPressesEvery,
-      snwFront9,
-      snwBack9,
-      snwMatch,
-      snwCarry,
-      snwMedal
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: autoPressOk } = Validations.intNumberValidation(snwAutoPressesEvery ? snwAutoPressesEvery : 1);
-    if (!autoPressOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} ${Dictionary.autoPress[language]} ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: front9Ok } = Validations.floatNumberValidation(snwFront9 ? snwFront9 : 1);
-    if (!front9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Front 9 ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: back9Ok } = Validations.floatNumberValidation(snwBack9 ? snwBack9 : 1);
-    if (!back9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Back 9 ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: matchOk } = Validations.floatNumberValidation(snwMatch ? snwMatch : 1);
-    if (!matchOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Match ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: carryOk } = Validations.floatNumberValidation(snwCarry ? snwCarry : 1);
-    if (!carryOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Carry ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: medalOk } = Validations.floatNumberValidation(snwMedal ? snwMedal : 1);
-    if (!medalOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal ${Dictionary.from[language]} Single Nassau Wagers`
-      );
-      return false;
-    }
-
-    return true;
-
-  }
-
-  tnwValidations = () => {
-
-    const {
-      tnwAutoPressesEvery,
-      tnwBack9,
-      tnwCarry,
-      tnwFront9,
-      tnwMatch,
-      tnwMedal
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: autoPressOk } = Validations.intNumberValidation(tnwAutoPressesEvery ? tnwAutoPressesEvery : 1);
-    if (!autoPressOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} ${Dictionary.autoPress[language]} ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: front9Ok } = Validations.floatNumberValidation(tnwFront9 ? tnwFront9 : 1);
-    if (!front9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Front 9 ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: back9Ok } = Validations.floatNumberValidation(tnwBack9 ? tnwBack9 : 1);
-    if (!back9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Back 9 ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: matchOk } = Validations.floatNumberValidation(tnwMatch ? tnwMatch : 1);
-    if (!matchOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Match ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: carryOk } = Validations.floatNumberValidation(tnwCarry ? tnwCarry : 1);
-    if (!carryOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Carry ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    const { ok: medalOk } = Validations.floatNumberValidation(tnwMedal ? tnwMedal : 1);
-    if (!medalOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal ${Dictionary.from[language]} Team Nassau Wagers`
-      );
-      return false;
-    }
-
-    return true;
-
-  }
-
-  gsValidations = () => {
-
-    const {
-      rabbit16,
-      rabbit712,
-      rabbit1318,
-      medalF9,
-      medalB9,
-      medal18,
-      skins,
-    } = this.state;
-
-    const {
-      language
-    } = this.props;
-
-    const { ok: rabbit16Ok } = Validations.floatNumberValidation(rabbit16 ? rabbit16 : 1);
-    if (!rabbit16Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Rabbit 1-6 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: rabbit712Ok } = Validations.floatNumberValidation(rabbit712 ? rabbit712 : 1);
-    if (!rabbit712Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Rabbit 7-12 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: rabbit1318Ok } = Validations.floatNumberValidation(rabbit1318 ? rabbit1318 : 1);
-    if (!rabbit1318Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Rabbit 13-18 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: medalF9Ok } = Validations.floatNumberValidation(medalF9 ? medalF9 : 1);
-    if (!medalF9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal Play F9 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: medalB9Ok } = Validations.floatNumberValidation(medalB9 ? medalB9 : 1);
-    if (!medalB9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal Play B9 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: medal18Ok } = Validations.floatNumberValidation(medal18 ? medal18 : 1);
-    if (!medal18Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal Play 18 ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    const { ok: skinsOk } = Validations.floatNumberValidation(skins ? skins : 1);
-    if (!skinsOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Skins ${Dictionary.from[language]} ${Dictionary.generalSettings[language]}`
-      );
-      return false;
-    }
-
-    return true;
-
+      let pureCell = '';
+      //console.warn('ce: ' + cellphone)
+      /*if (cellphone.length > 2) {
+        pureCell = cellphone.substr(2,cellphone.length);
+        formatted = '+' + cellphone.substr(0,2);
+        formatted += ' ' + FormatCellphone(pureCell);
+      }
+      else{
+        formatted = '+' + cellphone
+      }*/
+      return formatted;
   }
 
   submit = () => {
-
-    const player = this.props.navigation.getParam('item');
 
     const gsOk = this.gsValidations();
     if (gsOk) {
@@ -1308,8 +960,6 @@ class PlayerInfoView extends Component {
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-
-      this.props.saveGS(gsData);
     }
 
     const snwOk = this.snwValidations();
@@ -1337,8 +987,6 @@ class PlayerInfoView extends Component {
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-
-      this.props.saveSNW(snwData);
     }
 
     const tnwOk = this.tnwValidations();
@@ -1369,8 +1017,6 @@ class PlayerInfoView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      this.props.saveTNW(tnwData);
-
       const {
         ebWager
       } = this.state;
@@ -1381,8 +1027,6 @@ class PlayerInfoView extends Component {
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-
-      this.props.saveEB(ebData);
 
       const {
         advantageMove,
@@ -1401,8 +1045,6 @@ class PlayerInfoView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      this.props.saveAS(asData);
-
       const {
         bbtWagerF9,
         bbtWagerB9,
@@ -1417,60 +1059,9 @@ class PlayerInfoView extends Component {
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-
-      this.props.saveBB(bbData);
     }
   }
 
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  snwData: state.reducerSNWPlayer,
-  tnwData: state.reducerTNWPlayer,
-  gsData: state.reducerGSData,
-  ebData: state.reducerEBData,
-  asData: state.reducerASData,
-  bbData: state.reducerBBData,
-});
-
-const mapDispatchToProps = dispatch => ({
-  saveSNW: (values) => {
-    dispatch(actionSaveSNWPlayer(values));
-  },
-  saveTNW: (values) => {
-    dispatch(actionSaveTNWPlayer(values));
-  },
-  getSNW: (value) => {
-    dispatch(actionGetSNWPlayer(value));
-  },
-  getTNW: (value) => {
-    dispatch(actionGetTNWPlayer(value));
-  },
-  getGS: (value) => {
-    dispatch(actionGetGS(value));
-  },
-  saveGS: (values) => {
-    dispatch(actionSaveGS(values));
-  },
-  getEB: (values) => {
-    dispatch(actionGetEB(values));
-  },
-  saveEB: (values) => {
-    dispatch(actionSaveEB(values));
-  },
-  getAS: (value) => {
-    dispatch(actionGetAS(value));
-  },
-  saveAS: (values) => {
-    dispatch(actionSaveAS(values));
-  },
-  getBB: (value) => {
-    dispatch(actionGetBB(value));
-  },
-  saveBB: (values) => {
-    dispatch(actionSaveBB(values));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerInfoView);
+export default PlayerInfoView;

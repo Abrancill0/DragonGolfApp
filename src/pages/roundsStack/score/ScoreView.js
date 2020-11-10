@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { View, Dimensions } from 'react-native';
 import store from '../../../store/store';
-import { connect } from 'react-redux';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from './HeaderButton';
 import ViewPager from '@react-native-community/viewpager';
 import PlayersScore from './PlayersScore';
-import { actionGetHole } from '../../../store/actions';
 import { NavigationEvents } from 'react-navigation';
 import HorizontalScoreView from './HorizontalScoreView';
 
@@ -126,16 +124,5 @@ class ScoreView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  roundId: state.reducerRoundId,
-  initHole: state.reducerInitHole,
-});
 
-const mapDispatchToProps = dispatch => ({
-  getHole: (values) => {
-    dispatch(actionGetHole(values));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ScoreView);
+export default ScoreView;

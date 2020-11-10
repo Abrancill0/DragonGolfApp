@@ -14,7 +14,6 @@ import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from '../../global/HeaderButton';
-//import CourseComponent from './CourseComponent';
 import { NavigationEvents } from 'react-navigation';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import HideItem from '../../global/HideItem';
@@ -31,6 +30,7 @@ import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
+import * as NavigationService from '../../../routes/NavigationService';
 
 export default function RoundsView(route) {
 
@@ -252,17 +252,12 @@ export default function RoundsView(route) {
             color={Colors.Primary} />
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>My Courses</Text>
-          </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddCourse')}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Select Courses</Text>
           </View>
         </View>
         { visible &&
@@ -364,7 +359,7 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> NavigationService.navigate('RoundTab')}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
@@ -381,14 +376,14 @@ export default function RoundsView(route) {
                             </View>
                               </View>
                           </TouchableOpacity>
-                          <View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
+                          {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
                             <FontAwesome name={'edit'} size={30} color={Colors.White} />
                           </TouchableOpacity>
                           <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id, item.tipo)}>
                             <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
                           </TouchableOpacity>
-                          </View>
+                          </View>*/}
                           </ScrollView>
                     </View>
               }

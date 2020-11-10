@@ -42,9 +42,9 @@ class SettingsView extends Component {
   constructor(props) {
     super(props);
 
-    this.havePreferences = false;
     this.state={
-      status: true,
+      status: false,
+      una:0,
       userData: [],
       language:'en',
       asHowAdvMove : 'Match',
@@ -101,18 +101,22 @@ class SettingsView extends Component {
         this.setState({
           conexion:true
         })
-        this.getUserData()
+        //this.getUserData()
     }
     else if(connection.isInternetReachable==false)
     {
       this.setState({
         conexion:false
       })
-        this.getUserDataLocal()
+        //this.getUserDataLocal()
     }
   };
 
-   async componentDidMount() {
+  async componentDidMount() {
+    this.getUserData()
+   }
+
+   /*async componentDidMount() {
     const actualizar = await AsyncStorage.getItem('actualizar')
     if(actualizar=="true"){
       this.setState({
@@ -120,31 +124,7 @@ class SettingsView extends Component {
       })
     }
     this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
-   }
-
-  static navigationOptions = ({ navigation }) => {
-    const state = store.getState();
-    const language = state.reducerLanguage;
-    return {
-      title: navigation.getParam('Title', Dictionary.settings[language]),
-      headerRight: (
-        <HeaderButton
-          iconName="ios-log-out"
-          color={Colors.Primary}
-          onPress={() =>
-            Alert.alert(
-              Dictionary.signOutAsk[language],
-              '',
-              [
-                { text: Dictionary.cancel[language], style: 'cancel' },
-                { text: Dictionary.signOut[language], onPress: () => store.dispatch(actionSignOut()) },
-              ]
-            )
-          }
-        />
-      )
-    }
-  };
+   }*/
 
   render() {
 
@@ -1235,6 +1215,10 @@ class SettingsView extends Component {
 
   getUserDataLocal = async () => {
 
+    this.setState({
+      status:false
+    })
+
     db.transaction((tx) => {
 
       let sql = `SELECT * FROM Usuario`
@@ -1371,10 +1355,18 @@ class SettingsView extends Component {
   }
 
   getUserData = async () => {
+
+    if(this.state.una==0){
+      this.setState({
+        status:true
+      })
+    }
+    console.warn("Hola")
     const token = await AsyncStorage.getItem('usu_id')
     const actualizar = await AsyncStorage.getItem('actualizar')
     //console.warn("Act: " + actualizar)
-    if(actualizar=="false"){
+    if(actualizar=="false" && this.state.status){
+      console.warn(this.state.una)
       InfoUsuarioAB(token)
         .then((res) => {
           //console.warn(res)
@@ -1438,12 +1430,13 @@ class SettingsView extends Component {
                 ssPar: res.Result[0].set_stableford_par.toString(),
                 ssBogey: res.Result[0].set_stableford_bogey.toString(),
                 ssDoubleBogey: res.Result[0].set_stableford_double_bogey.toString(),
-                status: false
                 //seePicker: res.Result[0].usu_id
               })
               //console.warn(res.Result[0])
               this.setState({
-                userData: lista[0]
+                userData: lista[0],
+                status: false,
+                una:this.state.una + 1
               })
 
             db.transaction((tx) => {
@@ -1507,7 +1500,7 @@ class SettingsView extends Component {
             });
         })
     }
-    else{
+    else if(this.state.status){
       Alert.alert(
       "DragonGolf",
       "¿Los datos no están actualizados en la base global, si continúa, usará la última versión de Settings",
@@ -1522,7 +1515,7 @@ class SettingsView extends Component {
           text: "Continuar",
           onPress: () => {
             AsyncStorage.setItem('actualizar', "false");
-            this.getUserData()
+            //this.getUserData()
             this.setState({
               btnAct: false
             })
@@ -1535,6 +1528,9 @@ class SettingsView extends Component {
   }
 
   Actualizar = async () => {
+    this.setState({
+      status:true
+    })
     db.transaction((tx) => {
 
       let sql = `SELECT * FROM Settings`
@@ -1821,7 +1817,6 @@ class SettingsView extends Component {
         ebData,
         bbData,
         sfsData,
-        havePreferences: this.havePreferences,
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }

@@ -372,7 +372,7 @@ export default function RoundsView(route) {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <View activeOpacity={0}>
+              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('PlayerInfo',{item:item.id})}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>
@@ -398,7 +398,7 @@ export default function RoundsView(route) {
                       </View>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
             <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
