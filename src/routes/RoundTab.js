@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Platform } from 'react-native';
 import ConfigRoundStack from './ConfigRoundStack';
-//import RoundPlayerStack from './RoundPlayerStack';
+import RoundPlayerStack from './RoundPlayerStack';
 //import ScoreStack from './ScoreStack';
 //import BetsStack from './BetsStack';
 //import MoreStack from './MoreStack';
@@ -15,7 +15,7 @@ import ConfigRoundView from '../pages/roundsStack/configRound/ConfigRoundView';
 const RoundTab = createMaterialTopTabNavigator(
     {
         ConfigRoundStack: {
-            screen: ConfigRoundStack,
+            screen: ConfigRoundView,
             navigationOptions: ({ navigation }) => {
                 const language = 'es'
                 return {
@@ -31,7 +31,7 @@ const RoundTab = createMaterialTopTabNavigator(
                 }
             }
         },
-        /*RoundPlayerStack: {
+        RoundPlayerStack: {
             screen: RoundPlayerStack,
             navigationOptions: () => {
                 const language = 'es'

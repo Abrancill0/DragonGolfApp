@@ -753,6 +753,18 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+        <Stack.Screen name='configureRounds' component={configureRounds}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
       </Stack.Navigator>
 
     if (this.state.isLoading) {

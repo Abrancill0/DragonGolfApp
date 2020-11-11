@@ -95,6 +95,7 @@ class ConfigRoundView extends Component {
     //props.setSwitchAdv(switchAdv);
 
     this.state = {
+      language: 'es',
       roundName: title,
       selectedButton,
       holeNumber,
@@ -148,6 +149,7 @@ class ConfigRoundView extends Component {
   render() {
 
     const {
+      language,
       roundName,
       selectedButton,
       holeNumber,
@@ -158,10 +160,6 @@ class ConfigRoundView extends Component {
       pickerTextDate,
       editDate
     } = this.state;
-
-    const {
-      language,
-    } = this.props;
 
     const {
       roundName: roundNameText,

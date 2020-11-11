@@ -1,13 +1,13 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import PlayersView from '../pages/roundsStack/players/PlayersView';
-import AddPlayersView from '../pages/roundsStack/players/AddPlayersView';
-import PlayersVsView from '../pages/roundsStack/players/PlayersVsView';
+import PlayersView from '../pages/playersStack/players/PlayersView';
+//import AddPlayersView from '../pages/roundsStack/players/AddPlayersView';
+//import PlayersVsView from '../pages/roundsStack/players/PlayersVsView';
 
 const RoundPlayerStack = createStackNavigator(
     {
         PlayersView,
-        AddPlayersView,
-        PlayersVsView
+        //AddPlayersView,
+        //PlayersVsView
     },
     {
         initialRouteName: "PlayersView",
