@@ -25,6 +25,8 @@ import HeaderButton from '../../global/HeaderButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import Details from '../../../utils/Details';
+import { InfoUsuarioAB } from '../../../Services/Services'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
 
@@ -34,8 +36,8 @@ class PlayerInfoView extends Component {
     this.state = {
       item: props.route.params.item,
       asCollapsed: true,
-      advantageMove: '',
-      strokesPerRound: null,
+      advantageMove: 'Match',
+      strokesPerRound: '0.5',
       advMovesHoles: false,
       carryMoveAdv: false,
       gsCollapsed: true,
@@ -46,7 +48,7 @@ class PlayerInfoView extends Component {
       medalB9: '',
       medal18: '',
       skins: '',
-      skinCarryOver: false,
+      skinCarryOver: 0,
       lowedAdv: false,
       snwCollapsed: true,
       tnwCollapsed: true,
@@ -74,23 +76,79 @@ class PlayerInfoView extends Component {
       language: 'es'
     };
 
-    console.warn('item: ' + this.state.item)
+    console.warn(this.state.item)
 
     this.inputs = {};
   }
 
-  static navigationOptions = ({ navigation }) => {
-    const item = navigation.getParam('item');
-    return {
-      title: `${navigation.getParam('item').name} ${navigation.getParam('item').last_name}`,
-      headerRight: (
-        <HeaderButton
-          iconName="md-create"
-          onPress={() => navigation.navigate('EditPlayerView', { item: item })}
-        />
-      ),
-    }
-  };
+  async componentDidMount() {
+    this.getUserData()
+   }
+
+   getUserData = async () => {
+    const token = await AsyncStorage.getItem('usu_id')
+      InfoUsuarioAB(token)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus==1){
+
+                this.setState({
+                advantageMove: res.Result[0].set_how_adv_move,
+                strokesPerRound: res.Result[0].set_strokes_moved_per_round.toString(),
+                advMovesHoles: res.Result[0].set_adv_moves_on_9_holes,
+                carryMoveAdv: res.Result[0].set_carry_moves_adv,
+                rabbit16: res.Result[0].set_rabbit_1_6.toString(),
+                rabbit712: res.Result[0].set_rabbit_7_12.toString(),
+                rabbit1318: res.Result[0].set_rabbit_13_18.toString(),
+                medalF9: res.Result[0].set_medal_play_f9.toString(),
+                medalB9: res.Result[0].set_medal_play_b9.toString(),
+                medal18: res.Result[0].set_medal_play_18.toString(),
+                skins: res.Result[0].set_skins.toString(),
+                skinCarryOver: res.Result[0].set_skins_carry_over,
+                lowedAdv: res.Result[0].set_lower_adv_f9,
+                snwUseFactor: res.Result[0].set_snw_use_factor,
+                snwAutoPress: res.Result[0].set_snw_automatic_press.toString(),
+                snwFront9: res.Result[0].set_snw_front_9.toString(),
+                snwBack9: res.Result[0].set_snw_back_9.toString(),
+                snwMatch: res.Result[0].set_snw_match.toString(),
+                snwCarry: res.Result[0].set_snw_carry.toString(),
+                snwMedal: res.Result[0].set_snw_medal.toString(),
+                tnwUseFactor: res.Result[0].set_tmw_use_factor,
+                tnwAutoPress: res.Result[0].set_tmw_automatic_press.toString(),
+                tnwFront9: res.Result[0].set_tmw_front_9.toString(),
+                tnwBack9: res.Result[0].set_tmw_back_9.toString(),
+                tnwMatch: res.Result[0].set_tmw_match.toString(),
+                tnwCarry: res.Result[0].set_tmw_carry.toString(),
+                tnwMedal: res.Result[0].set_tmw_medal.toString(),
+                tnwWhoGets: res.Result[0].set_tmw_adv_strokes,
+                ebWager: res.Result[0].set_eb_wager.toString(),
+                bbWagerF9: res.Result[0].set_bbt_wager_f9.toString(),
+                bbWagerB9: res.Result[0].set_bbt_wager_b9.toString(),
+                bbWager18: res.Result[0].set_bbt_wager_18.toString(),
+                ssDoubleEagle: res.Result[0].set_stableford_double_eagle.toString(),
+                ssEaglePoints: res.Result[0].set_stableford_eagle.toString(),
+                ssBirdie: res.Result[0].set_stableford_birdie.toString(),
+                ssPar: res.Result[0].set_stableford_par.toString(),
+                ssBogey: res.Result[0].set_stableford_bogey.toString(),
+                ssDoubleBogey: res.Result[0].set_stableford_double_bogey.toString(),
+                //seePicker: res.Result[0].usu_id
+              })
+            }  
+            else{
+                //setLoading(false)
+                showMessage({
+                    message: res.mensaje,
+                    type: 'info',
+                });
+            }
+        }).catch(error=>{
+            //setLoading(false)
+            showMessage({
+                message: error,
+                type:'error',
+            });
+        })
+  }
 
   render() {
 
@@ -160,7 +218,7 @@ class PlayerInfoView extends Component {
           <View style={styles.profileCard}>
             <View style={styles.imageNameView}>
               <Image
-                source={item.photo ? { uri: item.photo } : BlankProfile}
+                source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile}
                 style={{
                   width: 60,
                   height: 60,
@@ -169,15 +227,15 @@ class PlayerInfoView extends Component {
               />
               <View style={styles.userInfoView}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={styles.userName}>{item.name}</Text>
-                  <Text style={styles.nicknameText}>({item.nick_name})</Text>
+                  <Text style={styles.userName}>{item.nombre}</Text>
+                  <Text style={styles.nicknameText}>({item.nickname})</Text>
                 </View>
                 <View>
-                  <TouchableOpacity onPress={() => Linking.openURL('mailto:' + item.email)}>
-                    <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{item.email}</Text>
+                  <TouchableOpacity onPress={() => Linking.openURL('mailto:' + item.usu_email)}>
+                    <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{item.usu_email}</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL('tel://' + item.cellphone)}>
-                    <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone(item.cellphone)}</Text>
+                  <TouchableOpacity onPress={() => Linking.openURL('tel://' + item.usu_telefono)}>
+                    <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone(item.usu_telefono)}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -190,10 +248,10 @@ class PlayerInfoView extends Component {
             <View style={styles.infoGolfView}>
               <View>
                 <Text style={styles.cardTitle}>{ghinNumber[language]}</Text>
-                <Text style={styles.cardInfo}>{item.ghin_number}</Text>
+                <Text style={styles.cardInfo}>{item.ghinnumber}</Text>
               </View>
               <View>
-                <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpIndex })}>
+                <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpIndex, language:language })}>
                   <Text style={styles.cardTitle}>{handicap[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
                 </TouchableOpacity>
                 <Text style={styles.cardInfo}>{item.handicap}</Text>
@@ -221,19 +279,19 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{howAdvantage[language]}</Text>
                 <View style={styles.radioGroupView}>
                   <View style={styles.radioButtonView}>
-                    <RadioButton value="match" color={Colors.Primary} />
+                    <RadioButton value="Match" color={Colors.Primary} />
                     <TouchableOpacity
-                      onPress={() => this.setState({ advantageMove: 'match' })}
+                      onPress={() => this.setState({ advantageMove: 'Match' })}
                     >
-                      <Text style={[styles.radioButtonText, { color: advantageMove === 'match' ? Colors.Primary : Colors.Black }]}>{match[language]}</Text>
+                      <Text style={[styles.radioButtonText, { color: advantageMove === 'Match' ? Colors.Primary : Colors.Black }]}>{match[language]}</Text>
                     </TouchableOpacity>
                   </View>
                   <View style={styles.radioButtonView}>
-                    <RadioButton value="money" color={Colors.Primary} />
+                    <RadioButton value="Money" color={Colors.Primary} />
                     <TouchableOpacity
-                      onPress={() => this.setState({ advantageMove: 'money' })}
+                      onPress={() => this.setState({ advantageMove: 'Money' })}
                     >
-                      <Text style={[styles.radioButtonText, { color: advantageMove === 'money' ? Colors.Primary : Colors.Black }]}>{money[language]}</Text>
+                      <Text style={[styles.radioButtonText, { color: advantageMove === 'Money' ? Colors.Primary : Colors.Black }]}>{money[language]}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -276,8 +334,8 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question} numberOfLines={2}>{advMoves[language]}</Text>
                 <Switch
                   value={advMovesHoles}
-                  thumbColor={advMovesHoles ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={advMovesHoles ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(advMovesHoles) => this.setState({ advMovesHoles })}
                 />
               </View>
@@ -286,8 +344,8 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{carryMove[language]}</Text>
                 <Switch
                   value={carryMoveAdv}
-                  thumbColor={carryMoveAdv ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={carryMoveAdv ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(carryMoveAdv) => this.setState({ carryMoveAdv })}
                 />
               </View>
@@ -445,8 +503,8 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Skin Carry Over</Text>
                 <Switch
                   value={skinCarryOver}
-                  thumbColor={skinCarryOver ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={skinCarryOver ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(skinCarryOver) => this.setState({ skinCarryOver })}
                 />
               </View>
@@ -455,8 +513,8 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Lowed Adv On F9</Text>
                 <Switch
                   value={lowedAdv}
-                  thumbColor={lowedAdv ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={lowedAdv ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(lowedAdv) => this.setState({ lowedAdv })}
                 />
               </View>
@@ -495,8 +553,8 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{useFactorText[language]}</Text>
                 <Switch
                   value={snwUseFactor}
-                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={this.changeSNUseFactor}
                 />
               </View>
@@ -633,8 +691,8 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{useFactorText[language]}</Text>
                 <Switch
                   value={tnwUseFactor}
-                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Primary}
+                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={this.changeTNUseFactor}
                 />
               </View>

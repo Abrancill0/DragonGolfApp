@@ -73,7 +73,8 @@ export default function RoundsView(route) {
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
                       ghinnumber: item.usu_ghinnumber,
-                      photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.usu_imagen
+                      photo: item.usu_imagen,
+                      handicap: item.usu_handicapindex
                     }
                 ))
                 setPlayers(list)
@@ -99,7 +100,8 @@ export default function RoundsView(route) {
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
                       ghinnumber: item.usu_ghinnumber,
-                      photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.usu_imagen
+                      photo: item.usu_imagen,
+                      handicap: item.usu_handicapindex
                     }
                 ))
                 setPlayers(list)
@@ -124,7 +126,8 @@ export default function RoundsView(route) {
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
                       ghinnumber: item.usu_ghinnumber,
-                      photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.usu_imagen
+                      photo: item.usu_imagen,
+                      handicap: item.usu_handicapindex
                     }
                 ))
                 setPlayers(list)
@@ -372,7 +375,7 @@ export default function RoundsView(route) {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('PlayerInfo',{item:item.id})}>
+              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('PlayerInfo',{item:item})}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>
@@ -385,7 +388,7 @@ export default function RoundsView(route) {
                       </View>
                       <View>
                         <Image
-                          source={item.photo ? { uri: item.photo } : BlankProfile }
+                          source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
                           style={{
                             alignSelf:'center',
                             width: 60,

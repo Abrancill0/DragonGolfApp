@@ -457,8 +457,11 @@ class RegisterView extends Component {
                       ? response2.uri
                       : response2.uri.replace("file://", ""),
                     type: 'image/jepg',
-                    name: response.fileName
-                  }
+                    name:
+                      Platform.OS === "android"
+                        ? response.fileName
+                        : "evidencia.jpg",
+                  },
                 });
             })
           .catch((err) => {
@@ -520,8 +523,11 @@ class RegisterView extends Component {
                       ? response2.uri
                       : response2.uri.replace("file://", ""),
                     type: 'image/jepg',
-                    name: response.fileName
-                  }
+                    name:
+                      Platform.OS === "android"
+                        ? response.fileName
+                        : "evidencia.jpg",
+                  },
                 });
           })
           .catch((err) => {

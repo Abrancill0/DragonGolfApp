@@ -467,6 +467,8 @@ class EditUserView extends Component {
               null
             )
               .then((response2) => {
+                console.warn('r1: ' + response)
+                console.warn('r2: ' + response2)
                 this.setState({
                   profilePicture: {
                     uri:
@@ -474,8 +476,11 @@ class EditUserView extends Component {
                       ? response2.uri
                       : response2.uri.replace("file://", ""),
                     type: 'image/jepg',
-                    name: response.fileName
-                  }
+                    name:
+                      Platform.OS === "android"
+                        ? response.fileName
+                        : "evidencia.jpg",
+                  },
                 });
             })
               .catch((err) => {
@@ -533,6 +538,8 @@ class EditUserView extends Component {
               null
             )
               .then((response2) => {
+                console.warn(response)
+                console.warn(response2)
                 this.setState({
                   profilePicture: {
                     uri:
@@ -540,8 +547,11 @@ class EditUserView extends Component {
                       ? response2.uri
                       : response2.uri.replace("file://", ""),
                     type: 'image/jepg',
-                    name: response.fileName
-                  }
+                    name:
+                      Platform.OS === "android"
+                        ? response.fileName
+                        : "evidencia.jpg",
+                  },
                 });
             })
               .catch((err) => {
@@ -616,6 +626,7 @@ class EditUserView extends Component {
     GuardarFoto = async (idUsuario) => {
 
         try{
+            console.warn(this.state.profilePicture)
             if (this.state.profilePicture.name != null) {
               SubirImagenUsuario(idUsuario, this.state.profilePicture)
                 .then((res) => {
