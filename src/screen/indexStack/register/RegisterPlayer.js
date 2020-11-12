@@ -9,7 +9,8 @@ import {
     ScrollView,
     Alert,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    Button
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import Ripple from 'react-native-material-ripple';
@@ -52,6 +53,7 @@ class RegisterView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            signo: true,
             language: props.route.params.language,
             profilePicture: null,
             phoneCode: '+52',
@@ -140,7 +142,8 @@ class RegisterView extends Component {
             difTeesReg,
             confirmPasswordError,
             strokesReg,
-            ghin
+            ghin,
+            signo
         } = this.state
 
         return (
@@ -314,7 +317,15 @@ class RegisterView extends Component {
                                     }}
                                 />
                             </View>
-                            <View style={styles.inputContainer}>
+                            <View style={[styles.inputContainer, {flexDirection:'row', justifyContent: 'space-between'}]}>
+                                <View>
+                                <Button
+                                  title={this.state.signo?'+':'-'}
+                                  onPress={() => setState({signo:!signo})}
+                                  color={Colors.Primary}
+                                />
+                                </View>
+                                <View>
                                 <TextField
                                     ref={ref => this.strokesIn = ref}
                                     label={strokes[language]}
@@ -330,6 +341,7 @@ class RegisterView extends Component {
                                         this.difTeesIn.focus();
                                     }}
                                 />
+                                </View>
                             </View>
                             <View style={[styles.inputContainer,{marginBottom:40}]}>
                                 <TextField
@@ -426,7 +438,7 @@ class RegisterView extends Component {
                     uri:
                     Platform.OS === "android"
                       ? response2.uri
-                      : response2.uri.replace("file://", ""),
+                      : response2.uri.replace("file://", "/private"),
                     type: 'image/jepg',
                     name:
                       Platform.OS === "android"
@@ -491,7 +503,7 @@ class RegisterView extends Component {
                     uri:
                     Platform.OS === "android"
                       ? response2.uri
-                      : response2.uri.replace("file://", ""),
+                      : response2.uri.replace("file://", "/private"),
                     type: 'image/jepg',
                     name:
                       Platform.OS === "android"

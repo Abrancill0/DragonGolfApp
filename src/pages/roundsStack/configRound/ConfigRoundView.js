@@ -139,13 +139,6 @@ class ConfigRoundView extends Component {
     this.initBackHandler();
   }
 
-  componentWillUnmount() {
-    this.props.clearCourse();
-    this.props.clearRound();
-    this.props.clearPlayers();
-    this.removeBackHandler();
-  }
-
   render() {
 
     const {
@@ -190,14 +183,14 @@ class ConfigRoundView extends Component {
                   tintColor={Colors.Primary}
                   autoCapitalize="words"
                   value={roundName}
-                  onChangeText={this.onChangeName}
+                  //onChangeText={this.onChangeName}
                 />
               </View>
             </View>
 
             {(!editDate || Platform.OS === 'android') && <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
-                <TouchableOpacity onPress={_ => this.setState({ editDate: true, showDatePicker: Platform.OS === 'android' })}>
+                <TouchableOpacity /*onPress={_ => this.setState({ editDate: true, showDatePicker: Platform.OS === 'android' })}*/>
                   <TextField
                     label={roundDateText[language]}
                     editable={false}
@@ -214,14 +207,14 @@ class ConfigRoundView extends Component {
                     value={pickerDate}
                     mode='date'
                     display='default'
-                    onChange={this.onChangeDate}
+                    //onChange={this.onChangeDate}
                   />}
               </View>
             </View>}
 
             {Platform.OS === 'ios' && editDate && <View style={styles.formContainer}>
               <View style={[styles.inputContainer, { height: 250 }]}>
-                <TouchableOpacity style={styles.checkView} onPress={_ => this.setState({ editDate: false })}>
+                <TouchableOpacity style={styles.checkView} /*onPress={_ => this.setState({ editDate: false })}*/>
                   <Text style={[styles.titles, { marginBottom: 0 }]}>{roundDateText[language]}</Text>
                   <Entypo name="check" size={20} color={Colors.Primary} />
                 </TouchableOpacity>
@@ -229,7 +222,7 @@ class ConfigRoundView extends Component {
                   value={pickerDate}
                   mode='date'
                   display='default'
-                  onChange={this.onChangeDate}
+                  //onChange={this.onChangeDate}
                   locale={language}
                 />
               </View>
@@ -238,11 +231,11 @@ class ConfigRoundView extends Component {
             <View style={{ height: 10 }} />
             <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
-                <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpAutoAdj })}>
+                <TouchableOpacity /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpAutoAdj })}*/>
                   <Text style={styles.titles}>{autoAdjust[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
                 </TouchableOpacity>
                 <ButtonGroup
-                  onPress={this.onChangeHcpAdj}
+                  //onPress={this.onChangeHcpAdj}
                   selectedIndex={selectedButton}
                   buttons={['100%', '95%', '90%', '85%', '80%']}
                   containerStyle={{ height: 30 }}
@@ -254,13 +247,13 @@ class ConfigRoundView extends Component {
             <View style={{ height: 10 }} />
             <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
-                <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.startingHole })}>
+                <TouchableOpacity /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.startingHole })}*/>
                   <Text style={styles.titles}>{startingHole[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
                 </TouchableOpacity>
                 <View style={styles.startHoleView}>
                   <View style={{ width: 150 }}>
                     <ButtonGroup
-                      onPress={this.changeHole}
+                      //onPress={this.changeHole}
                       selectedIndex={1}
                       buttons={['-', '+']}
                       containerStyle={{ height: 30 }}
@@ -279,14 +272,14 @@ class ConfigRoundView extends Component {
               <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
                   <View style={styles.switchView}>
-                    <TouchableOpacity style={{width: '80%'}} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.switchAdv })}>
+                    <TouchableOpacity style={{width: '80%'}} /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.switchAdv })}*/>
                       <Text style={styles.question} numberOfLines={2}>Switch Adv B9/F9 <Text style={{ color: Colors.Primary }}>?</Text></Text>
                     </TouchableOpacity>
                     <Switch
                       value={switchAdv}
                       thumbColor={switchAdv ? Colors.Primary : Colors.Gray}
                       trackColor={{ true: Colors.PrimaryWithOpacity }}
-                      onValueChange={this.onChangeSwitchAdv}
+                      //onValueChange={this.onChangeSwitchAdv}
                     />
                   </View>
                 </View>
@@ -375,11 +368,11 @@ class ConfigRoundView extends Component {
 
   handleBackPress = () => {
     Alert.alert(
-      Dictionary.exitRound[this.props.language],
+      Dictionary.exitRound[this.state.language],
       '',
       [
-        { text: Dictionary.cancel[this.props.language], style: 'cancel' },
-        { text: Dictionary.exit[this.props.language], onPress: () => this.props.navigation.navigate(/*'HomeTab'*/'RoundsView') },
+        { text: Dictionary.cancel[this.state.language], style: 'cancel' },
+        { text: Dictionary.exit[this.state.language], onPress: () => this.props.navigation.navigate(/*'HomeTab'*/'RoundsStack') },
       ]
     )
     return true;

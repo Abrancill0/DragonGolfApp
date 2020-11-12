@@ -5,7 +5,7 @@ import RoundPlayerStack from './RoundPlayerStack';
 //import ScoreStack from './ScoreStack';
 //import BetsStack from './BetsStack';
 //import MoreStack from './MoreStack';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../utils/Colors';

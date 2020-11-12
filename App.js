@@ -6,6 +6,7 @@ import { createDrawerNavigator,DrawerContentScrollView,DrawerItem } from '@react
 
 import SplashScreen from './src/screen/splashScreen/SplashScreen'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 
 import { Icon } from 'react-native-elements'
@@ -13,11 +14,12 @@ import Login from './src/screen/indexStack/login/LoginView'
 import RecuperaContrasena from './src/screen/indexStack/login/RecuperaContrasena'
 import CambioContrasena from './src/screen/indexStack/login/CambioContrasena'
 import RegisterView from './src/screen/indexStack/register/RegisterView'
-import RoundTab from './src/routes/RoundTab'
+//import RoundTab from './src/routes/RoundTab'
 import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
 import CoursesViewRounds from './src/pages/roundsStack/courses/CoursesViewRound'
 import PlayersView from './src/pages/playersStack/players/PlayersView'
+//import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
@@ -331,6 +333,69 @@ export default class App extends Component {
 
 
   render() {
+
+    const Tab = createMaterialTopTabNavigator();
+
+    function RoundTab() {
+      return (
+        <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
+          <BottomTab.Screen name="configureRounds" component={configureRounds} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>
+              )
+            }else
+            {
+              return(
+                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Black}
+                    size={20} />
+              </View>
+              )
+            }
+          },
+          })}
+          />
+          {/*<BottomTab.Screen name="Settings" component={PlayersView} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='user-friends'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>
+              )
+            }else
+            {
+              return(
+                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='user-friends'
+                    color={Colors.Black}
+                    size={20} />
+              </View>
+              )
+            }
+          },
+          })}
+          />*/}
+        </BottomTab.Navigator>
+      );
+    }
 
 
     const DrawerContent = props => {

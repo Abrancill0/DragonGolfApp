@@ -474,7 +474,7 @@ class EditUserView extends Component {
                     uri:
                     Platform.OS === "android"
                       ? response2.uri
-                      : response2.uri.replace("file://", ""),
+                      : response2.uri.replace("file://", "/private"),
                     type: 'image/jepg',
                     name:
                       Platform.OS === "android"
@@ -545,7 +545,7 @@ class EditUserView extends Component {
                     uri:
                     Platform.OS === "android"
                       ? response2.uri
-                      : response2.uri.replace("file://", ""),
+                      : response2.uri.replace("file://", "/private"),
                     type: 'image/jepg',
                     name:
                       Platform.OS === "android"
