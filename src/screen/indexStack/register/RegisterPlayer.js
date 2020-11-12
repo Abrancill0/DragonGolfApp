@@ -317,15 +317,15 @@ class RegisterView extends Component {
                                     }}
                                 />
                             </View>
-                            <View style={[styles.inputContainer, {flexDirection:'row', justifyContent: 'space-between'}]}>
-                                <View>
+                            <View style={[styles.inputContainer, {flex:1, flexDirection:'row', justifyContent: 'space-between'}]}>
+                                <View style={{flex:0.1, alignSelf:'center', paddingRigth:5}}>
                                 <Button
                                   title={this.state.signo?'+':'-'}
-                                  onPress={() => setState({signo:!signo})}
+                                  onPress={() => this.setState({signo:!signo})}
                                   color={Colors.Primary}
                                 />
                                 </View>
-                                <View>
+                                <View style={{flex:0.9, paddingLeft:5}}>
                                 <TextField
                                     ref={ref => this.strokesIn = ref}
                                     label={strokes[language]}
@@ -638,7 +638,8 @@ class RegisterView extends Component {
             handicapReg,
             strokesReg,
             difTeesReg,
-            language
+            language,
+            signo
         } = this.state;
 
         if (nameReg == '') {
@@ -672,7 +673,15 @@ class RegisterView extends Component {
     console.warn(strokesReg)
     console.warn(difTeesReg)
     console.warn(idUsu)
-      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicapReg, ghin, strokesReg, difTeesReg, idUsu)
+    console.warn(signo)
+        let strokesRegSigno = ''
+
+        if(!signo)
+            strokesRegSigno = '-'+strokesReg
+        else
+            strokesRegSigno = strokesReg
+        console.warn(strokesRegSigno)
+      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicapReg, ghin, strokesRegSigno, difTeesReg, idUsu)
       .then((res) => {
         console.warn(res)
         if (res.estatus == 1) {
