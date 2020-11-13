@@ -136,7 +136,7 @@ class ConfigRoundView extends Component {
   }
 
   componentDidMount() {
-    this.initBackHandler();
+    //this.initBackHandler();
   }
 
   render() {
