@@ -382,10 +382,11 @@ class RegisterView extends Component {
             Dictionary.selectPhoto[this.state.language],
             '',
             [
+              { text: Dictionary.cancel[this.state.language], onPress: () => null },
               { text: Dictionary.takePhoto[this.state.language], onPress: () => this._openCamera() },
               { text: Dictionary.selectPhoto[this.state.language], onPress: () => this._openGalley() },
             ],
-            { cancelable: false }
+            { cancelable: true }
           )
         }, 100)
     }
