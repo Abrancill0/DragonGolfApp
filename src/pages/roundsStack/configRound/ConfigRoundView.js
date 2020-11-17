@@ -22,6 +22,20 @@ import { ButtonGroup } from 'react-native-elements';
 import HeaderButton from '../../global/HeaderButton';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Details from '../../../utils/Details';
+import DragonButton from '../../global/DragonButton';
+import AsyncStorage from '@react-native-community/async-storage';
+import { showMessage } from "react-native-flash-message";
+import { CrearRonda } from '../../../Services/Services'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+const {
+      save,
+      required,
+      roundName: roundNameText,
+      autoAdjust,
+      startingHole,
+      roundDate: roundDateText
+    } = Dictionary;
 
 class ConfigRoundView extends Component {
   constructor(props) {
@@ -33,69 +47,14 @@ class ConfigRoundView extends Component {
     let holeNumber = 1;
     let switchAdv = false;
     let pickerDate = moment().toDate();
-    let pickerTextDate = moment().format(props.language === 'es' ? 'DD/MM/YYYY' : 'MM/DD/YYYY');
+    let pickerTextDate = moment().format('DD/MM/YYYY');
 
     this.hcpAdjustment = [1, 0.95, 0.90, 0.85, 0.80];
 
-    if (props.round) {
-      this.courseName = props.round.course_name;
-      monthDay = this.formatDate(moment(props.round.date).toDate() / 1000);
-      title = props.round.name;
-      selectedButton = this.hcpAdjustment.indexOf(props.round.hcp_adjustment);
-      holeNumber = props.round.starting_hole;
-      switchAdv = props.round.adv_b9_f9 == 1 ? true : false;
-      pickerDate = moment(props.round.date).toDate();
-      pickerTextDate = moment(props.round.date).format(props.language === 'es' ? 'DD/MM/YYYY' : 'MM/DD/YYYY');
-      props.setHcpAdj(props.round.hcp_adjustment);
-      props.setRoundId(props.round.id);
-    } else if (props.course) {
-      this.courseName = props.course.name;
-      monthDay = this.formatDate(moment().toDate() / 1000);
-      title = props.course.short_name + ` ${monthDay}`;
-
-      let howAdvMove = 'match';
-      let howManyStrokes = 0.5;
-      let advMoves = 0;
-      let carryMoves = 0;
-
-      if (props.preferences) {
-        const { asData } = props.preferences;
-        if (asData.how_adv_move !== "") howAdvMove = asData.how_adv_move;
-        if (asData.how_many_strokes !== "") howManyStrokes = asData.how_many_strokes;
-        if (asData.adv_moves !== "") advMoves = asData.adv_moves;
-        if (asData.carry_move_adv !== "") carryMoves = asData.carry_move_adv;
-      }
-
-      const roundData = {
-        name: title,
-        course_id: props.course.id,
-        date: moment().format('YYYY-MM-DD'),
-        hcp_adjustment: 1,
-        online_key: '',
-        starting_hole: '1',
-        adv_b9_f9: 0,
-        how_adv_move: howAdvMove,
-        how_many_strokes: howManyStrokes,
-        adv_moves: advMoves,
-        carry_move_adv: carryMoves,
-        id_sync: '',
-        ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
-      }
-
-      props.saveRound(roundData);
-    } else {
-      //props.navigate('HomeTab');
-    }
-
-    props.navigation.setParams({
-      Title: title,
-    });
-
-    //props.setInitHole(holeNumber);
-    //props.setSwitchAdv(switchAdv);
-
     this.state = {
       language: 'es',
+      IDCourse: props.route.params.IDCourse,
+      courseName: props.route.params.courseName,
       roundName: title,
       selectedButton,
       holeNumber,
@@ -108,41 +67,11 @@ class ConfigRoundView extends Component {
     };
   }
 
-  static navigationOptions = ({ navigation }) => {
-    const language = 'es';
-    return {
-      title: navigation.getParam('Title', 'Round'),
-      headerRight: (
-        <HeaderButton
-          iconName="ios-exit"
-          color={Colors.Primary}
-          onPress={() =>
-            Alert.alert(
-              Dictionary.exitRound[language],
-              '',
-              [
-                { text: Dictionary.cancel[language], style: 'cancel' },
-                {
-                  text: Dictionary.exit[language], style: 'destructive', onPress: () => {
-                    navigation.navigate('RoundsView');
-                  }
-                },
-              ]
-            )
-          }
-        />
-      )
-    }
-  }
-
-  componentDidMount() {
-    //this.initBackHandler();
-  }
-
   render() {
 
     const {
       language,
+      IDCourse,
       roundName,
       selectedButton,
       holeNumber,
@@ -154,13 +83,6 @@ class ConfigRoundView extends Component {
       editDate
     } = this.state;
 
-    const {
-      roundName: roundNameText,
-      autoAdjust,
-      startingHole,
-      roundDate: roundDateText
-    } = Dictionary;
-
     return (
       <View style={{ flex: 1 }}>
         <StatusBar
@@ -171,8 +93,24 @@ class ConfigRoundView extends Component {
         <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
           <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
 
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+              <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+                <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+            <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Round</Text>
+            </View>
+            {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+              <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
+                <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+              </TouchableOpacity>
+            </View>*/}
+          </View>
+
             <View style={styles.titleView}>
-              <Text style={styles.courseTitle}>{this.courseName}</Text>
+              <Text style={styles.courseTitle}>{this.state.courseName}</Text>
               <Text style={styles.courseTitle}>{date}</Text>
             </View>
 
@@ -183,14 +121,14 @@ class ConfigRoundView extends Component {
                   tintColor={Colors.Primary}
                   autoCapitalize="words"
                   value={roundName}
-                  //onChangeText={this.onChangeName}
+                  onChangeText={this.onChangeName}
                 />
               </View>
             </View>
 
             {(!editDate || Platform.OS === 'android') && <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
-                <TouchableOpacity /*onPress={_ => this.setState({ editDate: true, showDatePicker: Platform.OS === 'android' })}*/>
+                <TouchableOpacity onPress={_ => this.setState({ editDate: true, showDatePicker: Platform.OS === 'android' })}>
                   <TextField
                     label={roundDateText[language]}
                     editable={false}
@@ -207,14 +145,14 @@ class ConfigRoundView extends Component {
                     value={pickerDate}
                     mode='date'
                     display='default'
-                    //onChange={this.onChangeDate}
+                    onChange={this.onChangeDate}
                   />}
               </View>
             </View>}
 
             {Platform.OS === 'ios' && editDate && <View style={styles.formContainer}>
               <View style={[styles.inputContainer, { height: 250 }]}>
-                <TouchableOpacity style={styles.checkView} /*onPress={_ => this.setState({ editDate: false })}*/>
+                <TouchableOpacity style={styles.checkView} onPress={_ => this.setState({ editDate: false })}>
                   <Text style={[styles.titles, { marginBottom: 0 }]}>{roundDateText[language]}</Text>
                   <Entypo name="check" size={20} color={Colors.Primary} />
                 </TouchableOpacity>
@@ -222,7 +160,7 @@ class ConfigRoundView extends Component {
                   value={pickerDate}
                   mode='date'
                   display='default'
-                  //onChange={this.onChangeDate}
+                  onChange={this.onChangeDate}
                   locale={language}
                 />
               </View>
@@ -231,11 +169,11 @@ class ConfigRoundView extends Component {
             <View style={{ height: 10 }} />
             <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
-                <TouchableOpacity /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpAutoAdj })}*/>
+                <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpAutoAdj, language: language })}>
                   <Text style={styles.titles}>{autoAdjust[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
                 </TouchableOpacity>
                 <ButtonGroup
-                  //onPress={this.onChangeHcpAdj}
+                  onPress={this.onChangeHcpAdj}
                   selectedIndex={selectedButton}
                   buttons={['100%', '95%', '90%', '85%', '80%']}
                   containerStyle={{ height: 30 }}
@@ -247,13 +185,13 @@ class ConfigRoundView extends Component {
             <View style={{ height: 10 }} />
             <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
-                <TouchableOpacity /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.startingHole })}*/>
+                <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.startingHole, language: language })}>
                   <Text style={styles.titles}>{startingHole[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
                 </TouchableOpacity>
                 <View style={styles.startHoleView}>
                   <View style={{ width: 150 }}>
                     <ButtonGroup
-                      //onPress={this.changeHole}
+                      onPress={this.changeHole}
                       selectedIndex={1}
                       buttons={['-', '+']}
                       containerStyle={{ height: 30 }}
@@ -267,7 +205,7 @@ class ConfigRoundView extends Component {
               </View>
             </View>
 
-            {holeNumber !== 1 && <>
+            {holeNumber !== 1 && <View>
               <View style={{ height: 10 }} />
               <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
@@ -277,14 +215,18 @@ class ConfigRoundView extends Component {
                     </TouchableOpacity>
                     <Switch
                       value={switchAdv}
-                      thumbColor={switchAdv ? Colors.Primary : Colors.Gray}
-                      trackColor={{ true: Colors.PrimaryWithOpacity }}
-                      //onValueChange={this.onChangeSwitchAdv}
+                      thumbColor={switchAdv ? Colors.Primary : Colors.Primary}
+                      trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                      onValueChange={this.onChangeSwitchAdv}
                     />
                   </View>
                 </View>
               </View>
-            </>}
+            </View>}
+
+            <View style={[styles.bottomButtom,{margin:20}]}>
+                    <DragonButton title={save[language]} onPress={this.submit} />
+                </View>
 
           </ScrollView>
         </KeyboardAvoidingView>
@@ -303,7 +245,7 @@ class ConfigRoundView extends Component {
       if (hole === 1) {
         switchAdv = false;
         this.setState({ switchAdv: false });
-        this.props.setSwitchAdv(false);
+        //this.props.setSwitchAdv(false);
       }
     } else {
       hole = holeNumber === 1 ? 18 : holeNumber - 1;
@@ -311,7 +253,7 @@ class ConfigRoundView extends Component {
       if (hole === 1) {
         switchAdv = false;
         this.setState({ switchAdv: false });
-        this.props.setSwitchAdv(false);
+        //this.props.setSwitchAdv(false);
       }
     }
 
@@ -321,7 +263,7 @@ class ConfigRoundView extends Component {
       selectedButton,
     } = this.state;
 
-    const roundData = {
+    /*const roundData = {
       id: this.props.roundId,
       name: roundName,
       course_id: this.props.course.id,
@@ -335,12 +277,12 @@ class ConfigRoundView extends Component {
     }
 
     this.props.updateRound(roundData);
-    this.props.setInitHole(hole);
+    this.props.setInitHole(hole);*/
 
   }
 
   formatDate = (timestamp) => {
-    const { language } = this.props;
+    const { language } = this.state;
     const numMonth = moment.unix(timestamp).format('M');
     let month = '';
 
@@ -396,13 +338,14 @@ class ConfigRoundView extends Component {
         const { timestamp } = date.nativeEvent;
         this.setState({
           pickerDate: moment.unix(timestamp / 1000).toDate(),
-          pickerTextDate: moment.unix(timestamp / 1000).format(this.props.language === 'es' ? 'DD/MM/YYYY' : 'MM/DD/YYYY'),
+          pickerTextDate: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
           date: this.formatDate(timestamp / 1000),
           showDatePicker: false,
-          editDate: false
+          editDate: false,
+
         });
 
-        const roundData = {
+        /*const roundData = {
           id: this.props.roundId,
           name: roundName,
           course_id: this.props.course.id,
@@ -415,7 +358,7 @@ class ConfigRoundView extends Component {
           ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
         }
 
-        this.props.updateRound(roundData);
+        this.props.updateRound(roundData);*/
       }
       this.setState({ showDatePicker: false, editDate: false });
     }
@@ -424,12 +367,12 @@ class ConfigRoundView extends Component {
       const { nativeEvent: { timestamp } } = date;
 
       this.setState({
-        pickerTextDate: moment.unix(timestamp / 1000).format(this.props.language === 'es' ? 'DD/MM/YYYY' : 'MM/DD/YYYY'),
+        pickerTextDate: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
         pickerDate: moment.unix(timestamp / 1000).toDate(),
         date: this.formatDate(timestamp / 1000),
       });
 
-      const roundData = {
+      /*const roundData = {
         id: this.props.roundId,
         name: roundName,
         course_id: this.props.course.id,
@@ -442,7 +385,7 @@ class ConfigRoundView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      this.props.updateRound(roundData);
+      this.props.updateRound(roundData);*/
     }
   }
 
@@ -456,7 +399,7 @@ class ConfigRoundView extends Component {
       switchAdv
     } = this.state;
 
-    const roundData = {
+    /*const roundData = {
       id: this.props.roundId,
       name: roundName,
       course_id: this.props.course.id,
@@ -470,14 +413,11 @@ class ConfigRoundView extends Component {
     }
 
     this.props.setHcpAdj(this.hcpAdjustment[selectedButton]);
-    this.props.updateRound(roundData);
+    this.props.updateRound(roundData);*/
   }
 
   onChangeName = (title) => {
     this.setState({ roundName: title });
-    this.props.navigation.setParams({
-      Title: title,
-    });
 
     const {
       pickerDate,
@@ -486,7 +426,7 @@ class ConfigRoundView extends Component {
       switchAdv
     } = this.state;
 
-    const roundData = {
+    /*const roundData = {
       id: this.props.roundId,
       name: title,
       course_id: this.props.course.id,
@@ -499,7 +439,7 @@ class ConfigRoundView extends Component {
       ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
     }
 
-    this.props.updateRound(roundData);
+    this.props.updateRound(roundData);*/
   }
 
   onChangeSwitchAdv = (switchAdv) => {
@@ -512,7 +452,7 @@ class ConfigRoundView extends Component {
       holeNumber
     } = this.state;
 
-    const roundData = {
+    /*const roundData = {
       id: this.props.roundId,
       name: roundName,
       course_id: this.props.course.id,
@@ -526,17 +466,77 @@ class ConfigRoundView extends Component {
     }
 
     this.props.updateRound(roundData);
-    this.props.setSwitchAdv(switchAdv);
+    //this.props.setSwitchAdv(switchAdv);*/
   }
 
-  removeBackHandler = () => {
-    try {
-      this.backHandler.remove();
-    } catch (error) {
-      console.log('====================================');
-      console.log(error + ' file: ConfigRoundView, line: 236');
-      console.log('====================================');
-    }
+  submit = async () => {
+    const token = await AsyncStorage.getItem('usu_id')
+
+        const {
+          roundName,
+          pickerDate,
+          selectedButton,
+          holeNumber,
+          switchAdv,
+          language,
+          IDCourse
+        } = this.state;
+
+        if (roundName === "") {
+          showMessage({
+                    message: roundNameText[language]+' ' + required[language],
+                    type: "warning",
+                  });
+          return;
+        }
+
+        console.warn(IDCourse)
+        console.warn(roundName)
+        console.warn(holeNumber)
+        console.warn(token)
+
+        let Ro_SwitchAdventage = 0
+        if(switchAdv)
+          Ro_SwitchAdventage= 1
+
+
+        console.warn(Ro_SwitchAdventage)
+
+        let Ro_HandicapAdjustment = 0
+
+        switch(selectedButton){
+          case 0: Ro_HandicapAdjustment = 100
+          break;
+          case 1: Ro_HandicapAdjustment = 95
+          break;
+          case 2: Ro_HandicapAdjustment = 90
+          break;
+          case 3: Ro_HandicapAdjustment = 85
+          break;
+          case 4: Ro_HandicapAdjustment = 80
+          break;
+        }
+
+
+        console.warn(Ro_HandicapAdjustment)
+
+        CrearRonda(IDCourse, roundName, Ro_HandicapAdjustment, holeNumber, Ro_SwitchAdventage, token)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus > 0){
+                showMessage({
+                message: "Ronda creada correctamente",
+                type:'success',
+            });
+            this.props.navigation.navigate("RoundsStack")
+            }
+            else{
+              showMessage({
+                message: "Ocurrió un error, intente más tarde",
+                type:'danger',
+            });
+            }
+        })
   }
 }
 

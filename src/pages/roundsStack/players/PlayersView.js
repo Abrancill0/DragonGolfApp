@@ -1,131 +1,244 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StatusBar,
-  Dimensions,
   Animated,
-  Platform,
-  Easing
+  Dimensions,
+  Alert,
+  TouchableOpacity,
+  RefreshControl,
+  Text,
+  ScrollView,
+  Image
 } from 'react-native';
-import { connect } from 'react-redux';
+import { SearchBar, ButtonGroup } from 'react-native-elements';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from '../../global/HeaderButton';
+//import CourseComponent from './CourseComponent';
+import { NavigationEvents } from 'react-navigation';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
-import { SwipeListView } from 'react-native-swipe-list-view';
-import DraggableFlatList from 'react-native-draggable-flatlist';
 import HideItem from '../../global/HideItem';
 import Snackbar from 'react-native-snackbar';
 import Colors from '../../../utils/Colors';
-import RoundPlayerComponent from './RoundPlayerComponent';
-import moment from 'moment';
-import { actionGetRoundPlayers, actionDeleteRoundPlayer, actionSetRoundPlayers, actionUpdatePlayerPosition, actionGetTees } from '../../../store/actions';
-import ReorderButton from '../../global/ReorderButton';
-import { Header } from 'react-native-elements';
-import { showMessage } from 'react-native-flash-message';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import { FlatList } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
+import { ListaAmigos, QuitarAmigos, ListaInvitados, ListaTodos } from '../../../Services/Services'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ripple from 'react-native-material-ripple';
+import { useNavigation } from "@react-navigation/native";
+import Entypo from 'react-native-vector-icons/Entypo';
+import styles from './styles';
+import { showMessage } from "react-native-flash-message";
 
-class PlayersView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: true,
-      drag: false,
-      dragArrows: new Animated.Value(0),
-    };
+export default function RoundsView(route) {
 
-    this.isDeleting = false;
-    this.isEditing = false;
+    const navigation = useNavigation();
+    const [players, setPlayers] = useState([]);
+    const [arrayholder, setArrayholder] = useState([]);
+    const [value1, setValue1] = useState('');
+    const [value2, setValue2] = useState('');
+    const [value3, setValue3] = useState('');
+    const [value4, setValue4] = useState('');
+    const [language, setLanguage] = useState('es');
+    const ScreenWidth = Dimensions.get("window").width;
+    const [search, setSearch] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const buttons = ['Todos', 'Amigos', 'Invitados']
+    const BlankProfile = require('../../../../assets/globals/blank-profile.png');
+    const [selectedIndex, setSelectedIndex] = useState(0)
+        useEffect(() => {
+         const unsubscribe = navigation.addListener("focus", () => {
+            ListadoTodos();
+            setSelectedIndex(0)
+          });
 
-    this.hideSnackbar = null;
+        return unsubscribe;
+      }, [navigation]);
 
-    this.rowTranslateAnimatedValues = null;
+  async function ListadoTodos() {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    console.warn(idUsu)
+    ListaTodos(idUsu)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDUsuario,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      ghinnumber: item.usu_ghinnumber,
+                      photo: item.usu_imagen,
+                      handicap: item.usu_handicapindex
+                    }
+                ))
+                setPlayers(list)
+                setArrayholder(list)
+            }
+            else{
+              setPlayers([])
+            }
+        })
+  }
+    
 
-    Dimensions.addEventListener('change', () => {
-      this.setState({ visible: false });
-      let timeout = setTimeout(() => {
-        this.setState({ visible: true });
-        clearTimeout(timeout);
-      }, 10);
-    });
-
-    const { language } = props;
-    let numMonth = '';
-    let day = '';
-    let title = '';
-    if (props.round) {
-      title = props.round.name;
-    } else {
-      numMonth = moment().format('M');
-      day = moment().format('DD');
-
-      let month = '';
-      switch (numMonth) {
-        case '1':
-          month = Dictionary.january[language];
-          break;
-        case '4':
-          month = Dictionary.april[language];
-          break;
-        case '8':
-          month = Dictionary.august[language];
-          break;
-        case '12':
-          month = Dictionary.december[language];
-          break;
-        default:
-          month = moment().format('MMM');
-          break;
-      }
-
-      title = props.course.short_name + ` ${month} ${day}`;
-    }
-
-    props.navigation.setParams({
-      Title: title,
-    });
-
-    props.getPlayers(props.roundId);
-    props.getTees(props.course.id);
+  async function ListadoJugadores() {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    ListaAmigos(idUsu)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDUsuario,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      ghinnumber: item.usu_ghinnumber,
+                      photo: item.usu_imagen,
+                      handicap: item.usu_handicapindex
+                    }
+                ))
+                setPlayers(list)
+                setArrayholder(list)
+            }
+            else{
+              setPlayers([])
+            }
+        })
   }
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      header: null
+  async function ListadoInvitados() {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    ListaInvitados(idUsu)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDUsuario,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      ghinnumber: item.usu_ghinnumber,
+                      photo: item.usu_imagen,
+                      handicap: item.usu_handicapindex
+                    }
+                ))
+                setPlayers(list)
+                setArrayholder(list)
+            }
+            else{
+              setPlayers([])
+              setArrayholder([])
+            }
+        })
+  }
+
+  function updateIndex(selectedIndex) {
+
+    console.warn(selectedIndex)
+
+    setSelectedIndex(selectedIndex)
+    setValue1('')
+    setValue2('')
+    setValue3('')
+    setValue4('')
+    setSearch(false)
+
+    if (selectedIndex == 0) {
+      ListadoTodos()
     }
+
+    if (selectedIndex == 1) {
+      ListadoJugadores()
+    }
+    if (selectedIndex == 2) {
+        ListadoInvitados()
+    }
+  }
+
+  async function Elimina(IDUsuarioFav){
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    Alert.alert(
+      "DragonGolf",
+      "¿Desea eliminar este jugador de su lista de amigos?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {
+          },
+        },
+        {
+          text: "Eliminar",
+          onPress: () => {
+            QuitarAmigos(IDUsuarioFav,idUsu)
+                .then((res) => {
+                  console.warn(res)
+                    if(res.estatus == 1){
+                      showMessage({
+                        message: "Jugador eliminado correctamente",
+                        type:'success',
+                      });
+                      ListadoJugadores()
+                    }
+                })
+          },
+        }
+      ],
+      { cancelable: false }
+    );
+  }
+
+  function searchFilterFunction(text,busqueda){
+
+    const newData = arrayholder.filter(item => {
+    let itemData = ""
+    switch(busqueda){
+      case 1:
+        setValue1(text) 
+        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+        break;
+      case 2:
+        setValue2(text) 
+        itemData = `${item.apellido} ${item.apellido.toUpperCase()}`;
+        break;
+      case 3:
+        setValue3(text) 
+        itemData = `${item.nickname} ${item.nickname.toUpperCase()}`;
+        break;
+      case 4:
+        setValue4(text) 
+        itemData = `${item.ghinnumber} ${item.ghinnumber.toUpperCase()}`;
+        break;
+    }
+    const textData = text.toUpperCase();
+    return itemData.indexOf(textData) > -1;
+
+    });
+    setPlayers(newData)
   };
 
-  componentDidMount() {
-    this.props.navigation.setParams({ drag: this.state.drag, changeDragState: this.changeDragState });
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.players !== this.props.players) {
-      this.props.navigation.setParams({ players: nextProps.players });
-      this.rowTranslateAnimatedValues = {}
-      nextProps.players.map(item => {
-        this.rowTranslateAnimatedValues[`${item.id}`] = new Animated.Value(1);
-      });
-    }
-  }
-
-  render() {
+   function renderSeparator(){  
+        return (  
+            <View  
+                style={{  
+                    height: 1,  
+                    width: "100%",  
+                    backgroundColor: "#000",  
+                }}  
+            />  
+        );  
+    };
 
     const {
-      visible,
-      drag,
-      dragArrows
-    } = this.state;
-
-    const {
-      language,
-      players,
-      hcpAdj,
-      navigation
-    } = this.props;
-
-    this.rowTranslateAnimatedValues = {}
-    players.map(item => {
-      this.rowTranslateAnimatedValues[`${item.id}`] = new Animated.Value(1);
-    });
+      emptyPlayerList
+    } = Dictionary;
 
     return (
       <View style={{ flex: 1 }}>
@@ -134,193 +247,184 @@ class PlayersView extends Component {
           barStyle="dark-content"
           translucent={false}
         />
-        <Header
-          containerStyle={{ backgroundColor: 'white', height: Platform.OS === 'ios' ? 45 : 56, borderBottomWidth: Platform.OS === 'ios' ? 2 : 0, paddingTop: 0, elevation: 4 }}
-          centerContainerStyle={{ height: Platform.OS === 'ios' ? 45 : 55, justifyContent: 'center', }}
-          leftComponent={players.length > 1 && <ReorderButton
-            iconName={drag ? 'playlist-check' : 'playlist-edit'}
-            onPress={_ => this.changeDragState(!drag)}
-          />}
-          centerComponent={{ text: navigation.getParam('Title'), style: { fontSize: 20, fontWeight: 'bold' } }}
-          rightComponent={<HeaderButton
-            iconName="ios-add"
-            onPress={() => navigation.navigate('AddPlayersView', { players: navigation.getParam('players', []) })}
-          />}
-        />
-        {this.rowTranslateAnimatedValues && visible && !drag && <SwipeListView
-          data={players}
-          extraData={players}
-          keyExtractor={(item) => item.id.toString()}
-          style={{ flex: 1, paddingVertical: 5 }}
-          renderItem={({ item }) => (
-            <RoundPlayerComponent
-              item={item}
-              hcpAdj={hcpAdj}
-              height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 70],
-              })}
-              opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
-              drag={drag}
-              changeDragState={this.changeDragState}
-              dragArrows={dragArrows}
+
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Select Friend</Text>
+          </View>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
+              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>*/}
+        </View>
+        { visible &&
+          <ScrollView>
+
+        <ButtonGroup
+              onPress={updateIndex}
+              selectedIndex={selectedIndex}
+              buttons={buttons}
+              selectedButtonStyle={{backgroundColor:Colors.Primary}}
+              containerStyle={{ height: 50 }}
             />
-          )}
-          ListEmptyComponent={
-            <ListEmptyComponent
-              text={Dictionary.emptyRoundPlayerList[language]}
-              iconName="user-friends"
-              iconFamily='font-awesome'
-            />
-          }
-          renderHiddenItem={({ item }) => (
-            <HideItem
-              item={item}
-              height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 70],
-              })}
-              opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
-            />
-          )
-          }
-          disableRightSwipe
-          stopRightSwipe={-(Dimensions.get('window').width * .5)}
-          onSwipeValueChange={this.onSwipeValueChange}
-        />}
-        {
-          this.rowTranslateAnimatedValues && visible && drag && <DraggableFlatList
-            data={players}
-            extraData={players}
-            keyExtractor={(item) => item.id.toString()}
-            style={{ flex: 1, paddingVertical: 5 }}
-            renderItem={({ item, move, moveEnd }) => (
-              <RoundPlayerComponent
-                item={item}
-                hcpAdj={hcpAdj}
-                height={this.rowTranslateAnimatedValues[`${item.id}`].interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 70],
-                })}
-                opacity={this.rowTranslateAnimatedValues[`${item.id}`]}
-                drag={drag}
-                move={move}
-                moveEnd={moveEnd}
-                changeDragState={this.changeDragState}
-                dragArrows={dragArrows}
-              />
-            )}
-            ListEmptyComponent={
-              <ListEmptyComponent
-                text={Dictionary.emptyRoundPlayerList[language]}
-                iconName="user-friends"
-                iconFamily='font-awesome'
+
+      <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:1, justifyContent: 'flex-start' }}>
+            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+          </View>
+          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
+              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+      {search && <View>
+      <SearchBar
+        placeholder="Nombre"
+        onChangeText={(text) => searchFilterFunction(text,1)}
+        autoCorrect={false}
+        value={value1}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.5}}
+      />
+      <SearchBar
+        placeholder="Apellido"
+        onChangeText={(text) => searchFilterFunction(text,2)}
+        autoCorrect={false}
+        value={value2}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:0.8}}
+      />
+      <SearchBar
+        placeholder="Nickname"
+        lightTheme
+        round
+        onChangeText={(text) => searchFilterFunction(text,3)}
+        autoCorrect={false}
+        value={value3}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:0,
+        borderBottomWidth:1}}
+      />
+      <SearchBar
+        placeholder="Ghin"
+        lightTheme
+        round
+        onChangeText={(text) => searchFilterFunction(text,4)}
+        autoCorrect={false}
+        value={value4}
+        inputContainerStyle={{backgroundColor: 'white'}}
+        leftIconContainerStyle={{backgroundColor: 'white'}}
+        inputStyle={{backgroundColor: 'white'}}
+        containerStyle={{
+        marginHorizontal: 50,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-around',
+        borderTopWidth:1,
+        borderBottomWidth:2}}
+      />
+      </View>}
+          <SwipeListView
+            refreshControl={
+              <RefreshControl
+                refreshing={false}
+                onRefresh={()=>{
+                  if(selectedIndex==0)
+                    ListadoTodos()
+                  if(selectedIndex==1)
+                    ListadoJugadores()
+                  if(selectedIndex==2)
+                    ListadoInvitados()
+                  setValue1('')
+                  setValue2('')
+                  setValue3('')
+                  setValue4('')
+                }}
               />
             }
-            onMoveEnd={({ data: players }) => {
-              this.props.updatePlayers(players);
-              this.props.updatePlayerPosition({ players, roundId: this.props.roundId });
-            }}
+            data={players}
+            renderItem={({item}) =>
+            <View style={{flex:.2,padding:5}}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+              <TouchableOpacity activeOpacity={0} /*onPress={()=> navigation.navigate('PlayerInfo',{item:item})}*/>
+                <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
+                    <View style={{flex:1}}>
+                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
+                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nickname}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
+                      </View>
+                      <View>
+                        <Image
+                          source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
+                          style={{
+                            alignSelf:'center',
+                            width: 60,
+                            height: 60,
+                            borderRadius: 30,
+                            marginHorizontal:30
+                          }}
+                        />
+                      </View>
+                      </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+            {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
+                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+              </TouchableOpacity>
+            </View>*/}
+          </ScrollView>
+        </View>
+              }
+              keyExtractor={item=>item.id}
+              ListEmptyComponent={
+              <View style={styles.emptyView}>
+                  <FontAwesome5 name={"user-friends"} size={50} color="red" />
+                <Text style={styles.emptyText}>{emptyPlayerList[language]}</Text>
+              </View>
+            }
+            stopLeftSwipe={Dimensions.get('window').width * .5}
+            stopRightSwipe={-(Dimensions.get('window').width * .5)}
+            //onSwipeValueChange={this.onSwipeValueChange}
           />
-        }
+        
+      </ScrollView>}
+
       </View>
     );
-  }
-
-  changeDragState = (drag) => {
-    this.setState({ drag });
-    Animated.timing(this.state.dragArrows, {
-      toValue: drag ? 1 : 0,
-      duration: 250
-    }).start();
-  }
-
-  changeTitleText = () => {
-    this.props.navigation.setParams({
-      Title: Dictionary.players[this.props.language]
-    });
-  }
-
-  onSwipeValueChange = (swipeData) => {
-    const { key, value } = swipeData;
-
-    if (value < -(Dimensions.get('window').width * .5 - 1) && !this.isDeleting) {
-      const snIndex = this.props.snBet.findIndex(item => item.member_a_id == key || item.member_b_id == key);
-      const tnIndex = this.props.tnBet.findIndex(item => item.member_a_id == key || item.member_b_id == key || item.member_c_id == key || item.member_d_id == key);
-      if (snIndex < 0 && tnIndex < 0) {
-        clearInterval(this.hideSnackbar);
-        this.deletePlayer(key);
-      } else {
-        showMessage({
-          message: Dictionary.cannotDeleteWithBet[this.props.language],
-          description: Dictionary.firstDelete[this.props.language],
-          type: 'warning',
-          icon: 'warning'
-        });
-      }
-    }
-  }
-
-  deletePlayer = (key) => {
-    this.isDeleting = true;
-    Animated.timing(this.rowTranslateAnimatedValues[key], { toValue: 0, duration: 200 }).start(() => {
-      let { players } = this.props;
-      const index = players.findIndex(item => item.id == key);
-      this.hideSnackbar = setTimeout(() => {
-        Snackbar.dismiss();
-        players.splice(index, 1);
-        this.props.updatePlayerPosition({ players, roundId: this.props.roundId });
-        this.props.updatePlayers(players);
-        this.props.deletePlayer({ params: 1, memberId: key, roundId: this.props.roundId });
-        this.isDeleting = false;
-        console.log('terminó')
-      }, 5000);
-      Snackbar.show({
-        text: `1 ${Dictionary.removed[this.props.language]}`,
-        duration: Snackbar.LENGTH_INDEFINITE,
-        action: {
-          text: Dictionary.undo[this.props.language],
-          textColor: Colors.Secondary,
-          onPress: () => {
-            Animated.timing(this.rowTranslateAnimatedValues[key], { toValue: 1, duration: 200 }).start();
-            this.isDeleting = false;
-            clearTimeout(this.hideSnackbar);
-          },
-        },
-      });
-    });
-
-  }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-  course: state.reducerRoundCourse,
-  round: state.reducerRound,
-  roundId: state.reducerRoundId,
-  players: state.reducerRoundPlayers,
-  hcpAdj: state.reducerHcpAdj,
-  snBet: state.reducerSNBet,
-  tnBet: state.reducerTNBet
-});
-
-const mapDispatchToProps = dispatch => ({
-  getPlayers: (value) => {
-    dispatch(actionGetRoundPlayers(value));
-  },
-  deletePlayer: (value) => {
-    dispatch(actionDeleteRoundPlayer(value));
-  },
-  updatePlayers: (values) => {
-    dispatch(actionSetRoundPlayers(values));
-  },
-  updatePlayerPosition: (values) => {
-    dispatch(actionUpdatePlayerPosition(values));
-  },
-  getTees: (value) => {
-    dispatch(actionGetTees(value));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlayersView);

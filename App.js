@@ -19,7 +19,7 @@ import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
 import CoursesViewRounds from './src/pages/roundsStack/courses/CoursesViewRound'
 import PlayersView from './src/pages/playersStack/players/PlayersView'
-//import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
+import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
@@ -339,7 +339,7 @@ export default class App extends Component {
     function RoundTab() {
       return (
         <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-          <BottomTab.Screen name="configureRounds" component={configureRounds} 
+          <BottomTab.Screen name="CoursesViewRounds" component={CoursesViewRounds} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -366,7 +366,7 @@ export default class App extends Component {
           },
           })}
           />
-          {/*<BottomTab.Screen name="Settings" component={PlayersView} 
+          <BottomTab.Screen name="Settings" component={PlayersViewRounds} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -392,7 +392,7 @@ export default class App extends Component {
             }
           },
           })}
-          />*/}
+          />
         </BottomTab.Navigator>
       );
     }
@@ -470,7 +470,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-          <BottomTab.Screen name='SettingsView' component={SettingsView} 
+          {/*<BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -495,7 +495,7 @@ export default class App extends Component {
               )
             }
           },
-          })} />
+          })} />*/}
           <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{

@@ -398,6 +398,47 @@ export const ListaJugadores = (IDUsuario) => {
                 });
 };
 
+export const ListarRonda = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListadoRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario) => {
+    const URL = RutaBaseAB + "/CrearRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDCourse: IDCourse,
+                    Ro_Name: Ro_Name,
+                    Ro_HandicapAdjustment: Ro_HandicapAdjustment,
+                    Ro_StartingHole: Ro_StartingHole,
+                    Ro_SwitchAdventage: Ro_SwitchAdventage,
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const AltaAmigos = (IDUsuarioFav,IDUsuario,Fav_Status) => {
     const URL = RutaBaseAB + "/AltaAmigos";
     return fetch(URL, {
