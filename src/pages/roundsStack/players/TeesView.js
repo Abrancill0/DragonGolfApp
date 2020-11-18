@@ -30,6 +30,7 @@ import { ColorPicker, fromHsv } from 'react-native-color-picker'
 import styles from './styles';
 import { useNavigation } from "@react-navigation/native";
 import Ripple from 'react-native-material-ripple';
+import { showMessage } from "react-native-flash-message";
 
 export default function RoundsView(route) {
 
@@ -87,25 +88,20 @@ export default function RoundsView(route) {
     AgregarTeesRonda(IDRound,idUsu,PlayerID,IDTees)
         .then((res) => {
           console.warn(res)
-            /*if(res.estatus == 1){
-                const list = res.Result.map(item => (
-                    {
-                      id: item.IDTees,
-                      nombre: item.Te_TeeName,
-                      slope: item.Te_Slope,
-                      rating: item.Te_Rating,
-                      par: item.Te_Par,
-                      teeColor: item.Te_TeeColor,
-                      front: item.Te_In,
-                      back: item.Te_Out,
-                      total: item.Te_Total
-                    }
-                ))
-                setTees(list)
+            if(res.estatus == 1){
+                showMessage({
+                  message: "Tee agreado correctamente",
+                  type:'success',
+              });
+              navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
             }
             else{
-              setTees([])
-            }*/
+              showMessage({
+                  message: "Ocurrió un error, intente más tarde",
+                  type:'danger',
+              });
+              navig
+            }
         })
   }
 
@@ -204,14 +200,14 @@ export default function RoundsView(route) {
                     </View>
                   </View>
               </TouchableOpacity>
-            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+            {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditTee', {IDTees:item.id ,IDCourse: IDCourse, Nombre: item.nombre, Slope: item.slope, Rating: item.rating, Color: item.teeColor})}>
                 <FontAwesome name={'edit'} size={30} color={Colors.White} />
               </TouchableOpacity>
               <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(IDCourse,item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
               </TouchableOpacity>
-            </View>
+            </View>*/}
           </ScrollView>
         </View>
               }

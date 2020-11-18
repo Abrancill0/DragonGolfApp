@@ -452,6 +452,11 @@ export const Dictionary = {
         'en': 'Save',
         'es': 'Guardar'
     },
+    //===========Save===============
+    finish: {
+        'en': 'Finish',
+        'es': 'Finalizar'
+    },
     //===========TeeData===============
     verifyField: {
         'en': 'Check the field',

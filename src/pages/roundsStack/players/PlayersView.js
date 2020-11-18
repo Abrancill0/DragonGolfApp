@@ -216,7 +216,7 @@ export default function RoundsView(route) {
             else{
               showMessage({
                   message: "Ocurrió un error, intente más tarde",
-                  type:'success',
+                  type:'danger',
               });
               navig
             }

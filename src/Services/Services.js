@@ -60,6 +60,25 @@ export const InfoUsuarioAB = (IDUsuario) => {
     });
 };
 
+export const ListadoSettingsFriend = (IDUsuario, IDUsuarioFriend) => {
+    const URL = RutaBaseAB + "/ListadoSettingsFriend";
+    return fetch(URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        IDUsuario: IDUsuario,
+        IDUsuarioFriend: IDUsuarioFriend
+      }),
+    })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.warn(error);
+    });
+};
+
 export const Registro = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_email,usu_password,usu_nickname,usu_telefono, usu_imagen) => {
     const formData = new FormData();
 
@@ -467,7 +486,7 @@ export const AgregarTeesRonda = (IDRound, IDUsuario, PlayerId, IDTees) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDRound: IDRound,
+                    IDRounds: IDRound,
                     IDUsuario: IDUsuario,
                     PlayerId: PlayerId,
                     IDTees: IDTees

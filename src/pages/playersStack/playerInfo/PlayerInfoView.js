@@ -27,6 +27,7 @@ import moment from 'moment';
 import Details from '../../../utils/Details';
 import { InfoUsuarioAB } from '../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
+import { showMessage } from "react-native-flash-message";
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
 
@@ -214,6 +215,21 @@ class PlayerInfoView extends Component {
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:30}} onPress={()=> this.props.navigation.goBack()}>
+              <MaterialIcons name={'arrow-back'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View> 
+          <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Settings Player</Text>
+          </View>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{margin:30, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>
+              <MaterialIcons name={'add'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>*/}
+        </View>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps='handled'>
           <View style={styles.profileCard}>
             <View style={styles.imageNameView}>
@@ -231,10 +247,10 @@ class PlayerInfoView extends Component {
                   <Text style={styles.nicknameText}>({item.nickname})</Text>
                 </View>
                 <View>
-                  <TouchableOpacity onPress={() => Linking.openURL('mailto:' + item.usu_email)}>
+                  <TouchableOpacity /*onPress={() => Linking.openURL('mailto:' + item.usu_email)}*/>
                     <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{item.usu_email}</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL('tel://' + item.usu_telefono)}>
+                  <TouchableOpacity /*onPress={() => Linking.openURL('tel://' + item.usu_telefono)}*/>
                     <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone(item.usu_telefono)}</Text>
                   </TouchableOpacity>
                 </View>
@@ -921,7 +937,7 @@ class PlayerInfoView extends Component {
         </ScrollView>
 
         <View style={styles.bottomButtom}>
-          <DragonButton title={save[language]} /*onPress={this.submit}*/ />
+          <DragonButton title={save[language]} onPress={this.submit} />
         </View>
 
       </KeyboardAvoidingView>
@@ -989,6 +1005,13 @@ class PlayerInfoView extends Component {
   }
 
   submit = () => {
+
+    showMessage({
+      message: 'Ocurrió un error, intente más tarde',
+      type: 'danger',
+    });
+
+  /*
 
     const gsOk = this.gsValidations();
     if (gsOk) {
@@ -1118,7 +1141,7 @@ class PlayerInfoView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
     }
-  }
+  */}
 
 }
 

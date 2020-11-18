@@ -33,6 +33,7 @@ import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from './styles';
 import { showMessage } from "react-native-flash-message";
+import DragonButton from '../../global/DragonButton';
 
 export default function RoundsView(route) {
 
@@ -87,6 +88,27 @@ export default function RoundsView(route) {
               setPlayers([])
             }
         })
+  }
+
+  function finalizar(){
+    Alert.alert(
+      "DragonGolf",
+      "¿Desea terminar la configuración de la ronda?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {
+          },
+        },
+        {
+          text: "Terminar",
+          onPress: () => {
+            navigation.navigate('RoundsStack')
+          },
+        }
+      ],
+      { cancelable: true }
+    );
   }
     
 
@@ -240,7 +262,8 @@ export default function RoundsView(route) {
     };
 
     const {
-      emptyPlayerList
+      emptyPlayerList,
+      finish
     } = Dictionary;
 
     return (
@@ -426,7 +449,9 @@ export default function RoundsView(route) {
           />
         
       </ScrollView>}
-
+        <View style={[styles.bottomButtom,{flex:0.1, margin:20}]}>
+          <DragonButton title={finish[language]} onPress={()=>finalizar()} />
+        </View>
       </View>
     );
 }
