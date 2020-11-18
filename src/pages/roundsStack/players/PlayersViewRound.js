@@ -25,7 +25,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, QuitarAmigos, ListaInvitados, ListaTodos, AgregarAmigosRonda } from '../../../Services/Services'
+import { ListaAmigos, QuitarAmigos, ListaInvitados, ListadoAmigosRonda } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -64,13 +64,14 @@ export default function RoundsView(route) {
   async function ListadoTodos() {
     let idUsu = await AsyncStorage.getItem('usu_id')
     console.warn(idUsu)
-    ListaTodos(idUsu)
+    console.warn(IDRound)
+    ListadoAmigosRonda(idUsu, IDRound)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDUsuario,
+                      id: item.PlayerId,
                       nombre: item.usu_nombre,
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
@@ -197,32 +198,6 @@ export default function RoundsView(route) {
     );
   }
 
-  async function agregaJugadorRonda(playerId){
-    let idUsu = await AsyncStorage.getItem('usu_id')
-    console.warn(idUsu)
-    console.warn(IDCourse)
-    console.warn(IDRound)
-    console.warn(playerId)
-    AgregarAmigosRonda(IDRound,idUsu,playerId,0.0,'',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-        .then((res) => {
-          console.warn(res)
-            if(res.estatus == 1){
-                showMessage({
-                  message: "Jugador agreado correctamente",
-                  type:'success',
-              });
-              navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
-            }
-            else{
-              showMessage({
-                  message: "Ocurrió un error, intente más tarde",
-                  type:'success',
-              });
-              navig
-            }
-        })
-  }
-
   function searchFilterFunction(text,busqueda){
 
     const newData = arrayholder.filter(item => {
@@ -283,18 +258,18 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Select Friend</Text>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Friends in Round</Text>
           </View>
-          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
+          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRounds', {IDCourse:IDCourse, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>*/}
+          </View>
         </View>
         { visible &&
           <ScrollView>
 
-        <ButtonGroup
+        {/*<ButtonGroup
               onPress={updateIndex}
               selectedIndex={selectedIndex}
               buttons={buttons}
@@ -311,7 +286,7 @@ export default function RoundsView(route) {
               <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-        </View>
+        </View>*/}
 
       {search && <View>
       <SearchBar
@@ -403,7 +378,7 @@ export default function RoundsView(route) {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> agregaJugadorRonda(item.id)}>
+              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>

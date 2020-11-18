@@ -126,7 +126,7 @@ class ConfigRoundView extends Component {
               </View>
             </View>
 
-            {(!editDate || Platform.OS === 'android') && <View style={styles.formContainer}>
+            {/*(!editDate || Platform.OS === 'android') && <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
                 <TouchableOpacity onPress={_ => this.setState({ editDate: true, showDatePicker: Platform.OS === 'android' })}>
                   <TextField
@@ -164,7 +164,7 @@ class ConfigRoundView extends Component {
                   locale={language}
                 />
               </View>
-            </View>}
+            </View>*/}
 
             <View style={{ height: 10 }} />
             <View style={styles.formContainer}>
@@ -524,11 +524,11 @@ class ConfigRoundView extends Component {
         .then((res) => {
           console.warn(res)
             if(res.estatus > 0){
-                showMessage({
+                /*showMessage({
                 message: "Ronda creada correctamente",
                 type:'success',
-            });
-            this.props.navigation.navigate("RoundsStack")
+            });*/
+            this.props.navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
             }
             else{
               showMessage({

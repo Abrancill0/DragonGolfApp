@@ -20,8 +20,11 @@ import CoursesView from './src/pages/coursesStack/courses/CoursesView'
 import CoursesViewRounds from './src/pages/roundsStack/courses/CoursesViewRound'
 import PlayersView from './src/pages/playersStack/players/PlayersView'
 import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
+import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRound'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
+import TeesViewRound from './src/pages/roundsStack/players/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
+import TeeDataViewRound from './src/pages/roundsStack/players/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
 import AddPlayer from './src/pages/playersStack/addPlayer/AddPlayerView'
 import PlayerInfo from './src/pages/playersStack/playerInfo/PlayerInfoView'
@@ -339,7 +342,7 @@ export default class App extends Component {
     function RoundTab() {
       return (
         <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-          <BottomTab.Screen name="CoursesViewRounds" component={CoursesViewRounds} 
+          {/*<BottomTab.Screen name="CoursesViewRounds" component={CoursesViewRounds} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -365,7 +368,7 @@ export default class App extends Component {
             }
           },
           })}
-          />
+          />*/}
           <BottomTab.Screen name="Settings" component={PlayersViewRounds} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -734,7 +737,31 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+          <Stack.Screen name='TeesViewRound' component={TeesViewRound}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
           <Stack.Screen name='TeeDataView' component={TeeDataView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='TeeDataViewRound' component={TeeDataViewRound}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
@@ -783,6 +810,30 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='CoursesViewRounds' component={CoursesViewRounds}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='PlayersViewRounds' component={PlayersViewRounds}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='PlayersViewRoundsList' component={PlayersViewRoundsList}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

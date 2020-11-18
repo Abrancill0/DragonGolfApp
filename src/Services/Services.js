@@ -416,6 +416,25 @@ export const ListarRonda = (IDUsuario) => {
                 });
 };
 
+export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
+    const URL = RutaBaseAB + "/ListadoAmigosRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario,
+                    IDRounds: IDRounds
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario) => {
     const URL = RutaBaseAB + "/CrearRonda";
     return fetch(URL, {
@@ -431,6 +450,67 @@ export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_Starting
                     Ro_StartingHole: Ro_StartingHole,
                     Ro_SwitchAdventage: Ro_SwitchAdventage,
                     IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const AgregarTeesRonda = (IDRound, IDUsuario, PlayerId, IDTees) => {
+    const URL = RutaBaseAB + "/AgregarTeesRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: IDRound,
+                    IDUsuario: IDUsuario,
+                    PlayerId: PlayerId,
+                    IDTees: IDTees
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const AgregarAmigosRonda = (IDRounds, IDUsuario, PlayerId, RoundHandicap, PlayerTee, ScoreHole1, ScoreHole2, ScoreHole3, ScoreHole4, ScoreHole5, ScoreHole6, ScoreHole7, ScoreHole8, ScoreHole9, ScoreHole10, ScoreHole11, ScoreHole12, ScoreHole13, ScoreHole14, ScoreHole15, ScoreHole16, ScoreHole17, ScoreHole18) => {
+    const URL = RutaBaseAB + "/AgregarAmigosRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRounds: IDRounds,
+                    IDUsuario: IDUsuario,
+                    PlayerId: PlayerId,
+                    RoundHandicap: RoundHandicap,
+                    PlayerTee: PlayerTee,
+                    ScoreHole1: ScoreHole1,
+                    ScoreHole2: ScoreHole2,
+                    ScoreHole3: ScoreHole3,
+                    ScoreHole4: ScoreHole4,
+                    ScoreHole5: ScoreHole5,
+                    ScoreHole6: ScoreHole6,
+                    ScoreHole7: ScoreHole7,
+                    ScoreHole8: ScoreHole8,
+                    ScoreHole9: ScoreHole9,
+                    ScoreHole10: ScoreHole10,
+                    ScoreHole11: ScoreHole11,
+                    ScoreHole12: ScoreHole12,
+                    ScoreHole13: ScoreHole13,
+                    ScoreHole14: ScoreHole14,
+                    ScoreHole15: ScoreHole15,
+                    ScoreHole16: ScoreHole16,
+                    ScoreHole17: ScoreHole17,
+                    ScoreHole18: ScoreHole18
                 }),
             })
             .then((response) => response.json())
