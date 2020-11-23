@@ -30,6 +30,17 @@ import styles from './styles';
 import DragonButton from '../../global/DragonButton';
 import { showMessage } from "react-native-flash-message";
 
+const {
+      emptyCourseList,
+      create,
+      Search,
+      allCourses,
+      courseName,
+      courseShortName,
+      courseCity,
+      country
+    } = Dictionary;
+
 class RoundsView extends Component {
   constructor(props) {
     super(props);
@@ -100,6 +111,10 @@ class RoundsView extends Component {
 
   ListadoCourses = async () => {
     let idUsu = await AsyncStorage.getItem('usu_id')
+    let language = await AsyncStorage.getItem('language')
+    this.setState({
+      language:language
+    })
     ListaCamposTodos(idUsu)
         .then((res) => {
           console.warn(res)
@@ -185,7 +200,7 @@ class RoundsView extends Component {
 
       <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[this.state.language]}</Text>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> this.setState({search:!this.state.search})}>
@@ -196,7 +211,7 @@ class RoundsView extends Component {
 
       {this.state.search && <View>
       <SearchBar
-        placeholder="Nombre"
+        placeholder={courseName[this.state.language]}
         onChangeText={text => this.searchFilterFunction(text, 1)}
         autoCorrect={false}
         value={this.state.value1}
@@ -211,7 +226,7 @@ class RoundsView extends Component {
         borderBottomWidth:0.5}}
       />
       <SearchBar
-        placeholder="Nombre Corto"
+        placeholder={courseShortName[this.state.language]}
         onChangeText={text => this.searchFilterFunction(text, 2)}
         autoCorrect={false}
         value={this.state.value2}
@@ -226,7 +241,7 @@ class RoundsView extends Component {
         borderBottomWidth:0.8}}
       />
       <SearchBar
-        placeholder="Ciudad"
+        placeholder={courseCity[this.state.language]}
         lightTheme
         round
         onChangeText={text => this.searchFilterFunction(text, 3)}
@@ -243,7 +258,7 @@ class RoundsView extends Component {
         borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Pais"
+        placeholder={country[this.state.language]}
         lightTheme
         round
         onChangeText={text => this.searchFilterFunction(text, 4)}
@@ -298,11 +313,6 @@ class RoundsView extends Component {
       courses
     } = this.state;
 
-    const {
-      emptyCourseList,
-      create
-    } = Dictionary;
-
     return (
       <View style={{ flex: 1 }}>
         <StatusBar
@@ -318,7 +328,7 @@ class RoundsView extends Component {
             </TouchableOpacity>
           </View> 
           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>All Courses</Text>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{allCourses[language]}</Text>
           </View>
           {/*<View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> this.props.navigation.navigate('AddCourse')}>

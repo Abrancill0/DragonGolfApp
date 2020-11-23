@@ -447,11 +447,11 @@ export default function RoundsView(route) {
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-        
-      </ScrollView>}
-        <View style={[styles.bottomButtom,{flex:0.1, margin:20}]}>
+        <View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
           <DragonButton title={finish[language]} onPress={()=>finalizar()} />
         </View>
+        
+      </ScrollView>}
       </View>
     );
 }

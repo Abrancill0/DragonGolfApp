@@ -634,7 +634,7 @@ class RegisterView extends Component {
                   style: "cancel"
                 },
               ],
-              { cancelable: false }
+              { cancelable: true }
             );
           }
         });

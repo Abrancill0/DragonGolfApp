@@ -28,6 +28,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { FlatList } from 'react-native-gesture-handler';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import InputScrollView from "react-native-input-scroll-view";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function RoundsView(route) {
 
@@ -51,6 +52,8 @@ export default function RoundsView(route) {
     
 
   async function ListadoHoles() {
+    let language = await AsyncStorage.getItem('language')
+    setLanguage(language)
     /*let list = [];
     for (var i = 0; i < 18; i++) {
       list.push({
@@ -172,9 +175,10 @@ export default function RoundsView(route) {
     console.warn(repetidos);
     if(repetidos.length>0){
       showMessage({
-                message: "Las ventajas no se deben de repetir",
-                type:'warning',
-              });
+                message: Dictionary.advRepeat[language],
+                type: 'warning',
+                icon: 'warning',
+            });
     }
     else{
 
@@ -190,14 +194,14 @@ export default function RoundsView(route) {
           console.warn('r: '+res)
             if(res.estatus == 1){      
               showMessage({
-                message: "Holes guardados correctamente",
+                message: successSaveTeeData[language],
                 type:'success',
               });
               navigation.navigate('TeesView', {IDCourse:IDCourse})
             }
             else{
               showMessage({
-                message: "Ocurrió un error, intente más tarde",
+                message: error[language],
                 type:'danger',
               });
             }
@@ -207,7 +211,12 @@ export default function RoundsView(route) {
 
     const {
       emptyHoles,
-      save
+      save,
+      hoyos,
+      hoyo,
+      ventaja,
+      successSaveTeeData,
+      error
     } = Dictionary;
 
     return (
@@ -220,7 +229,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View> 
             <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-              <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Holes</Text>
+              <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{hoyos[language]}</Text>
             </View>
           {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddHole', {IDTees:IDTees, NameTee:NameTee})}>
@@ -231,7 +240,7 @@ export default function RoundsView(route) {
           <View style={{flex:1, marginLeft:50}}>
             <View style={styles.holesHeader}>
               <View style={styles.rectangleElement}>
-                <Text style={styles.holeText}>Hole</Text>
+                <Text style={styles.holeText}>{hoyo[language]}</Text>
               </View>
 
               <View style={styles.rectangleElement}>
@@ -239,7 +248,7 @@ export default function RoundsView(route) {
               </View>
 
               <View style={styles.rectangleElement}>
-                <Text style={styles.headerText}>Adv</Text>
+                <Text style={styles.headerText}>{ventaja[language]}</Text>
               </View>
 
               <View style={styles.rectangleElement}>

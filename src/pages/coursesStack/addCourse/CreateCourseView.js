@@ -30,7 +30,8 @@ const {
             country: countryText,
             save,
             update,
-            required
+            required,
+            createCourse
         } = Dictionary;
 
 class AddCourseView extends Component {
@@ -65,14 +66,14 @@ class AddCourseView extends Component {
         //}
     }
 
-    static navigationOptions = ({navigation}) => {
-        const state = store.getState();
-        const language = state.reducerLanguage;
-        let course = navigation.getParam('course');
-        return {
-            title: course ? navigation.getParam('Title', Dictionary.editCourse[language]) : navigation.getParam('Title', Dictionary.addCourse[language]),
-        }
-    };
+
+
+    componentDidMount = async () => {
+    let language = await AsyncStorage.getItem('language')
+    this.setState({
+        language:language
+    })
+    }
 
     render() {
 
@@ -98,7 +99,7 @@ class AddCourseView extends Component {
                   <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
                 </TouchableOpacity> 
                   <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-                  <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Course</Text>
+                  <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{createCourse[language]}</Text>
                   </View>
                     <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>

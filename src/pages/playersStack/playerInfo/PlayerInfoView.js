@@ -25,7 +25,7 @@ import HeaderButton from '../../global/HeaderButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import Details from '../../../utils/Details';
-import { InfoUsuarioAB } from '../../../Services/Services'
+import { ListadoSettingsFriend, InfoUsuarioAB, AltaSettingsFriend } from '../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 
@@ -88,7 +88,7 @@ class PlayerInfoView extends Component {
 
    getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')
-      InfoUsuarioAB(token)
+      ListadoSettingsFriend(token, this.state.item.id)
         .then((res) => {
           console.warn(res)
             if(res.estatus==1){
@@ -136,11 +136,67 @@ class PlayerInfoView extends Component {
               })
             }  
             else{
-                //setLoading(false)
-                showMessage({
-                    message: res.mensaje,
-                    type: 'info',
-                });
+                InfoUsuarioAB(token)
+                  .then((res) => {
+                    console.warn(res)
+                      if(res.estatus==1){
+
+                          this.setState({
+                          advantageMove: res.Result[0].set_how_adv_move,
+                          strokesPerRound: res.Result[0].set_strokes_moved_per_round.toString(),
+                          advMovesHoles: res.Result[0].set_adv_moves_on_9_holes,
+                          carryMoveAdv: res.Result[0].set_carry_moves_adv,
+                          rabbit16: res.Result[0].set_rabbit_1_6.toString(),
+                          rabbit712: res.Result[0].set_rabbit_7_12.toString(),
+                          rabbit1318: res.Result[0].set_rabbit_13_18.toString(),
+                          medalF9: res.Result[0].set_medal_play_f9.toString(),
+                          medalB9: res.Result[0].set_medal_play_b9.toString(),
+                          medal18: res.Result[0].set_medal_play_18.toString(),
+                          skins: res.Result[0].set_skins.toString(),
+                          skinCarryOver: res.Result[0].set_skins_carry_over,
+                          lowedAdv: res.Result[0].set_lower_adv_f9,
+                          snwUseFactor: res.Result[0].set_snw_use_factor,
+                          snwAutoPress: res.Result[0].set_snw_automatic_press.toString(),
+                          snwFront9: res.Result[0].set_snw_front_9.toString(),
+                          snwBack9: res.Result[0].set_snw_back_9.toString(),
+                          snwMatch: res.Result[0].set_snw_match.toString(),
+                          snwCarry: res.Result[0].set_snw_carry.toString(),
+                          snwMedal: res.Result[0].set_snw_medal.toString(),
+                          tnwUseFactor: res.Result[0].set_tmw_use_factor,
+                          tnwAutoPress: res.Result[0].set_tmw_automatic_press.toString(),
+                          tnwFront9: res.Result[0].set_tmw_front_9.toString(),
+                          tnwBack9: res.Result[0].set_tmw_back_9.toString(),
+                          tnwMatch: res.Result[0].set_tmw_match.toString(),
+                          tnwCarry: res.Result[0].set_tmw_carry.toString(),
+                          tnwMedal: res.Result[0].set_tmw_medal.toString(),
+                          tnwWhoGets: res.Result[0].set_tmw_adv_strokes,
+                          ebWager: res.Result[0].set_eb_wager.toString(),
+                          bbWagerF9: res.Result[0].set_bbt_wager_f9.toString(),
+                          bbWagerB9: res.Result[0].set_bbt_wager_b9.toString(),
+                          bbWager18: res.Result[0].set_bbt_wager_18.toString(),
+                          ssDoubleEagle: res.Result[0].set_stableford_double_eagle.toString(),
+                          ssEaglePoints: res.Result[0].set_stableford_eagle.toString(),
+                          ssBirdie: res.Result[0].set_stableford_birdie.toString(),
+                          ssPar: res.Result[0].set_stableford_par.toString(),
+                          ssBogey: res.Result[0].set_stableford_bogey.toString(),
+                          ssDoubleBogey: res.Result[0].set_stableford_double_bogey.toString(),
+                          //seePicker: res.Result[0].usu_id
+                        })
+                      }  
+                      else{
+                          //setLoading(false)
+                          showMessage({
+                              message: res.mensaje,
+                              type: 'info',
+                          });
+                      }
+                  }).catch(error=>{
+                      //setLoading(false)
+                      showMessage({
+                          message: error,
+                          type:'error',
+                      });
+                  })
             }
         }).catch(error=>{
             //setLoading(false)
@@ -217,8 +273,8 @@ class PlayerInfoView extends Component {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:30}} onPress={()=> this.props.navigation.goBack()}>
-              <MaterialIcons name={'arrow-back'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+              <MaterialIcons name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
@@ -1004,18 +1060,12 @@ class PlayerInfoView extends Component {
       return formatted;
   }
 
-  submit = () => {
+  submit = async () => {
 
-    showMessage({
-      message: 'Ocurrió un error, intente más tarde',
-      type: 'danger',
-    });
+    const token = await AsyncStorage.getItem('usu_id')
 
-  /*
-
-    const gsOk = this.gsValidations();
-    if (gsOk) {
       const {
+        language,
         rabbit16,
         rabbit712,
         rabbit1318,
@@ -1028,7 +1078,6 @@ class PlayerInfoView extends Component {
       } = this.state;
 
       const gsData = {
-        player_id: player.id,
         rabbit_1_6: rabbit16,
         rabbit_7_12: rabbit712,
         rabbit_13_18: rabbit1318,
@@ -1036,15 +1085,12 @@ class PlayerInfoView extends Component {
         medal_play_b9: medalB9,
         medal_play_18: medal18,
         skins,
-        skins_carry_over: skinCarryOver,
-        lowed_adv_on_f9: lowedAdv,
+        skinCarry: skinCarryOver,
+        lowedAdv: lowedAdv,
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-    }
 
-    const snwOk = this.snwValidations();
-    if (snwOk) {
       const {
         snwAutoPressesEvery,
         snwUseFactor,
@@ -1056,22 +1102,15 @@ class PlayerInfoView extends Component {
       } = this.state;
 
       const snwData = {
+        useFactor: snwUseFactor ? 1 : 0,
         automatic_presses_every: snwAutoPressesEvery,
-        use_factor: snwUseFactor ? 'factor' : 'value',
-        cantidad: snwFront9,
-        front_9: snwUseFactor ? 1 : snwFront9,
+        front_9: snwFront9,
         back_9: snwBack9,
         match: snwMatch,
         medal: snwMedal,
         carry: snwCarry,
-        player_id: player.id,
-        id_sync: '',
-        ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-    }
 
-    const tnwOk = this.tnwValidations();
-    if (tnwOk) {
       const {
         tnwAutoPressesEvery,
         tnwUseFactor,
@@ -1084,18 +1123,14 @@ class PlayerInfoView extends Component {
       } = this.state;
 
       const tnwData = {
+        useFactor: tnwUseFactor ? 1 : 0,
         automatic_presses_every: tnwAutoPressesEvery,
-        use_factor: tnwUseFactor ? 'factor' : 'value',
-        cantidad: tnwFront9,
-        front_9: tnwUseFactor ? 1 : tnwFront9,
+        front_9: tnwFront9,
         back_9: tnwBack9,
         match: tnwMatch,
         medal: tnwMedal,
         carry: tnwCarry,
         who_gets_the_adv_strokes: whoGetAdvStrokes,
-        player_id: player.id,
-        id_sync: '',
-        ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
       const {
@@ -1104,7 +1139,6 @@ class PlayerInfoView extends Component {
 
       const ebData = {
         wager: ebWager,
-        player_id: player.id,
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
@@ -1117,11 +1151,10 @@ class PlayerInfoView extends Component {
       } = this.state;
 
       const asData = {
-        advantage_move: advantageMove,
-        strokes_moved_per_round: strokesPerRound,
-        adv_mov_if_only_9_holes: advMovesHoles ? 1 : 0,
-        does_the_carry_move: carryMoveAdv ? 1 : 0,
-        player_id: player.id,
+        how_adv_move: advantageMove,
+        how_many_strokes: strokesPerRound,
+        adv_moves: advMovesHoles ? 1 : 0,
+        carry_move_adv: carryMoveAdv ? 1 : 0,
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
@@ -1136,12 +1169,50 @@ class PlayerInfoView extends Component {
         wager_f9: bbtWagerF9,
         wager_b9: bbtWagerB9,
         wager_18: bbtWager18,
-        player_id: player.id,
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
-    }
-  */}
+
+      AltaSettingsFriend(token,this.state.item.id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
+      asData.carry_move_adv,gsData.rabbit_1_6,gsData.rabbit_7_12,gsData.rabbit_13_18,
+      gsData.medal_play_f9,gsData.medal_play_b9,gsData.medal_play_18,gsData.skins,
+      gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
+      snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
+      snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
+      tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
+      tnwData.who_gets_the_adv_strokes,ebData.wager,bbData.wager_f9,bbData.wager_b9,
+      bbData.wager_18,0,0,0,0,0,0, this.state.item.strokes,0)/*sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
+      sfsData.bogey,sfsData.double_bogey)*/
+      .then((res) => {
+        console.warn(res)
+        try{
+          if(res.estatus==1){
+          showMessage({
+                message: "Settings guardados correctamente",
+                type: 'success',
+            });
+        }  
+        else{
+            //setLoading(false)
+            showMessage({
+                message: res.mensaje,
+                type: 'info',
+            });
+        }
+        }catch(e){
+          showMessage({
+            message: "Ocurrió un error, intente más tarde",
+            type:'danger',
+        });
+        }
+    }).catch(error=>{
+        //setLoading(false)
+        showMessage({
+            message: error,
+            type:'error',
+        });
+    })
+  }
 
 }
 

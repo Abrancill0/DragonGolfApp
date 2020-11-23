@@ -653,7 +653,7 @@ class EditUserView extends Component {
                           style: "cancel"
                         },
                       ],
-                      { cancelable: false }
+                      { cancelable: true }
                     );
                   }
                 });
@@ -670,7 +670,7 @@ class EditUserView extends Component {
                     style: "cancel"
                   },
                 ],
-                { cancelable: false }
+                { cancelable: true }
               );
         }
     }

@@ -30,7 +30,9 @@ const {
             country: countryText,
             save,
             update,
-            required
+            required,
+            editCourse,
+            successUpdateCourse
         } = Dictionary;
 
 class AddCourseView extends Component {
@@ -66,14 +68,12 @@ class AddCourseView extends Component {
         //}
     }
 
-    static navigationOptions = ({navigation}) => {
-        const state = store.getState();
-        const language = state.reducerLanguage;
-        let course = navigation.getParam('course');
-        return {
-            title: course ? navigation.getParam('Title', Dictionary.editCourse[language]) : navigation.getParam('Title', Dictionary.addCourse[language]),
-        }
-    };
+    componentDidMount = async () => {
+    let language = await AsyncStorage.getItem('language')
+    this.setState({
+        language:language
+    })
+    }
 
     render() {
 
@@ -99,7 +99,7 @@ class AddCourseView extends Component {
                   <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
                 </TouchableOpacity>
                 <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-                    <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Edit Course</Text>
+                    <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{editCourse[language]}</Text>
                 </View>
                     <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
                         <View style={styles.formContainer}>
@@ -254,7 +254,7 @@ class AddCourseView extends Component {
           console.warn(res)
             if(res.estatus == 1){
                 showMessage({
-                message: "Campo editado correctamente",
+                message: successUpdateCourse[language],
                 type:'success',
             });
             this.props.navigation.goBack()

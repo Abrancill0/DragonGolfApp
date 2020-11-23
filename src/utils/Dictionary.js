@@ -32,6 +32,11 @@ export const Dictionary = {
         'en': 'You have no internet connection.',
         'es': 'No tienes conexión a internet.'
     },
+
+    Search: {
+        'en': 'Search for: ',
+        'es': 'Buscar por: '
+    },
     //===========Validations===============
     required: {
         'en': 'Required.',
@@ -122,6 +127,30 @@ export const Dictionary = {
         'en': 'Create',
         'es': 'Crear'
     },
+    createCourse: {
+        'en': 'Create Course',
+        'es': 'Crear Campo'
+    },
+    createTee: {
+        'en': 'Create Tee',
+        'es': 'Crear Tee'
+    },
+    createPlayer: {
+        'en': 'Create Player',
+        'es': 'Crear Jugador'
+    },
+    friends: {
+        'en': 'Friends',
+        'es': 'Amigos'
+    },
+    all: {
+        'en': 'All',
+        'es': 'Todos'
+    },
+    guests: {
+        'en': 'Guests',
+        'es': 'Invitados'
+    },
     //===========ImagePicker===============
     selectPhoto: {
         'en': 'Select Photo',
@@ -138,6 +167,10 @@ export const Dictionary = {
     cancel: {
         'en': 'Cancel',
         'es': 'Cancelar'
+    },
+    continuar: {
+        'en': 'OK',
+        'es': 'Continuar'
     },
     //===========Errors===============
     invalidLogin: {
@@ -192,6 +225,10 @@ export const Dictionary = {
         'en': 'Are you sure you want to sign out?',
         'es': '¿Seguro que quieres cerrar sesión?'
     },
+    error: {
+        'en': 'An error occurred, please try again later',
+        'es': 'Ocurrió un error, intente más tarde'
+    },
     //===========HomeTabTitles===============
     rounds: {
         'en': 'Rounds',
@@ -201,9 +238,17 @@ export const Dictionary = {
         'en': 'Players',
         'es': 'Jugadores'
     },
-    courses: {
-        'en': 'Courses',
-        'es': 'Campos'
+    myCourses: {
+        'en': 'My Courses',
+        'es': 'Mis Campos'
+    },
+    allCourses: {
+        'en': 'All Courses',
+        'es': 'Todos los Campos'
+    },
+    allPlayersView: {
+        'en': 'All Players',
+        'es': 'Todos los Jugadores'
     },
     settings: {
         'en': 'Settings',
@@ -308,6 +353,14 @@ export const Dictionary = {
     successUpdateCourse: {
         'en': 'Course was updated successfully',
         'es': 'El Campo se actualizó correctamente'
+    },
+    sureToUpdateCourse: {
+        'en': 'Are you sure you want to delete this course?',
+        'es': '¿Seguro deseas eliminar este campo?'
+    },
+    sureToUpdateTee: {
+        'en': 'Are you sure you want to delete this tee?',
+        'es': '¿Seguro deseas eliminar este tee?'
     },
     //===========AddPlayer===============
     addPlayer: {
@@ -446,6 +499,18 @@ export const Dictionary = {
     emptyHoles: {
         'en': 'There are no Holes yet',
         'es': 'Aún no hay hoyos'
+    },
+    hoyos: {
+        'en': 'Holes',
+        'es': 'Hoyos'
+    },
+    hoyo: {
+        'en': 'Hole',
+        'es': 'Hoyo'
+    },
+    ventaja: {
+        'en': 'Adv',
+        'es': 'Ven'
     },
     //===========Save===============
     save: {
@@ -648,8 +713,8 @@ export const Dictionary = {
         'es': 'Historial'
     },
     date: {
-        'en': 'Date',
-        'es': 'Fecha'
+        'en': 'Date: ',
+        'es': 'Fecha: '
     },
     course: {
         'en': 'Course',

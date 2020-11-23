@@ -50,6 +50,8 @@ export default function RoundsView(route) {
     
 
   async function ListadoTees() {
+    let language = await AsyncStorage.getItem('language')
+    setLanguage(language)
     ListaTees(IDCourse)
         .then((res) => {
           console.warn(res)
@@ -78,14 +80,14 @@ export default function RoundsView(route) {
   function Elimina(idCourse,id){
     Alert.alert(
       "DragonGolf",
-      "¿Está seguro de eliminar este tee?",
+      sureToUpdateTee[language],
       [
         {
-          text: "Cancelar",
+          text: cancel[language],
           style: 'cancel',
         },
         {
-          text: "Continuar",
+          text: continuar[language],
           onPress: () => {
             EliminarTees(idCourse,id)
               .then((res) => {
@@ -105,6 +107,9 @@ export default function RoundsView(route) {
     const {
       emptyTeesList,
       teeColor: teeColorText,
+      sureToUpdateTee,
+      cancel,
+      continuar
     } = Dictionary;
 
     return (

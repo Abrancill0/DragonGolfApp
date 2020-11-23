@@ -114,7 +114,14 @@ class SettingsView extends Component {
 
   async componentDidMount() {
     this.getUserData()
-   }
+    let language = await AsyncStorage.getItem('language')
+    if (language != null )
+    {
+      this.setState({
+        language:language
+      })
+    }
+  }
 
    /*async componentDidMount() {
     const actualizar = await AsyncStorage.getItem('actualizar')
@@ -1945,6 +1952,7 @@ class SettingsView extends Component {
                 type: 'success',
             });
           AsyncStorage.setItem('actualizar', "false");
+          AsyncStorage.setItem('language', language);
           this.setState({
             btnAct: false
           })

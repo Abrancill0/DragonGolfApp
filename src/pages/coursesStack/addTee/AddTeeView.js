@@ -19,13 +19,15 @@ import moment from 'moment';
 import { AltaTees } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const {
       teeName,
       teeColor: teeColorText,
       save,
       update,
-      required
+      required,
+      createTee
     } = Dictionary;
 
 class AddTeeView extends Component {
@@ -59,6 +61,13 @@ class AddTeeView extends Component {
     //}
   }
 
+  componentDidMount = async () => {
+    let language = await AsyncStorage.getItem('language')
+    this.setState({
+        language:language
+    })
+    }
+
   static navigationOptions = ({ navigation }) => {
     const state = store.getState();
     const language = state.reducerLanguage;
@@ -89,7 +98,7 @@ class AddTeeView extends Component {
             <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
           </TouchableOpacity> 
           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-            <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Tee</Text>
+            <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{createTee[language]}</Text>
           </View>
           <View style={styles.formContainer}>
 

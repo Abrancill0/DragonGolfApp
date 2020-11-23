@@ -58,6 +58,8 @@ export default function RoundsView(route) {
   async function ListadoCourses() {
                 setStatus(true)
     let idUsu = await AsyncStorage.getItem('usu_id')
+    let language = await AsyncStorage.getItem('language')
+    setLanguage(language)
     ListaCampos(idUsu)
         .then((res) => {
           console.warn(res)
@@ -217,14 +219,14 @@ export default function RoundsView(route) {
     let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
-      "¿Está seguro de eliminar este campo?",
+      sureToUpdateCourse[language],
       [
         {
-          text: "Cancelar",
+          text: cancel[language],
           style: 'cancel',
         },
         {
-          text: "Continuar",
+          text: continuar[language],
           onPress: () => {
             EliminarCampo(id, tipo, idUsu)
               .then((res) => {
@@ -242,7 +244,16 @@ export default function RoundsView(route) {
 
 
     const {
-      emptyCourseList
+      emptyCourseList,
+      Search,
+      myCourses,
+      courseName,
+      courseShortName,
+      courseCity,
+      country,
+      sureToUpdateCourse,
+      cancel,
+      continuar
     } = Dictionary;
 
     return (
@@ -257,7 +268,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>My Courses</Text>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{myCourses[language]}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddCourse')}>
@@ -270,7 +281,7 @@ export default function RoundsView(route) {
 
       <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
@@ -281,7 +292,7 @@ export default function RoundsView(route) {
 
       {search && <View>
       <SearchBar
-        placeholder="Nombre"
+        placeholder={courseName[language]}
         onChangeText={(text) => searchFilterFunction(text,1)}
         autoCorrect={false}
         value={value1}
@@ -296,7 +307,7 @@ export default function RoundsView(route) {
         borderBottomWidth:0.5}}
       />
       <SearchBar
-        placeholder="Nombre Corto"
+        placeholder={courseShortName[language]}
         onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
         value={value2}
@@ -311,7 +322,7 @@ export default function RoundsView(route) {
         borderBottomWidth:0.8}}
       />
       <SearchBar
-        placeholder="Ciudad"
+        placeholder={courseCity[language]}
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,3)}
@@ -328,7 +339,7 @@ export default function RoundsView(route) {
         borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Pais"
+        placeholder={country[language]}
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,4)}

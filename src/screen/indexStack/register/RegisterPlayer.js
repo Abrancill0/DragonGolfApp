@@ -45,7 +45,8 @@ const {
             create,
             required,
             strokes,
-            difTees
+            difTees,
+            createPlayer
         } = Dictionary;
 
 class RegisterView extends Component {
@@ -159,7 +160,7 @@ class RegisterView extends Component {
                           <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
                         </TouchableOpacity> 
                           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-                            <Text style={{ paddingBottom:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Player</Text>
+                            <Text style={{ paddingBottom:20, fontSize: 16, fontFamily: 'Montserrat',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{createPlayer[language]}</Text>
                           </View>
                         <TouchableOpacity
                             style={styles.imagePicker}
@@ -616,7 +617,7 @@ class RegisterView extends Component {
                   style: "cancel"
                 },
               ],
-              { cancelable: false }
+              { cancelable: true }
             );
           }
         });

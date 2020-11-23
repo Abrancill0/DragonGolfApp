@@ -58,6 +58,8 @@ export default function RoundsView(route) {
   async function ListadoRondas() {
                 setStatus(true)
     let idUsu = await AsyncStorage.getItem('usu_id')
+    let language = await AsyncStorage.getItem('language')
+    setLanguage(language)
     ListarRonda(idUsu)
         .then((res) => {
           console.warn(res)
@@ -70,7 +72,8 @@ export default function RoundsView(route) {
                       nombreRonda: item.Ro_Name,
                       handicap: item.Ro_HandicapAdjustment,
                       hole: item.Ro_StartingHole,
-                      adv: item.Ro_SwitchAdventage
+                      adv: item.Ro_SwitchAdventage,
+                      fecha: item.Ro_Date
                     }
                 ))
                 setRounds(list)
@@ -243,7 +246,9 @@ export default function RoundsView(route) {
 
 
     const {
-      emptyCourseList
+      emptyCourseList,
+      round,
+      date
     } = Dictionary;
 
     return (
@@ -258,7 +263,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>My Rounds</Text>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{round[language]}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('CoursesViewRounds')}>
@@ -370,10 +375,11 @@ export default function RoundsView(route) {
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombreRonda}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nombre}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+item.handicap + '%'}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Campo: '+ item.nombre}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{'Ronda: '+ item.nombreRonda}</Text>
+                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
                                   </View>
                                 </View>
                               {/*<View style={{flex:.2,padding:5}}>

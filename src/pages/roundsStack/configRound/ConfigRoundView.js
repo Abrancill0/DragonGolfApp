@@ -95,7 +95,7 @@ class ConfigRoundView extends Component {
 
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-              <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
                 <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
               </TouchableOpacity>
             </View>
@@ -126,7 +126,7 @@ class ConfigRoundView extends Component {
               </View>
             </View>
 
-            {/*(!editDate || Platform.OS === 'android') && <View style={styles.formContainer}>
+            {(!editDate || Platform.OS === 'android') && <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
                 <TouchableOpacity onPress={_ => this.setState({ editDate: true, showDatePicker: Platform.OS === 'android' })}>
                   <TextField
@@ -135,6 +135,7 @@ class ConfigRoundView extends Component {
                     tintColor={Colors.Primary}
                     autoCapitalize="words"
                     value={pickerTextDate}
+                    ref='fecha'
                   />
                   <View style={styles.editView}>
                     <Entypo name='edit' size={18} color={Colors.Primary} />
@@ -164,7 +165,7 @@ class ConfigRoundView extends Component {
                   locale={language}
                 />
               </View>
-            </View>*/}
+            </View>}
 
             <View style={{ height: 10 }} />
             <View style={styles.formContainer}>
@@ -345,6 +346,8 @@ class ConfigRoundView extends Component {
 
         });
 
+        this.refs.fecha.setValue(this.state.pickerTextDate)
+
         /*const roundData = {
           id: this.props.roundId,
           name: roundName,
@@ -371,6 +374,8 @@ class ConfigRoundView extends Component {
         pickerDate: moment.unix(timestamp / 1000).toDate(),
         date: this.formatDate(timestamp / 1000),
       });
+
+      this.refs.fecha.setValue(this.state.pickerTextDate)
 
       /*const roundData = {
         id: this.props.roundId,
