@@ -31,6 +31,25 @@ import { showMessage } from "react-native-flash-message";
 
 const BlankProfile = require('../../../../assets/globals/blank-profile.png');
 
+const {
+      ghinNumber,
+      handicap,
+      match,
+      money,
+      howAdvantage,
+      strokesPerRound: strokesPerRoundText,
+      advMoves,
+      carryMove,
+      advSettings,
+      generalSettings,
+      whoGetsAdv,
+      autoPress,
+      save,
+      useFactor: useFactorText,
+      successSaveTeeData,
+      error
+    } = Dictionary;
+
 class PlayerInfoView extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +96,7 @@ class PlayerInfoView extends Component {
       language: 'es'
     };
 
-    console.warn(this.state.item)
+    //console.warn(this.state.item)
 
     this.inputs = {};
   }
@@ -88,6 +107,10 @@ class PlayerInfoView extends Component {
 
    getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')
+    const language = await AsyncStorage.getItem('language')
+    this.setState({
+      language:language
+    })
       ListadoSettingsFriend(token, this.state.item.id)
         .then((res) => {
           console.warn(res)
@@ -138,7 +161,7 @@ class PlayerInfoView extends Component {
             else{
                 InfoUsuarioAB(token)
                   .then((res) => {
-                    console.warn(res)
+                    //console.warn(res)
                       if(res.estatus==1){
 
                           this.setState({
@@ -251,23 +274,6 @@ class PlayerInfoView extends Component {
       bbtWager18,
       language
     } = this.state;
-
-    const {
-      ghinNumber,
-      handicap,
-      match,
-      money,
-      howAdvantage,
-      strokesPerRound: strokesPerRoundText,
-      advMoves,
-      carryMove,
-      advSettings,
-      generalSettings,
-      whoGetsAdv,
-      autoPress,
-      save,
-      useFactor: useFactorText
-    } = Dictionary;
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
@@ -1045,7 +1051,7 @@ class PlayerInfoView extends Component {
   }
 
   formatCellphone = (cellphone) => {
-    console.warn(cellphone)
+    //console.warn(cellphone)
     let formatted = '';
       let pureCell = '';
       //console.warn('ce: ' + cellphone)
@@ -1188,20 +1194,20 @@ class PlayerInfoView extends Component {
         try{
           if(res.estatus==1){
           showMessage({
-                message: "Settings guardados correctamente",
+                message: successSaveTeeData[language],
                 type: 'success',
             });
         }  
         else{
             //setLoading(false)
             showMessage({
-                message: res.mensaje,
-                type: 'info',
+                message: error[language],
+                type: 'danger',
             });
         }
         }catch(e){
           showMessage({
-            message: "Ocurrió un error, intente más tarde",
+            message: error[language],
             type:'danger',
         });
         }
