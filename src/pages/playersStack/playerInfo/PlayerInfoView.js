@@ -61,38 +61,38 @@ class PlayerInfoView extends Component {
       advMovesHoles: false,
       carryMoveAdv: false,
       gsCollapsed: true,
-      rabbit16: '',
-      rabbit712: '',
-      rabbit1318: '',
-      medalF9: '',
-      medalB9: '',
-      medal18: '',
-      skins: '',
+      rabbit16: '0',
+      rabbit712: '0',
+      rabbit1318: '0',
+      medalF9: '0',
+      medalB9: '0',
+      medal18: '0',
+      skins: '0',
       skinCarryOver: 0,
       lowedAdv: false,
       snwCollapsed: true,
       tnwCollapsed: true,
       ebCollapsed: true,
       bbtCollapsed: true,
-      snwAutoPressesEvery: '',
+      snwAutoPressesEvery: '0',
       snwUseFactor: false,
-      snwFront9: '',
-      snwBack9: '',
-      snwMatch: '',
-      snwCarry: '',
-      snwMedal: '',
-      tnwFront9: '',
-      tnwAutoPressesEvery: '',
+      snwFront9: '0',
+      snwBack9: '0',
+      snwMatch: '0',
+      snwCarry: '0',
+      snwMedal: '0',
+      tnwFront9: '0',
+      tnwAutoPressesEvery: '0',
       tnwUseFactor: false,
-      tnwBack9: '',
-      tnwMatch: '',
-      tnwCarry: '',
-      tnwMedal: '',
+      tnwBack9: '0',
+      tnwMatch: '0',
+      tnwCarry: '0',
+      tnwMedal: '0',
       whoGetAdvStrokes: 'each',
-      ebWager: '',
-      bbtWagerF9: '',
-      bbtWagerB9: '',
-      bbtWager18: '',
+      ebWager: '0',
+      bbtWagerF9: '0',
+      bbtWagerB9: '0',
+      bbtWager18: '0',
       language: 'es'
     };
 
@@ -131,24 +131,24 @@ class PlayerInfoView extends Component {
                 skinCarryOver: res.Result[0].set_skins_carry_over,
                 lowedAdv: res.Result[0].set_lower_adv_f9,
                 snwUseFactor: res.Result[0].set_snw_use_factor,
-                snwAutoPress: res.Result[0].set_snw_automatic_press.toString(),
+                snwAutoPressesEvery: res.Result[0].set_snw_automatic_press.toString(),
                 snwFront9: res.Result[0].set_snw_front_9.toString(),
                 snwBack9: res.Result[0].set_snw_back_9.toString(),
                 snwMatch: res.Result[0].set_snw_match.toString(),
                 snwCarry: res.Result[0].set_snw_carry.toString(),
                 snwMedal: res.Result[0].set_snw_medal.toString(),
                 tnwUseFactor: res.Result[0].set_tmw_use_factor,
-                tnwAutoPress: res.Result[0].set_tmw_automatic_press.toString(),
+                tnwAutoPressesEvery: res.Result[0].set_tmw_automatic_press.toString(),
                 tnwFront9: res.Result[0].set_tmw_front_9.toString(),
                 tnwBack9: res.Result[0].set_tmw_back_9.toString(),
                 tnwMatch: res.Result[0].set_tmw_match.toString(),
                 tnwCarry: res.Result[0].set_tmw_carry.toString(),
                 tnwMedal: res.Result[0].set_tmw_medal.toString(),
-                tnwWhoGets: res.Result[0].set_tmw_adv_strokes,
+                whoGetAdvStrokes: res.Result[0].set_tmw_adv_strokes,
                 ebWager: res.Result[0].set_eb_wager.toString(),
-                bbWagerF9: res.Result[0].set_bbt_wager_f9.toString(),
-                bbWagerB9: res.Result[0].set_bbt_wager_b9.toString(),
-                bbWager18: res.Result[0].set_bbt_wager_18.toString(),
+                bbtWagerF9: res.Result[0].set_bbt_wager_f9.toString(),
+                bbtWagerB9: res.Result[0].set_bbt_wager_b9.toString(),
+                bbtWager18: res.Result[0].set_bbt_wager_18.toString(),
                 ssDoubleEagle: res.Result[0].set_stableford_double_eagle.toString(),
                 ssEaglePoints: res.Result[0].set_stableford_eagle.toString(),
                 ssBirdie: res.Result[0].set_stableford_birdie.toString(),
@@ -179,24 +179,24 @@ class PlayerInfoView extends Component {
                           skinCarryOver: res.Result[0].set_skins_carry_over,
                           lowedAdv: res.Result[0].set_lower_adv_f9,
                           snwUseFactor: res.Result[0].set_snw_use_factor,
-                          snwAutoPress: res.Result[0].set_snw_automatic_press.toString(),
+                          snwAutoPressesEvery: res.Result[0].set_snw_automatic_press.toString(),
                           snwFront9: res.Result[0].set_snw_front_9.toString(),
                           snwBack9: res.Result[0].set_snw_back_9.toString(),
                           snwMatch: res.Result[0].set_snw_match.toString(),
                           snwCarry: res.Result[0].set_snw_carry.toString(),
                           snwMedal: res.Result[0].set_snw_medal.toString(),
                           tnwUseFactor: res.Result[0].set_tmw_use_factor,
-                          tnwAutoPress: res.Result[0].set_tmw_automatic_press.toString(),
+                          tnwAutoPressesEvery: res.Result[0].set_tmw_automatic_press.toString(),
                           tnwFront9: res.Result[0].set_tmw_front_9.toString(),
                           tnwBack9: res.Result[0].set_tmw_back_9.toString(),
                           tnwMatch: res.Result[0].set_tmw_match.toString(),
                           tnwCarry: res.Result[0].set_tmw_carry.toString(),
                           tnwMedal: res.Result[0].set_tmw_medal.toString(),
-                          tnwWhoGets: res.Result[0].set_tmw_adv_strokes,
+                          whoGetAdvStrokes: res.Result[0].set_tmw_adv_strokes,
                           ebWager: res.Result[0].set_eb_wager.toString(),
-                          bbWagerF9: res.Result[0].set_bbt_wager_f9.toString(),
-                          bbWagerB9: res.Result[0].set_bbt_wager_b9.toString(),
-                          bbWager18: res.Result[0].set_bbt_wager_18.toString(),
+                          bbtWagerF9: res.Result[0].set_bbt_wager_f9.toString(),
+                          bbtWagerB9: res.Result[0].set_bbt_wager_b9.toString(),
+                          bbtWager18: res.Result[0].set_bbt_wager_18.toString(),
                           ssDoubleEagle: res.Result[0].set_stableford_double_eagle.toString(),
                           ssEaglePoints: res.Result[0].set_stableford_eagle.toString(),
                           ssBirdie: res.Result[0].set_stableford_birdie.toString(),
@@ -446,7 +446,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -455,6 +455,7 @@ class PlayerInfoView extends Component {
                     value={rabbit16}
                     onSubmitEditing={_ => this.focusNextField('gs2')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -465,7 +466,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -475,6 +476,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['gs2'] = ref}
                     onSubmitEditing={_ => this.focusNextField('gs3')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -485,7 +487,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -495,6 +497,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['gs3'] = ref}
                     onSubmitEditing={_ => this.focusNextField('gs4')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -505,7 +508,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -515,6 +518,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['gs4'] = ref}
                     onSubmitEditing={_ => this.focusNextField('gs5')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -525,7 +529,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -535,6 +539,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['gs5'] = ref}
                     onSubmitEditing={_ => this.focusNextField('gs6')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -545,7 +550,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -555,6 +560,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['gs6'] = ref}
                     onSubmitEditing={_ => this.focusNextField('gs7')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -565,7 +571,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -573,6 +579,7 @@ class PlayerInfoView extends Component {
                     onChangeText={(skins) => this.setState({ skins })}
                     value={skins}
                     ref={ref => this.inputs['gs7'] = ref}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -616,13 +623,14 @@ class PlayerInfoView extends Component {
                 <View style={styles.costInputView}>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
                     maxLength={2}
                     onChangeText={(snwAutoPressesEvery) => this.setState({ snwAutoPressesEvery })}
                     value={snwAutoPressesEvery}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -643,7 +651,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -653,6 +661,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['snw2'] = ref}
                     onSubmitEditing={_ => this.focusNextField('snw3')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -663,7 +672,7 @@ class PlayerInfoView extends Component {
                   {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -673,6 +682,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['snw3'] = ref}
                     onSubmitEditing={_ => this.focusNextField('snw4')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -683,7 +693,7 @@ class PlayerInfoView extends Component {
                   {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -693,6 +703,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['snw4'] = ref}
                     onSubmitEditing={_ => this.focusNextField('snw5')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -703,7 +714,7 @@ class PlayerInfoView extends Component {
                   {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -713,6 +724,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['snw5'] = ref}
                     onSubmitEditing={_ => this.focusNextField('snw6')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -723,7 +735,7 @@ class PlayerInfoView extends Component {
                   {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -731,6 +743,7 @@ class PlayerInfoView extends Component {
                     onChangeText={(snwMedal) => this.setState({ snwMedal })}
                     value={snwMedal}
                     ref={ref => this.inputs['snw6'] = ref}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -754,13 +767,14 @@ class PlayerInfoView extends Component {
                 <View style={styles.costInputView}>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
                     maxLength={2}
                     onChangeText={(tnwAutoPressesEvery) => this.setState({ tnwAutoPressesEvery })}
                     value={tnwAutoPressesEvery}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -781,7 +795,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -791,6 +805,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['tnw2'] = ref}
                     onSubmitEditing={_ => this.focusNextField('tnw3')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -801,7 +816,7 @@ class PlayerInfoView extends Component {
                   {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -811,6 +826,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['tnw3'] = ref}
                     onSubmitEditing={_ => this.focusNextField('tnw4')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -821,7 +837,7 @@ class PlayerInfoView extends Component {
                   {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -831,6 +847,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['tnw4'] = ref}
                     onSubmitEditing={_ => this.focusNextField('tnw5')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -841,7 +858,7 @@ class PlayerInfoView extends Component {
                   {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -851,6 +868,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['tnw5'] = ref}
                     onSubmitEditing={_ => this.focusNextField('tnw6')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -861,7 +879,7 @@ class PlayerInfoView extends Component {
                   {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -869,6 +887,7 @@ class PlayerInfoView extends Component {
                     onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
                     value={tnwMedal}
                     ref={ref => this.inputs['tnw6'] = ref}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -910,13 +929,14 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
                     maxLength={8}
                     onChangeText={(ebWager) => this.setState({ ebWager })}
                     value={ebWager}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -941,7 +961,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -950,6 +970,7 @@ class PlayerInfoView extends Component {
                     value={bbtWagerF9}
                     onSubmitEditing={_ => this.focusNextField('bbt2')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -960,7 +981,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -970,6 +991,7 @@ class PlayerInfoView extends Component {
                     ref={ref => this.inputs['bbt2'] = ref}
                     onSubmitEditing={_ => this.focusNextField('bbt3')}
                     blurOnSubmit={false}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -980,7 +1002,7 @@ class PlayerInfoView extends Component {
                   <Text style={styles.dollarText}>$</Text>
                   <TextInput
                     style={styles.costInput}
-                    selectionColor={Colors.Primary}
+                    selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
                     returnKeyType='done'
@@ -988,6 +1010,7 @@ class PlayerInfoView extends Component {
                     onChangeText={(bbtWager18) => this.setState({ bbtWager18 })}
                     value={bbtWager18}
                     ref={ref => this.inputs['bbt3'] = ref}
+                    selectTextOnFocus={true}
                   />
                 </View>
               </View>
@@ -1091,8 +1114,8 @@ class PlayerInfoView extends Component {
         medal_play_b9: medalB9,
         medal_play_18: medal18,
         skins,
-        skinCarry: skinCarryOver,
-        lowedAdv: lowedAdv,
+        skinCarry: skinCarryOver ? 1 : 0,
+        lowedAdv: lowedAdv ? 1 : 0,
         id_sync: '',
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
@@ -1179,6 +1202,43 @@ class PlayerInfoView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
+      console.warn("IDUsuario: " + token)
+      console.warn("IDUsuarioFriend: " + this.state.item.id)
+      console.warn("set_idioma: " + language)
+      console.warn("set_how_adv_move: " + asData.how_adv_move)
+      console.warn("set_strokes_moved_per_round: " + asData.how_many_strokes)
+      console.warn("set_adv_moves_on_9_holes: " + asData.adv_moves)
+      console.warn("set_carry_moves_adv: " + asData.carry_move_adv)
+      console.warn("set_rabbit_1_6: " + gsData.rabbit_1_6)
+      console.warn("set_rabbit_7_12: " + gsData.rabbit_7_12)
+      console.warn("set_rabbit_13_18: " + gsData.rabbit_13_18)
+      console.warn("set_medal_play_f9: " + gsData.medal_play_f9)
+      console.warn("set_medal_play_b9: " + gsData.medal_play_b9)
+      console.warn("set_medal_play_18: " + gsData.medal_play_18)
+      console.warn("set_skins: " + gsData.skins)
+      console.warn("set_skins_carry_over: " + gsData.skinCarry)
+      console.warn("set_lower_adv_f9: " + gsData.lowedAdv)
+      console.warn("set_snw_automatic_press: " + snwData.automatic_presses_every)
+      console.warn("set_snw_use_factor: " + snwData.useFactor)
+      console.warn("set_snw_front_9: " + snwData.front_9)
+      console.warn("set_snw_back_9: " + snwData.back_9)
+      console.warn("set_snw_match: " + snwData.match)
+      console.warn("set_snw_carry: " + snwData.carry)
+      console.warn("set_snw_medal: " + snwData.medal)
+      console.warn("set_tmw_automatic_press: " + tnwData.automatic_presses_every)
+      console.warn("set_tmw_use_factor: " + tnwData.useFactor)
+      console.warn("set_tmw_front_9: " + tnwData.front_9)
+      console.warn("set_tmw_back_9: " + tnwData.back_9)
+      console.warn("set_tmw_match: " + tnwData.match)
+      console.warn("set_tmw_carry: " + tnwData.carry)
+      console.warn("set_tmw_medal: " + tnwData.medal)
+      console.warn("set_tmw_adv_strokes: " + tnwData.who_gets_the_adv_strokes)
+      console.warn("set_eb_wager: " + ebData.wager)
+      console.warn("set_bbt_wager_f9: " + bbData.wager_f9)
+      console.warn("set_bbt_wager_b9: " + bbData.wager_b9)
+      console.warn("set_bbt_wager_18: " + bbData.wager_18)
+      console.warn("set_stableford_double_eagle: " + 0)
+
       AltaSettingsFriend(token,this.state.item.id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
       asData.carry_move_adv,gsData.rabbit_1_6,gsData.rabbit_7_12,gsData.rabbit_13_18,
       gsData.medal_play_f9,gsData.medal_play_b9,gsData.medal_play_18,gsData.skins,
@@ -1187,7 +1247,7 @@ class PlayerInfoView extends Component {
       snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
       tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
       tnwData.who_gets_the_adv_strokes,ebData.wager,bbData.wager_f9,bbData.wager_b9,
-      bbData.wager_18,0,0,0,0,0,0, this.state.item.strokes,0)/*sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
+      bbData.wager_18)/*sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
       sfsData.bogey,sfsData.double_bogey)*/
       .then((res) => {
         console.warn(res)
@@ -1197,6 +1257,7 @@ class PlayerInfoView extends Component {
                 message: successSaveTeeData[language],
                 type: 'success',
             });
+          this.props.navigation.goBack()
         }  
         else{
             //setLoading(false)

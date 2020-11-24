@@ -335,7 +335,7 @@ set_tmw_automatic_press, set_tmw_use_factor, set_tmw_front_9,set_tmw_back_9,set_
 set_tmw_medal,set_tmw_adv_strokes,set_eb_wager,set_bbt_wager_f9,set_bbt_wager_b9,set_bbt_wager_18,
 set_stableford_double_eagle,set_stableford_eagle,set_stableford_birdie,set_stableford_par,set_stableford_bogey,
 set_stableford_double_bogey,set_golpesventaja,set_diferenciatee) => {
-    const URL = RutaBaseAB + "/ActualizarSettings";
+    const URL = RutaBaseAB + "/AltaSettingsFriend";
     return fetch(URL, {
                 method: "POST",
                 headers: {

@@ -760,6 +760,7 @@ class EditUserView extends Component {
                this.GuardarFoto(id)
 
                 this.props.route.params.getUserData()
+                this.props.navigation.goBack()
 
                /*setTimeout(
                       () => { RNRestart.Restart();

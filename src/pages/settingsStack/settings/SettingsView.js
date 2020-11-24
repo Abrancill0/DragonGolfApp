@@ -114,15 +114,7 @@ class SettingsView extends Component {
 
   async componentDidMount() {
     this.getUserData()
-    let language = await AsyncStorage.getItem('language')
-    if (language != null )
-    {
-      this.setState({
-        language:language
-      })
-    }
   }
-
    /*async componentDidMount() {
     const actualizar = await AsyncStorage.getItem('actualizar')
     if(actualizar=="true"){
@@ -1371,8 +1363,19 @@ class SettingsView extends Component {
     console.warn("Hola")
     const token = await AsyncStorage.getItem('usu_id')
     const actualizar = await AsyncStorage.getItem('actualizar')
+    let language = await AsyncStorage.getItem('language')
+    if (language != null )
+    {
+      console.warn('entró')
+      this.setState({
+        language:language
+      })
+    }
+    else{
+      AsyncStorage.setItem('language', this.state.language);
+    }
     //console.warn("Act: " + actualizar)
-    if(actualizar=="false" && this.state.status){
+    if(actualizar=="false"){
       console.warn(this.state.una)
       InfoUsuarioAB(token)
         .then((res) => {

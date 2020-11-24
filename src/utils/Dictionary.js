@@ -101,7 +101,7 @@ export const Dictionary = {
     },
     ghinNumber: {
         'en': 'GHIN Number',
-        'es': 'Número de GHIN'
+        'es': 'Núm GHIN'
     },
     handicap: {
         'en': 'Handicap Index',

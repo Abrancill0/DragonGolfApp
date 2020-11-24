@@ -55,6 +55,7 @@ class RegisterView extends Component {
         super(props);
         this.state = {
             signo: true,
+            signoTee: true,
             language: props.route.params.language,
             profilePicture: null,
             phoneCode: '+52',
@@ -144,7 +145,8 @@ class RegisterView extends Component {
             confirmPasswordError,
             strokesReg,
             ghin,
-            signo
+            signo,
+            signoTee
         } = this.state
 
         return (
@@ -155,7 +157,7 @@ class RegisterView extends Component {
                     translucent={false}
                 />
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
-                    <ScrollView style={{ flex: 1, paddingTop: 20}} keyboardShouldPersistTaps='handled'>
+                    <ScrollView style={{ flex: 0.9, paddingTop: 20}} keyboardShouldPersistTaps='handled'>
                         <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
                           <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
                         </TouchableOpacity> 
@@ -192,7 +194,7 @@ class RegisterView extends Component {
                                     autoCapitalize="words"
                                     onChangeText={(lastNameReg) => this.setState({ lastNameReg })}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
-                                        this.nicknameIn.focus();
+                                        this.emailIn.focus();
                                     }}
                                 />
                             </View>
@@ -207,7 +209,7 @@ class RegisterView extends Component {
                                         this.emailIn.focus();
                                     }}
                                 />
-                            </View>
+                            </View>*/}
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.emailIn = ref}
@@ -219,7 +221,7 @@ class RegisterView extends Component {
                                         this.nicknameIn.focus();
                                     }}
                                 />
-                            </View>*/}
+                            </View>
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.nicknameIn = ref}
@@ -229,11 +231,11 @@ class RegisterView extends Component {
                                     maxLength={5}
                                     onChangeText={(nickname) => this.setState({ nicknameReg: nickname.toUpperCase() })}
                                     onSubmitEditing={({nativeEvent: {text}}) => {
-                                        this.ghinIn.focus();
+                                        this.phoneIn.focus();
                                     }}
                                 />
                             </View>
-                            {/*<View style={styles.phoneInputContainer}>
+                            <View style={styles.phoneInputContainer}>
                                 <View style={{ width: 90, flexDirection: 'row' }}>
                                     <View style={{ width: 30, justifyContent: 'center' }}>
                                         <PhoneInput
@@ -283,7 +285,7 @@ class RegisterView extends Component {
                                         }}
                                     />
                                 </View>
-                            </View>*/}
+                            </View>
                             <View style={styles.inputContainer}>
                                 <TextField
                                     ref={ref => this.ghinIn = ref}
@@ -344,7 +346,15 @@ class RegisterView extends Component {
                                 />
                                 </View>
                             </View>
-                            <View style={[styles.inputContainer,{marginBottom:40}]}>
+                            <View style={[styles.inputContainer, {flex:1, flexDirection:'row', justifyContent: 'space-between', paddingBottom:20}]}>
+                                <View style={{flex:0.1, alignSelf:'center', paddingRigth:5}}>
+                                <Button
+                                  title={this.state.signoTee?'+':'-'}
+                                  onPress={() => this.setState({signoTee:!signoTee})}
+                                  color={Colors.Primary}
+                                />
+                                </View>
+                                <View style={{flex:0.9, paddingLeft:5}}>
                                 <TextField
                                     ref={ref => this.difTeesIn = ref}
                                     label={difTees[language]}
@@ -360,10 +370,11 @@ class RegisterView extends Component {
                                         this.difTeesIn.blur();
                                     }}
                                 />
+                                </View>
                             </View>
                         </View>
                     </ScrollView>
-                        <View style={[styles.bottomButtom, {paddingTop:10}]}>
+                    <View style={[styles.bottomButtom, {paddingTop:10}]}>
                             <DragonButton title={create[language]} onPress={this.submit} />
                         </View>
                 </KeyboardAvoidingView>
@@ -641,7 +652,8 @@ class RegisterView extends Component {
             strokesReg,
             difTeesReg,
             language,
-            signo
+            signo,
+            signoTee
         } = this.state;
 
         if (nameReg == '') {
@@ -676,14 +688,25 @@ class RegisterView extends Component {
     console.warn(difTeesReg)
     console.warn(idUsu)
     console.warn(signo)
-        let strokesRegSigno = ''
+    console.warn(signoTee)
 
-        if(!signo)
-            strokesRegSigno = '-'+strokesReg
-        else
-            strokesRegSigno = strokesReg
-        console.warn(strokesRegSigno)
-      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicapReg, ghin, strokesRegSigno, difTeesReg, idUsu)
+    let strokesRegSigno = ''
+
+    if(!signo)
+        strokesRegSigno = '-'+strokesReg
+    else
+        strokesRegSigno = strokesReg
+    console.warn(strokesRegSigno)
+
+    let TeeRegSigno = ''
+
+    if(!signoTee)
+        TeeRegSigno = '-'+difTeesReg
+    else
+        TeeRegSigno = difTeesReg
+    console.warn(TeeRegSigno)
+
+      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicapReg, ghin, strokesRegSigno, TeeRegSigno, idUsu)
       .then((res) => {
         console.warn(res)
         if (res.estatus == 1) {
