@@ -394,6 +394,73 @@ set_stableford_double_bogey,set_golpesventaja,set_diferenciatee) => {
                 });
 };
 
+export const ActualizaSettingsFriend = (IDUsuario,IDUsuarioFriend,set_idioma,set_how_adv_move,set_strokes_moved_per_round,
+set_adv_moves_on_9_holes,set_carry_moves_adv,set_rabbit_1_6,set_rabbit_7_12,set_rabbit_13_18,set_medal_play_f9,
+set_medal_play_b9,set_medal_play_18,set_skins,set_skins_carry_over,set_lower_adv_f9,set_snw_automatic_press,
+set_snw_use_factor, set_snw_front_9,set_snw_back_9,set_snw_match,set_snw_carry,set_snw_medal,
+set_tmw_automatic_press, set_tmw_use_factor, set_tmw_front_9,set_tmw_back_9,set_tmw_match,set_tmw_carry,
+set_tmw_medal,set_tmw_adv_strokes,set_eb_wager,set_bbt_wager_f9,set_bbt_wager_b9,set_bbt_wager_18,
+set_stableford_double_eagle,set_stableford_eagle,set_stableford_birdie,set_stableford_par,set_stableford_bogey,
+set_stableford_double_bogey,set_golpesventaja,set_diferenciatee) => {
+    const URL = RutaBaseAB + "/ActualizaSettingsFriend";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario,
+                    IDUsuarioFriend: IDUsuarioFriend,
+                    set_idioma: set_idioma,
+                    set_how_adv_move: set_how_adv_move,
+                    set_strokes_moved_per_round: set_strokes_moved_per_round,
+                    set_adv_moves_on_9_holes: set_adv_moves_on_9_holes,
+                    set_carry_moves_adv: set_carry_moves_adv,
+                    set_rabbit_1_6: set_rabbit_1_6,
+                    set_rabbit_7_12: set_rabbit_7_12,
+                    set_rabbit_13_18: set_rabbit_13_18,
+                    set_medal_play_f9: set_medal_play_f9,
+                    set_medal_play_b9: set_medal_play_b9,
+                    set_medal_play_18: set_medal_play_18,
+                    set_skins: set_skins,
+                    set_skins_carry_over: set_skins_carry_over,
+                    set_lower_adv_f9: set_lower_adv_f9,
+                    set_snw_automatic_press: set_snw_automatic_press,
+                    set_snw_use_factor: set_snw_use_factor,
+                    set_snw_front_9: set_snw_front_9,
+                    set_snw_back_9: set_snw_back_9,
+                    set_snw_match: set_snw_match,
+                    set_snw_carry: set_snw_carry,
+                    set_snw_medal: set_snw_medal,
+                    set_tmw_automatic_press: set_tmw_automatic_press,
+                    set_tmw_use_factor: set_tmw_use_factor,
+                    set_tmw_front_9: set_tmw_front_9,
+                    set_tmw_back_9: set_tmw_back_9,
+                    set_tmw_match: set_tmw_match,
+                    set_tmw_carry: set_tmw_carry,
+                    set_tmw_medal: set_tmw_medal,
+                    set_tmw_adv_strokes: set_tmw_adv_strokes,
+                    set_eb_wager: set_eb_wager,
+                    set_bbt_wager_f9: set_bbt_wager_f9,
+                    set_bbt_wager_b9: set_bbt_wager_b9,
+                    set_bbt_wager_18: set_bbt_wager_18,
+                    set_stableford_double_eagle: set_stableford_double_eagle,
+                    set_stableford_eagle: set_stableford_eagle,
+                    set_stableford_birdie: set_stableford_birdie,
+                    set_stableford_par: set_stableford_par,
+                    set_stableford_bogey: set_stableford_bogey,
+                    set_stableford_double_bogey: set_stableford_double_bogey,
+                    set_golpesventaja: set_golpesventaja,
+                    set_diferenciatee: set_diferenciatee
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaCampos = (IDUsuario) => {
     const URL = RutaBaseAB + "/ListaCampos";
     return fetch(URL, {

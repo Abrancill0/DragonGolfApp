@@ -25,7 +25,7 @@ import HeaderButton from '../../global/HeaderButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import Details from '../../../utils/Details';
-import { ListadoSettingsFriend, InfoUsuarioAB, AltaSettingsFriend } from '../../../Services/Services'
+import { ListadoSettingsFriend, InfoUsuarioAB, AltaSettingsFriend, ActualizaSettingsFriend } from '../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 
@@ -54,6 +54,7 @@ class PlayerInfoView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      update: false,
       item: props.route.params.item,
       asCollapsed: true,
       advantageMove: 'Match',
@@ -115,8 +116,8 @@ class PlayerInfoView extends Component {
         .then((res) => {
           console.warn(res)
             if(res.estatus==1){
-
                 this.setState({
+                update:true,
                 advantageMove: res.Result[0].set_how_adv_move,
                 strokesPerRound: res.Result[0].set_strokes_moved_per_round.toString(),
                 advMovesHoles: res.Result[0].set_adv_moves_on_9_holes,
@@ -163,8 +164,8 @@ class PlayerInfoView extends Component {
                   .then((res) => {
                     //console.warn(res)
                       if(res.estatus==1){
-
                           this.setState({
+                          update:false,
                           advantageMove: res.Result[0].set_how_adv_move,
                           strokesPerRound: res.Result[0].set_strokes_moved_per_round.toString(),
                           advMovesHoles: res.Result[0].set_adv_moves_on_9_holes,
@@ -1094,6 +1095,7 @@ class PlayerInfoView extends Component {
     const token = await AsyncStorage.getItem('usu_id')
 
       const {
+        update,
         language,
         rabbit16,
         rabbit712,
@@ -1239,46 +1241,92 @@ class PlayerInfoView extends Component {
       console.warn("set_bbt_wager_18: " + bbData.wager_18)
       console.warn("set_stableford_double_eagle: " + 0)
 
-      AltaSettingsFriend(token,this.state.item.id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
-      asData.carry_move_adv,gsData.rabbit_1_6,gsData.rabbit_7_12,gsData.rabbit_13_18,
-      gsData.medal_play_f9,gsData.medal_play_b9,gsData.medal_play_18,gsData.skins,
-      gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
-      snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
-      snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
-      tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
-      tnwData.who_gets_the_adv_strokes,ebData.wager,bbData.wager_f9,bbData.wager_b9,
-      bbData.wager_18)/*sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
-      sfsData.bogey,sfsData.double_bogey)*/
-      .then((res) => {
-        console.warn(res)
-        try{
-          if(res.estatus==1){
-          showMessage({
-                message: successSaveTeeData[language],
-                type: 'success',
-            });
-          this.props.navigation.goBack()
-        }  
-        else{
-            //setLoading(false)
+      console.warn(update)
+
+      if(update){
+        ActualizaSettingsFriend(token,this.state.item.id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
+        asData.carry_move_adv,gsData.rabbit_1_6,gsData.rabbit_7_12,gsData.rabbit_13_18,
+        gsData.medal_play_f9,gsData.medal_play_b9,gsData.medal_play_18,gsData.skins,
+        gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
+        snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
+        snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
+        tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
+        tnwData.who_gets_the_adv_strokes,ebData.wager,bbData.wager_f9,bbData.wager_b9,
+        bbData.wager_18)/*sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
+        sfsData.bogey,sfsData.double_bogey)*/
+        .then((res) => {
+          console.warn(res)
+          try{
+            if(res.estatus==1){
             showMessage({
-                message: error[language],
-                type: 'danger',
-            });
-        }
-        }catch(e){
+                  message: successSaveTeeData[language],
+                  type: 'success',
+              });
+            this.props.navigation.goBack()
+          }  
+          else{
+              //setLoading(false)
+              showMessage({
+                  message: error[language],
+                  type: 'danger',
+              });
+          }
+          }catch(e){
+            showMessage({
+              message: error[language],
+              type:'danger',
+          });
+          }
+      }).catch(error=>{
+          //setLoading(false)
           showMessage({
-            message: error[language],
-            type:'danger',
-        });
-        }
-    }).catch(error=>{
-        //setLoading(false)
-        showMessage({
-            message: error,
-            type:'error',
-        });
-    })
+              message: error,
+              type:'error',
+          });
+        })
+      }
+      else{
+        AltaSettingsFriend(token,this.state.item.id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
+        asData.carry_move_adv,gsData.rabbit_1_6,gsData.rabbit_7_12,gsData.rabbit_13_18,
+        gsData.medal_play_f9,gsData.medal_play_b9,gsData.medal_play_18,gsData.skins,
+        gsData.skinCarry,gsData.lowedAdv,snwData.automatic_presses_every, 
+        snwData.useFactor,snwData.front_9,snwData.back_9,snwData.match,
+        snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
+        tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
+        tnwData.who_gets_the_adv_strokes,ebData.wager,bbData.wager_f9,bbData.wager_b9,
+        bbData.wager_18)/*sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
+        sfsData.bogey,sfsData.double_bogey)*/
+        .then((res) => {
+          console.warn(res)
+          try{
+            if(res.estatus==1){
+            showMessage({
+                  message: successSaveTeeData[language],
+                  type: 'success',
+              });
+            this.props.navigation.goBack()
+          }  
+          else{
+              //setLoading(false)
+              showMessage({
+                  message: error[language],
+                  type: 'danger',
+              });
+          }
+          }catch(e){
+            showMessage({
+              message: error[language],
+              type:'danger',
+          });
+          }
+      }).catch(error=>{
+          //setLoading(false)
+          showMessage({
+              message: error,
+              type:'error',
+          });
+      })
+    }
   }
 
 }
