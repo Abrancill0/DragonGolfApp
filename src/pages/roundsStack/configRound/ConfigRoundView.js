@@ -34,7 +34,8 @@ const {
       roundName: roundNameText,
       autoAdjust,
       startingHole,
-      roundDate: roundDateText
+      roundDate: roundDateText,
+      CreateRound
     } = Dictionary;
 
 class ConfigRoundView extends Component {
@@ -69,6 +70,13 @@ class ConfigRoundView extends Component {
     };
   }
 
+  componentDidMount = async () => {
+    let language = await AsyncStorage.getItem('language')
+    this.setState({
+        language:language
+    })
+    }
+
   render() {
 
     const {
@@ -102,7 +110,7 @@ class ConfigRoundView extends Component {
               </TouchableOpacity>
             </View>
             <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-            <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Create Round</Text>
+            <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{CreateRound[language]}</Text>
             </View>
             {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
               <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>

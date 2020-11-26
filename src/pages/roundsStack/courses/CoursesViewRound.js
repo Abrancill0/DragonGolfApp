@@ -41,7 +41,7 @@ export default function RoundsView(route) {
     const [value2, setValue2] = useState('');
     const [value3, setValue3] = useState('');
     const [value4, setValue4] = useState('');
-    const [language, setLanguage] = useState('es');
+    const [language, setLanguage] = useState('');
     const [search, setSearch] = useState(false);
     const [visible, setVisible] = useState(true);
     const [carga, setStatus] = useState(false);
@@ -58,6 +58,8 @@ export default function RoundsView(route) {
   async function ListadoCourses() {
                 setStatus(true)
     let idUsu = await AsyncStorage.getItem('usu_id')
+    let language = await AsyncStorage.getItem('language')
+    setLanguage(language)
     ListaCampos(idUsu)
         .then((res) => {
           console.warn(res)
@@ -132,7 +134,7 @@ export default function RoundsView(route) {
 
       <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Search[language]</Text>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
@@ -242,7 +244,13 @@ export default function RoundsView(route) {
 
 
     const {
-      emptyCourseList
+      emptyCourseList,
+      Search,
+      courseName,
+      courseShortName,
+      courseCity,
+      country,
+      selectCourse
     } = Dictionary;
 
     return (
@@ -257,7 +265,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Select Course</Text>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{selectCourse[language]}</Text>
           </View>
         </View>
         { visible &&
@@ -265,7 +273,7 @@ export default function RoundsView(route) {
 
       <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
@@ -276,7 +284,7 @@ export default function RoundsView(route) {
 
       {search && <View>
       <SearchBar
-        placeholder="Nombre"
+        placeholder={courseName[language]}
         onChangeText={(text) => searchFilterFunction(text,1)}
         autoCorrect={false}
         value={value1}
@@ -291,7 +299,7 @@ export default function RoundsView(route) {
         borderBottomWidth:0.5}}
       />
       <SearchBar
-        placeholder="Nombre Corto"
+        placeholder={courseShortName[language]}
         onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
         value={value2}
@@ -306,7 +314,7 @@ export default function RoundsView(route) {
         borderBottomWidth:0.8}}
       />
       <SearchBar
-        placeholder="Ciudad"
+        placeholder={courseCity[language]}
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,3)}
@@ -323,7 +331,7 @@ export default function RoundsView(route) {
         borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Pais"
+        placeholder={country[language]}
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,4)}

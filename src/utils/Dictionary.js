@@ -139,6 +139,10 @@ export const Dictionary = {
         'en': 'Create Player',
         'es': 'Crear Jugador'
     },
+    CreateRound: {
+        'en': 'Create Round',
+        'es': 'Crear Ronda'
+    },
     friends: {
         'en': 'Friends',
         'es': 'Amigos'
@@ -580,6 +584,10 @@ export const Dictionary = {
     roundDate: {
         'en': 'Date of Round',
         'es': 'Fecha de Ronda'
+    },
+    FriendsinRound:{
+        'en': 'Friends in Round',
+        'es': 'Amigos en la ronda'
     },
     //===========RoundTabTitles===============
     round: {

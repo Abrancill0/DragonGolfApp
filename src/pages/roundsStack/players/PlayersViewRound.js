@@ -64,6 +64,8 @@ export default function RoundsView(route) {
 
   async function ListadoTodos() {
     let idUsu = await AsyncStorage.getItem('usu_id')
+    let language = await AsyncStorage.getItem('language')
+    setLanguage(language)
     console.warn(idUsu)
     console.warn(IDRound)
     ListadoAmigosRonda(idUsu, IDRound)
@@ -72,13 +74,15 @@ export default function RoundsView(route) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
+                      idUsu: item.IDUsuario,
                       id: item.PlayerId,
                       nombre: item.usu_nombre,
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
-                      handicap: item.usu_handicapindex
+                      handicap: item.usu_handicapindex,
+                      strokes: item.usu_golpesventaja
                     }
                 ))
                 setPlayers(list)
@@ -263,7 +267,8 @@ export default function RoundsView(route) {
 
     const {
       emptyPlayerList,
-      finish
+      finish,
+      FriendsinRound
     } = Dictionary;
 
     return (
@@ -281,7 +286,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Friends in Round</Text>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{FriendsinRound[language]}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRounds', {IDCourse:IDCourse, IDRound:IDRound})}>
@@ -413,7 +418,11 @@ export default function RoundsView(route) {
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
                       </View>
                       <View>
-                        <Image
+                        <TouchableOpacity style={{margin:20, marginTop:10}} /*onPress={()=> navigation.goBack()}*/>
+                          <MaterialIcon name={'info-outline'} size={25} color={Colors.Primary} />
+                        </TouchableOpacity>
+                        {item.idUsu!=item.id?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Strokes: '+item.strokes}</Text>:null}
+                        {/*<Image
                           source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
                           style={{
                             alignSelf:'center',
@@ -422,7 +431,7 @@ export default function RoundsView(route) {
                             borderRadius: 30,
                             marginHorizontal:30
                           }}
-                        />
+                        />*/}
                       </View>
                       </View>
                       </View>
