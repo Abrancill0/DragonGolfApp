@@ -248,7 +248,9 @@ export default function RoundsView(route) {
     const {
       emptyCourseList,
       round,
-      date
+      date,
+      course,
+      rondas
     } = Dictionary;
 
     return (
@@ -263,7 +265,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{round[language]}</Text>
+          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{rondas[language]}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('CoursesViewRounds')}>
@@ -376,8 +378,8 @@ export default function RoundsView(route) {
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Campo: '+ item.nombre}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{'Ronda: '+ item.nombreRonda}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{course[language]+': '+ item.nombre}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
                                   </View>

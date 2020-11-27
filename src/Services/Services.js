@@ -127,7 +127,7 @@ export const RegistroAB = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,
     });
 };
 
-export const CrearInvitados = (usu_nombre,usu_apellido_paterno,usu_nickname,usu_handicapindex,usu_ghinnumber,usu_golpesventaja,usu_diferenciatee,IDUsuarioCrea) => {
+export const CrearInvitados = (usu_nombre,usu_apellido_paterno,usu_nickname,usu_handicapindex,usu_ghinnumber,usu_golpesventaja,usu_diferenciatee,IDUsuarioCrea,usu_email,usu_telefono) => {
     const URL = RutaBaseAB + "/CrearInvitados";
     return fetch(URL, {
       method: "POST",
@@ -143,7 +143,9 @@ export const CrearInvitados = (usu_nombre,usu_apellido_paterno,usu_nickname,usu_
         usu_ghinnumber: usu_ghinnumber,
         usu_golpesventaja: usu_golpesventaja,
         usu_diferenciatee: usu_diferenciatee,
-        IDUsuarioCrea: IDUsuarioCrea
+        IDUsuarioCrea: IDUsuarioCrea,
+        usu_email: usu_email,
+        usu_telefono: usu_telefono
       }),
     })
     .then((response) => response.json())
@@ -588,7 +590,7 @@ export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
                 });
 };
 
-export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario) => {
+export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario, Ro_Date) => {
     const URL = RutaBaseAB + "/CrearRonda";
     return fetch(URL, {
                 method: "POST",
@@ -602,7 +604,8 @@ export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_Starting
                     Ro_HandicapAdjustment: Ro_HandicapAdjustment,
                     Ro_StartingHole: Ro_StartingHole,
                     Ro_SwitchAdventage: Ro_SwitchAdventage,
-                    IDUsuario: IDUsuario
+                    IDUsuario: IDUsuario,
+                    Ro_Date: Ro_Date
                 }),
             })
             .then((response) => response.json())

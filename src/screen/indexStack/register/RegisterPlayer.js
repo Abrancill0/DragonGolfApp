@@ -706,7 +706,7 @@ class RegisterView extends Component {
         TeeRegSigno = difTeesReg
     console.warn(TeeRegSigno)
 
-      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicapReg, ghin, strokesRegSigno, TeeRegSigno, idUsu)
+      CrearInvitados(nameReg, lastNameReg, nicknameReg, handicapReg, ghin, strokesRegSigno, TeeRegSigno, idUsu, emailReg, cellphone)
       .then((res) => {
         console.warn(res)
         if (res.estatus == 1) {

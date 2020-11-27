@@ -230,7 +230,7 @@ export const Dictionary = {
         'es': 'Ocurrió un error, intente más tarde'
     },
     //===========HomeTabTitles===============
-    rounds: {
+    rondas: {
         'en': 'Rounds',
         'es': 'Rondas'
     },

@@ -11,7 +11,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Alert
+  Alert,
+  Button
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { RadioButton } from 'react-native-paper';
@@ -44,6 +45,8 @@ const {
       generalSettings,
       whoGetsAdv,
       autoPress,
+      strokes,
+      difTees,
       save,
       useFactor: useFactorText,
       successSaveTeeData,
@@ -54,6 +57,12 @@ class PlayerInfoView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      signo:props.route.params.item.strokes.toString().substring(0,1)=='-'?false:true,
+      strokesReg:props.route.params.item.strokes,
+      strokesRegAbs:Math.abs(props.route.params.item.strokes),
+      signoTee:props.route.params.item.difTee.toString().substring(0,1)=='-'?false:true,
+      difTeesReg:props.route.params.item.difTee,
+      difTeesRegAbs:Math.abs(props.route.params.item.difTee),
       update: false,
       item: props.route.params.item,
       asCollapsed: true,
@@ -156,13 +165,20 @@ class PlayerInfoView extends Component {
                 ssPar: res.Result[0].set_stableford_par.toString(),
                 ssBogey: res.Result[0].set_stableford_bogey.toString(),
                 ssDoubleBogey: res.Result[0].set_stableford_double_bogey.toString(),
+                strokesReg:res.Result[0].set_golpesventaja,
+                strokesRegAbs:Math.abs(res.Result[0].set_golpesventaja),
+                signo:res.Result[0].set_golpesventaja.toString().substring(0,1)=='-'?false:true,
+                difTeesReg:res.Result[0].set_diferenciatee,
+                difTeesRegAbs:Math.abs(res.Result[0].set_diferenciatee),
+                signoTee:res.Result[0].set_diferenciatee.toString().substring(0,1)=='-'?false:true
                 //seePicker: res.Result[0].usu_id
               })
             }  
             else{
+              console.warn('AB')
                 InfoUsuarioAB(token)
                   .then((res) => {
-                    //console.warn(res)
+                    console.warn(res)
                       if(res.estatus==1){
                           this.setState({
                           update:false,
@@ -234,6 +250,12 @@ class PlayerInfoView extends Component {
   render() {
 
     const {
+      signoTee,
+      difTeesReg,
+      difTeesRegAbs,
+      signo,
+      strokesReg,
+      strokesRegAbs,
       item,
       asCollapsed,
       advantageMove,
@@ -337,7 +359,7 @@ class PlayerInfoView extends Component {
               </View>
               <View>
                 <Text style={styles.cardTitle}>Strokes</Text>
-                <Text style={styles.cardInfo}>{item.strokes ? item.strokes : 0}</Text>
+                <Text style={styles.cardInfo}>{strokesReg ? strokesReg : 0}</Text>
               </View>
             </View>
           </View>
@@ -355,6 +377,52 @@ class PlayerInfoView extends Component {
                 onValueChange={advantageMove => this.setState({ advantageMove })}
                 value={advantageMove}
               >
+              <View style={styles.switchView}>
+                <Text style={styles.question}>{strokes[language]}</Text>
+                
+                <View style={styles.costInputView}>
+                <View style={{flex:1}}>
+                  <Button
+                    title={signo?'+':'-'}
+                    onPress={() => this.setState({signo:!signo})}
+                    color={Colors.Primary}
+                  />
+                </View>
+                  <TextInput
+                    style={styles.costInput}
+                    selectionColor={Colors.Secondary}
+                    placeholder="0"
+                    keyboardType="numeric"
+                    returnKeyType='done'
+                    onChangeText={(strokesRegAbs) => this.setState({ strokesRegAbs })}
+                    value={strokesRegAbs.toString()}
+                    selectTextOnFocus={true}
+                  />
+                </View>
+              </View>
+              <View style={styles.switchView}>
+                <Text style={styles.question}>{difTees[language]}</Text>
+                
+                <View style={styles.costInputView}>
+                <View style={{flex:1}}>
+                  <Button
+                    title={signoTee?'+':'-'}
+                    onPress={() => this.setState({signoTee:!signoTee})}
+                    color={Colors.Primary}
+                  />
+                </View>
+                  <TextInput
+                    style={styles.costInput}
+                    selectionColor={Colors.Secondary}
+                    placeholder="0"
+                    keyboardType="numeric"
+                    returnKeyType='done'
+                    onChangeText={(difTeesRegAbs) => this.setState({ difTeesRegAbs })}
+                    value={difTeesRegAbs.toString()}
+                    selectTextOnFocus={true}
+                  />
+                </View>
+              </View>
                 <Text style={styles.question}>{howAdvantage[language]}</Text>
                 <View style={styles.radioGroupView}>
                   <View style={styles.radioButtonView}>
@@ -1095,6 +1163,12 @@ class PlayerInfoView extends Component {
     const token = await AsyncStorage.getItem('usu_id')
 
       const {
+        difTeesReg,
+        difTeesRegAbs,
+        signoTee,
+        strokesReg,
+        strokesRegAbs,
+        signo,
         update,
         language,
         rabbit16,
@@ -1243,6 +1317,20 @@ class PlayerInfoView extends Component {
 
       console.warn(update)
 
+      let strokesRegSigno = ''
+      if(!signo)
+        strokesRegSigno = '-'+strokesRegAbs
+      else
+          strokesRegSigno = strokesRegAbs
+      console.warn(strokesRegSigno)
+
+      let TeeRegSigno = ''
+      if(!signoTee)
+        TeeRegSigno = '-'+difTeesRegAbs
+      else
+          TeeRegSigno = difTeesRegAbs
+      console.warn(TeeRegSigno)
+
       if(update){
         ActualizaSettingsFriend(token,this.state.item.id,language,asData.how_adv_move,asData.how_many_strokes,asData.adv_moves,
         asData.carry_move_adv,gsData.rabbit_1_6,gsData.rabbit_7_12,gsData.rabbit_13_18,
@@ -1252,8 +1340,7 @@ class PlayerInfoView extends Component {
         snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
         tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
         tnwData.who_gets_the_adv_strokes,ebData.wager,bbData.wager_f9,bbData.wager_b9,
-        bbData.wager_18)/*sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
-        sfsData.bogey,sfsData.double_bogey)*/
+        bbData.wager_18,0,0,0,0,0,0,strokesRegSigno,TeeRegSigno)
         .then((res) => {
           console.warn(res)
           try{
@@ -1294,8 +1381,7 @@ class PlayerInfoView extends Component {
         snwData.carry,snwData.medal,tnwData.automatic_presses_every, tnwData.useFactor,
         tnwData.front_9,tnwData.back_9,tnwData.match,tnwData.carry,tnwData.medal,
         tnwData.who_gets_the_adv_strokes,ebData.wager,bbData.wager_f9,bbData.wager_b9,
-        bbData.wager_18)/*sfsData.double_eagles_points,sfsData.eagle_points,sfsData.birdie,sfsData.par,
-        sfsData.bogey,sfsData.double_bogey)*/
+        bbData.wager_18,0,0,0,0,0,0,strokesRegSigno,TeeRegSigno)
         .then((res) => {
           console.warn(res)
           try{

@@ -48,6 +48,7 @@ class ConfigRoundView extends Component {
     let switchAdv = false;
     let pickerDate = moment().toDate();
     let pickerTextDate = moment().format('DD/MM/YYYY');
+    let pickerTextDate2 = moment().format('YYYY-MM-DD');
 
     this.hcpAdjustment = [1, 0.95, 0.90, 0.85, 0.80];
 
@@ -63,6 +64,7 @@ class ConfigRoundView extends Component {
       showDatePicker: false,
       pickerDate,
       pickerTextDate,
+      pickerTextDate2,
       editDate: false,
     };
   }
@@ -340,6 +342,7 @@ class ConfigRoundView extends Component {
         this.setState({
           pickerDate: moment.unix(timestamp / 1000).toDate(),
           pickerTextDate: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
+          pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
           date: this.formatDate(timestamp / 1000),
           showDatePicker: false,
           editDate: false,
@@ -371,6 +374,7 @@ class ConfigRoundView extends Component {
 
       this.setState({
         pickerTextDate: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
+        pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
         pickerDate: moment.unix(timestamp / 1000).toDate(),
         date: this.formatDate(timestamp / 1000),
       });
@@ -479,7 +483,7 @@ class ConfigRoundView extends Component {
 
         const {
           roundName,
-          pickerDate,
+          pickerTextDate2,
           selectedButton,
           holeNumber,
           switchAdv,
@@ -524,8 +528,9 @@ class ConfigRoundView extends Component {
 
 
         console.warn(Ro_HandicapAdjustment)
+        console.warn(pickerTextDate2)
 
-        CrearRonda(IDCourse, roundName, Ro_HandicapAdjustment, holeNumber, Ro_SwitchAdventage, token)
+        CrearRonda(IDCourse, roundName, Ro_HandicapAdjustment, holeNumber, Ro_SwitchAdventage, token, pickerTextDate2)
         .then((res) => {
           console.warn(res)
             if(res.estatus > 0){
