@@ -161,10 +161,13 @@ export default class App extends Component {
     try {
         let IDUsuario = await AsyncStorage.getItem('usu_id')
         const language = await AsyncStorage.getItem('language')
-        this.setState({
-          language:language
-        })
-        //console.warn(IDUsuario)
+        if (language != null )
+        {
+          this.setState({
+            language:language
+          })
+        }
+        console.warn('lan: '+language)
         if (IDUsuario != null )
         {
           this.setState({
@@ -222,7 +225,8 @@ export default class App extends Component {
             }]
             //console.warn(result)
             this.setState({
-            userData: lista[0]
+            userData: lista[0],
+            language: lista[0].language
           })
         }  
         else{

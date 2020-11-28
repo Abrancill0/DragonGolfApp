@@ -381,13 +381,14 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{strokes[language]}</Text>
                 
                 <View style={styles.costInputView}>
-                <View style={{flex:1}}>
+                <View style={{flex:1, alignSelf:'center', paddingRigth:5}}>
                   <Button
                     title={signo?'+':'-'}
                     onPress={() => this.setState({signo:!signo})}
                     color={Colors.Primary}
                   />
                 </View>
+                <View style={{flex:0.9, paddingLeft:5}}>
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -398,19 +399,21 @@ class PlayerInfoView extends Component {
                     value={strokesRegAbs.toString()}
                     selectTextOnFocus={true}
                   />
+                  </View>
                 </View>
               </View>
               <View style={styles.switchView}>
                 <Text style={styles.question}>{difTees[language]}</Text>
                 
                 <View style={styles.costInputView}>
-                <View style={{flex:1}}>
+                <View style={{flex:1, alignSelf:'center', paddingRigth:5}}>
                   <Button
                     title={signoTee?'+':'-'}
                     onPress={() => this.setState({signoTee:!signoTee})}
                     color={Colors.Primary}
                   />
                 </View>
+                <View style={{flex:0.9, paddingLeft:5}}>
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -421,6 +424,7 @@ class PlayerInfoView extends Component {
                     value={difTeesRegAbs.toString()}
                     selectTextOnFocus={true}
                   />
+                  </View>
                 </View>
               </View>
                 <Text style={styles.question}>{howAdvantage[language]}</Text>
