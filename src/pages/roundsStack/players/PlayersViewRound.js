@@ -286,7 +286,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{FriendsinRound[language]}</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{FriendsinRound[language]}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRounds', {IDCourse:IDCourse, IDRound:IDRound})}>

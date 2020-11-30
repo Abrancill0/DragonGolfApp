@@ -122,16 +122,16 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:30}} onPress={()=> navigation.goBack()}>
-              <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Tees</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Tees</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:30, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>
-              <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>
+              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
         </View>

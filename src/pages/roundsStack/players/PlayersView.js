@@ -37,13 +37,17 @@ import { showMessage } from "react-native-flash-message";
 const {
       emptyPlayerList,
       friends,
+      SelectFriend,
       all,
       guests,
       Search,
       name,
       lastName,
       nickname,
-      ghinNumber
+      ghinNumber,
+      selectPlayer,
+      cancel,
+      continuar
     } = Dictionary;
 
 export default function RoundsView(route) {
@@ -218,24 +222,40 @@ export default function RoundsView(route) {
     console.warn(IDCourse)
     console.warn(IDRound)
     console.warn(playerId)
-    AgregarAmigosRonda(IDRound,idUsu,playerId,0.0,'',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-        .then((res) => {
-          console.warn(res)
-            if(res.estatus == 1){
-                showMessage({
-                  message: "Jugador agreado correctamente",
-                  type:'success',
-              });
-              navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
-            }
-            else{
-              showMessage({
-                  message: "Ocurrió un error, intente más tarde",
-                  type:'danger',
-              });
-              navig
-            }
-        })
+    Alert.alert(
+      "DragonGolf",
+      selectPlayer[language],
+      [
+        {
+          text: cancel[language],
+          style: 'cancel',
+        },
+        {
+          text: continuar[language],
+          onPress: () => {
+            AgregarAmigosRonda(IDRound,idUsu,playerId,0.0,'',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+            .then((res) => {
+              console.warn(res)
+                if(res.estatus == 1){
+                    showMessage({
+                      message: "Jugador agreado correctamente",
+                      type:'success',
+                  });
+                  navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
+                }
+                else{
+                  showMessage({
+                      message: "Ocurrió un error, intente más tarde",
+                      type:'danger',
+                  });
+                  navig
+                }
+            })
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   }
 
   function searchFilterFunction(text,busqueda){
@@ -294,7 +314,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Select Friend</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{SelectFriend[language]}</Text>
           </View>
           {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>

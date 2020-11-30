@@ -19,6 +19,7 @@ import SettingsView from './src/pages/settingsStack/settings/SettingsView'
 import CoursesView from './src/pages/coursesStack/courses/CoursesView'
 import CoursesViewRounds from './src/pages/roundsStack/courses/CoursesViewRound'
 import PlayersView from './src/pages/playersStack/players/PlayersView'
+import NotificationsView from './src/pages/playersStack/players/NotificationsView'
 import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
 import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRound'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
@@ -69,12 +70,23 @@ var { width, height } = Dimensions.get('window');
 const BottomTab = createBottomTabNavigator();
 const BlankProfile = require('./assets/globals/blank-profile.png');
 
+const {
+      home,
+      profile,
+      notifications,
+      signOutAsk,
+      signOut,
+      cancel,
+      continuar
+    } = Dictionary;
+
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
     this.state={
+      language:'es',
       logeado:false,
       isLoading:true,
       UsuNombre:'',
@@ -148,6 +160,10 @@ export default class App extends Component {
 
     try {
         let IDUsuario = await AsyncStorage.getItem('usu_id')
+        const language = await AsyncStorage.getItem('language')
+        this.setState({
+          language:language
+        })
         //console.warn(IDUsuario)
         if (IDUsuario != null )
         {
@@ -320,11 +336,11 @@ export default class App extends Component {
   closeSesion(props){
     Alert.alert(
       'Dragon Golf',
-      "¿Esta seguro(a) que desea cerrar sesion?",
+      signOutAsk[this.state.language],
       [
-        { text: 'Cancelar', onPress: () => { return null } },
+        { text: cancel[this.state.language], onPress: () => { return null } },
         {
-          text: 'Confirmar', onPress: () => {
+          text: continuar[this.state.language], onPress: () => {
             AsyncStorage.clear();
             RNRestart.Restart();
           }
@@ -430,7 +446,7 @@ export default class App extends Component {
                   </View>
                 <View style={{flex:.9}}>
                   <DrawerItem
-                  label="Inicio"
+                  label={home[this.state.language]}
                   onPress={() => props.navigation.closeDrawer()}
                   labelStyle={{color:Colors.Primary}} />
                 </View>
@@ -441,9 +457,20 @@ export default class App extends Component {
                   </View>
                 <View style={{flex:.9}}>
                   <DrawerItem
-                  label="Perfil"
+                  label={profile[this.state.language]}
                   labelStyle={{color:Colors.Primary}}
                   onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})} />
+                </View>
+              </TouchableOpacity> 
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('NotificationsView')}>
+                  <View style={{flex:.1}}>
+                    <MaterialIcons name='notifications' color='#0F222D' size={20}/>
+                  </View>
+                <View style={{flex:.9}}>
+                  <DrawerItem
+                  label={notifications[this.state.language]}
+                  labelStyle={{color:Colors.Primary}}
+                  onPress={()=> props.navigation.navigate('NotificationsView')}/>
                 </View>
               </TouchableOpacity> 
               </View>
@@ -457,7 +484,7 @@ export default class App extends Component {
               </View>
               <View style={{flex:.9}}>
                 <DrawerItem
-                label="Cerrar sesión"
+                label={signOut[this.state.language]}
                 onPress={() => this.closeSesion(props)}
                 labelStyle={{color:'white'}} />
               </View> 
@@ -822,6 +849,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='PlayersViewRounds' component={PlayersViewRounds}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='NotificationsView' component={NotificationsView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

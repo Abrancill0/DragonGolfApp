@@ -571,6 +571,24 @@ export const ListarRonda = (IDUsuario) => {
                 });
 };
 
+export const ListadoInvitacion = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListadoInvitacion";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
     const URL = RutaBaseAB + "/ListadoAmigosRonda";
     return fetch(URL, {

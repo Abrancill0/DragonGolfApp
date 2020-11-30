@@ -53,6 +53,8 @@ export default function RoundsView(route) {
     
 
   async function ListadoTees() {
+    let language = await AsyncStorage.getItem('language')
+    setLanguage(language)
     ListaTees(IDCourse)
         .then((res) => {
           console.warn(res)
@@ -85,24 +87,40 @@ export default function RoundsView(route) {
     console.warn(idUsu)
     console.warn(PlayerID)
     console.warn(IDTees)
-    AgregarTeesRonda(IDRound,idUsu,PlayerID,IDTees)
-        .then((res) => {
-          console.warn(res)
-            if(res.estatus == 1){
-                showMessage({
-                  message: "Tee agreado correctamente",
-                  type:'success',
-              });
-              navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
-            }
-            else{
-              showMessage({
-                  message: "Ocurrió un error, intente más tarde",
-                  type:'danger',
-              });
-              navig
-            }
-        })
+    Alert.alert(
+      "DragonGolf",
+      SelectTee3[language],
+      [
+        {
+          text: cancel[language],
+          style: 'cancel',
+        },
+        {
+          text: continuar[language],
+          onPress: () => {
+            AgregarTeesRonda(IDRound,idUsu,PlayerID,IDTees)
+            .then((res) => {
+              console.warn(res)
+                if(res.estatus == 1){
+                    showMessage({
+                      message: "Tee agreado correctamente",
+                      type:'success',
+                  });
+                  navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
+                }
+                else{
+                  showMessage({
+                      message: "Ocurrió un error, intente más tarde",
+                      type:'danger',
+                  });
+                  navig
+                }
+            })
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   }
 
   function Elimina(idCourse,id){
@@ -135,6 +153,10 @@ export default function RoundsView(route) {
     const {
       emptyTeesList,
       teeColor: teeColorText,
+      SelectTee2,
+      SelectTee3,
+      cancel,
+      continuar
     } = Dictionary;
 
     return (
@@ -147,12 +169,12 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:30}} onPress={()=> navigation.goBack()}>
-              <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
           <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-          <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Select Tee</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{SelectTee2[language]}</Text>
           </View>
           {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:30, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>

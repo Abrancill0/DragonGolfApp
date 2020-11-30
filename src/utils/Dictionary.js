@@ -1,5 +1,17 @@
 export const Dictionary = {
     //===========LoginView===============
+    home: {
+        'en': 'Home',
+        'es': 'Inicio'
+    },
+    profile: {
+        'en': 'Profile',
+        'es': 'Perfil'
+    },
+    notifications: {
+        'en': 'Invitations',
+        'es': 'Invitaciones'
+    },
     email: {
         'en': 'Email',
         'es': 'Correo'
@@ -480,6 +492,10 @@ export const Dictionary = {
         'en': 'There are no saved Courses yet',
         'es': 'Aún no hay Campos guardados'
     },
+    emptynotifications: {
+        'en': 'There are no Invitations yet',
+        'es': 'Aún no hay Invitaciones'
+    },
     emptyTeesList: {
         'en': 'This Course has no saved Tee´s yet',
         'es': 'Este Campo aún no tiene Tee´s guardados'
@@ -561,6 +577,10 @@ export const Dictionary = {
         'en': 'Select Course',
         'es': 'Seleccionar Campo'
     },
+    SelectFriend: {
+        'en': 'Select Friend',
+        'es': 'Seleccionar Amigo'
+    },
     roundName: {
         'en': 'Round Name',
         'es': 'Nombre de Ronda'
@@ -607,9 +627,21 @@ export const Dictionary = {
         'en': 'There are no Players in this round yet',
         'es': 'Aún no hay Jugadores en esta ronda'
     },
+    selectPlayer: {
+        'en': 'Are you sure to add this player in this round?',
+        'es': '¿Está seguro de agrear este jugador en esta ronda?'
+    },
     selectTee: {
         'en': 'Select Tee for',
         'es': 'Seleccione el Tee para'
+    },
+    SelectTee2: {
+        'en': 'Select Tee',
+        'es': 'Seleccione el Tee'
+    },
+    SelectTee3: {
+        'en': 'Are you sure to add this tee to this player?',
+        'es': '¿Está seguro de agrear este tee a este jugador?'
     },
     wasAdded: {
         'en': 'was added to the round',
@@ -750,7 +782,7 @@ export const Dictionary = {
     },
     player: {
         'en': 'Player',
-        'es': 'Player'
+        'es': 'Jugador'
     },
     details: {
         'en': 'Details',

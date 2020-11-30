@@ -24,18 +24,19 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListarRonda } from '../../../Services/Services'
+import { ListadoInvitacion } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
+import moment from 'moment';
 
 export default function RoundsView(route) {
 
     const navigation = useNavigation();
-    const [rounds, setRounds] = useState([]);
+    const [courses, setCourses] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
@@ -48,40 +49,38 @@ export default function RoundsView(route) {
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
-        ListadoRondas();
+        ListarInvitacion();
           });
 
         return unsubscribe;
-      }, [rounds]);
+      }, [navigation]);
     
 
-  async function ListadoRondas() {
+  async function ListarInvitacion() {
                 setStatus(true)
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
     setLanguage(language)
-    ListarRonda(idUsu)
+    console.warn(language)
+    ListadoInvitacion(idUsu)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDRounds,
-                      idCourse: item.IDCourse,
-                      nombre: item.Cou_Nombre,
-                      nombreRonda: item.Ro_Name,
-                      handicap: item.Ro_HandicapAdjustment,
-                      hole: item.Ro_StartingHole,
-                      adv: item.Ro_SwitchAdventage,
-                      fecha: item.Ro_Date
+                      id: item.IDInvitacion,
+                      nombre: item.Nombre,
+                      Ro_Name: item.Ro_Name,
+                      fecha: moment(item.FechaCreacion).format('DD/MM/YYYY').toString()
                     }
                 ))
-                setRounds(list)
+                setCourses(list)
                 setArrayholder(list)
                 setStatus(false)
             }
             else{
-              setRounds([])
+              setCourses([])
+              setArrayholder([])
               setStatus(false)
             }
         })
@@ -113,7 +112,7 @@ export default function RoundsView(route) {
     return itemData.indexOf(textData) > -1;
 
     });
-    setRounds(newData)
+    setCourses(newData)
   };
 
    function renderSeparator(){  
@@ -135,14 +134,19 @@ export default function RoundsView(route) {
       <View>
 
       <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
-          </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
-              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>
+          </View> 
+            <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+              <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{notifications[language]}</Text>
+            </View>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddHole', {IDTees:IDTees, NameTee:NameTee})}>
+              <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>*/}
         </View>
 
       {search && <View>
@@ -216,25 +220,25 @@ export default function RoundsView(route) {
   };
 
 
-  async function Elimina(id, tipo){
+  async function Elimina(id){/*
     console.warn(tipo)
     let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
-      "¿Está seguro de eliminar este campo?",
+      sureToUpdateCourse[language],
       [
         {
-          text: "Cancelar",
+          text: cancel[language],
           style: 'cancel',
         },
         {
-          text: "Continuar",
+          text: continuar[language],
           onPress: () => {
             EliminarCampo(id, tipo, idUsu)
               .then((res) => {
                 console.warn(res)
                   if(res.estatus == 1){
-                    ListadoRounds()
+                    ListarInvitacion()
                   }
               })
           },
@@ -242,15 +246,24 @@ export default function RoundsView(route) {
       ],
       { cancelable: false }
     );
-  }
+  */}
 
 
     const {
-      emptyCourseList,
+      emptynotifications,
+      Search,
+      myCourses,
+      courseName,
+      courseShortName,
+      courseCity,
+      country,
+      sureToUpdateCourse,
+      cancel,
+      continuar,
+      notifications,
+      player,
       round,
-      date,
-      course,
-      rondas
+      date
     } = Dictionary;
 
     return (
@@ -260,25 +273,25 @@ export default function RoundsView(route) {
             color={Colors.Primary} />
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{rondas[language]}</Text>
-          </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('CoursesViewRounds')}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+          </View> 
+            <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+              <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{notifications[language]}</Text>
+            </View>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddHole', {IDTees:IDTees, NameTee:NameTee})}>
+              <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>
+          </View>*/}
         </View>
         { visible &&
           <ScrollView>
 
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
@@ -287,9 +300,9 @@ export default function RoundsView(route) {
           </View>
         </View>*/}
 
-      {search && <View>
+      {/*search && <View>
       <SearchBar
-        placeholder="Nombre"
+        placeholder={courseName[language]}
         onChangeText={(text) => searchFilterFunction(text,1)}
         autoCorrect={false}
         value={value1}
@@ -304,7 +317,7 @@ export default function RoundsView(route) {
         borderBottomWidth:0.5}}
       />
       <SearchBar
-        placeholder="Nombre Corto"
+        placeholder={courseShortName[language]}
         onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
         value={value2}
@@ -319,7 +332,7 @@ export default function RoundsView(route) {
         borderBottomWidth:0.8}}
       />
       <SearchBar
-        placeholder="Ciudad"
+        placeholder={courseCity[language]}
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,3)}
@@ -336,7 +349,7 @@ export default function RoundsView(route) {
         borderBottomWidth:1}}
       />
       <SearchBar
-        placeholder="Pais"
+        placeholder={country[language]}
         lightTheme
         round
         onChangeText={(text) => searchFilterFunction(text,4)}
@@ -352,13 +365,13 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />
-      </View>}
+      </View>*/}
           <SwipeListView
             refreshControl={
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  ListadoRondas()
+                  ListarInvitacion()
                   setValue1('')
                   setValue2('')
                   setValue3('')
@@ -366,39 +379,32 @@ export default function RoundsView(route) {
                 }}
               />
             }
-            data={rounds}
+            data={courses}
             renderItem={({item}) =>
                     <View style={{flex:.2,padding:5}}>
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} /*onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}*/>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{course[language]+': '+ item.nombre}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>
-                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{player[language]+': '+ item.nombre}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{round[language]+': '+ item.Ro_Name}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+': '+ item.fecha}</Text>
                                   </View>
                                 </View>
-                              {/*<View style={{flex:.2,padding:5}}>
-                              <View style={{flex:.5}}>
-                                    <Fontisto name={item.tipo=='Copia'?'cloud-down':'cloud-up'} size={30} color={Colors.Primary} />
-                              </View>
-                            </View>*/}
                               </View>
                           </TouchableOpacity>
-                          {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
-                          <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
+                          <View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
+                          {/*<TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
                             <FontAwesome name={'edit'} size={30} color={Colors.White} />
-                          </TouchableOpacity>
-                          <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id, item.tipo)}>
+                          </TouchableOpacity>*/}
+                          <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                             <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
                           </TouchableOpacity>
-                          </View>*/}
+                          </View>
                           </ScrollView>
                     </View>
               }
@@ -406,9 +412,8 @@ export default function RoundsView(route) {
               //ListHeaderComponent={renderHeader}
               ListEmptyComponent={
               <ListEmptyComponent
-                text={Dictionary.emptyRoundList[language]}
-                iconName="golf-ball"
-                iconFamily='font-awesome'
+                text={emptynotifications[language]}
+                iconName="golf"
               />
             }
             stopLeftSwipe={Dimensions.get('window').width * .5}
