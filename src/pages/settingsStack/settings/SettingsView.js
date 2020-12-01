@@ -621,6 +621,82 @@ class SettingsView extends Component {
             </View>
           </View>
 
+          {
+            snwUseFactor ? 
+          <View>
+            <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Back 9</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+            <TextInput
+                  ref={ref => this.inputs['snw2'] = ref}
+                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                  selectionColor={Colors.Secondary}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  returnKeyType='done'
+                  maxLength={8}
+                  onChangeText={(snwBack9) => this.setState({ snwBack9 })}
+                  onSubmitEditing={_ => this.focusNextField('snw3')}
+                  value={snwBack9}
+                  blurOnSubmit={false}
+                  selectTextOnFocus={true}
+                />
+          </View> 
+          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Match</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <TextInput
+                  ref={ref => this.inputs['snw3'] = ref}
+                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                  selectionColor={Colors.Secondary}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  returnKeyType='done'
+                  maxLength={8}
+                  onChangeText={(snwMatch) => this.setState({ snwMatch })}
+                  onSubmitEditing={_ => this.focusNextField('snw4')}
+                  value={snwMatch}
+                  blurOnSubmit={false}
+                  selectTextOnFocus={true}
+                />
+          </View>
+          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Carry</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <TextInput
+                  ref={ref => this.inputs['snw4'] = ref}
+                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                  selectionColor={Colors.Secondary}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  returnKeyType='done'
+                  maxLength={8}
+                  onChangeText={(snwCarry) => this.setState({ snwCarry })}
+                  onSubmitEditing={_ => this.focusNextField('snw5')}
+                  value={snwCarry}
+                  blurOnSubmit={false}
+                  selectTextOnFocus={true}
+                />
+          </View>
+          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Medal</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <TextInput
+                  ref={ref => this.inputs['snw5'] = ref}
+                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                  selectionColor={Colors.Secondary}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  returnKeyType='done'
+                  maxLength={8}
+                  onChangeText={(snwMedal) => this.setState({ snwMedal })}
+                  value={snwMedal}
+                  selectTextOnFocus={true}
+                />
+          </View>
+        </View>
+          :
+        <View>
           <View style={styles.optionSection}>
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Back 9</Text>
@@ -643,7 +719,6 @@ class SettingsView extends Component {
               </View>
             </View>
           </View>
-
           <View style={styles.optionSection}>
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Match</Text>
@@ -666,7 +741,6 @@ class SettingsView extends Component {
               </View>
             </View>
           </View>
-
           <View style={styles.optionSection}>
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Carry</Text>
@@ -710,7 +784,8 @@ class SettingsView extends Component {
               </View>
             </View>
           </View>
-
+        </View>
+          }
           <Text style={styles.settingsTitle}>Team Nassau Wagers</Text>
 
           <View style={styles.optionSection}>
@@ -787,6 +862,85 @@ class SettingsView extends Component {
             </View>
           </View>
 
+          {
+            tnwUseFactor ? 
+        <View>
+          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Back 9</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <TextInput
+                  ref={ref => this.inputs['tnw2'] = ref}
+                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                  selectionColor={Colors.Secondary}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  returnKeyType='done'
+                  maxLength={8}
+                  onChangeText={(tnwBack9) => this.setState({ tnwBack9 })}
+                  onSubmitEditing={_ => this.focusNextField('tnw3')}
+                  value={tnwBack9}
+                  blurOnSubmit={false}
+                  selectTextOnFocus={true}
+                />
+          </View>
+
+          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Match</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <TextInput
+                  ref={ref => this.inputs['tnw3'] = ref}
+                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                  selectionColor={Colors.Secondary}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  returnKeyType='done'
+                  maxLength={8}
+                  onChangeText={(tnwMatch) => this.setState({ tnwMatch })}
+                  onSubmitEditing={_ => this.focusNextField('tnw4')}
+                  value={tnwMatch}
+                  blurOnSubmit={false}
+                  selectTextOnFocus={true}
+                />
+          </View>
+
+          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Carry</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <TextInput
+                  ref={ref => this.inputs['tnw4'] = ref}
+                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                  selectionColor={Colors.Secondary}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  returnKeyType='done'
+                  maxLength={8}
+                  onChangeText={(tnwCarry) => this.setState({ tnwCarry })}
+                  onSubmitEditing={_ => this.focusNextField('tnw5')}
+                  value={tnwCarry}
+                  blurOnSubmit={false}
+                  selectTextOnFocus={true}
+                />
+          </View>
+
+          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Medal</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <TextInput
+                  ref={ref => this.inputs['tnw5'] = ref}
+                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                  selectionColor={Colors.Secondary}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  returnKeyType='done'
+                  maxLength={8}
+                  onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
+                  value={tnwMedal}
+                  selectTextOnFocus={true}
+                />
+          </View>
+        </View>
+          :
+        <View>
           <View style={styles.optionSection}>
             <View style={styles.optionView}>
               <Text style={styles.optionsText}>Back 9</Text>
@@ -876,6 +1030,8 @@ class SettingsView extends Component {
               </View>
             </View>
           </View>
+        </View>
+      }
 
           <View style={styles.optionSection}>
             <View style={{ paddingHorizontal: 10 }}>

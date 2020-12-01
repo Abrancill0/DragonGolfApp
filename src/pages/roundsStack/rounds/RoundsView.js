@@ -31,6 +31,7 @@ import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
+import moment from 'moment';
 
 export default function RoundsView(route) {
 
@@ -73,7 +74,7 @@ export default function RoundsView(route) {
                       handicap: item.Ro_HandicapAdjustment,
                       hole: item.Ro_StartingHole,
                       adv: item.Ro_SwitchAdventage,
-                      fecha: item.Ro_Date
+                      fecha: moment(item.Ro_Date).format('DD/MM/YYYY').toString()
                     }
                 ))
                 setRounds(list)

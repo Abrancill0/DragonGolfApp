@@ -987,6 +987,25 @@ export const EliminarCampo = (IDCourse, Tipo, IDUsuario) => {
                 });
 };
 
+export const EliminarInvitacion = (IDInvitacion,IDUsuario) => {
+    const URL = RutaBaseAB + "/EliminarInvitacion";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDInvitacion: IDInvitacion,
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const EliminarTees = (IDCourse, IDTees) => {
     const URL = RutaBaseAB + "/EliminarTees";
     return fetch(URL, {

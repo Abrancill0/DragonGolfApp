@@ -378,6 +378,10 @@ export const Dictionary = {
         'en': 'Are you sure you want to delete this tee?',
         'es': '¿Seguro deseas eliminar este tee?'
     },
+    sureToUpdateInvitations: {
+        'en': 'Are you sure you want to delete this Invitations?',
+        'es': '¿Seguro deseas eliminar esta Invitación?'
+    },
     //===========AddPlayer===============
     addPlayer: {
         'en': 'Add Player',

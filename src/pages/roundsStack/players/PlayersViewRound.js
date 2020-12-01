@@ -97,15 +97,15 @@ export default function RoundsView(route) {
   function finalizar(){
     Alert.alert(
       "DragonGolf",
-      "¿Desea terminar la configuración de la ronda?",
+      exitRound[language],
       [
         {
-          text: "Cancelar",
+          text: cancel[language],
           onPress: () => {
           },
         },
         {
-          text: "Terminar",
+          text: continuar[language],
           onPress: () => {
             navigation.navigate('RoundsStack')
           },
@@ -268,7 +268,10 @@ export default function RoundsView(route) {
     const {
       emptyPlayerList,
       finish,
-      FriendsinRound
+      FriendsinRound,
+      exitRound,
+      cancel,
+      continuar
     } = Dictionary;
 
     return (

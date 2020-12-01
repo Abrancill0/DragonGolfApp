@@ -24,7 +24,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoInvitacion } from '../../../Services/Services'
+import { ListadoInvitacion, EliminarInvitacion } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -53,7 +53,7 @@ export default function RoundsView(route) {
           });
 
         return unsubscribe;
-      }, [navigation]);
+      }, [courses]);
     
 
   async function ListarInvitacion() {
@@ -220,12 +220,12 @@ export default function RoundsView(route) {
   };
 
 
-  async function Elimina(id){/*
-    console.warn(tipo)
+  async function Elimina(id){
+    console.warn(id)
     let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
-      sureToUpdateCourse[language],
+      sureToUpdateInvitations[language],
       [
         {
           text: cancel[language],
@@ -234,7 +234,7 @@ export default function RoundsView(route) {
         {
           text: continuar[language],
           onPress: () => {
-            EliminarCampo(id, tipo, idUsu)
+            EliminarInvitacion(id,idUsu)
               .then((res) => {
                 console.warn(res)
                   if(res.estatus == 1){
@@ -246,7 +246,7 @@ export default function RoundsView(route) {
       ],
       { cancelable: false }
     );
-  */}
+  }
 
 
     const {
@@ -257,7 +257,7 @@ export default function RoundsView(route) {
       courseShortName,
       courseCity,
       country,
-      sureToUpdateCourse,
+      sureToUpdateInvitations,
       cancel,
       continuar,
       notifications,
