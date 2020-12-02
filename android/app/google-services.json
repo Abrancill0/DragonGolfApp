@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1055874683563",
+    "firebase_url": "https://dragongolfapp-c499f.firebaseio.com",
+    "project_id": "dragongolfapp-c499f",
+    "storage_bucket": "dragongolfapp-c499f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055874683563:android:c88b64fbf552171339ddee",
+        "android_client_info": {
+          "package_name": "com.dragongolfapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055874683563-a4nlhpplil6pb68sdj27t4m8o7hmpeaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwHzqlds0BBx9SOjrOhitS5FuTPndF4jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055874683563-a4nlhpplil6pb68sdj27t4m8o7hmpeaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
