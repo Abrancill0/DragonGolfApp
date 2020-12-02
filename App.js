@@ -22,6 +22,7 @@ import PlayersView from './src/pages/playersStack/players/PlayersView'
 import NotificationsView from './src/pages/playersStack/players/NotificationsView'
 import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
 import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRound'
+import ScoreView from './src/pages/roundsStack/score/ScoreView'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeesViewRound from './src/pages/roundsStack/players/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
@@ -362,7 +363,7 @@ export default class App extends Component {
     function RoundTab() {
       return (
         <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-          {/*<BottomTab.Screen name="CoursesViewRounds" component={CoursesViewRounds} 
+          <BottomTab.Screen name="Settings" component={PlayersViewRoundsList} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -370,7 +371,7 @@ export default class App extends Component {
               return(
               <View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesome5
-                    name='golf-ball'
+                    name='user-friends'
                     color={Colors.Primary}
                     size={25} />
               </View>
@@ -380,7 +381,7 @@ export default class App extends Component {
               return(
                 <View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesome5
-                    name='golf-ball'
+                    name='user-friends'
                     color={Colors.Black}
                     size={20} />
               </View>
@@ -388,8 +389,8 @@ export default class App extends Component {
             }
           },
           })}
-          />*/}
-          <BottomTab.Screen name="Settings" component={PlayersViewRounds} 
+          />
+          <BottomTab.Screen name="ScoreView" component={ScoreView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -397,7 +398,7 @@ export default class App extends Component {
               return(
               <View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesome5
-                    name='user-friends'
+                    name='golf-ball'
                     color={Colors.Primary}
                     size={25} />
               </View>
@@ -407,7 +408,7 @@ export default class App extends Component {
               return(
                 <View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesome5
-                    name='user-friends'
+                    name='golf-ball'
                     color={Colors.Black}
                     size={20} />
               </View>

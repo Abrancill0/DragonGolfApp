@@ -546,7 +546,8 @@ class ConfigRoundView extends Component {
                 message: "Ronda creada correctamente",
                 type:'success',
             });*/
-            this.props.navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
+            //navigation.navigate('createDetalleTab', { screen: 'Detalle', params: { RmReqId: RmReqId, RmReqProveedorNombre: RmReqProveedorNombre } })
+            this.props.navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:res.idround} })
             }
             else{
               showMessage({

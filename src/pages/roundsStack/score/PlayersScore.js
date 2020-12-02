@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import { connect } from 'react-redux';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import { Dictionary } from '../../../utils/Dictionary';
 import PlayerScoreComponent from './PlayerScoreComponent';
@@ -54,4 +53,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayersScore);
+export default PlayersScore;

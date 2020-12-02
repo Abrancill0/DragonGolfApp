@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Dimensions } from 'react-native';
-import store from '../../../store/store';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from './HeaderButton';
 import ViewPager from '@react-native-community/viewpager';
@@ -28,7 +27,7 @@ class ScoreView extends Component {
       this.holes.push({ key: `${index}`, hole: `${index + 1}` });
     }
 
-    props.getHole({ roundId: props.roundId });
+    //props.getHole({ roundId: props.roundId });
   }
 
   componentDidMount() {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, FlatList } from 'react-native';
-import { connect } from 'react-redux';
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
 import PlayerScoreComponent from './PlayerScoreComponent';
@@ -32,8 +31,8 @@ class HorizontalScoreView extends Component {
             <View style={{ flex: 1 }}>
                 <View style={styles.holeHeaderView}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={styles.courseName}>{course.name}</Text>
-                        <Text style={styles.cityName}>{course.city}</Text>
+                        {/*<Text style={styles.courseName}>{course.name}</Text>
+                        <Text style={styles.cityName}>{course.city}</Text>*/}
                     </View>
                 </View>
                 <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 10 }}>
@@ -79,4 +78,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HorizontalScoreView);
+export default HorizontalScoreView;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { connect } from 'react-redux';
 import styles from './styles';
 import { Dictionary } from '../../../utils/Dictionary';
 
@@ -28,8 +27,8 @@ class HoleHeader extends Component {
           </View>
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text style={styles.courseName}>{course.name}</Text>
-          <Text style={styles.cityName}>{course.city}</Text>
+          {/*<Text style={styles.courseName}>{course.name}</Text>
+          <Text style={styles.cityName}>{course.city}</Text>*/}
         </View>
       </View>
     );
@@ -44,5 +43,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HoleHeader);
+export default HoleHeader;
 

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
-import { connect } from 'react-redux';
-import { actionSaveScore } from '../../../store/actions';
-import * as Validations from '../../../utils/Validations';
 import moment from 'moment';
 import styles from './styles';
 
@@ -139,8 +136,6 @@ class HorizontalScoreComponent extends Component {
     }
 
     onChangeScore = (score) => {
-        const scoreOk = Validations.intNumberValidation(score ? score : 1);
-        if (scoreOk.ok) {
             if (parseInt(score ? score : 1) > 0) {
                 const { holeInfo, index, hole } = this.props;
                 const par = holeInfo[index].holes[hole - 1].par;
@@ -150,7 +145,6 @@ class HorizontalScoreComponent extends Component {
                 this.setState({ holeScore: score.toString(), inputStyle, inputBorder });
                 this.saveScore(score);
             }
-        }
     }
 
     saveScore = (score) => {
@@ -164,16 +158,4 @@ class HorizontalScoreComponent extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    holeInfo: state.reducerHole,
-    roundId: state.reducerRoundId,
-    switchAdv: state.reducerSwitchAdv
-});
-
-const mapDispatchToProps = dispatch => ({
-    saveScore: (values) => {
-        dispatch(actionSaveScore(values));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HorizontalScoreComponent);
+export default HorizontalScoreComponent;

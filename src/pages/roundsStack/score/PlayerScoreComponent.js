@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Platform } from 'react-native';
-import { connect } from 'react-redux';
 import styles from './styles';
-import { actionSaveScore } from '../../../store/actions';
-import * as Validations from '../../../utils/Validations';
 import moment from 'moment';
 
 class PlayerScoreComponent extends Component {
@@ -92,7 +89,7 @@ class PlayerScoreComponent extends Component {
         } = this.props;
 
         return (
-            <>
+            <View>
                 <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
                     <Text>PAR: </Text>
                     <Text style={styles.dataValues}>{par}</Text>
@@ -143,7 +140,7 @@ class PlayerScoreComponent extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </>
+            </View>
         );
     }
 
@@ -212,9 +209,6 @@ class PlayerScoreComponent extends Component {
     }
 
     onChangeScore = (score) => {
-        const scoreOk = Validations.intNumberValidation(score ? score : 1);
-        if (scoreOk.ok) {
-
             if (parseInt(score ? score : 1) > 0) {
                 const { holeInfo, index, hole } = this.props;
                 const par = holeInfo[index].holes[hole - 1].par;
@@ -225,7 +219,6 @@ class PlayerScoreComponent extends Component {
                 this.setState({ holeScore: score.toString(), buttonIndex, inputStyle, inputBorder });
                 this.saveScore(score);
             }
-        }
     }
 
     saveScore = (score) => {
@@ -239,16 +232,4 @@ class PlayerScoreComponent extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    holeInfo: state.reducerHole,
-    roundId: state.reducerRoundId,
-    switchAdv: state.reducerSwitchAdv
-});
-
-const mapDispatchToProps = dispatch => ({
-    saveScore: (values) => {
-        dispatch(actionSaveScore(values));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerScoreComponent);
+export default PlayerScoreComponent;
