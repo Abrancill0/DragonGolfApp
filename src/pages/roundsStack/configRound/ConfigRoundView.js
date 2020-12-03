@@ -547,7 +547,9 @@ class ConfigRoundView extends Component {
                 type:'success',
             });*/
             //navigation.navigate('createDetalleTab', { screen: 'Detalle', params: { RmReqId: RmReqId, RmReqProveedorNombre: RmReqProveedorNombre } })
-            this.props.navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:res.idround} })
+            this.props.navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
+            //this.props.navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:res.idround} })
+            //AsyncStorage.setItem('IDRound', res.idround.toString());
             }
             else{
               showMessage({

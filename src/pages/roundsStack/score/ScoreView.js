@@ -84,13 +84,10 @@ class ScoreView extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <NavigationEvents
-          onWillFocus={this.changeTitleText}
-        />
         {isLandscape ?
           <HorizontalScoreView holes={this.holes} /> :
           <ViewPager
-            initialPage={this.props.initHole - 1}
+            initialPage={0/*this.props.initHole - 1*/}
             ref={ref => this.pager = ref}
             onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}

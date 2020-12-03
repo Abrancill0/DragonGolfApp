@@ -216,6 +216,11 @@ export default function RoundsView(route) {
     );
   };
 
+  async function muestraRonda(IDCourse, IDRound){
+    navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
+    AsyncStorage.setItem('IDRound', IDRound.toString());
+  }
+
 
   async function Elimina(id, tipo){
     console.warn(tipo)
@@ -373,7 +378,7 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:item.idCourse, IDRound:item.id} })}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idCourse,item.id)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>

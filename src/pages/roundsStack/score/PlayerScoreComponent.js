@@ -98,7 +98,7 @@ class PlayerScoreComponent extends Component {
                 </View>
                 <View style={styles.playerScoreView}>
                     <View style={styles.playerScoreNameView}>
-                        <Text style={styles.playerScoreNameText} numberOfLines={1} adjustsFontSizeToFit >{item.nick_name}</Text>
+                        <Text style={styles.playerScoreNameText} numberOfLines={1} adjustsFontSizeToFit >{item.nickname}</Text>
                     </View>
                     <View style={styles.inputView}>
                         <View style={inputBorder}>
@@ -228,7 +228,7 @@ class PlayerScoreComponent extends Component {
             ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
             id: this.props.item.id
         }
-        this.props.saveScore({ hole: parseInt(this.props.hole), member, roundId: this.props.roundId });
+        //this.props.saveScore({ hole: parseInt(this.props.hole), member, roundId: this.props.roundId });
     }
 }
 
