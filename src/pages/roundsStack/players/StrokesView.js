@@ -9,7 +9,9 @@ import {
   RefreshControl,
   Text,
   ScrollView,
-  Image
+  Image,
+  Button,
+  TextInput
 } from 'react-native';
 import { SearchBar, ButtonGroup } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -32,20 +34,25 @@ import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from './styles';
+import styles3 from './styles3';
 import { showMessage } from "react-native-flash-message";
 import DragonButton from '../../global/DragonButton';
 
 export default function RoundsView(route) {
 
     const navigation = useNavigation();
-    const [IDCourse, setIDCourse] = useState(route.route.params.IDCourse);
     const [IDRound, setIDRound] = useState(route.route.params.IDRound);
+    const [IDUsuario, setIDUsuario] = useState(route.route.params.IDUsuario);
     const [players, setPlayers] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
     const [value3, setValue3] = useState('');
     const [value4, setValue4] = useState('');
+    const [signoMas] = useState(true);
+    const [signoMenos] = useState(false);
+    const [strokesReg, setstrokesReg] = useState(route.route.params.strokes);
+    const [strokesRegAbs, setStrokesRegAbs] = useState(Math.abs(route.route.params.strokes))
     const [language, setLanguage] = useState('es');
     const ScreenWidth = Dimensions.get("window").width;
     const [search, setSearch] = useState(false);
@@ -68,6 +75,7 @@ export default function RoundsView(route) {
     setLanguage(language)
     console.warn(idUsu)
     console.warn(IDRound)
+    console.warn(IDUsuario)
     ListadoAmigosRonda(idUsu, IDRound)
         .then((res) => {
           console.warn(res)
@@ -268,10 +276,11 @@ export default function RoundsView(route) {
     const {
       emptyPlayerList,
       finish,
-      FriendsinRound,
+      strokesPlayer,
       exitRound,
       cancel,
-      continuar
+      continuar,
+      strokes
     } = Dictionary;
 
     return (
@@ -289,13 +298,13 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{FriendsinRound[language]}</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{strokesPlayer[language]}</Text>
           </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRounds', {IDCourse:IDCourse, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>
+          </View>*/}
         </View>
         { visible &&
           <ScrollView>
@@ -409,19 +418,51 @@ export default function RoundsView(route) {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
+              <TouchableOpacity activeOpacity={0} /*onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}*/>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>
                       <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
                       <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nickname}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
+                        <View style={styles3.switchView}>
+                          <Text style={styles3.question}>{strokes[language]}</Text>
+                          
+                          <View style={styles3.costInputView}>
+                          <View style={{flex:1, alignSelf:'center', marginHorizontal:2}}>
+                            <Button
+                              title={signoMas?'+':'-'}
+                              onPress={() => setStrokesRegAbs(strokesRegAbs + 0.5)}
+                              color={Colors.Primary}
+                            />
+                          </View>
+                          <View style={{flex:1, alignSelf:'center'}}>
+                            <Button
+                              title={signoMenos?'+':'-'}
+                              onPress={() => setStrokesRegAbs(strokesRegAbs - 0.5)}
+                              color={Colors.Primary}
+                            />
+                          </View>
+                          <View style={{flex:0.9, paddingLeft:5}}>
+                            <TextInput
+                              style={styles3.costInput}
+                              selectionColor={Colors.Secondary}
+                              placeholder="0"
+                              keyboardType="numeric"
+                              returnKeyType='done'
+                              onChangeText={(strokesRegAbs) => setStrokesRegAbs(strokesRegAbs)}
+                              value={strokesRegAbs.toString()}
+                              selectTextOnFocus={true}
+                            />
+                            </View>
+                          </View>
+                        </View>
+                        {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>*/}
                       </View>
-                      <View>
-                        <TouchableOpacity style={{margin:20, marginTop:10}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.idUsu, strokes:item.strokes})}>
+                      {/*<View>
+                        <TouchableOpacity style={{margin:20, marginTop:10}} onPress={()=> navigation.navigate("StrokesView")}>
                           <MaterialIcon name={'info-outline'} size={25} color={Colors.Primary} />
                         </TouchableOpacity>
                         {item.idUsu!=item.id?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginHorizontal:20}}>{'Strokes: '+item.strokes}</Text>:null}
@@ -434,8 +475,8 @@ export default function RoundsView(route) {
                             borderRadius: 30,
                             marginHorizontal:30
                           }}
-                        />*/}
-                      </View>
+                        />
+                      </View>*/}
                       </View>
                       </View>
                     </View>
@@ -460,7 +501,7 @@ export default function RoundsView(route) {
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         <View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
-          <DragonButton title={finish[language]} onPress={()=>finalizar()} />
+          <DragonButton title={finish[language]} /*onPress={()=>finalizar()} *//>
         </View>
         
       </ScrollView>}

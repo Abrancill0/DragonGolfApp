@@ -776,6 +776,10 @@ export const Dictionary = {
         'en': 'Next Strokes',
         'es': 'Strokes Siguientes'
     },
+    strokesPlayer: {
+        'en': 'Edit Strokes',
+        'es': 'Editar Golpes de ventaja'
+    },
     debt: {
         'en': 'Debt',
         'es': 'Deuda'
