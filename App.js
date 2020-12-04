@@ -22,6 +22,7 @@ import PlayersView from './src/pages/playersStack/players/PlayersView'
 import NotificationsView from './src/pages/playersStack/players/NotificationsView'
 import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
 import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRound'
+import StrokesView from './src/pages/roundsStack/players/StrokesView'
 import ScoreView from './src/pages/roundsStack/score/ScoreView'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeesViewRound from './src/pages/roundsStack/players/TeesView'
@@ -397,20 +398,20 @@ export default class App extends Component {
             {
               return(
               <View style={{height:'60%',width:'60%', alignItems:'center'}}>
-                  <FontAwesome5
-                    name='golf-ball'
+                  <MaterialCommunityIcons
+                    name='scoreboard'
                     color={Colors.Primary}
-                    size={25} />
+                    size={30} />
               </View>
               )
             }else
             {
               return(
                 <View style={{height:'60%',width:'60%', alignItems:'center'}}>
-                  <FontAwesome5
-                    name='golf-ball'
+                  <MaterialCommunityIcons
+                    name='scoreboard'
                     color={Colors.Black}
-                    size={20} />
+                    size={25} />
               </View>
               )
             }
@@ -878,6 +879,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='PlayersViewRoundsList' component={PlayersViewRoundsList}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='StrokesView' component={StrokesView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
