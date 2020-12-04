@@ -3,6 +3,7 @@ import {View, StatusBar, Image, Animated, Text, Platform} from 'react-native';
 import styles from './styles';
 import {getLanguage, getSessionToken} from '../../utils/Session';
 import messaging from '@react-native-firebase/messaging';
+import {showMessage} from 'react-native-flash-message';
 import PushNotification from 'react-native-push-notification';
 
 //assets
@@ -36,57 +37,51 @@ class SplashScreen extends Component {
     );
   };
 
-  async componentDidMount() {
-    const data = await this.performTimeConsumingTask();
+  componentDidMount() {
+    this.requestUserPermission();
+    this.LoadHandlers();
+  }
 
-    //
-    PushNotification.configure({
-      // (optional) Called when Token is generated (iOS and Android)
-      onRegister: function (token) {
-        console.warn('TOKEN:', token);
-      },
+  requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function (notification) {
-        console.warn('NOTIFICATION:', notification);
-        //  notification.finish(PushNotificationIOS.FetchResult.NoData);
-      },
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  };
 
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
-
-      popInitialNotification: true,
-      requestPermissions: true,
+  LoadHandlers() {
+    messaging().onNotificationOpenedApp((remoteMessage) => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
     });
-    //
 
-    // initNotifications();
-    const settings = await messaging().requestPermission();
-
+    // Check whether an initial notification is available
     messaging()
-      .getToken()
-      .then((token) => {
-        // AsyncStorage.setItem('Token', token);
+      .getInitialNotification()
+      .then((remoteMessage) => {
+        if (remoteMessage) {
+        }
       });
 
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      if (Platform.OS === 'android') {
-        let Titulo = remoteMessage.notification.title;
-        let Descripcion = remoteMessage.notification.body;
+    messaging().onMessage(async (remoteMessage) => {
+      /*  showMessage({
+        message: remoteMessage.notification.title,
+        description: remoteMessage.notification.body,
+        type: 'success',
+        autoHide: false,
+      }); */
 
-        this.testfunction(Titulo, Descripcion);
-      } else {
-        let Titulo = remoteMessage.notification.title;
-        let Descripcion = remoteMessage.notification.body;
-
-        this.testfunction(Titulo, Descripcion);
-      }
+      let Titulo = remoteMessage.notification.title;
+      let Descripcion = remoteMessage.notification.body;
+      console.warn(Titulo);
+      this.testfunction(Titulo, Descripcion);
     });
-
-    return unsubscribe;
   }
 
   testfunction = (Titulo, Descripcion) => {
@@ -96,16 +91,16 @@ class SplashScreen extends Component {
         message: Descripcion,
       });
 
-      //let Badget = DatosUser.Badget + 1;
+      // let Badget = DatosUser.Badget + 1;
     } else {
       //let Badget = DatosUser.Badget + 1;
-      /*  
-        PushNotificationIOS.presentLocalNotification({
-            alertTitle:Titulo,
-            alertBody: Descripcion,
-            fireDate: new Date().toISOString(),
-            applicationIconBadgeNumber: Badget
-          }); */
+      /* 
+      PushNotificationIOS.presentLocalNotification({
+        alertTitle: Titulo,
+        alertBody: Descripcion,
+        fireDate: new Date().toISOString(),
+        applicationIconBadgeNumber: Badget,
+      }); */
     }
   };
 
