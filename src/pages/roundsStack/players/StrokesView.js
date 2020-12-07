@@ -27,7 +27,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, QuitarAmigos, ListaInvitados, ListadoAmigosRonda } from '../../../Services/Services'
+import { ListaAmigos, QuitarAmigos, ListaInvitados, ListadoRondaStroker } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -76,21 +76,14 @@ export default function RoundsView(route) {
     console.warn(idUsu)
     console.warn(IDRound)
     console.warn(IDUsuario)
-    ListadoAmigosRonda(idUsu, IDRound)
+    ListadoRondaStroker(IDRound, IDUsuario)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      idUsu: item.IDUsuario,
-                      id: item.PlayerId,
-                      nombre: item.usu_nombre,
-                      apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
-                      ghinnumber: item.usu_ghinnumber,
-                      photo: item.usu_imagen,
-                      handicap: item.usu_handicapindex,
-                      strokes: item.usu_golpesventaja
+                      strokes: item.P1vsP2Strokes
                     }
                 ))
                 setPlayers(list)
@@ -451,7 +444,7 @@ export default function RoundsView(route) {
                               keyboardType="numeric"
                               returnKeyType='done'
                               onChangeText={(strokesRegAbs) => setStrokesRegAbs(strokesRegAbs)}
-                              value={strokesRegAbs.toString()}
+                              value={item.strokes.toString()}
                               selectTextOnFocus={true}
                             />
                             </View>

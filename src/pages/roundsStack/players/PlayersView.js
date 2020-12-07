@@ -45,8 +45,9 @@ const {
       lastName,
       nickname,
       ghinNumber,
-      selectPlayer,
+      successSavePlayer,
       cancel,
+      samePlayer,
       continuar
     } = Dictionary;
 
@@ -222,7 +223,25 @@ export default function RoundsView(route) {
     console.warn(IDCourse)
     console.warn(IDRound)
     console.warn(playerId)
-    Alert.alert(
+    AgregarAmigosRonda(IDRound,idUsu,playerId,0.0,'',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+            .then((res) => {
+              console.warn(res)
+                if(res.estatus == 1){
+                    showMessage({
+                      message: successSavePlayer[language],
+                      type:'success',
+                  });
+                    navigation.goBack()
+                  //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
+                }
+                else{
+                  showMessage({
+                      message: samePlayer[language],
+                      type:'danger',
+                  });
+                }
+            })
+    /*Alert.alert(
       "DragonGolf",
       selectPlayer[language],
       [
@@ -246,17 +265,16 @@ export default function RoundsView(route) {
                 }
                 else{
                   showMessage({
-                      message: "Ocurrió un error, intente más tarde",
+                      message: "Ocurrió un samePlayer, intente más tarde",
                       type:'danger',
                   });
-                  navig
                 }
             })
           },
         },
       ],
       { cancelable: false }
-    );
+    );*/
   }
 
   function searchFilterFunction(text,busqueda){

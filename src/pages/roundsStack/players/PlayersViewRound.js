@@ -25,7 +25,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, QuitarAmigos, ListaInvitados, ListadoAmigosRonda } from '../../../Services/Services'
+import { ListaAmigos, EliminarAmigosRonda, ListaInvitados, ListadoAmigosRonda } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -95,24 +95,33 @@ export default function RoundsView(route) {
   }
 
   function finalizar(){
-    Alert.alert(
-      "DragonGolf",
-      exitRound[language],
-      [
-        {
-          text: cancel[language],
-          onPress: () => {
+    console.warn(players.length)
+    if(players.length<2){
+      showMessage({
+        message: needTwoPlayers[language],
+        type:'warning',
+      });
+    }
+    else{
+      Alert.alert(
+        "DragonGolf",
+        exitRound[language],
+        [
+          {
+            text: cancel[language],
+            onPress: () => {
+            },
           },
-        },
-        {
-          text: continuar[language],
-          onPress: () => {
-            navigation.navigate('RoundsStack')
-          },
-        }
-      ],
-      { cancelable: true }
-    );
+          {
+            text: continuar[language],
+            onPress: () => {
+              navigation.navigate('RoundsStack')
+            },
+          }
+        ],
+        { cancelable: true }
+      );
+    }
   }
     
 
@@ -192,11 +201,10 @@ export default function RoundsView(route) {
     }
   }
 
-  async function Elimina(IDUsuarioFav){
-    let idUsu = await AsyncStorage.getItem('usu_id')
+  async function Elimina(PlayerId){
     Alert.alert(
       "DragonGolf",
-      "¿Desea eliminar este jugador de su lista de amigos?",
+      "¿Desea eliminar este jugador de la ronda?",
       [
         {
           text: "Cancelar",
@@ -206,7 +214,7 @@ export default function RoundsView(route) {
         {
           text: "Eliminar",
           onPress: () => {
-            QuitarAmigos(IDUsuarioFav,idUsu)
+            EliminarAmigosRonda(IDRound,PlayerId)
                 .then((res) => {
                   console.warn(res)
                     if(res.estatus == 1){
@@ -214,7 +222,7 @@ export default function RoundsView(route) {
                         message: "Jugador eliminado correctamente",
                         type:'success',
                       });
-                      ListadoJugadores()
+                      ListadoTodos()
                     }
                 })
           },
@@ -271,7 +279,8 @@ export default function RoundsView(route) {
       FriendsinRound,
       exitRound,
       cancel,
-      continuar
+      continuar,
+      needTwoPlayers
     } = Dictionary;
 
     return (
@@ -421,7 +430,7 @@ export default function RoundsView(route) {
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
                       </View>
                       <View>
-                        <TouchableOpacity style={{margin:20, marginTop:10}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.idUsu, strokes:item.strokes})}>
+                        <TouchableOpacity style={{margin:20, marginTop:10}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes})}>
                           <MaterialIcon name={'info-outline'} size={25} color={Colors.Primary} />
                         </TouchableOpacity>
                         {item.idUsu!=item.id?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginHorizontal:20}}>{'Strokes: '+item.strokes}</Text>:null}
@@ -440,11 +449,11 @@ export default function RoundsView(route) {
                       </View>
                     </View>
                   </TouchableOpacity>
-            {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
               </TouchableOpacity>
-            </View>*/}
+            </View>
           </ScrollView>
         </View>
               }

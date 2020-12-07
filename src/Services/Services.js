@@ -732,6 +732,44 @@ export const QuitarAmigos = (IDUsuarioFav,IDUsuario) => {
                 });
 };
 
+export const EliminarAmigosRonda = (IDRounds,PlayerId) => {
+    const URL = RutaBaseAB + "/EliminarAmigosRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRounds: IDRounds,
+                    PlayerId: PlayerId
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const ListadoRondaStroker = (IDRound,Player1) => {
+    const URL = RutaBaseAB + "/ListadoRondaStroker";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: IDRound,
+                    Player1: Player1
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ActualizarHoles = (IDTees,Arreglo) => {
     const URL = RutaBaseAB + "/ActualizarHoles";
     return fetch(URL, {
