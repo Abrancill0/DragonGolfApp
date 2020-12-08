@@ -425,14 +425,14 @@ export default function RoundsView(route) {
                           <View style={{flex:1, alignSelf:'center', marginHorizontal:2}}>
                             <Button
                               title={signoMas?'+':'-'}
-                              onPress={() => setStrokesRegAbs(strokesRegAbs + 0.5)}
+                              onPress={() => item.strokes=item.strokes+0.5/*setStrokesRegAbs(strokesRegAbs + 0.5)*/}
                               color={Colors.Primary}
                             />
                           </View>
                           <View style={{flex:1, alignSelf:'center'}}>
                             <Button
                               title={signoMenos?'+':'-'}
-                              onPress={() => setStrokesRegAbs(strokesRegAbs - 0.5)}
+                              onPress={() => item.strokes=item.strokes-0.5/*setStrokesRegAbs(strokesRegAbs - 0.5)*/}
                               color={Colors.Primary}
                             />
                           </View>
@@ -443,8 +443,8 @@ export default function RoundsView(route) {
                               placeholder="0"
                               keyboardType="numeric"
                               returnKeyType='done'
-                              onChangeText={(strokesRegAbs) => setStrokesRegAbs(strokesRegAbs)}
-                              value={item.strokes.toString()}
+                              //onChangeText={(strokesRegAbs) => setStrokesRegAbs(strokesRegAbs)}
+                              defaultValue={item.strokes.toString()}
                               selectTextOnFocus={true}
                             />
                             </View>
