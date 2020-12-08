@@ -1,26 +1,74 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList } from 'react-native';
+import { View, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
 import PlayerScoreComponent from './PlayerScoreComponent';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import HorizontalScoreComponent from './HorizontalScoreComponent';
+import { ListadoAmigosRonda } from '../../../Services/Services'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class HorizontalScoreView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          language: '',
+          players: []
         };
-    }
+      }
+
+      async componentDidMount() {
+        this.ListadoTodos()
+       }
+
+      ListadoTodos = async () => {
+        let idUsu = await AsyncStorage.getItem('usu_id')
+        let language = await AsyncStorage.getItem('language')
+        let IDRound = await AsyncStorage.getItem('IDRound')
+        this.setState({
+            language:language
+        })
+        console.warn(idUsu)
+        console.warn(IDRound)
+        ListadoAmigosRonda(idUsu, IDRound)
+            .then((res) => {
+              console.warn(res)
+                if(res.estatus == 1){
+                    const list = res.Result.map(item => (
+                        {
+                          idUsu: item.IDUsuario,
+                          id: item.PlayerId,
+                          nombre: item.usu_nombre,
+                          apellido: item.usu_apellido_paterno,
+                          nickname: item.usu_nickname,
+                          ghinnumber: item.usu_ghinnumber,
+                          photo: item.usu_imagen,
+                          handicap: item.usu_handicapindex,
+                          strokes: item.usu_golpesventaja
+                        }
+                    ))
+                    this.setState({
+                      players:list
+                    })
+                }
+                else{
+                  this.setState({
+                    players:[]
+                  })
+                }
+            })
+      }
 
     render() {
 
         const {
-            language,
-            course,
-            holes,
-            players
+            holes
         } = this.props;
+
+        const {
+            language,
+            players
+        } = this.state;
 
         const {
             emptyRoundPlayerList,
@@ -41,7 +89,7 @@ class HorizontalScoreView extends Component {
                             <View style={{ height: 40 }} />
                             {players.map(item =>
                                 <View key={item.id.toString()} style={[styles.playerScoreNameView, {height: 55, justifyContent: 'flex-end'}]}>
-                                    <Text style={styles.playerScoreNameText} numberOfLines={1} adjustsFontSizeToFit >{item.nick_name}</Text>
+                                    <Text style={styles.playerScoreNameText} numberOfLines={1} adjustsFontSizeToFit >{item.nickname}</Text>
                                 </View>
                             )}
                         </View>
@@ -68,14 +116,5 @@ class HorizontalScoreView extends Component {
         );
     }
 }
-
-const mapStateToProps = state => ({
-    language: state.reducerLanguage,
-    course: state.reducerRoundCourse,
-    players: state.reducerRoundPlayers,
-});
-
-const mapDispatchToProps = dispatch => ({
-});
 
 export default HorizontalScoreView;

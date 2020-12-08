@@ -196,7 +196,7 @@ export default function RoundsView(route) {
             renderItem={({item}) =>
             <View style={{flex:.2,padding:5}}>
               <ScrollView
-                horizontal={true}
+                horizontal={false}
                 showsHorizontalScrollIndicator={false}>
               <TouchableOpacity activeOpacity={0} onPress={()=>agregarTee(item.id)} onLongPress={()=> navigation.navigate('TeeDataViewRound', {IDTees: item.id, NameTee: item.nombre,IDCourse: IDCourse})}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:90,backgroundColor:'#f1f2f2',marginVertical:10}}>

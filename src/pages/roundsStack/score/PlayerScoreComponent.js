@@ -209,7 +209,8 @@ class PlayerScoreComponent extends Component {
     }
 
     onChangeScore = (score) => {
-            if (parseInt(score ? score : 1) > 0) {
+        this.setState({ holeScore: score.toString()});
+            /*if (parseInt(score ? score : 1) > 0) {
                 const { holeInfo, index, hole } = this.props;
                 const par = holeInfo[index].holes[hole - 1].par;
                 score = score ? parseInt(score) : '';
@@ -218,7 +219,7 @@ class PlayerScoreComponent extends Component {
                 const inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ holeScore: score.toString(), buttonIndex, inputStyle, inputBorder });
                 this.saveScore(score);
-            }
+            }*/
     }
 
     saveScore = (score) => {

@@ -409,9 +409,9 @@ export default function RoundsView(route) {
             renderItem={({item}) =>
             <View style={{flex:.2,padding:5}}>
               <ScrollView
-                horizontal={true}
+                horizontal={false}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} /*onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}*/>
+              <View /*activeOpacity={0} /*onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}*/>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>
@@ -438,6 +438,7 @@ export default function RoundsView(route) {
                           </View>
                           <View style={{flex:0.9, paddingLeft:5}}>
                             <TextInput
+                              editable={false}
                               style={styles3.costInput}
                               selectionColor={Colors.Secondary}
                               placeholder="0"
@@ -473,7 +474,7 @@ export default function RoundsView(route) {
                       </View>
                       </View>
                     </View>
-                  </TouchableOpacity>
+                  </View>
             {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />

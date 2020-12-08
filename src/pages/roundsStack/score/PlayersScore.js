@@ -94,12 +94,4 @@ class PlayersScore extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  players: state.reducerRoundPlayers
-});
-
-const mapDispatchToProps = dispatch => ({
-});
-
 export default PlayersScore;

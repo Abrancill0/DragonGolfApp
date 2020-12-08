@@ -98,7 +98,7 @@ class HorizontalScoreComponent extends Component {
                         <TextInput
                             style={inputStyle}
                             maxLength={2}
-                            value={holeScore}
+                            value={holeScore.toString()}
                             onChangeText={this.onChangeScore}
                             keyboardType='number-pad'
                         />
@@ -136,7 +136,8 @@ class HorizontalScoreComponent extends Component {
     }
 
     onChangeScore = (score) => {
-            if (parseInt(score ? score : 1) > 0) {
+        this.setState({ holeScore: score.toString()});
+            /*if (parseInt(score ? score : 1) > 0) {
                 const { holeInfo, index, hole } = this.props;
                 const par = holeInfo[index].holes[hole - 1].par;
                 score = score ? parseInt(score) : '';
@@ -144,7 +145,7 @@ class HorizontalScoreComponent extends Component {
                 const inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ holeScore: score.toString(), inputStyle, inputBorder });
                 this.saveScore(score);
-            }
+            }*/
     }
 
     saveScore = (score) => {
