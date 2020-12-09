@@ -27,7 +27,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, QuitarAmigos, ListaInvitados, ListadoRondaStroker } from '../../../Services/Services'
+import { ListaAmigos, ActualizaStrokerPvPRonda, ListaInvitados, ListadoRondaStroker } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -82,6 +82,9 @@ export default function RoundsView(route) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
+                      Player1Id: item.Player1Id,
+                      Player2Id: item.Player2Id,
+                      RoundId: item.RoundId,
                       nickname: item.usu_nickname,
                       strokes: item.P1vsP2Strokes
                     }
@@ -96,7 +99,8 @@ export default function RoundsView(route) {
   }
 
   function finalizar(){
-    Alert.alert(
+    navigation.goBack()
+    /*Alert.alert(
       "DragonGolf",
       exitRound[language],
       [
@@ -113,7 +117,7 @@ export default function RoundsView(route) {
         }
       ],
       { cancelable: true }
-    );
+    );*/
   }
     
 
@@ -193,9 +197,25 @@ export default function RoundsView(route) {
     }
   }
 
-  async function Elimina(IDUsuarioFav){
-    let idUsu = await AsyncStorage.getItem('usu_id')
-    Alert.alert(
+  async function Elimina(RoundId, Player1Id, Player2Id, strokes){
+    ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, strokes)
+      .then((res) => {
+        console.warn(res)
+          if(res.estatus == 1){
+            showMessage({
+              message: successSaveTeeData[language],
+              type:'success',
+            });
+            ListadoTodos()
+          }
+          else{
+            showMessage({
+              message: error[language],
+              type:'danger',
+            });
+          }
+      })
+    /*Alert.alert(
       "DragonGolf",
       "¿Desea eliminar este jugador de su lista de amigos?",
       [
@@ -207,7 +227,7 @@ export default function RoundsView(route) {
         {
           text: "Eliminar",
           onPress: () => {
-            QuitarAmigos(IDUsuarioFav,idUsu)
+            ActualizaStrokerPvPRonda(IDUsuarioFav,idUsu)
                 .then((res) => {
                   console.warn(res)
                     if(res.estatus == 1){
@@ -222,7 +242,7 @@ export default function RoundsView(route) {
         }
       ],
       { cancelable: false }
-    );
+    );*/
   }
 
   function searchFilterFunction(text,busqueda){
@@ -269,11 +289,14 @@ export default function RoundsView(route) {
     const {
       emptyPlayerList,
       finish,
+      save,
       strokesPlayer,
       exitRound,
       cancel,
       continuar,
-      strokes
+      strokes,
+      error,
+      successSaveTeeData
     } = Dictionary;
 
     return (
@@ -409,14 +432,14 @@ export default function RoundsView(route) {
             renderItem={({item}) =>
             <View style={{flex:.2,padding:5}}>
               <ScrollView
-                horizontal={false}
+                horizontal={true}
                 showsHorizontalScrollIndicator={false}>
               <View /*activeOpacity={0} /*onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}*/>
-                <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>
-                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
-                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
+                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:5}}>
+                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:5}}>
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nickname}</Text>
                         <View style={styles3.switchView}>
                           <Text style={styles3.question}>{strokes[language]}</Text>
@@ -475,11 +498,11 @@ export default function RoundsView(route) {
                       </View>
                     </View>
                   </View>
-            {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
-                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity style={{flex:1,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}>
+                <FontAwesome name={'save'} size={30} color={Colors.White} />
               </TouchableOpacity>
-            </View>*/}
+            </View>
           </ScrollView>
         </View>
               }
@@ -495,7 +518,7 @@ export default function RoundsView(route) {
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         <View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
-          <DragonButton title={finish[language]} /*onPress={()=>finalizar()} *//>
+          <DragonButton title={finish[language]} onPress={()=>finalizar()}/>
         </View>
         
       </ScrollView>}

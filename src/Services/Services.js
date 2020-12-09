@@ -653,6 +653,27 @@ export const AgregarTeesRonda = (IDRound, IDUsuario, PlayerId, IDTees) => {
                 });
 };
 
+export const ActualizaStrokerPvPRonda = (RoundId, Player1Id, Player2Id, stroker) => {
+    const URL = RutaBaseAB + "/ActualizaStrokerPvPRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: RoundId,
+                    Player1: Player1Id,
+                    Player2: Player2Id,
+                    stroker: stroker
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const AgregarAmigosRonda = (IDRounds, IDUsuario, PlayerId, RoundHandicap, PlayerTee, ScoreHole1, ScoreHole2, ScoreHole3, ScoreHole4, ScoreHole5, ScoreHole6, ScoreHole7, ScoreHole8, ScoreHole9, ScoreHole10, ScoreHole11, ScoreHole12, ScoreHole13, ScoreHole14, ScoreHole15, ScoreHole16, ScoreHole17, ScoreHole18) => {
     const URL = RutaBaseAB + "/AgregarAmigosRonda";
     return fetch(URL, {

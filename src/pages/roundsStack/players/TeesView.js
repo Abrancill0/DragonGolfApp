@@ -103,14 +103,14 @@ export default function RoundsView(route) {
               console.warn(res)
                 if(res.estatus == 1){
                     showMessage({
-                      message: "Tee agreado correctamente",
+                      message: successSaveTeeData[language],
                       type:'success',
                   });
                   navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
                 }
                 else{
                   showMessage({
-                      message: "Ocurrió un error, intente más tarde",
+                      message: error[language],
                       type:'danger',
                   });
                   navig
@@ -156,7 +156,9 @@ export default function RoundsView(route) {
       SelectTee2,
       SelectTee3,
       cancel,
-      continuar
+      continuar,
+      successSaveTeeData,
+      error
     } = Dictionary;
 
     return (

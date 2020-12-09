@@ -32,6 +32,7 @@ import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from './styles';
+import styles4 from './styles4';
 import { showMessage } from "react-native-flash-message";
 import DragonButton from '../../global/DragonButton';
 
@@ -76,13 +77,12 @@ export default function RoundsView(route) {
                     {
                       idUsu: item.IDUsuario,
                       id: item.PlayerId,
-                      nombre: item.usu_nombre,
-                      apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
-                      ghinnumber: item.usu_ghinnumber,
-                      photo: item.usu_imagen,
                       handicap: item.usu_handicapindex,
-                      strokes: item.usu_golpesventaja
+                      strokes: item.usu_golpesventaja,
+                      tee: item.PlayerTee,
+                      colorTee: item.Te_TeeColor,
+                      handicapAuto: item.handicapAuto
                     }
                 ))
                 setPlayers(list)
@@ -424,16 +424,18 @@ export default function RoundsView(route) {
                     <View style={{flex:1}}>
                       <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
                       <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nickname}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
+                        <View style={[styles4.teeColorView],{flex:.2}}>
+                          <View style={[styles4.colorSquare, { backgroundColor: item.colorTee, marginVertical:2}]} />
+                        </View>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginLeft:20 }}>{item.tee}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicapAjs: '+item.handicapAuto}</Text>
                       </View>
                       <View>
                         <TouchableOpacity style={{margin:20, marginTop:10}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes})}>
                           <MaterialIcon name={'info-outline'} size={25} color={Colors.Primary} />
                         </TouchableOpacity>
-                        {item.idUsu!=item.id?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginHorizontal:20}}>{'Strokes: '+item.strokes}</Text>:null}
+                        {item.idUsu!=item.id?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginHorizontal:20}}>{'Strokes: '+item.strokes}</Text>:<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginHorizontal:20}}>                 </Text>}
                         {/*<Image
                           source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
                           style={{
