@@ -30,6 +30,7 @@ import SQLite from 'react-native-sqlite-storage';
 //Assets
 import HeaderImage from '../../../../assets/globals/header.jpg';
 import { useNavigation } from "@react-navigation/native";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const {
             email,
@@ -52,6 +53,7 @@ export default function Login({ logeadoHandler }) {
   const [emailLogin, setemailLogin] = useState("");
   const [re, setre] = useState(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   const [passwordLogin, setpasswordLogin] = useState("");
+  const [carga, setStatus] = useState(false);
   //const [showPassword, setShowPassword] = useState(false);
   const [language, setlanguage] = useState('es');
   const [headerHeight, setheaderHeight] = useState( new Animated.Value(240));
@@ -107,7 +109,8 @@ export default function Login({ logeadoHandler }) {
 
         //console.warn(emailLogin)
         //console.warn(passwordLogin)
-
+        
+        setStatus(true)
         LogearseAB(emailLogin, passwordLogin)
           .then((res) => {
             //console.warn(res)
@@ -129,6 +132,7 @@ export default function Login({ logeadoHandler }) {
 
                 setTimeout(
                   () => { RNRestart.Restart();
+                    setStatus(false)
                    },
                   1000
                 )
@@ -175,12 +179,14 @@ export default function Login({ logeadoHandler }) {
               setpasswordLogin("");
               refInput.current.clear();
               passInput.current.clear();
+              setStatus(false)
             }
             else {
               showMessage({
                     message: res.mensaje,
                     type: "danger",
                   });
+              setStatus(false)
             }
           } catch (e) {
             //console.warn(e)
@@ -188,17 +194,16 @@ export default function Login({ logeadoHandler }) {
                   message: "Ocurrió un error, favor de intentar más tarde" + e,
                   type: "danger",
                 });
+                setStatus(false)
               }
           });
     }
 
   return (
             <View style={{ flex: 1 }}>
-                <StatusBar
-                    backgroundColor="transparent"
-                    barStyle="light-content"
-                    translucent
-                />
+                <Spinner
+                  visible={carga}
+                  color={Colors.Primary} />
                 <Animated.View
                     style={[styles.header, { height: headerHeight }]}
                 >

@@ -22,7 +22,8 @@ export const LogearseAB = (Usuario,Pass) => {
       },
       body: JSON.stringify({
         Usuario: Usuario,
-        Pass: Pass
+        Pass: Pass,
+        usu_token: ''
       }),
     })
     .then((response) => response.json())

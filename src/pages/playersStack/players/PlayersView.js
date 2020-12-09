@@ -33,6 +33,7 @@ import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from './styles';
 import { showMessage } from "react-native-flash-message";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const {
       emptyPlayerList,
@@ -50,6 +51,7 @@ export default function RoundsView(route) {
 
     const navigation = useNavigation();
     const [players, setPlayers] = useState([]);
+    const [carga, setStatus] = useState(false);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
@@ -72,6 +74,7 @@ export default function RoundsView(route) {
       }, [navigation]);
 
   async function ListadoTodos() {
+    setStatus(true)
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
     setButtons([all[language], friends[language], guests[language]])
@@ -96,9 +99,11 @@ export default function RoundsView(route) {
                 ))
                 setPlayers(list)
                 setArrayholder(list)
+                setStatus(false)
             }
             else{
               setPlayers([])
+              setStatus(false)
             }
         })
   }
@@ -259,11 +264,9 @@ export default function RoundsView(route) {
 
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar
-          backgroundColor="#FFFFFF"
-          barStyle="dark-content"
-          translucent={false}
-        />
+        <Spinner
+            visible={carga}
+            color={Colors.Primary} />
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
@@ -393,7 +396,7 @@ export default function RoundsView(route) {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
               <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('PlayerInfo',{item:item})}>
-                <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:50,marginVertical:10}}>
+                <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>
                       <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>

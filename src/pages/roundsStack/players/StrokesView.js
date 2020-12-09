@@ -198,6 +198,10 @@ export default function RoundsView(route) {
   }
 
   async function Elimina(RoundId, Player1Id, Player2Id, strokes){
+    console.warn('R: '+RoundId)
+    console.warn('P1: '+Player1Id)
+    console.warn('P2: '+Player2Id)
+    console.warn('S: '+strokes)
     ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, strokes)
       .then((res) => {
         console.warn(res)
