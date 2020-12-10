@@ -74,6 +74,66 @@ class PlayerScoreComponent extends Component {
         }
     }
 
+    renderPar(){
+        const {
+            item,
+            hole
+        } = this.props;
+
+        switch(hole){
+            case '1': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole1}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole1}</Text>
+                    </View>
+                )
+            break;
+            case '2': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole2}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole2}</Text>
+                    </View>
+                )
+            break;
+            case '3': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole3}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole3}</Text>
+                    </View>
+                )
+            break;
+            case '4': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole4}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole4}</Text>
+                    </View>
+                )
+            break;
+            case '5': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole5}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.ScoreHole5}</Text>
+                    </View>
+                )
+            break;
+        }
+    }
+
     render() {
 
         const {
@@ -85,17 +145,14 @@ class PlayerScoreComponent extends Component {
         } = this.state;
 
         const {
-            item,
+            item
         } = this.props;
 
         return (
             <View>
-                <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
-                    <Text>PAR: </Text>
-                    <Text style={styles.dataValues}>{par}</Text>
-                    <Text>ADV: </Text>
-                    <Text style={styles.dataValues}>{adv}</Text>
-                </View>
+                {
+                    this.renderPar()
+                }
                 <View style={styles.playerScoreView}>
                     <View style={styles.playerScoreNameView}>
                         <Text style={styles.playerScoreNameText} numberOfLines={1} adjustsFontSizeToFit >{item.nickname}</Text>

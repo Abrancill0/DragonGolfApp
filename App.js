@@ -22,6 +22,7 @@ import PlayersView from './src/pages/playersStack/players/PlayersView'
 import NotificationsView from './src/pages/playersStack/players/NotificationsView'
 import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
 import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRound'
+import PlayersViewRoundsList2 from './src/pages/roundsStack/players/PlayersViewRound2'
 import StrokesView from './src/pages/roundsStack/players/StrokesView'
 import ScoreView from './src/pages/roundsStack/score/ScoreView'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
@@ -364,7 +365,7 @@ export default class App extends Component {
     function RoundTab() {
       return (
         <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-          <BottomTab.Screen name="Settings" component={PlayersViewRoundsList} 
+          <BottomTab.Screen name="Settings" component={PlayersViewRoundsList2} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -879,6 +880,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='PlayersViewRoundsList' component={PlayersViewRoundsList}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='PlayersViewRoundsList2' component={PlayersViewRoundsList2}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

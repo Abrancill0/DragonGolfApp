@@ -44,7 +44,25 @@ class PlayersScore extends Component {
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
                       handicap: item.usu_handicapindex,
-                      strokes: item.usu_golpesventaja
+                      strokes: item.usu_golpesventaja,
+                      ScoreHole1: item.ScoreHole1,
+                      ScoreHole2: item.ScoreHole2,
+                      ScoreHole3: item.ScoreHole3,
+                      ScoreHole4: item.ScoreHole4,
+                      ScoreHole5: item.ScoreHole5,
+                      ScoreHole6: item.ScoreHole6,
+                      ScoreHole7: item.ScoreHole7,
+                      ScoreHole8: item.ScoreHole8,
+                      ScoreHole9: item.ScoreHole9,
+                      ScoreHole10: item.ScoreHole10,
+                      ScoreHole11: item.ScoreHole11,
+                      ScoreHole12: item.ScoreHole12,
+                      ScoreHole13: item.ScoreHole13,
+                      ScoreHole14: item.ScoreHole14,
+                      ScoreHole15: item.ScoreHole15,
+                      ScoreHole16: item.ScoreHole16,
+                      ScoreHole17: item.ScoreHole17,
+                      ScoreHole18: item.ScoreHole18,
                     }
                 ))
                 this.setState({
