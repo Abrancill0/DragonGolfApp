@@ -85,9 +85,9 @@ class PlayerScoreComponent extends Component {
                 return (
                     <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
                         <Text>PAR: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole1}</Text>
+                        <Text style={styles.dataValues}>{item.ho_par1}</Text>
                         <Text>ADV: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole1}</Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage1}</Text>
                     </View>
                 )
             break;
@@ -95,9 +95,9 @@ class PlayerScoreComponent extends Component {
                 return (
                     <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
                         <Text>PAR: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole2}</Text>
+                        <Text style={styles.dataValues}>{item.ho_par2}</Text>
                         <Text>ADV: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole2}</Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage2}</Text>
                     </View>
                 )
             break;
@@ -105,9 +105,9 @@ class PlayerScoreComponent extends Component {
                 return (
                     <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
                         <Text>PAR: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole3}</Text>
+                        <Text style={styles.dataValues}>{item.ho_par3}</Text>
                         <Text>ADV: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole3}</Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage3}</Text>
                     </View>
                 )
             break;
@@ -115,9 +115,9 @@ class PlayerScoreComponent extends Component {
                 return (
                     <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
                         <Text>PAR: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole4}</Text>
+                        <Text style={styles.dataValues}>{item.ho_par4}</Text>
                         <Text>ADV: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole4}</Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage4}</Text>
                     </View>
                 )
             break;
@@ -125,9 +125,139 @@ class PlayerScoreComponent extends Component {
                 return (
                     <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
                         <Text>PAR: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole5}</Text>
+                        <Text style={styles.dataValues}>{item.ho_par5}</Text>
                         <Text>ADV: </Text>
-                        <Text style={styles.dataValues}>{item.ScoreHole5}</Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage5}</Text>
+                    </View>
+                )
+            break;
+            case '6': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par6}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage6}</Text>
+                    </View>
+                )
+            break;
+            case '7': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par7}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage7}</Text>
+                    </View>
+                )
+            break;
+            case '8': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par8}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage8}</Text>
+                    </View>
+                )
+            break;
+            case '9': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par9}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage9}</Text>
+                    </View>
+                )
+            break;
+            case '10': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par10}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage10}</Text>
+                    </View>
+                )
+            break;
+            case '11': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par11}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage11}</Text>
+                    </View>
+                )
+            break;
+            case '12': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par12}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage12}</Text>
+                    </View>
+                )
+            break;
+            case '13': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par13}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage13}</Text>
+                    </View>
+                )
+            break;
+            case '14': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par14}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage14}</Text>
+                    </View>
+                )
+            break;
+            case '15': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par15}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage15}</Text>
+                    </View>
+                )
+            break;
+            case '16': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par16}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage16}</Text>
+                    </View>
+                )
+            break;
+            case '17': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par17}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage17}</Text>
+                    </View>
+                )
+            break;
+            case '18': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <Text>PAR: </Text>
+                        <Text style={styles.dataValues}>{item.ho_par18}</Text>
+                        <Text>ADV: </Text>
+                        <Text style={styles.dataValues}>{item.Ho_Advantage18}</Text>
                     </View>
                 )
             break;
@@ -171,25 +301,25 @@ class PlayerScoreComponent extends Component {
                     <View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(0)}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par1,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(1)}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par1,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(2)}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par1,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(3)}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par1,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -230,11 +360,11 @@ class PlayerScoreComponent extends Component {
         }
     }
 
-    onPressButtonGroup = (value) => {
+    onPressButtonGroup = (par, value) => {
+        console.warn(par)
         const { holeScore } = this.state;
         const { holeInfo, index, hole } = this.props;
         this.setState({ buttonIndex: value });
-        let par = 0;
         let bogy = 0;
         let score = 0;
         if (holeInfo) {
