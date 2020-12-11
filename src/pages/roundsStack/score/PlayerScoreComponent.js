@@ -264,6 +264,592 @@ class PlayerScoreComponent extends Component {
         }
     }
 
+    renderBotones(){
+        const {
+            item,
+            hole
+        } = this.props;
+
+        switch(hole){
+            case '1': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par1,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par1,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par1,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par1,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '2': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par2,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par2,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par2,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par2,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '3': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par3,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par3,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par3,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par3,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '4': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par4,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par4,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par4,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par4,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '5': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par5,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par5,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par5,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par5,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '6': 
+                return (
+                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par6,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par6,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par6,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par6,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '7': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par7,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par7,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par7,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par7,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '8': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par8,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par8,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par8,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par8,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '9': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par9,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par9,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par9,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par9,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '10': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par10,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par10,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par10,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par10,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '11': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par11,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par11,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par11,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par11,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '12': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par12,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par12,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par12,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par12,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '13': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par13,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par13,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par13,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par13,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '14': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par14,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par14,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par14,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par14,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '15': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par15,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par15,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par15,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par15,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '16': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par16,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par16,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par16,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par16,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '17': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par17,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par17,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par17,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par17,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+            case '18': 
+                return (
+                     <View style={styles.buttonGroupView}>
+                        <TouchableOpacity
+                            style={styles.birdieButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par18,0)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.parButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par18,1)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.bogeyButtonView}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par18,2)}
+                        >
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.dblButtonView1}
+                            onPress={_ => this.onPressButtonGroup(item.ho_par18,3)}
+                        >
+                            <View style={styles.dblButtonView2}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )
+            break;
+        }
+    }
+
     render() {
 
         const {
@@ -298,34 +884,9 @@ class PlayerScoreComponent extends Component {
                             />
                         </View>
                     </View>
-                    <View style={styles.buttonGroupView}>
-                        <TouchableOpacity
-                            style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par1,0)}
-                        >
-                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par1,1)}
-                        >
-                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par1,2)}
-                        >
-                            <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par1,3)}
-                        >
-                            <View style={styles.dblButtonView2}>
-                                <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                    {
+                        this.renderBotones()
+                    }
                 </View>
             </View>
         );

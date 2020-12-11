@@ -429,13 +429,13 @@ export default function RoundsView(route) {
                           <View style={[styles4.colorSquare, { backgroundColor: item.colorTee, marginVertical:2}]} />
                         </View>
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginLeft:20 }}>{item.tee}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicapAjs: '+item.handicapAuto}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicap: '+item.handicap}</Text>
                       </View>
-                      <View>
-                        <TouchableOpacity style={{margin:20, marginTop:10}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes})}>
-                          <MaterialIcon name={'info-outline'} size={25} color={Colors.Primary} />
+                      <View style={{flex: 1, margin:20, marginTop:10, alignSelf:'center'}}>
+                        <TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes})}>
+                          <MaterialIcon name={'info-outline'} size={27} color={Colors.Primary} />
                         </TouchableOpacity>
-                        {item.idUsu!=item.id?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginHorizontal:20}}>{'Strokes: '+item.strokes}</Text>:<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginHorizontal:20}}>                 </Text>}
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',  margin:20, marginTop:10, alignSelf:'center'}}>{'Strokes: '+item.handicapAuto}</Text>
                         {/*<Image
                           source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
                           style={{

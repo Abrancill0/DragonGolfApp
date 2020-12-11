@@ -6,6 +6,10 @@ import ViewPager from '@react-native-community/viewpager';
 import PlayersScore from './PlayersScore';
 import { NavigationEvents } from 'react-navigation';
 import HorizontalScoreView from './HorizontalScoreView';
+import { ListadoAmigosRonda } from '../../../Services/Services'
+import AsyncStorage from '@react-native-community/async-storage';
+import Spinner from 'react-native-loading-spinner-overlay';
+import Colors from '../../../utils/Colors';
 
 class ScoreView extends Component {
   constructor(props) {
@@ -19,7 +23,9 @@ class ScoreView extends Component {
     props.navigation.setParams({isLandscape});
 
     this.state = {
-      isLandscape
+      isLandscape,
+      players: [],
+      carga:true
     };
 
     this.holes = [];
@@ -31,6 +37,7 @@ class ScoreView extends Component {
   }
 
   componentDidMount() {
+    this.ListadoTodos()
     this.props.navigation.setParams({
       onPressRight: () => this.pager.setPage(1),
       onPressLeft: () => this.pager.setPage(17),
@@ -41,6 +48,82 @@ class ScoreView extends Component {
       this.setState({ isLandscape: width > height });
       this.props.navigation.setParams({isLandscape: width > height});
     });
+  }
+
+  ListadoTodos = async () => {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    let language = await AsyncStorage.getItem('language')
+    let IDRound = await AsyncStorage.getItem('IDRound')
+    this.setState({
+        language:language
+    })
+    console.warn(idUsu)
+    console.warn(IDRound)
+    ListadoAmigosRonda(idUsu, IDRound)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      idUsu: item.IDUsuario,
+                      id: item.PlayerId,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      ghinnumber: item.usu_ghinnumber,
+                      photo: item.usu_imagen,
+                      handicap: item.usu_handicapindex,
+                      strokes: item.usu_golpesventaja,
+                      ho_par1: item.ho_par1,
+                      ho_par2: item.ho_par2,
+                      ho_par3: item.ho_par3,
+                      ho_par4: item.ho_par4,
+                      ho_par5: item.ho_par5,
+                      ho_par6: item.ho_par6,
+                      ho_par7: item.ho_par7,
+                      ho_par8: item.ho_par8,
+                      ho_par9: item.ho_par9,
+                      ho_par10: item.ho_par10,
+                      ho_par11: item.ho_par11,
+                      ho_par12: item.ho_par12,
+                      ho_par13: item.ho_par13,
+                      ho_par14: item.ho_par14,
+                      ho_par15: item.ho_par15,
+                      ho_par16: item.ho_par16,
+                      ho_par17: item.ho_par17,
+                      ho_par18: item.ho_par18,
+                      Ho_Advantage1: item.Ho_Advantage1,
+                      Ho_Advantage2: item.Ho_Advantage2,
+                      Ho_Advantage3: item.Ho_Advantage3,
+                      Ho_Advantage4: item.Ho_Advantage4,
+                      Ho_Advantage5: item.Ho_Advantage5,
+                      Ho_Advantage6: item.Ho_Advantage6,
+                      Ho_Advantage7: item.Ho_Advantage7,
+                      Ho_Advantage8: item.Ho_Advantage8,
+                      Ho_Advantage9: item.Ho_Advantage9,
+                      Ho_Advantage10: item.Ho_Advantage10,
+                      Ho_Advantage11: item.Ho_Advantage11,
+                      Ho_Advantage12: item.Ho_Advantage12,
+                      Ho_Advantage13: item.Ho_Advantage13,
+                      Ho_Advantage14: item.Ho_Advantage14,
+                      Ho_Advantage15: item.Ho_Advantage15,
+                      Ho_Advantage16: item.Ho_Advantage16,
+                      Ho_Advantage17: item.Ho_Advantage17,
+                      Ho_Advantage18: item.Ho_Advantage18,
+                    }
+                ))
+                this.setState({
+                  players:list,
+                  carga:false
+                })
+            }
+            else{
+              this.setState({
+                players:[],
+                carga:false
+              })
+            }
+        })
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -80,10 +163,13 @@ class ScoreView extends Component {
 
   render() {
 
-    const { isLandscape } = this.state;
+    const { isLandscape, players, carga } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
+      <Spinner
+            visible={carga}
+            color={Colors.Primary} />
         {isLandscape ?
           <HorizontalScoreView holes={this.holes} /> :
           <ViewPager
@@ -94,7 +180,7 @@ class ScoreView extends Component {
           >
             {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
-                <PlayersScore item={item.hole} />
+                <PlayersScore item={item.hole} players={players} />
               </View>
             ))}
           </ViewPager>

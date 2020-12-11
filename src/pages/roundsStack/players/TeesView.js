@@ -106,7 +106,8 @@ export default function RoundsView(route) {
                       message: successSaveTeeData[language],
                       type:'success',
                   });
-                  navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
+                    navigation.goBack()
+                  //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
                 }
                 else{
                   showMessage({

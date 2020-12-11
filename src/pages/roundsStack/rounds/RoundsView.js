@@ -77,7 +77,7 @@ export default function RoundsView(route) {
                       fecha: moment(item.Ro_Date).format('DD/MM/YYYY').toString()
                     }
                 ))
-                setRounds(list)
+                setRounds(list.reverse())
                 setArrayholder(list)
                 setStatus(false)
             }

@@ -449,13 +449,6 @@ export default function RoundsView(route) {
                           <Text style={styles3.question}>{strokes[language]}</Text>
                           
                           <View style={styles3.costInputView}>
-                          <View style={{flex:1, alignSelf:'center', marginHorizontal:2}}>
-                            <Button
-                              title={signoMas?'+':'-'}
-                              onPress={() => item.strokes=item.strokes+0.5/*setStrokesRegAbs(strokesRegAbs + 0.5)*/}
-                              color={Colors.Primary}
-                            />
-                          </View>
                           <View style={{flex:1, alignSelf:'center'}}>
                             <Button
                               title={signoMenos?'+':'-'}
@@ -476,6 +469,13 @@ export default function RoundsView(route) {
                               selectTextOnFocus={true}
                             />
                             </View>
+                            <View style={{flex:1, alignSelf:'center', marginHorizontal:2}}>
+                            <Button
+                              title={signoMas?'+':'-'}
+                              onPress={() => item.strokes=item.strokes+0.5/*setStrokesRegAbs(strokesRegAbs + 0.5)*/}
+                              color={Colors.Primary}
+                            />
+                          </View>
                           </View>
                         </View>
                         {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
