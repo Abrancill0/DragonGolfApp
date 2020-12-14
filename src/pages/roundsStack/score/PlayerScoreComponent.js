@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 import styles from './styles';
 import moment from 'moment';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class PlayerScoreComponent extends Component {
     constructor(props) {
@@ -958,6 +959,7 @@ class PlayerScoreComponent extends Component {
 
     onChangeScore = (score) => {
         this.setState({ holeScore: score.toString()});
+        this.saveScore(score);
             /*if (parseInt(score ? score : 1) > 0) {
                 const { holeInfo, index, hole } = this.props;
                 const par = holeInfo[index].holes[hole - 1].par;
@@ -970,7 +972,12 @@ class PlayerScoreComponent extends Component {
             }*/
     }
 
-    saveScore = (score) => {
+    saveScore = async (score) => {
+        let IDRound = await AsyncStorage.getItem('IDRound')
+        console.warn(score)
+        console.warn(this.props.item.id)
+        console.warn(this.props.hole)
+        console.warn(IDRound)
         const member = {
             strokes: score,
             id_sync: '',

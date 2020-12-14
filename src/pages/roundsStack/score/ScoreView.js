@@ -171,7 +171,7 @@ class ScoreView extends Component {
             visible={carga}
             color={Colors.Primary} />
         {isLandscape ?
-          <HorizontalScoreView holes={this.holes} /> :
+          <HorizontalScoreView holes={this.holes} players={players} /> :
           <ViewPager
             initialPage={0/*this.props.initHole - 1*/}
             ref={ref => this.pager = ref}

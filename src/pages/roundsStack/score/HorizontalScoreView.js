@@ -12,62 +12,19 @@ class HorizontalScoreView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          language: '',
-          players: []
+          language: ''
         };
-      }
-
-      async componentDidMount() {
-        this.ListadoTodos()
-       }
-
-      ListadoTodos = async () => {
-        let idUsu = await AsyncStorage.getItem('usu_id')
-        let language = await AsyncStorage.getItem('language')
-        let IDRound = await AsyncStorage.getItem('IDRound')
-        this.setState({
-            language:language
-        })
-        console.warn(idUsu)
-        console.warn(IDRound)
-        ListadoAmigosRonda(idUsu, IDRound)
-            .then((res) => {
-              console.warn(res)
-                if(res.estatus == 1){
-                    const list = res.Result.map(item => (
-                        {
-                          idUsu: item.IDUsuario,
-                          id: item.PlayerId,
-                          nombre: item.usu_nombre,
-                          apellido: item.usu_apellido_paterno,
-                          nickname: item.usu_nickname,
-                          ghinnumber: item.usu_ghinnumber,
-                          photo: item.usu_imagen,
-                          handicap: item.usu_handicapindex,
-                          strokes: item.usu_golpesventaja
-                        }
-                    ))
-                    this.setState({
-                      players:list
-                    })
-                }
-                else{
-                  this.setState({
-                    players:[]
-                  })
-                }
-            })
       }
 
     render() {
 
         const {
-            holes
+            holes,
+            players
         } = this.props;
 
         const {
-            language,
-            players
+            language
         } = this.state;
 
         const {
