@@ -635,6 +635,10 @@ export const Dictionary = {
         'en': 'Are you sure to add this player in this round?',
         'es': '¿Está seguro de agrear este jugador en esta ronda?'
     },
+    deletePlayer: {
+        'en': 'Are you sure you want to delete this player of the round?',
+        'es': '¿Está seguro de eliminar este jugador de la ronda?'
+    },
     selectTee: {
         'en': 'Select Tee for',
         'es': 'Seleccione el Tee para'

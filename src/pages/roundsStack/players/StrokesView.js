@@ -43,6 +43,7 @@ export default function RoundsView(route) {
     const navigation = useNavigation();
     const [IDRound, setIDRound] = useState(route.route.params.IDRound);
     const [IDUsuario, setIDUsuario] = useState(route.route.params.IDUsuario);
+    const [Nickname, setNickname] = useState(route.route.params.Nickname);
     const [players, setPlayers] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
@@ -319,6 +320,7 @@ export default function RoundsView(route) {
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{strokesPlayer[language]}</Text>
+        <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT', color:'#123c5b', alignSelf:'center',backgroundColor:'#f1f2f2',fontWeight:'bold'}}>{Nickname}</Text>
           </View>
           {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRounds', {IDCourse:IDCourse, IDRound:IDRound})}>

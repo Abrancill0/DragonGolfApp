@@ -3,6 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, Platform } from 'react-native'
 import styles from './styles';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
+import DragonButton from '../../global/DragonButton';
+import styles2 from './styles2';
+import { Dictionary } from '../../../utils/Dictionary';
 
 class PlayerScoreComponent extends Component {
     constructor(props) {
@@ -862,7 +865,8 @@ class PlayerScoreComponent extends Component {
         } = this.state;
 
         const {
-            item
+            item,
+            language
         } = this.props;
 
         return (
@@ -889,9 +893,16 @@ class PlayerScoreComponent extends Component {
                         this.renderBotones()
                     }
                 </View>
+                <View style={[styles2.bottomButtom,{margin:20, flex:0.07}]}>
+                  <DragonButton title={Dictionary.save[language]} onPress={this.submit} />
+                </View>
             </View>
         );
     }
+
+    submit = () => {
+        console.warn('Hola')
+      }
 
     setHoleData = (holeInfo, switchAdv) => {
         const { index, hole } = this.props;

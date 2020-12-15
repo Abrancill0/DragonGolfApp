@@ -42,7 +42,7 @@ class PlayersScore extends Component {
           keyExtractor={item => item.id.toString()}
           style={{ flex: 1, paddingVertical: 5 }}
           renderItem={({ item, index }) => (
-            <PlayerScoreComponent item={item} hole={hole} index={index} />
+            <PlayerScoreComponent item={item} hole={hole} index={index} language={language} />
           )}
           ListEmptyComponent={
             <ListEmptyComponent

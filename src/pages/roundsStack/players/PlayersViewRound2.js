@@ -208,22 +208,22 @@ export default function RoundsView(route) {
   async function Elimina(PlayerId){
     Alert.alert(
       "DragonGolf",
-      "¿Desea eliminar este jugador de la ronda?",
+      deletePlayer[language],
       [
         {
-          text: "Cancelar",
+          text: cancel[language],
           onPress: () => {
           },
         },
         {
-          text: "Eliminar",
+          text: continuar[language],
           onPress: () => {
             EliminarAmigosRonda(IDRound,PlayerId)
                 .then((res) => {
                   console.warn(res)
                     if(res.estatus == 1){
                       showMessage({
-                        message: "Jugador eliminado correctamente",
+                        message: deleted[language],
                         type:'success',
                       });
                       ListadoTodos()
@@ -284,7 +284,9 @@ export default function RoundsView(route) {
       exitRound,
       cancel,
       continuar,
-      needTwoPlayers
+      needTwoPlayers,
+      deletePlayer,
+      deleted
     } = Dictionary;
 
     return (
@@ -434,7 +436,7 @@ export default function RoundsView(route) {
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicap: '+item.handicap}</Text>
                       </View>
                       <View style={{flex: 1, margin:20, marginTop:10, alignSelf:'center'}}>
-                        <TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes})}>
+                        <TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
                           <MaterialIcon name={'info-outline'} size={27} color={Colors.Primary} />
                         </TouchableOpacity>
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',  margin:20, marginTop:10, alignSelf:'center'}}>{'Strokes: '+item.handicapAuto}</Text>

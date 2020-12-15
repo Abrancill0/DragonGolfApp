@@ -91,7 +91,7 @@ class HorizontalScoreComponent extends Component {
         return (
             <View>
                 <View style={{ width: '100%', height: 15, alignItems: 'center' }}>
-                    <Text style={styles.advText}>{adv}</Text>
+                    <Text style={styles.advText}>{item.ho_par1}</Text>
                 </View>
                 <View style={[styles.inputView, { height: 40 }]}>
                     <View style={inputBorder}>
