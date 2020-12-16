@@ -500,6 +500,24 @@ export const ListaTodos = (IDUsuario) => {
                 });
 };
 
+export const ListaTodosAgregar = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListaTodosAgregar";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaAmigos = (IDUsuario) => {
     const URL = RutaBaseAB + "/ListaAmigos";
     return fetch(URL, {
@@ -518,7 +536,43 @@ export const ListaAmigos = (IDUsuario) => {
                 });
 };
 
+export const ListaAmigosAgregar = (IDUsuario) => {
+    const URL = RutaBaseAB + "/ListaAmigosAgregar";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaInvitados = (IDUsuarioCrea) => {
+    const URL = RutaBaseAB + "/ListadoInvitados";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuarioCrea: IDUsuarioCrea
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const ListaInvitadosAgregar = (IDUsuarioCrea) => {
     const URL = RutaBaseAB + "/ListadoInvitados";
     return fetch(URL, {
                 method: "POST",

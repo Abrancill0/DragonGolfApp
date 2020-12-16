@@ -25,7 +25,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, QuitarAmigos, ListaInvitados, ListaTodos, AgregarAmigosRonda } from '../../../Services/Services'
+import { ListaAmigosAgregar, QuitarAmigos, ListaInvitadosAgregar, ListaTodosAgregar, AgregarAmigosRonda } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -84,7 +84,7 @@ export default function RoundsView(route) {
     setButtons([all[language], friends[language], guests[language]])
     setLanguage(language)
     console.warn(idUsu)
-    ListaTodos(idUsu)
+    ListaTodosAgregar(idUsu)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -111,7 +111,7 @@ export default function RoundsView(route) {
 
   async function ListadoJugadores() {
     let idUsu = await AsyncStorage.getItem('usu_id')
-    ListaAmigos(idUsu)
+    ListaAmigosAgregar(idUsu)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -137,7 +137,7 @@ export default function RoundsView(route) {
 
   async function ListadoInvitados() {
     let idUsu = await AsyncStorage.getItem('usu_id')
-    ListaInvitados(idUsu)
+    ListaInvitadosAgregar(idUsu)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
