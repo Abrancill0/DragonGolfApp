@@ -1,585 +1,781 @@
 import React, { Component } from 'react';
 import {
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  Text,
-  KeyboardAvoidingView,
-  Platform
+    Text,
+    View,
+    StatusBar,
+    Keyboard,
+    Image,
+    TouchableOpacity,
+    ScrollView,
+    Alert,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
-import { Dictionary } from '../../../utils/Dictionary';
-import { connect } from 'react-redux';
 import { TextField } from 'react-native-material-textfield';
-import ImagePicker from 'react-native-image-picker';
-import PhoneInput from 'react-native-phone-input';
-import * as Validations from '../../../utils/Validations';
+import ImagePicker from "react-native-image-picker";
+import ImageResizer from "react-native-image-resizer";
+import PhoneInput from 'react-native-phone-input'
+import styles from './styles';
+import Colors from '../../../utils/Colors';
+//import * as Validations from '../../../utils/Validations';
+import { Dictionary } from '../../../utils/Dictionary';
 import DragonButton from '../../global/DragonButton';
 import FormatCellphone from '../../../utils/FormatCellphone';
-import moment from "moment";
-import styles from '../addPlayer/styles';
-import Colors from '../../../utils/Colors';
-import { actionUpdatePlayer } from '../../../store/actions';
+import moment from 'moment';
+import { ActualizarInvitados, SubirImagenUsuario } from '../../../Services/Services'
+import { showMessage } from "react-native-flash-message";
+import RNRestart from 'react-native-restart'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-class EditPlayerView extends Component {
-  constructor(props) {
-    super(props);
+const {
+    photo,
+    name,
+    lastName,
+    lastName2,
+    email,
+    nickname,
+    invalidEmail,
+    code,
+    cellphone: cellphoneText,
+    ghinNumber,
+    handicap,
+    save,
+    successSaveTeeData
+        } = Dictionary;
 
-    const item = props.navigation.getParam('item');
-    if (!item) {
-      props.navigation.goBack();
+class EditUserView extends Component {
+
+    constructor(props) {
+
+        super(props);
+        const { cellphone, email, ghinnumber, handicap, id, apellido, nombre, nickname, photo } = props.route.params.userData;
+        //const {getUserData} = props.route.params.getUserData
+        console.warn(id)
+        //console.warn(props.route.params.language)
+        //console.warn(getUserData)
+        let cellphone2 = cellphone;
+        //let formatted = '';
+        //let pureCell = '';
+        //if (cellphone.length > 10) {
+          let  pureCell = cellphone2.substr(2,cellphone2.length);
+        //}
+        let formatted = cellphone2.substr(0, 2);
+        //pureCell = FormatCellphone(pureCell);
+        this.state = {
+            language:props.route.params.language,
+            id,
+            profilePicture: photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + photo } : null,
+            phoneCode: formatted,
+            codeNumber: formatted,//formatted.substring(1, formatted.length),
+            nameReg: nombre,
+            nameError: '',
+            lastNameReg: apellido,
+            lastName2Reg: 'last_name2',
+            lastNameError: '',
+            emailReg: email,
+            emailError: '',
+            nicknameReg: nickname,
+            nicknameError: '',
+            codeError: '',
+            cellphone: pureCell,
+            cellphoneError: '',
+            ghin: ghinnumber.toString(),
+            ghinError: '',
+            handicap: handicap.toString(),
+            handicapError: '',
+            deleting: false,
+            re : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        }
+
+        this.inputs = {};
     }
 
-    this.state = {
-      player: {
-        id: item.id,
-        name: item.name,
-        last_name: item.last_name,
-        email: item.email,
-        ghin_number: item.ghin_number.toString(),
-        nick_name: item.nick_name,
-        handicap: item.handicap.toString(),
-        strokes: item.strokes ? item.strokes.toString() : '0',
-        tee: item.tee ? item.tee.toString() : '0',
-        photo: item.photo,
-        id_sync: null,
-        ultimate_sync: '',
-      },
-      cellphone: this.firstFormatCellphone(),
-      profilePicture: item.photo ? { uri: item.photo } : null,
-      nameError: '',
-      nicknameError: '',
-      handicapError: '',
-      emailError: '',
-      ghinError: '',
-      strokesError: '',
-      teeError: '',
-      phoneCode: '+52',
-      codeNumber: '52',
-      codeError: '',
-      cellphoneError: '',
-      deleting: false,
+
+    static navigationOptions = ({ navigation }) => {
+        const language = this.state.language;
+        return {
+            title: navigation.getParam('Title', Dictionary.editUser[language]),
+        }
     };
 
-    this.inputs = {};
-  }
-
-  static navigationOptions = ({ navigation }) => {
-    const item = navigation.getParam('item', { name: '', lastName: '' });
-    return {
-      title: `${item.name} ${item.last_name}`,
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (this.props.signUpError !== nextProps.signUpError) {
+            if (nextProps.signUpError) {
+                Alert.alert(
+                    nextProps.signUpError.message,
+                    nextProps.signUpError.error,
+                    [{
+                        text: 'Ok', onPress: () => {
+                            this.props.changeLoading(false);
+                            this.props.resetSignUpError();
+                        }
+                    }]
+                );
+                if (nextProps.signUpError.error === Dictionary.emailTaken[this.props.language]) {
+                    this.setState({
+                        emailError: Dictionary.emailTaken[this.props.language],
+                    });
+                }
+                if (nextProps.signUpError.error === Dictionary.ghinNumberTaken[this.props.language]) {
+                    this.setState({
+                        ghinError: Dictionary.ghinNumberTaken[this.props.language],
+                    });
+                }
+                if (nextProps.signUpError.error === Dictionary.nicknameTaken[this.props.language]) {
+                    this.setState({
+                        nicknameError: Dictionary.nicknameTaken[this.props.language],
+                    });
+                }
+            }
+        }
     }
-  };
 
-  render() {
+    render() {
 
-    const {
-      player,
-      profilePicture,
-      nameError,
-      lastNameError,
-      nicknameError,
-      handicapError,
-      emailError,
-      ghinError,
-      strokesError,
-      teeError,
-      phoneCode,
-      codeNumber,
-      codeError,
-      cellphoneError,
-      cellphone
-    } = this.state;
+        const {
+            language,
+            profilePicture,
+            phoneCode,
+            codeNumber,
+            nameError,
+            lastNameError,
+            emailError,
+            nicknameError,
+            codeError,
+            cellphone,
+            cellphoneError,
+            ghinError,
+            handicapError,
+        } = this.state
 
-    const {
-      language
-    } = this.props;
 
-    const {
-      name: nameText,
-      lastName: lastNameText,
-      nickname: nicknameText,
-      ghinNumber,
-      email: emailText,
-      photo,
-      strokes: strokesText,
-      code,
-      cellphone: cellphoneText,
-      save,
-      difTees
-    } = Dictionary;
-
-    return (
-      <View style={{ flex: 1 }}>
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
-          <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
-            <TouchableOpacity
-              style={styles.imagePicker}
-              onPress={this.pickImage}
-            >
-              {profilePicture ?
-                <Image source={profilePicture} style={styles.image} /> :
-                <Text style={styles.imagePickerText}>{photo[language]}</Text>
-              }
-            </TouchableOpacity>
-
-            <View style={styles.formContainer}>
-              <View style={[styles.inputContainer, { flexDirection: 'row', justifyContent: 'space-between' }]}>
-                <View style={styles.twoInputContainer}>
-                  <TextField
-                    ref={ref => this.inputs['name'] = ref}
-                    label={nameText[language]}
-                    tintColor={Colors.Primary}
-                    autoCapitalize="words"
-                    onChangeText={(name) => this.updateTextInput(name, 'name')}
-                    value={player.name}
-                    error={nameError}
-                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                      if (this.nameValidation(text)) {
-                        this.focusNextField('lastName');
-                      }
-                    }}
-                    blurOnSubmit={false}
-                  />
-                </View>
-                <View style={styles.twoInputContainer}>
-                  <TextField
-                    ref={ref => this.inputs['lastName'] = ref}
-                    label={lastNameText[language]}
-                    tintColor={Colors.Primary}
-                    autoCapitalize="words"
-                    autoCorrect={false}
-                    onChangeText={(lastName) => this.updateTextInput(lastName, 'last_name')}
-                    value={player.last_name}
-                    error={lastNameError}
-                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                      if (this.lastNameValidation(text)) {
-                        this.focusNextField('email');
-                      }
-                    }}
-                    blurOnSubmit={false}
-                  />
-                </View>
-              </View>
-
-              <View style={styles.inputContainer}>
-                <TextField
-                  ref={ref => this.inputs['email'] = ref}
-                  label={emailText[language]}
-                  tintColor={Colors.Primary}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  onChangeText={(email) => this.updateTextInput(email, 'email')}
-                  value={player.email}
-                  error={emailError}
-                  onSubmitEditing={({ nativeEvent: { text } }) => {
-                    if (this.emailValidation(text)) {
-                      this.focusNextField('cellphone');
-                    }
-                  }}
-                  blurOnSubmit={false}
+        return (
+            <View style={{ flex: 1 }}>
+                <StatusBar
+                    backgroundColor="#FFFFFF"
+                    barStyle="dark-content"
+                    translucent={false}
                 />
-              </View>
+                <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                </TouchableOpacity>
+                <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
+                    <ScrollView style={{ flex: 1, paddingTop: 20 }} keyboardShouldPersistTaps='handled'>
+                        <TouchableOpacity
+                            style={styles.imagePicker}
+                            onPress={this.pickImage}
+                        >
+                            {profilePicture ?
+                                <Image source={profilePicture} style={styles.image} /> :
+                                <Text style={styles.imagePickerText}>{photo[language]}</Text>
+                            }
+                        </TouchableOpacity>
+                        <View style={styles.formContainer}>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.inputs['name'] = ref}
+                                    label={name[language]}
+                                    value={this.state.nameReg}
+                                    tintColor={Colors.Primary}
+                                    autoCapitalize="words"
+                                    autoCompleteType="name"
+                                    onChangeText={(nameReg) => this.setState({ nameReg })}
+                                    error={nameError}
+                                    onSubmitEditing={({ nativeEvent: { text } }) => {
+                                        this.focusNextField('lastName');
+                                    }}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.inputs['lastName'] = ref}
+                                    label={lastName[language]}
+                                    value={this.state.lastNameReg}
+                                    tintColor={Colors.Primary}
+                                    autoCapitalize="words"
+                                    autoCorrect={false}
+                                    onChangeText={(lastNameReg) => this.setState({ lastNameReg })}
+                                    error={lastNameError}
+                                    onSubmitEditing={({ nativeEvent: { text } }) => {
+                                        this.focusNextField('lastName2');
+                                    }}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            {/*<View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.inputs['lastName2'] = ref}
+                                    label={lastName2[language]}
+                                    value={this.state.lastName2Reg}
+                                    tintColor={Colors.Primary}
+                                    autoCapitalize="words"
+                                    autoCorrect={false}
+                                    onChangeText={(lastName2Reg) => this.setState({ lastName2Reg })}
+                                    error={lastNameError}
+                                    onSubmitEditing={({ nativeEvent: { text } }) => {
+                                        this.focusNextField('nickname');
+                                    }}
+                                    blurOnSubmit={false}
+                                />
+                            </View>*/}
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.inputs['email'] = ref}
+                                    editable={true}
+                                    label={email[language]}
+                                    value={this.state.emailReg}
+                                    tintColor={Colors.Primary}
+                                    keyboardType="email-address"
+                                    autoCapitalize="none"
+                                    autoCompleteType="email"
+                                    autoCorrect={false}
+                                    onChangeText={(emailReg) => this.setState({ emailReg })}
+                                    error={emailError}
+                                    onSubmitEditing={({ nativeEvent: { text } }) => {
+                                            this.focusNextField('nickname');
+                                    }}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.inputs['nickname'] = ref}
+                                    label={nickname[language]}
+                                    tintColor={Colors.Primary}
+                                    value={this.state.nicknameReg}
+                                    autoCapitalize="characters"
+                                    autoCorrect={false}
+                                    maxLength={5}
+                                    onChangeText={(nickname) => this.setState({ nicknameReg: nickname.toUpperCase() })}
+                                    error={nicknameError}
+                                    onSubmitEditing={({ nativeEvent: { text } }) => {
+                                        this.focusNextField('cellphone');
+                                    }}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            <View style={styles.phoneInputContainer}>
+                                <View style={{ width: 90, flexDirection: 'row' }}>
+                                    <View style={{ width: 30, justifyContent: 'center' }}>
+                                        <PhoneInput
+                                            initialCountry='mx'
+                                            value={phoneCode}
+                                            onPressFlag={() => { }}
+                                            textStyle={{ fontSize: 16 }}
+                                            textComponent={() => <View />}
+                                        />
+                                    </View>
+                                    <View style={{ justifyContent: 'center', width: 10 }}>
+                                        <Text style={{ fontSize: 20 }}>+</Text>
+                                    </View>
+                                    <View style={{ width: 50, marginTop: -10 }}>
+                                        <TextField
+                                            label={code[language]}
+                                            tintColor={Colors.Primary}
+                                            keyboardType="number-pad"
+                                            onChangeText={(codeNumber) => {
+                                                this.setState({
+                                                    codeNumber,
+                                                    phoneCode: '+' + codeNumber,
+                                                });
+                                            }}
+                                            value={codeNumber}
+                                            maxLength={2}
+                                            autoCapitalize="none"
+                                            error={codeError}
+                                            onSubmitEditing={({ nativeEvent: { text } }) => this.codeValidation(text)}
+                                            blurOnSubmit={false}
+                                        />
+                                    </View>
+                                </View>
+                                <View style={{ flex: 1, marginTop: -10 }}>
+                                    <TextField
+                                        ref={ref => this.inputs['cellphone'] = ref}
+                                        label={cellphoneText[language]}
+                                        tintColor={Colors.Primary}
+                                        keyboardType="phone-pad"
+                                        maxLength={10}
+                                        autoCapitalize="none"
+                                        onKeyPress={({ nativeEvent: { key } }) => this.setState({ deleting: key === 'Backspace' })}
+                                        onChangeText={this.formatCellphone}
+                                        value={cellphone}
+                                        error={cellphoneError}
+                                        returnKeyType='done'
+                                        onSubmitEditing={({ nativeEvent: { text } }) => {
+                                            this.focusNextField('ghin');
+                                        }}
+                                        blurOnSubmit={false}
+                                    />
+                                </View>
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.inputs['ghin'] = ref}
+                                    label={ghinNumber[language]}
+                                    value={this.state.ghin}
+                                    maxLength={7}
+                                    tintColor={Colors.Primary}
+                                    keyboardType="number-pad"
+                                    autoCapitalize="none"
+                                    onChangeText={(ghin) => this.setState({ ghin })}
+                                    error={ghinError}
+                                    returnKeyType='done'
+                                    onSubmitEditing={({ nativeEvent: { text } }) => {
+                                        this.focusNextField('handicap');
+                                    }}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextField
+                                    ref={ref => this.inputs['handicap'] = ref}
+                                    label={handicap[language]}
+                                    value={this.state.handicap}
+                                    tintColor={Colors.Primary}
+                                    keyboardType="numeric"
+                                    maxLength={5}
+                                    autoCapitalize="none"
+                                    returnKeyType='done'
+                                    onChangeText={(handicap) => this.setState({ handicap })}
+                                    error={handicapError} onSubmitEditing={({ nativeEvent: { text } }) => {
+                                        this.inputs['handicap'].blur();
+                                    }}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            <View style={{ height: 20 }} />
+                        </View>
+                    </ScrollView>
 
-              <View style={styles.phoneInputContainer}>
-                <View style={{ width: 90, flexDirection: 'row' }}>
-                  <View style={{ width: 30, justifyContent: 'center' }}>
-                    <PhoneInput
-                      initialCountry='mx'
-                      value={phoneCode}
-                      onPressFlag={() => { }}
-                      textStyle={{ fontSize: 16 }}
-                      textComponent={() => <View />}
-                    />
-                  </View>
-                  <View style={{ justifyContent: 'center', width: 10 }}>
-                    <Text style={{ fontSize: 20 }}>+</Text>
-                  </View>
-                  <View style={{ width: 50, marginTop: -10 }}>
-                    <TextField
-                      label={code[language]}
-                      tintColor={Colors.Primary}
-                      keyboardType="numeric"
-                      returnKeyType='done'
-                      onChangeText={(codeNumber) => {
-                        this.setState({
-                          codeNumber,
-                          phoneCode: '+' + codeNumber,
-                        });
-                      }}
-                      value={codeNumber}
-                      maxLength={6}
-                      autoCapitalize="none"
-                      error={codeError}
-                      onSubmitEditing={({ nativeEvent: { text } }) => this.codeValidation(text)}
-                      blurOnSubmit={false}
-                    />
-                  </View>
-                </View>
-                <View style={{ flex: 1, marginTop: -10 }}>
-                  <TextField
-                    ref={ref => this.inputs['cellphone'] = ref}
-                    label={cellphoneText[language]}
-                    tintColor={Colors.Primary}
-                    keyboardType="phone-pad"
-                    maxLength={14}
-                    autoCapitalize="none"
-                    onKeyPress={({ nativeEvent: { key } }) => this.setState({ deleting: key === 'Backspace' })}
-                    onChangeText={this.formatCellphone}
-                    value={cellphone}
-                    error={cellphoneError}
-                    returnKeyType='done'
-                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                      if (this.cellphoneValidation(text)) {
-                        this.focusNextField('nickname');
-                      }
-                    }}
-                    blurOnSubmit={false}
-                  />
-                </View>
-              </View>
-
-              <View style={styles.inputContainer}>
-                <TextField
-                  ref={ref => this.inputs['nickname'] = ref}
-                  label={nicknameText[language]}
-                  tintColor={Colors.Primary}
-                  autoCapitalize="characters"
-                  autoCorrect={false}
-                  maxLength={5}
-                  onChangeText={(nickname) => this.updateTextInput(nickname.toUpperCase(), 'nick_name')}
-                  value={player.nick_name}
-                  error={nicknameError}
-                  onSubmitEditing={({ nativeEvent: { text } }) => {
-                    if (this.nicknameValidation(text)) {
-                      this.focusNextField('ghin');
-                    }
-                  }}
-                  blurOnSubmit={false}
-                />
-              </View>
-
-              <View style={[styles.inputContainer, { flexDirection: 'row', justifyContent: 'space-between' }]}>
-                <View style={styles.twoInputContainer}>
-                  <TextField
-                    ref={ref => this.inputs['ghin'] = ref}
-                    label={ghinNumber[language]}
-                    tintColor={Colors.Primary}
-                    autoCapitalize="none"
-                    maxLength={7}
-                    keyboardType="numeric"
-                    returnKeyType='done'
-                    onChangeText={(ghin) => this.updateTextInput(ghin, 'ghin_number')}
-                    value={player.ghin_number}
-                    error={ghinError}
-                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                      if (this.ghinValidation(text)) {
-                        this.focusNextField('handicap');
-                      }
-                    }}
-                    blurOnSubmit={false}
-                  />
-                </View>
-                <View style={styles.twoInputContainer}>
-                  <TextField
-                    ref={ref => this.inputs['handicap'] = ref}
-                    label="Handicap Index"
-                    tintColor={Colors.Primary}
-                    autoCapitalize="none"
-                    keyboardType="numeric"
-                    returnKeyType='done'
-                    onChangeText={(handicap) => this.updateTextInput(handicap, 'handicap')}
-                    value={player.handicap}
-                    error={handicapError}
-                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                      if (this.handicapValidation(text)) {
-                        this.focusNextField('strokes');
-                      }
-                    }}
-                    blurOnSubmit={false}
-                  />
-                </View>
-              </View>
-
-              <View style={[styles.inputContainer, { flexDirection: 'row', justifyContent: 'space-between' }]}>
-                <View style={styles.twoInputContainer}>
-                  <TextField
-                    ref={ref => this.inputs['strokes'] = ref}
-                    label={strokesText[language]}
-                    tintColor={Colors.Primary}
-                    autoCapitalize="none"
-                    keyboardType={Platform.OS === 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                    onChangeText={(strokes) => this.updateTextInput(strokes, 'strokes')}
-                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                      if (this.strokesValidation(text)) {
-                        this.focusNextField('tee');
-                      }
-                    }}
-                    value={player.strokes}
-                    error={strokesError}
-                    blurOnSubmit={false}
-                  />
-                </View>
-                <View style={styles.twoInputContainer}>
-                  <TextField
-                    ref={ref => this.inputs['tee'] = ref}
-                    label={difTees[language]}
-                    tintColor={Colors.Primary}
-                    autoCapitalize="none"
-                    keyboardType={Platform.OS === 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                    onChangeText={(tee) => this.updateTextInput(tee, 'tee')}
-                    onSubmitEditing={({ nativeEvent: { text } }) => {
-                      if (this.teeValidation(text)) {
-                        this.inputs['tee'].blur();
-                      }
-                    }}
-                    value={player.tee}
-                    error={teeError}
-                    blurOnSubmit={false}
-                  />
-                </View>
-              </View>
+                    <View style={styles.bottomButtom}>
+                        <DragonButton title={save[language]} onPress={this.submit} />
+                    </View>
+                </KeyboardAvoidingView>
             </View>
-            <View style={{ height: 20 }} />
-          </ScrollView>
-
-          <View style={styles.bottomButtom}>
-            <DragonButton title={save[language]} onPress={this.submit} />
-          </View>
-        </KeyboardAvoidingView>
-      </View>
-    );
-  }
-
-  focusNextField = (field) => {
-    this.inputs[field].focus();
-  }
-
-  updateTextInput = (text, field) => {
-    const state = this.state;
-    state.player[field] = text;
-    state.player.ultimate_sync = moment().format('YYYY-MM-DD HH:mm:ss');
-    this.setState(state);
-  }
-
-  firstFormatCellphone = () => {
-    let { navigation: { state: { params: { item: { cellphone } } } } } = this.props;
-    let formatted = '';
-    let pureCell = '';
-    if (cellphone.length > 10) {
-      pureCell = cellphone.substr(cellphone.length - 10);
+        )
     }
 
-    formatted = FormatCellphone(pureCell);
-
-    return formatted;
-  }
-
-  formatCellphone = (cellphone) => {
-    //Filter only numbers from the input
-    let cleaned = ('' + cellphone).replace(/\D/g, '');
-
-    //Check if the input is of correct length
-    let match1 = cleaned.match(/^(\d{3})$/);
-    let match2 = cleaned.match(/^(\d{3})(\d{3})$/);
-    let match3 = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-
-    if (match3) {
-      this.setState({ cellphone: '(' + match3[1] + ') ' + match3[2] + '-' + match3[3] });
-    } else if (match2) {
-      if (!this.state.deleting)
-        this.setState({ cellphone: '(' + match2[1] + ') ' + match2[2] + '-' });
-    } else if (match1) {
-      if (!this.state.deleting)
-        this.setState({ cellphone: '(' + match1[1] + ') ' });
-    } else {
-      this.setState({ cellphone: cellphone, deleting: false });
+    focusNextField = (field) => {
+        this.inputs[field].focus();
     }
-  }
 
-  //================Validations==================
+    haveAnAccountAction = () => {
+        Keyboard.dismiss();
+        this.props.navigation.goBack();
+    }
 
-  cellphoneValidation = (cellphone) => {
-    const response = Validations.phoneValidation(cellphone);
-    this.setState({ cellphoneError: !response.ok ? response.error : '' });
+    pickImage = () => {
 
-    return response.ok;
-  }
+         setTimeout(() => {
+          Alert.alert(
+            Dictionary.selectPhoto[this.state.language],
+            '',
+            [
+              { text: Dictionary.cancel[this.state.language], onPress: () => null },
+              { text: Dictionary.takePhoto[this.state.language], onPress: () => this._openCamera() },
+              { text: Dictionary.selectPhoto[this.state.language], onPress: () => this._openGalley() },
+            ],
+            { cancelable: true }
+          )
+        }, 100)
 
-  codeValidation = (code) => {
-    const response = Validations.intNumberValidation(code);
-    this.setState({ codeError: !response.ok ? response.error : '' });
+         /*
+        const options = {
+            title: Dictionary.selectPhoto[this.props.language],
+            takePhotoButtonTitle: Dictionary.takePhoto[this.props.language],
+            chooseFromLibraryButtonTitle: Dictionary.selectPhoto[this.props.language],
+            cancelButtonTitle: Dictionary.cancel[this.props.language],
+            mediaType: 'photo',
+            allowsEditing: true,
+        };
 
-    return response.ok;
-  }
+        ImagePicker.showImagePicker(options, (response) => {
 
-  pickImage = () => {
-    const options = {
-      title: Dictionary.selectPhoto[this.props.language],
-      takePhotoButtonTitle: Dictionary.takePhoto[this.props.language],
-      chooseFromLibraryButtonTitle: Dictionary.selectPhoto[this.props.language],
-      cancelButtonTitle: Dictionary.cancel[this.props.language],
-      mediaType: 'photo',
-      allowsEditing: true,
-    };
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
 
-    ImagePicker.showImagePicker(options, (response) => {
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
 
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        const source = { uri: response.uri };
+                this.setState({
+                    profilePicture: source,
+                });
+            }
+        });*/
+    }
 
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-        this.setState({
-          profilePicture: source,
+    _openGalley(foto) {
+        const options = {
+          title: "Selected",
+          storageOptions: {
+            skipBackup: true,
+            path: "images",
+          },
+          takePhotoButtonTitle: "Tomar fotografia",
+          chooseFromLibraryButtonTitle: "Seleccionar de la libreria",
+        };
+    
+        ImagePicker.launchImageLibrary(options, (response) => {
+          if (response.didCancel) {
+          } else if (response.error) {
+            RNToasty.Error({ title: response.error });
+          } else {
+            this.setState({
+              isloading: true,
+            });
+            let compressFormat = "JPEG";
+            let quality = 80;
+            let rotation = 0;
+            let newWidth = 0;
+            let newHeight = 0;
+            if (response.width > response.height) {
+              newWidth = 500;
+              newHeight = response.height;
+            }
+            if (response.height > response.width) {
+              newWidth = 500;
+              newHeight = 750;
+            }
+            if (response.height == response.width) {
+              (newWidth = 500), (newHeight = 500);
+            }
+    
+            ImageResizer.createResizedImage(
+              response.uri,
+              newWidth,
+              newHeight,
+              compressFormat,
+              quality,
+              rotation,
+              null
+            )
+              .then((response2) => {
+                console.warn('r1: ' + response)
+                console.warn('r2: ' + response2)
+                this.setState({
+                  profilePicture: {
+                    uri:
+                    Platform.OS === "android"
+                      ? response2.uri
+                      : response2.uri.replace("file://", "/private"),
+                    type: 'image/jepg',
+                    name:
+                      Platform.OS === "android"
+                        ? response.fileName
+                        : "evidencia.jpg",
+                  },
+                });
+            })
+              .catch((err) => {
+                this.setState({
+                  isloading: false,
+                });
+                RNToasty.Error({ title: "Error, imagen no permitida" });
+              });
+          }
+          this.setState({ status: false });
         });
       }
-    });
-  }
-
-  nameValidation = (name) => {
-    const response = Validations.nameValidation(name);
-    this.setState({ nameError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  lastNameValidation = (lastName) => {
-    const response = Validations.nameValidation(lastName);
-    this.setState({ lastNameError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  emailValidation = (email) => {
-    const response = Validations.emailValidation(email);
-    if(!response.ok && email === '' && this.state.cellphone !== '') response.ok = true;
-    this.setState({ emailError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  nicknameValidation = (nickname) => {
-    const response = Validations.nicknameValidation(nickname);
-    this.setState({ nicknameError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  codeValidation = (code) => {
-    const response = Validations.intNumberValidation(code);
-    this.setState({ codeError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  cellphoneValidation = (cellphone) => {
-    const response = Validations.phoneValidation(cellphone);
-    if(!response.ok && cellphone === '' && this.state.player.email !== '') response.ok = true;
-    this.setState({ cellphoneError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  ghinValidation = (ghin) => {
-    let ok = true;
-    const response = Validations.intNumberValidation(ghin);
-    this.setState({ ghinError: !response.ok ? response.error : '' });
-    if (response.ok) {
-      if (ghin.length !== 7) {
-        this.setState({ ghinError: Dictionary.ghinMustContain[this.props.language] });
-        ok = false;
+    
+      _openCamera() {
+        const options = {
+          title: "Selected",
+          storageOptions: {
+            skipBackup: true,
+            path: "images",
+          },
+          takePhotoButtonTitle: "Tomar fotografia",
+          chooseFromLibraryButtonTitle: "Seleccionar de la libreria",
+        };
+    
+        ImagePicker.launchCamera(options, (response) => {
+          if (response.didCancel) {
+          } else if (response.error) {
+            RNToasty.Error({ title: response.error });
+          } else {
+            this.setState({
+              isloading: true,
+            });
+            let compressFormat = "JPEG";
+            let quality = 80;
+            let rotation = 0;
+            let newWidth = 0;
+            let newHeight = 0;
+            if (response.isVertical) {
+              newWidth = 500;
+              newHeight = response.height;
+            }
+            if (!response.isVertical) {
+              newWidth = 500;
+              newHeight = 750;
+              rotation = 90;
+            }
+    
+            ImageResizer.createResizedImage(
+              response.uri,
+              newWidth,
+              newHeight,
+              compressFormat,
+              quality,
+              rotation,
+              null
+            )
+              .then((response2) => {
+                console.warn(response)
+                console.warn(response2)
+                this.setState({
+                  profilePicture: {
+                    uri:
+                    Platform.OS === "android"
+                      ? response2.uri
+                      : response2.uri.replace("file://", "/private"),
+                    type: 'image/jepg',
+                    name:
+                      Platform.OS === "android"
+                        ? response.fileName
+                        : "evidencia.jpg",
+                  },
+                });
+            })
+              .catch((err) => {
+                this.setState({
+                  isloading: false,
+                });
+                RNToasty.Error({ title: "Error, imagen no permitida" });
+              });
+          }
+          this.setState({ status: false });
+        });
       }
+
+    formatCellphone = (cellphone) => {
+        //Filter only numbers from the input
+        /*let cleaned = ('' + cellphone).replace(/\D/g, '');
+
+        //Check if the input is of correct length
+        let match1 = cleaned.match(/^(\d{3})$/);
+        let match2 = cleaned.match(/^(\d{3})(\d{3})$/);
+        let match3 = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+        if (match3) {
+            this.setState({ cellphone: '(' + match3[1] + ') ' + match3[2] + '-' + match3[3] });
+        } else if (match2) {
+            if (!this.state.deleting)
+                this.setState({ cellphone: '(' + match2[1] + ') ' + match2[2] + '-' });
+        } else if (match1) {
+            if (!this.state.deleting)
+                this.setState({ cellphone: '(' + match1[1] + ') ' });
+        } else {*/
+            this.setState({ cellphone: cellphone.toString(), deleting: false });
+        //}
     }
 
-    return response.ok && ok;
-  }
+    //============= VALIDATIONS ==============
 
-  handicapValidation = (handicap) => {
-    const response = Validations.floatNumberValidation(handicap);
-    this.setState({ handicapError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  strokesValidation = (strokes) => {
-    let stroke = strokes;
-    if (strokes.startsWith("-")) {
-      stroke = stroke.substr(1);
+    nameValidation = (name) => {
+        return true
     }
 
-    const response = Validations.floatNumberValidation(stroke);
-    this.setState({ strokesError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  teeValidation = (tee) => {
-    let tees = tee;
-    if (tees.startsWith("-")) {
-      tees = tee.substr(1);
+    lastNameValidation = (lastName) => {
+        return true
     }
 
-    const response = Validations.intNumberValidation(tees);
-    this.setState({ teeError: !response.ok ? response.error : '' });
-
-    return response.ok;
-  }
-
-  submit = () => {
-    let {
-      player,
-      codeNumber,
-      cellphone
-    } = this.state;
-
-    const nameOk = this.nameValidation(player.name);
-    const lastNameOk = this.lastNameValidation(player.last_name);
-    const emailOk = this.emailValidation(player.email);
-    const nicknameOk = this.nicknameValidation(player.nick_name);
-    const codeNumberOk = this.codeValidation(codeNumber);
-    const cellphoneOk = this.cellphoneValidation(cellphone);
-    const ghinOk = this.ghinValidation(player.ghin_number);
-    const handicapOk = this.handicapValidation(player.handicap);
-    const strokesOk = this.strokesValidation(player.strokes);
-    const teeOk = this.teeValidation(player.tee);
-
-    const submitOk = (emailOk || cellphoneOk) && nameOk && lastNameOk
-      && nicknameOk && codeNumberOk && ghinOk && handicapOk && strokesOk && teeOk;
-
-    if (submitOk) {
-      let cleaned = ('' + cellphone).replace(/\D/g, '');
-
-      let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-      if (match) cellphone = match[1] + match[2] + match[3];
-
-      player.cellphone = `+${codeNumber}${cellphone}`;
-      player.ultimate_sync = moment().format('YYYY-MM-DD HH:mm:ss');
-      player.editPlayer = true;
-      const { profilePicture } = this.state;
-      player.photo = profilePicture ? profilePicture.uri : player.photo;
-      this.props.updatePlayer(player);
+    emailValidation = (email) => {
+        return true
     }
-  }
+
+    nicknameValidation = (nickname) => {
+        return true
+    }
+
+    codeValidation = (code) => {
+        return true
+    }
+
+    cellphoneValidation = (cellphone) => {
+        return true
+    }
+
+    ghinValidation = (ghin) => {
+        return true
+    }
+
+    handicapValidation = (handicap) => {
+        return true
+    }
+
+    //============= VALIDATIONS ==============
+
+    GuardarFoto = async (idUsuario) => {
+
+        try{
+            console.warn(this.state.profilePicture)
+            if (this.state.profilePicture != null) {
+              SubirImagenUsuario(idUsuario, this.state.profilePicture)
+                .then((res) => {
+                  console.warn(res)
+                  if (res.estatus == 1) {
+
+                       setTimeout(() => {
+                         showMessage({
+                          message: 'Foto subida correctamente',
+                          type: "success",
+                        });
+                       }, 1000)
+
+                  }
+                  else {
+                    Alert.alert(
+                      "Dragon Golf",
+                      res.mensaje,
+                      [
+                        {
+                          text: "Aceptar",
+                          onPress: () => console.log("Cancel Pressed"),
+                          style: "cancel"
+                        },
+                      ],
+                      { cancelable: true }
+                    );
+                  }
+                });
+            }
+        }
+        catch(e){
+            Alert.alert(
+                "Dragon Golf",
+                e.toString(),
+                [
+                  {
+                    text: "Aceptar",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                ],
+                { cancelable: true }
+              );
+        }
+    }
+
+    submit = () => {
+        const {
+            id,
+            profilePicture,
+            nameReg,
+            lastNameReg,
+            lastName2Reg,
+            emailReg,
+            nicknameReg,
+            codeNumber,
+            cellphone,
+            ghin,
+            handicap,
+            passwordReg,
+            confirmPasswordReg,
+            language
+        } = this.state;
+
+        console.warn(id)
+
+        if (nameReg == '') {
+      showMessage({
+                message: name[language] +' ' + required[language],
+                type: "warning",
+              });
+      return
+    }
+
+    if (lastNameReg == '') {
+      showMessage({
+                message: lastName[language] + ' ' + required[language],
+                type: "warning",
+              });
+      return
+    }
+
+
+    if (nicknameReg == '') {
+      showMessage({
+                message: nickname[language] + ' ' +required[language],
+                type: "warning",
+              });
+      return
+    }
+
+    if (passwordReg == '') {
+      showMessage({
+                message: password[language] + ' ' + required[language],
+                type: "warning",
+              });
+      return
+    }
+
+    if (confirmPasswordReg == '') {
+      showMessage({
+                message: confirmPassword[language],
+                type: "warning",
+              });
+      return
+    }
+
+    if (passwordReg != confirmPasswordReg) {
+      showMessage({
+                message: dontMatch[language],
+                type: "warning",
+              });
+      return
+    }
+
+    console.warn(codeNumber)
+    console.warn(cellphone)
+
+    ActualizarInvitados(id, nameReg, lastNameReg, emailReg, nicknameReg, codeNumber + cellphone, ghin,handicap)
+        .then((res) => {
+            console.warn(res)
+            if (res.estatus === 1) {
+
+              try {
+               showMessage({
+                    message: successSaveTeeData[language],
+                    type: "success",
+                  });
+
+               this.GuardarFoto(id)
+
+                //this.props.route.params.getUserData()
+                this.props.navigation.navigate('PlayersView')
+
+               /*setTimeout(
+                      () => { RNRestart.Restart();
+                       },
+                      1000
+                    )*/
+
+              } catch (e) {
+
+                showMessage({
+                    message: e.toString(),
+                    type: "danger",
+                  });
+              }
+            }
+            else {
+              showMessage({
+                    message: res.mensaje,
+                    type: "warning",
+                  });
+            }
+        });
+    }
+
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-});
 
-const mapDispatchToProps = dispatch => ({
-  updatePlayer: (values) => {
-    dispatch(actionUpdatePlayer(values));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditPlayerView);
+export default EditUserView;

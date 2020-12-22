@@ -893,9 +893,9 @@ class PlayerScoreComponent extends Component {
                         this.renderBotones()
                     }
                 </View>
-                <View style={[styles2.bottomButtom,{margin:20, flex:0.07}]}>
+                {/*<View style={[styles2.bottomButtom,{margin:20, flex:0.07}]}>
                   <DragonButton title={Dictionary.save[language]} onPress={this.submit} />
-                </View>
+                </View>*/}
             </View>
         );
     }

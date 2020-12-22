@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 5,
         borderWidth: 0.8,
-        borderColor: Colors.Gray,
+        borderColor: Colors.Primary,
         textAlign: 'center',
         padding: 5,
         fontSize: Platform.OS === 'ios' ? 15 : 18,

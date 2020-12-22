@@ -422,7 +422,7 @@ export default function RoundsView(route) {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
+              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     <View style={{flex:1}}>
@@ -436,9 +436,9 @@ export default function RoundsView(route) {
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicap: '+item.handicap}</Text>
                       </View>
                       <View style={{flex: 1, margin:20, marginTop:10, alignSelf:'center'}}>
-                        <TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
+                        {/*<TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
                           <MaterialIcon name={'info-outline'} size={27} color={Colors.Primary} />
-                        </TouchableOpacity>
+                        </TouchableOpacity>*/ }
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',  margin:20, marginTop:10, alignSelf:'center'}}>{'Strokes: '+item.handicapAuto}</Text>
                         {/*<Image
                           source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
@@ -458,6 +458,9 @@ export default function RoundsView(route) {
             <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+              </TouchableOpacity>
+              <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
+                <FontAwesome name={'edit'} size={30} color={Colors.White} />
               </TouchableOpacity>
             </View>
           </ScrollView>

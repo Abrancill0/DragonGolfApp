@@ -201,6 +201,31 @@ export const Update = (IDUsuario,usu_nombre,usu_apellido_paterno,usu_apellido_ma
     });
 };
 
+export const ActualizarInvitados = (IDUsuario,usu_nombre,usu_apellido_paterno,usu_email,usu_nickname,usu_telefono,usu_ghinnumber,usu_handicapindex) => {
+    const URL = RutaBaseAB + "/ActualizarInvitados";
+    return fetch(URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        IDUsuario: IDUsuario,
+        usu_nombre: usu_nombre,
+        usu_apellido_paterno: usu_apellido_paterno,
+        usu_email: usu_email,
+        usu_nickname: usu_nickname,
+        usu_telefono: usu_telefono,
+        usu_ghinnumber: usu_ghinnumber,
+        usu_handicapindex: usu_handicapindex
+      }),
+    })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.warn(error);
+    });
+};
+
 export const updateSettings = (usu_id,set_idioma,set_how_adv_move,set_strokes_moved_per_round,
 set_adv_moves_on_9_holes,set_carry_moves_adv,set_rabbit_1_6,set_rabbit_7_12,set_rabbit_13_18,set_medal_play_f9,
 set_medal_play_b9,set_medal_play_18,set_skins,set_skins_carry_over,set_lower_adv_f9,set_snw_automatic_press,

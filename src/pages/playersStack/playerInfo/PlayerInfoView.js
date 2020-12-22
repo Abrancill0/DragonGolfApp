@@ -57,6 +57,7 @@ class PlayerInfoView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      invitado:props.route.params.item.invitado,
       signo:props.route.params.item.strokes.toString().substring(0,1)=='-'?false:true,
       strokesReg:props.route.params.item.strokes,
       strokesRegAbs:Math.abs(props.route.params.item.strokes),
@@ -113,6 +114,7 @@ class PlayerInfoView extends Component {
 
   async componentDidMount() {
     this.getUserData()
+    console.warn(this.state.invitado)
    }
 
    getUserData = async () => {
@@ -316,7 +318,7 @@ class PlayerInfoView extends Component {
           </View>*/}
         </View>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps='handled'>
-          <View style={styles.profileCard}>
+          {item.invitado&&<TouchableOpacity style={styles.profileCard} onPress={_ => this.props.navigation.navigate('EditPlayerView', { userData:item, language:language })}>
             <View style={styles.imageNameView}>
               <Image
                 source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile}
@@ -332,11 +334,60 @@ class PlayerInfoView extends Component {
                   <Text style={styles.nicknameText}>({item.nickname})</Text>
                 </View>
                 <View>
-                  <TouchableOpacity /*onPress={() => Linking.openURL('mailto:' + item.usu_email)}*/>
-                    <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{item.usu_email}</Text>
+                  <TouchableOpacity /*onPress={() => Linking.openURL('mailto:' + item.email)}*/>
+                    <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{item.email}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity /*onPress={() => Linking.openURL('tel://' + item.usu_telefono)}*/>
-                    <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone(item.usu_telefono)}</Text>
+                    <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone(item.cellphone)}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={{ flex: 1, height: '100%', alignItems: 'flex-end' }}>
+                {item.id !== 1 && <TouchableOpacity /*onPress={_ => navigation.navigate('HistoryScreen', { playerId: item.id })}*/>
+                  <MaterialIcons name='history' size={25} color={Colors.Black} />
+                </TouchableOpacity>}
+              </View>
+            </View>
+            <View style={styles.infoGolfView}>
+              <View>
+                <Text style={styles.cardTitle}>{ghinNumber[language]}</Text>
+                <Text style={styles.cardInfo}>{item.ghinnumber}</Text>
+              </View>
+              <View>
+                <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpIndex, language:language })}>
+                  <Text style={styles.cardTitle}>{handicap[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
+                </TouchableOpacity>
+                <Text style={styles.cardInfo}>{item.handicap}</Text>
+              </View>
+              <View>
+                <Text style={styles.cardTitle}>Strokes</Text>
+                <Text style={styles.cardInfo}>{strokesReg ? strokesReg : 0}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          }
+          { !item.invitado &&
+          <View style={styles.profileCard} onPress={_ => this.props.navigation.navigate('EditPlayerView', { userData:item, language:language })}>
+            <View style={styles.imageNameView}>
+              <Image
+                source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile}
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: 30
+                }}
+              />
+              <View style={styles.userInfoView}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={styles.userName}>{item.nombre}</Text>
+                  <Text style={styles.nicknameText}>({item.nickname})</Text>
+                </View>
+                <View>
+                  <TouchableOpacity /*onPress={() => Linking.openURL('mailto:' + item.email)}*/>
+                    <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{item.email}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity /*onPress={() => Linking.openURL('tel://' + item.usu_telefono)}*/>
+                    <Text style={styles.textLink} ellipsizeMode="tail">{this.formatCellphone(item.cellphone)}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -363,7 +414,7 @@ class PlayerInfoView extends Component {
               </View>
             </View>
           </View>
-
+        }
           <TouchableOpacity
             style={styles.asButton}
             onPress={() => this.setState({ asCollapsed: !asCollapsed })}
@@ -721,7 +772,7 @@ class PlayerInfoView extends Component {
               <View style={styles.switchView}>
                 <Text style={styles.question}>Front 9</Text>
                 <View style={styles.costInputView}>
-                  <Text style={styles.dollarText}>$</Text>
+                  {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -743,6 +794,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Back 9</Text>
                 <View style={styles.costInputView}>
                   {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                  { snwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -764,6 +816,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Match</Text>
                 <View style={styles.costInputView}>
                   {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                  { snwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -785,6 +838,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Carry</Text>
                 <View style={styles.costInputView}>
                   {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                  { snwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -806,6 +860,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Medal</Text>
                 <View style={styles.costInputView}>
                   {!snwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                  { snwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -865,7 +920,7 @@ class PlayerInfoView extends Component {
               <View style={styles.switchView}>
                 <Text style={styles.question}>Front 9</Text>
                 <View style={styles.costInputView}>
-                  <Text style={styles.dollarText}>$</Text>
+                  {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -887,6 +942,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Back 9</Text>
                 <View style={styles.costInputView}>
                   {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                  { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -908,6 +964,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Match</Text>
                 <View style={styles.costInputView}>
                   {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                  { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -929,6 +986,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Carry</Text>
                 <View style={styles.costInputView}>
                   {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                  { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -950,6 +1008,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Medal</Text>
                 <View style={styles.costInputView}>
                   {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                  { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
                   <TextInput
                     style={styles.costInput}
                     selectionColor={Colors.Secondary}
@@ -1159,7 +1218,7 @@ class PlayerInfoView extends Component {
       else{
         formatted = '+' + cellphone
       }*/
-      return formatted;
+      return cellphone;
   }
 
   submit = async () => {

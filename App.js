@@ -41,6 +41,7 @@ import RegisterPlayer from './src/screen/indexStack/register/RegisterPlayer'
 import EditCourse from './src/pages/coursesStack/addCourse/EditCourseView'
 import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
+import EditPlayerView from './src/pages/playersStack/editPlayer/EditPlayerView';
 import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
 import FlashMessage from "react-native-flash-message";
 
@@ -928,6 +929,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='EditUserView' component={EditUserView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+        <Stack.Screen name='EditPlayerView' component={EditPlayerView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

@@ -94,7 +94,10 @@ export default function RoundsView(route) {
                       photo: item.usu_imagen,
                       handicap: item.usu_handicapindex,
                       strokes: item.usu_golpesventaja,
-                      difTee: item.usu_diferenciatee
+                      difTee: item.usu_diferenciatee,
+                      invitado: item.usu_invitado,
+                      cellphone: item.usu_telefono,
+                      email: item.usu_email
                     }
                 ))
                 setPlayers(list)
@@ -125,7 +128,8 @@ export default function RoundsView(route) {
                       photo: item.usu_imagen,
                       handicap: item.usu_handicapindex,
                       strokes: item.usu_golpesventaja,
-                      difTee: item.usu_diferenciatee
+                      difTee: item.usu_diferenciatee,
+                      invitado: item.usu_invitado
                     }
                 ))
                 setPlayers(list)
@@ -153,7 +157,8 @@ export default function RoundsView(route) {
                       photo: item.usu_imagen,
                       handicap: item.usu_handicapindex,
                       strokes: item.usu_golpesventaja,
-                      difTee: item.usu_diferenciatee
+                      difTee: item.usu_diferenciatee,
+                      invitado: item.usu_invitado
                     }
                 ))
                 setPlayers(list)
