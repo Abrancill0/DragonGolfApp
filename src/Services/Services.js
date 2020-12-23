@@ -119,7 +119,8 @@ export const RegistroAB = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,
         usu_email: usu_email,
         usu_pass: usu_pass,
         usu_nickname: usu_nickname,
-        usu_telefono: usu_telefono
+        usu_telefono: usu_telefono,
+        usu_token: ''
       }),
     })
     .then((response) => response.json())

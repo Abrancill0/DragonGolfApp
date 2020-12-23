@@ -12,7 +12,7 @@ import Colors from '../../../utils/Colors';
 class PlayersScore extends Component {
   constructor(props) {
     super(props);
-    let holeScore = '';
+    /*let holeScore = '';
 
         const { holeInfo, index, hole } = props;
         if (holeInfo) {
@@ -25,26 +25,44 @@ class PlayersScore extends Component {
 
                 }
             }
-        }
+        }*/
     this.state = {
       language: '',
       buttonIndex: null,
-      holeScore,
       par: 0,
       adv: 0,
       inputStyle: styles.input,
       inputBorder: {},
+      playerHole: []
     };
-  }
+
+    this.outputEvent = this.outputEvent.bind(this);
+    }
+    outputEvent(score,id,hole,IDRound) {
+        // the event context comes from the Child
+        console.warn(score)
+        console.warn(id)
+        console.warn(hole)
+        console.warn(IDRound)//this.setState({ count: this.state.count++ });
+        console.warn(this.state.playerHole)
+    }
 
   componentDidMount = async () => {
     let language = await AsyncStorage.getItem('language')
     this.setState({
         language:language
     })
+    let playersHoleAux = []
+    for (var i = this.props.players.length - 1; i >= 0; i--) {
+        playersHoleAux.push(this.props.players[i].id)
     }
 
-    setHoleData = (holeInfo, switchAdv) => {
+    this.setState({
+        playerHole:playersHoleAux
+    })
+    }
+
+    /*setHoleData = (holeInfo, switchAdv) => {
         const { index, hole } = this.props;
 
         try {
@@ -124,9 +142,9 @@ class PlayersScore extends Component {
                 }
             }
         }
-    }
+    }*/
 
-    onChangeScore = (score) => {
+    /*onChangeScore = (score) => {
         this.setState({ holeScore: score.toString()});
         this.saveScore(score);
             /*if (parseInt(score ? score : 1) > 0) {
@@ -138,10 +156,10 @@ class PlayersScore extends Component {
                 const inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ holeScore: score.toString(), buttonIndex, inputStyle, inputBorder });
                 this.saveScore(score);
-            }*/
-    }
+            }
+    }*/
 
-    saveScore = async (score) => {
+    guardar = async () => {
         let IDRound = await AsyncStorage.getItem('IDRound')
         console.warn(score)
         console.warn(item.id)
@@ -173,7 +191,7 @@ class PlayersScore extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View>
-          <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
+          <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar()}>
             <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
           </TouchableOpacity>
         </View>
@@ -184,6 +202,7 @@ class PlayersScore extends Component {
           keyExtractor={item => item.id.toString()}
           style={{ flex: 1, paddingVertical: 5 }}
           renderItem={({ item, index }) => (
+          <PlayerScoreComponent item={item} hole={hole} index={index} language={language} clickHandler={this.outputEvent} />/*
             <View>
                 {
                   hole==1&&
@@ -888,9 +907,9 @@ class PlayersScore extends Component {
                 </View>
                 {/*<View style={[styles2.bottomButtom,{margin:20, flex:0.07}]}>
                   <DragonButton title={Dictionary.save[language]} onPress={this.submit} />
-                </View>*/}
+                </View>}
             </View>
-          )}
+          */)}
           ListEmptyComponent={
             <ListEmptyComponent
               text={Dictionary.emptyRoundPlayerList[language]}

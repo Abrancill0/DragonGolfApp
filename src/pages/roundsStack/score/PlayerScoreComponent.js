@@ -985,10 +985,11 @@ class PlayerScoreComponent extends Component {
 
     saveScore = async (score) => {
         let IDRound = await AsyncStorage.getItem('IDRound')
-        console.warn(score)
+        /*console.warn(score)
         console.warn(this.props.item.id)
         console.warn(this.props.hole)
-        console.warn(IDRound)
+        console.warn(IDRound)*/
+        this.props.clickHandler(score,this.props.item.id,this.props.hole,IDRound)
         const member = {
             strokes: score,
             id_sync: '',
