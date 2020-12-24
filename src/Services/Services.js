@@ -689,6 +689,27 @@ export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
                 });
 };
 
+export const ActualizarRondaHoyos = (IDRound, IDUsuario, Arreglo, NumeroArreglo) => {
+    const URL = RutaBaseAB + "/ActualizarRondaHoyos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: IDRound,
+                    IDUsuario: IDUsuario,
+                    Arreglo: Arreglo,
+                    NumeroArreglo: NumeroArreglo
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario, Ro_Date) => {
     const URL = RutaBaseAB + "/CrearRonda";
     return fetch(URL, {

@@ -57,11 +57,11 @@ class ScoreView extends Component {
     let playersHoleAux = []
     for (var i = 0; i <= players.length - 1; i++) {
         let HolesAux = []
-        HolesAux.push(players[i].id)
+        HolesAux.push('['+players[i].id)
         for (var j = 0; j <= 17; j++) {
             HolesAux.push(0)
         }
-        playersHoleAux.push(HolesAux)
+        playersHoleAux.push(HolesAux + ']')
     }
 
     this.setState({

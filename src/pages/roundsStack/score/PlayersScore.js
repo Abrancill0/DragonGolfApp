@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../utils/Colors';
 import { showMessage } from "react-native-flash-message";
+import { ActualizarRondaHoyos } from '../../../Services/Services'
 
 class PlayersScore extends Component {
   constructor(props) {
@@ -205,12 +206,28 @@ class PlayersScore extends Component {
     }*/
 
     guardar = async () => {
-        console.warn(this.state.playerHole)
+        let idUsu = await AsyncStorage.getItem('usu_id')
         let IDRound = await AsyncStorage.getItem('IDRound')
-        showMessage({
-            message: Dictionary.error[this.state.language],
-            type:'danger',
-        });
+        console.warn(idUsu)
+        console.warn(IDRound)
+        console.warn(this.state.playerHole.toString())
+        console.warn(this.state.playerHole.length)
+        ActualizarRondaHoyos(IDRound, idUsu, '['+this.state.playerHole.toString()+']', this.state.playerHole.length)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+              showMessage({
+                message: Dictionary.successSaveTeeData[this.state.language],
+                type:'success',
+              });
+            }
+            else{
+              showMessage({
+                message: Dictionary.error[this.state.language],
+                type:'danger',
+              });
+            }
+        })
     }
 
   render() {
