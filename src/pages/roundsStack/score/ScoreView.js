@@ -25,6 +25,7 @@ class ScoreView extends Component {
     this.state = {
       isLandscape,
       players: [],
+      playerHole: [],
       carga:true
     };
 
@@ -49,6 +50,25 @@ class ScoreView extends Component {
       this.props.navigation.setParams({isLandscape: width > height});
     });
   }
+
+  llenaArreglo = async (players) => {
+    //console.warn('Entró')
+    let language = await AsyncStorage.getItem('language')
+    let playersHoleAux = []
+    for (var i = 0; i <= players.length - 1; i++) {
+        let HolesAux = []
+        HolesAux.push(players[i].id)
+        for (var j = 0; j <= 17; j++) {
+            HolesAux.push(0)
+        }
+        playersHoleAux.push(HolesAux)
+    }
+
+    this.setState({
+        language:language,
+        playerHole:playersHoleAux
+    })
+    }
 
   ListadoTodos = async () => {
     let idUsu = await AsyncStorage.getItem('usu_id')
@@ -92,6 +112,24 @@ class ScoreView extends Component {
                       ho_par16: item.ho_par16,
                       ho_par17: item.ho_par17,
                       ho_par18: item.ho_par18,
+                      ScoreHole1: item.ScoreHole1,
+                      ScoreHole1: item.ScoreHole2,
+                      ScoreHole1: item.ScoreHole3,
+                      ScoreHole1: item.ScoreHole4,
+                      ScoreHole1: item.ScoreHole5,
+                      ScoreHole1: item.ScoreHole6,
+                      ScoreHole1: item.ScoreHole7,
+                      ScoreHole1: item.ScoreHole8,
+                      ScoreHole1: item.ScoreHole9,
+                      ScoreHole1: item.ScoreHole10,
+                      ScoreHole1: item.ScoreHole11,
+                      ScoreHole1: item.ScoreHole12,
+                      ScoreHole1: item.ScoreHole13,
+                      ScoreHole1: item.ScoreHole14,
+                      ScoreHole1: item.ScoreHole15,
+                      ScoreHole1: item.ScoreHole16,
+                      ScoreHole1: item.ScoreHole17,
+                      ScoreHole1: item.ScoreHole18,
                       Ho_Advantage1: item.Ho_Advantage1,
                       Ho_Advantage2: item.Ho_Advantage2,
                       Ho_Advantage3: item.Ho_Advantage3,
@@ -112,6 +150,9 @@ class ScoreView extends Component {
                       Ho_Advantage18: item.Ho_Advantage18,
                     }
                 ))
+
+                this.llenaArreglo(list)
+
                 this.setState({
                   players:list,
                   carga:false
@@ -163,7 +204,7 @@ class ScoreView extends Component {
 
   render() {
 
-    const { isLandscape, players, carga } = this.state;
+    const { isLandscape, players, playerHole, carga } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
@@ -180,7 +221,7 @@ class ScoreView extends Component {
           >
             {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
-                <PlayersScore item={item.hole} players={players} />
+                <PlayersScore item={item.hole} players={players} playerHole={playerHole} />
               </View>
             ))}
           </ViewPager>

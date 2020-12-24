@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         color: Colors.Black,
         marginVertical: 0,
         paddingVertical: 0,
-        paddingHorizontal: 5,
+        paddingHorizontal: 0,
         borderBottomWidth: 0.8,
         borderColor: Colors.Gray
     },

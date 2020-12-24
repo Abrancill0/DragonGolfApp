@@ -8,6 +8,7 @@ import HoleHeader from './HoleHeader';
 import AsyncStorage from '@react-native-community/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../utils/Colors';
+import { showMessage } from "react-native-flash-message";
 
 class PlayersScore extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class PlayersScore extends Component {
                 }
             }
         }*/
+
     this.state = {
       language: '',
       buttonIndex: null,
@@ -33,32 +35,75 @@ class PlayersScore extends Component {
       adv: 0,
       inputStyle: styles.input,
       inputBorder: {},
-      playerHole: []
+      playerHole: this.props.playerHole
     };
+
+    //this.llenaArreglo()
+    
 
     this.outputEvent = this.outputEvent.bind(this);
     }
     outputEvent(score,id,hole,IDRound) {
+        console.warn(this.props.playerHole)
+        //console.warn(hole)
         // the event context comes from the Child
-        console.warn(score)
+        let playersHoleAux = this.props.playerHole
+        if(playersHoleAux.length>0){
+            for (var i = 0; i <= this.props.players.length - 1; i++) {
+                for (var j = 0; j <= 17; j++) {
+                    if(playersHoleAux[i][j]==id){
+                        playersHoleAux[i][hole]=score
+                    }
+                }
+            }
+            this.setState({
+                playerHole:playersHoleAux
+            })
+        }
+        else{
+            //this.llenaArreglo()
+        }
+        /*console.warn(score)
         console.warn(id)
         console.warn(hole)
-        console.warn(IDRound)//this.setState({ count: this.state.count++ });
-        console.warn(this.state.playerHole)
+        console.warn(IDRound)//this.setState({ count: this.state.count++ });*/
+    }
+
+    llenaArreglo = async () => {
+    //console.warn('Entró')
+    let language = await AsyncStorage.getItem('language')
+    let playersHoleAux = []
+    for (var i = 0; i <= this.props.players.length - 1; i++) {
+        let HolesAux = []
+        HolesAux.push(this.props.players[i].id)
+        for (var j = 0; j <= 17; j++) {
+            HolesAux.push(0)
+        }
+        playersHoleAux.push(HolesAux)
+    }
+
+    this.setState({
+        language:language,
+        playerHole:playersHoleAux
+    })
     }
 
   componentDidMount = async () => {
+    //console.warn('Entró')
     let language = await AsyncStorage.getItem('language')
-    this.setState({
-        language:language
-    })
-    let playersHoleAux = []
-    for (var i = this.props.players.length - 1; i >= 0; i--) {
-        playersHoleAux.push(this.props.players[i].id)
-    }
+    /*let playersHoleAux = []
+    for (var i = 0; i <= this.props.players.length - 1; i++) {
+        let HolesAux = []
+        HolesAux.push(this.props.players[i].id)
+        for (var j = 0; j <= 17; j++) {
+            HolesAux.push(0)
+        }
+        playersHoleAux.push(HolesAux)
+    }*/
 
     this.setState({
-        playerHole:playersHoleAux
+        language:language,
+        //playerHole:playersHoleAux
     })
     }
 
@@ -160,18 +205,12 @@ class PlayersScore extends Component {
     }*/
 
     guardar = async () => {
+        console.warn(this.state.playerHole)
         let IDRound = await AsyncStorage.getItem('IDRound')
-        console.warn(score)
-        console.warn(item.id)
-        console.warn(this.props.hole)
-        console.warn(IDRound)
-        const member = {
-            strokes: score,
-            id_sync: '',
-            //ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
-            id: this.props.item.id
-        }
-        //this.props.saveScore({ hole: parseInt(this.props.hole), member, roundId: this.props.roundId });
+        showMessage({
+            message: Dictionary.error[this.state.language],
+            type:'danger',
+        });
     }
 
   render() {
