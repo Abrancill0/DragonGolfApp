@@ -28,6 +28,24 @@ class PlayerScoreComponent extends Component {
         this.state = {
             buttonIndex: null,
             holeScore,
+            ScoreHole1: this.props.item.ScoreHole1,
+            ScoreHole2: this.props.item.ScoreHole2,
+            ScoreHole3: this.props.item.ScoreHole3,
+            ScoreHole4: this.props.item.ScoreHole4,
+            ScoreHole5: this.props.item.ScoreHole5,
+            ScoreHole6: this.props.item.ScoreHole6,
+            ScoreHole7: this.props.item.ScoreHole7,
+            ScoreHole8: this.props.item.ScoreHole8,
+            ScoreHole9: this.props.item.ScoreHole9,
+            ScoreHole10: this.props.item.ScoreHole10,
+            ScoreHole11: this.props.item.ScoreHole11,
+            ScoreHole12: this.props.item.ScoreHole12,
+            ScoreHole13: this.props.item.ScoreHole13,
+            ScoreHole14: this.props.item.ScoreHole14,
+            ScoreHole15: this.props.item.ScoreHole15,
+            ScoreHole16: this.props.item.ScoreHole16,
+            ScoreHole17: this.props.item.ScoreHole17,
+            ScoreHole18: this.props.item.ScoreHole18,
             par: 0,
             adv: 0,
             inputStyle: styles.input,
@@ -262,6 +280,327 @@ class PlayerScoreComponent extends Component {
                         <Text style={styles.dataValues}>{item.ho_par18}</Text>
                         <Text>ADV: </Text>
                         <Text style={styles.dataValues}>{item.Ho_Advantage18}</Text>
+                    </View>
+                )
+            break;
+        }
+    }
+
+    renderTextInput(){
+        const {
+            item,
+            hole
+        } = this.props;
+
+        const {
+            inputStyle,
+            inputBorder,
+            ScoreHole1,
+            ScoreHole2,
+            ScoreHole3,
+            ScoreHole4,
+            ScoreHole5,
+            ScoreHole6,
+            ScoreHole7,
+            ScoreHole8,
+            ScoreHole9,
+            ScoreHole10,
+            ScoreHole11,
+            ScoreHole12,
+            ScoreHole13,
+            ScoreHole14,
+            ScoreHole15,
+            ScoreHole16,
+            ScoreHole17,
+            ScoreHole18
+        } = this.state;
+
+        switch(hole){
+            case '1': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole1.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,1)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '2': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole2.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,2)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '3': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole3.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,3)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '4': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole4.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,4)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '5': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole5.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,5)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '6': 
+                return (
+                    <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole6.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,6)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '7': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole7.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,7)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '8': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole8.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,8)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '9': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole9.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,9)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '10': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole10.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,10)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '11': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole11.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,11)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '12': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole12.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,12)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '13': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole13.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,13)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '14': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole14.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,14)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '15': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole15.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,15)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '16': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole16.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,16)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '17': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole17.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,17)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
+                    </View>
+                )
+            break;
+            case '18': 
+                return (
+                     <View style={styles.inputView}>
+                        <View style={inputBorder}>
+                            <TextInput
+                                selectTextOnFocus={true}
+                                style={inputStyle}
+                                maxLength={2}
+                                value={ScoreHole18.toString()}
+                                onChangeText={(score)=>this.onChangeScore(score,18)}
+                                keyboardType='number-pad'
+                            />
+                        </View>
                     </View>
                 )
             break;
@@ -878,17 +1217,9 @@ class PlayerScoreComponent extends Component {
                     <View style={styles.playerScoreNameView}>
                         <Text style={styles.playerScoreNameText} numberOfLines={1} adjustsFontSizeToFit >{item.nickname}</Text>
                     </View>
-                    <View style={styles.inputView}>
-                        <View style={inputBorder}>
-                            <TextInput
-                                style={inputStyle}
-                                maxLength={2}
-                                value={holeScore}
-                                onChangeText={this.onChangeScore}
-                                keyboardType='number-pad'
-                            />
-                        </View>
-                    </View>
+                    {
+                        this.renderTextInput()
+                    }
                     {
                         this.renderBotones()
                     }
@@ -934,50 +1265,608 @@ class PlayerScoreComponent extends Component {
     }
 
     onPressButtonGroup = (par, value) => {
-        console.warn(par)
-        const { holeScore } = this.state;
         const { holeInfo, index, hole } = this.props;
-        this.setState({ buttonIndex: value });
         let bogy = 0;
         let score = 0;
-        if (holeInfo) {
-            if (holeInfo[index].holes[hole - 1].par)
-                par = parseInt(holeInfo[index].holes[hole - 1].par);
+        let buttonIndex = 0
+        let inputStyle  = 0
+        let inputBorder = 0
+        console.warn(hole)
+        switch(hole){
+            case '1':
+                const { ScoreHole1 } = this.state;
+                console.warn('HEW')
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole1) <= (par - 1) && parseInt(ScoreHole1) > 1 ? parseInt(ScoreHole1) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole1) >= (bogy + 1) && parseInt(ScoreHole1) < 99 ? parseInt(ScoreHole1) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole1: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '2':
+                const { ScoreHole2 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole2) <= (par - 1) && parseInt(ScoreHole2) > 1 ? parseInt(ScoreHole2) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole2) >= (bogy + 1) && parseInt(ScoreHole2) < 99 ? parseInt(ScoreHole2) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole2: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '3':
+                const { ScoreHole3 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole3) <= (par - 1) && parseInt(ScoreHole3) > 1 ? parseInt(ScoreHole3) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole3) >= (bogy + 1) && parseInt(ScoreHole3) < 99 ? parseInt(ScoreHole3) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole3: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '4':
+                const { ScoreHole4 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole4) <= (par - 1) && parseInt(ScoreHole4) > 1 ? parseInt(ScoreHole4) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole4) >= (bogy + 1) && parseInt(ScoreHole4) < 99 ? parseInt(ScoreHole4) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole4: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '5':
+                const { ScoreHole5 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole5) <= (par - 1) && parseInt(ScoreHole5) > 1 ? parseInt(ScoreHole5) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole5) >= (bogy + 1) && parseInt(ScoreHole5) < 99 ? parseInt(ScoreHole5) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole5: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '6':
+                const { ScoreHole6 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole6) <= (par - 1) && parseInt(ScoreHole6) > 1 ? parseInt(ScoreHole6) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole6) >= (bogy + 1) && parseInt(ScoreHole6) < 99 ? parseInt(ScoreHole6) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole6: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '7':
+                const { ScoreHole7 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole7) <= (par - 1) && parseInt(ScoreHole7) > 1 ? parseInt(ScoreHole7) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole7) >= (bogy + 1) && parseInt(ScoreHole7) < 99 ? parseInt(ScoreHole7) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole7: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '8':
+                const { ScoreHole8 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole8) <= (par - 1) && parseInt(ScoreHole8) > 1 ? parseInt(ScoreHole8) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole8) >= (bogy + 1) && parseInt(ScoreHole8) < 99 ? parseInt(ScoreHole8) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole8: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '9':
+                const { ScoreHole9 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole9) <= (par - 1) && parseInt(ScoreHole9) > 1 ? parseInt(ScoreHole9) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole9) >= (bogy + 1) && parseInt(ScoreHole9) < 99 ? parseInt(ScoreHole9) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole9: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '10':
+                const { ScoreHole10 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole10) <= (par - 1) && parseInt(ScoreHole10) > 1 ? parseInt(ScoreHole10) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole10) >= (bogy + 1) && parseInt(ScoreHole10) < 99 ? parseInt(ScoreHole10) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole10: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '11':
+                const { ScoreHole11 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole11) <= (par - 1) && parseInt(ScoreHole11) > 1 ? parseInt(ScoreHole11) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole11) >= (bogy + 1) && parseInt(ScoreHole11) < 99 ? parseInt(ScoreHole11) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole11: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '12':
+                const { ScoreHole12 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole12) <= (par - 1) && parseInt(ScoreHole12) > 1 ? parseInt(ScoreHole12) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole12) >= (bogy + 1) && parseInt(ScoreHole12) < 99 ? parseInt(ScoreHole12) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole12: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '13':
+                const { ScoreHole13 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole13) <= (par - 1) && parseInt(ScoreHole13) > 1 ? parseInt(ScoreHole13) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole13) >= (bogy + 1) && parseInt(ScoreHole13) < 99 ? parseInt(ScoreHole13) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole13: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '14':
+                const { ScoreHole14 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole14) <= (par - 1) && parseInt(ScoreHole14) > 1 ? parseInt(ScoreHole14) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole14) >= (bogy + 1) && parseInt(ScoreHole14) < 99 ? parseInt(ScoreHole14) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole14: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '15':
+                const { ScoreHole15 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole15) <= (par - 1) && parseInt(ScoreHole15) > 1 ? parseInt(ScoreHole15) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole15) >= (bogy + 1) && parseInt(ScoreHole15) < 99 ? parseInt(ScoreHole15) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole15: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '16':
+                const { ScoreHole16 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole16) <= (par - 1) && parseInt(ScoreHole16) > 1 ? parseInt(ScoreHole16) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole16) >= (bogy + 1) && parseInt(ScoreHole16) < 99 ? parseInt(ScoreHole16) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole16: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '17':
+                const { ScoreHole17 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole17) <= (par - 1) && parseInt(ScoreHole17) > 1 ? parseInt(ScoreHole17) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole17) >= (bogy + 1) && parseInt(ScoreHole17) < 99 ? parseInt(ScoreHole17) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole17: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
+            case '18':
+                const { ScoreHole18 } = this.state;
+                this.setState({ buttonIndex: value });
+                if (holeInfo) {
+                    if (holeInfo[index].holes[hole - 1].par)
+                        par = parseInt(holeInfo[index].holes[hole - 1].par);
+                }
+                if (par) {
+                    bogy = par + 1;
+                }
+                switch (value) {
+                    case 0:
+                        score = (parseInt(ScoreHole18) <= (par - 1) && parseInt(ScoreHole18) > 1 ? parseInt(ScoreHole18) - 1 : (par - 1));
+                        break;
+                    case 1:
+                        score = par;
+                        break;
+                    case 2:
+                        score = bogy;
+                        break;
+                    case 3:
+                        score = (parseInt(ScoreHole18) >= (bogy + 1) && parseInt(ScoreHole18) < 99 ? parseInt(ScoreHole18) + 1 : (bogy + 1));
+                        break;
+                }
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                this.setState({ ScoreHole18: score.toString(), buttonIndex, inputStyle, inputBorder });
+            break;
         }
-        if (par) {
-            bogy = par + 1;
-        }
-        switch (value) {
-            case 0:
-                score = (parseInt(holeScore) <= (par - 1) && parseInt(holeScore) > 1 ? parseInt(holeScore) - 1 : (par - 1));
-                break;
-            case 1:
-                score = par;
-                break;
-            case 2:
-                score = bogy;
-                break;
-            case 3:
-                score = (parseInt(holeScore) >= (bogy + 1) && parseInt(holeScore) < 99 ? parseInt(holeScore) + 1 : (bogy + 1));
-                break;
-        }
-        const buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-        const inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-        const inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
-        this.setState({ holeScore: score.toString(), buttonIndex, inputStyle, inputBorder });
         this.saveScore(score);
     }
 
-    onChangeScore = (score) => {
-        this.setState({ holeScore: score.toString()});
+    onChangeScore = (score, value) => {
+        console.warn(score)
+        console.warn(value)
+        switch (value) {
+            case 1:
+                this.setState({ ScoreHole1: score.toString()});
+                break;
+            case 2:
+                this.setState({ ScoreHole2: score.toString()});
+                break;
+            case 3:
+                this.setState({ ScoreHole3: score.toString()});
+                break;
+            case 4:
+                this.setState({ ScoreHole4: score.toString()});
+                break;
+            case 5:
+                this.setState({ ScoreHole5: score.toString()});
+                break;
+            case 6:
+                this.setState({ ScoreHole6: score.toString()});
+                break;
+            case 7:
+                this.setState({ ScoreHole7: score.toString()});
+                break;
+            case 8:
+                this.setState({ ScoreHole8: score.toString()});
+                break;
+            case 9:
+                this.setState({ ScoreHole9: score.toString()});
+                break;
+            case 10:
+                this.setState({ ScoreHole10: score.toString()});
+                break;
+            case 11:
+                this.setState({ ScoreHole11: score.toString()});
+                break;
+            case 12:
+                this.setState({ ScoreHole12: score.toString()});
+                break;
+            case 13:
+                this.setState({ ScoreHole13: score.toString()});
+                break;
+            case 14:
+                this.setState({ ScoreHole14: score.toString()});
+                break;
+            case 15:
+                this.setState({ ScoreHole15: score.toString()});
+                break;
+            case 16:
+                this.setState({ ScoreHole16: score.toString()});
+                break;
+            case 17:
+                this.setState({ ScoreHole17: score.toString()});
+                break;
+            case 18:
+                this.setState({ ScoreHole18: score.toString()});
+                break;
+        }
         this.saveScore(score);
             /*if (parseInt(score ? score : 1) > 0) {
                 const { holeInfo, index, hole } = this.props;
                 const par = holeInfo[index].holes[hole - 1].par;
                 score = score ? parseInt(score) : '';
-                const buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                const inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                const inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
+                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ holeScore: score.toString(), buttonIndex, inputStyle, inputBorder });
                 this.saveScore(score);
             }*/
@@ -989,7 +1878,7 @@ class PlayerScoreComponent extends Component {
         console.warn(this.props.item.id)
         console.warn(this.props.hole)
         console.warn(IDRound)*/
-        this.props.clickHandler(score,this.props.item.id,this.props.hole,IDRound)
+        this.props.clickHandler(parseInt(score),this.props.item.id,this.props.hole,IDRound)
         const member = {
             strokes: score,
             id_sync: '',

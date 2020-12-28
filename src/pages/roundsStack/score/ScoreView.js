@@ -57,11 +57,12 @@ class ScoreView extends Component {
     let playersHoleAux = []
     for (var i = 0; i <= players.length - 1; i++) {
         let HolesAux = []
-        HolesAux.push('['+players[i].id)
-        for (var j = 0; j <= 17; j++) {
-            HolesAux.push(0)
+        HolesAux.push(players[i].id)
+        for (var j = 1; j <= 18; j++) {
+            console.warn(players[i][j])
+            HolesAux.push(players[i][j])
         }
-        playersHoleAux.push(HolesAux + ']')
+        playersHoleAux.push(HolesAux)
     }
 
     this.setState({
@@ -112,24 +113,42 @@ class ScoreView extends Component {
                       ho_par16: item.ho_par16,
                       ho_par17: item.ho_par17,
                       ho_par18: item.ho_par18,
+                      1: item.ScoreHole1,
+                      2: item.ScoreHole2,
+                      3: item.ScoreHole3,
+                      4: item.ScoreHole4,
+                      5: item.ScoreHole5,
+                      6: item.ScoreHole6,
+                      7: item.ScoreHole7,
+                      8: item.ScoreHole8,
+                      9: item.ScoreHole9,
+                      10: item.ScoreHole10,
+                      11: item.ScoreHole11,
+                      12: item.ScoreHole12,
+                      13: item.ScoreHole13,
+                      14: item.ScoreHole14,
+                      15: item.ScoreHole15,
+                      16: item.ScoreHole16,
+                      17: item.ScoreHole17,
+                      18: item.ScoreHole18,
                       ScoreHole1: item.ScoreHole1,
-                      ScoreHole1: item.ScoreHole2,
-                      ScoreHole1: item.ScoreHole3,
-                      ScoreHole1: item.ScoreHole4,
-                      ScoreHole1: item.ScoreHole5,
-                      ScoreHole1: item.ScoreHole6,
-                      ScoreHole1: item.ScoreHole7,
-                      ScoreHole1: item.ScoreHole8,
-                      ScoreHole1: item.ScoreHole9,
-                      ScoreHole1: item.ScoreHole10,
-                      ScoreHole1: item.ScoreHole11,
-                      ScoreHole1: item.ScoreHole12,
-                      ScoreHole1: item.ScoreHole13,
-                      ScoreHole1: item.ScoreHole14,
-                      ScoreHole1: item.ScoreHole15,
-                      ScoreHole1: item.ScoreHole16,
-                      ScoreHole1: item.ScoreHole17,
-                      ScoreHole1: item.ScoreHole18,
+                      ScoreHole2: item.ScoreHole2,
+                      ScoreHole3: item.ScoreHole3,
+                      ScoreHole4: item.ScoreHole4,
+                      ScoreHole5: item.ScoreHole5,
+                      ScoreHole6: item.ScoreHole6,
+                      ScoreHole7: item.ScoreHole7,
+                      ScoreHole8: item.ScoreHole8,
+                      ScoreHole9: item.ScoreHole9,
+                      ScoreHole10: item.ScoreHole10,
+                      ScoreHole11: item.ScoreHole11,
+                      ScoreHole12: item.ScoreHole12,
+                      ScoreHole13: item.ScoreHole13,
+                      ScoreHole14: item.ScoreHole14,
+                      ScoreHole15: item.ScoreHole15,
+                      ScoreHole16: item.ScoreHole16,
+                      ScoreHole17: item.ScoreHole17,
+                      ScoreHole18: item.ScoreHole18,
                       Ho_Advantage1: item.Ho_Advantage1,
                       Ho_Advantage2: item.Ho_Advantage2,
                       Ho_Advantage3: item.Ho_Advantage3,
@@ -212,7 +231,7 @@ class ScoreView extends Component {
             visible={carga}
             color={Colors.Primary} />
         {isLandscape ?
-          <HorizontalScoreView holes={this.holes} players={players} /> :
+          <HorizontalScoreView holes={this.holes} players={players} playerHole={playerHole} /> :
           <ViewPager
             initialPage={0/*this.props.initHole - 1*/}
             ref={ref => this.pager = ref}

@@ -7,6 +7,10 @@ import ListEmptyComponent from '../../global/ListEmptyComponent';
 import HorizontalScoreComponent from './HorizontalScoreComponent';
 import { ListadoAmigosRonda } from '../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Colors from '../../../utils/Colors';
+import { showMessage } from "react-native-flash-message";
+import { ActualizarRondaHoyos } from '../../../Services/Services'
 
 class HorizontalScoreView extends Component {
     constructor(props) {
@@ -14,13 +18,98 @@ class HorizontalScoreView extends Component {
         this.state = {
           language: ''
         };
+        this.outputEvent = this.outputEvent.bind(this);
       }
+      componentDidMount = async () => {
+        //console.warn('Entró')
+        let language = await AsyncStorage.getItem('language')
+        /*let playersHoleAux = []
+        for (var i = 0; i <= this.props.players.length - 1; i++) {
+            let HolesAux = []
+            HolesAux.push(this.props.players[i].id)
+            for (var j = 0; j <= 17; j++) {
+                HolesAux.push(0)
+            }
+            playersHoleAux.push(HolesAux)
+        }*/
+
+        this.setState({
+            language:language,
+            //playerHole:playersHoleAux
+        })
+        }
+
+      outputEvent(score,id,hole,IDRound) {
+        console.warn(this.props.playerHole)
+        console.warn(this.props.players.length)
+        console.warn(id)
+        //console.warn(hole)
+        // the event context comes from the Child
+        let playersHoleAux = this.props.playerHole
+        if(playersHoleAux.length>0){
+            for (var i = 0; i <= this.props.players.length - 1; i++) {
+                for (var j = 0; j <= 17; j++) {
+                    console.warn(playersHoleAux[i][j])
+                    if(playersHoleAux[i][j]==id){
+                        console.warn('entra')
+                        playersHoleAux[i][hole]=score
+                    }
+                }
+            }
+            this.setState({
+                playerHole:playersHoleAux
+            })
+        console.warn(this.props.playerHole)
+        }
+        else{
+            //this.llenaArreglo()
+        }
+        /*console.warn(score)
+        console.warn(id)
+        console.warn(hole)
+        console.warn(IDRound)//this.setState({ count: this.state.count++ });*/
+    }
+
+    guardar = async () => {
+        let idUsu = await AsyncStorage.getItem('usu_id')
+        let IDRound = await AsyncStorage.getItem('IDRound')
+        console.warn(idUsu)
+        console.warn(IDRound)
+        console.warn(this.state.playerHole)
+        let arreglo = ''
+        for (var i = 0; i <= this.state.playerHole.length - 1; i++) {
+            let HolesAux = []
+            for (var j = 0; j <= 18; j++) {
+                HolesAux.push(this.state.playerHole[i][j])
+            }
+            HolesAux='['+HolesAux.toString()+']'
+            arreglo += HolesAux
+        }
+        console.warn(arreglo)
+        ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+              showMessage({
+                message: Dictionary.successSaveTeeData[this.state.language],
+                type:'success',
+              });
+            }
+            else{
+              showMessage({
+                message: Dictionary.error[this.state.language],
+                type:'danger',
+              });
+            }
+        })
+    }
 
     render() {
 
         const {
             holes,
-            players
+            players,
+            playerHole
         } = this.props;
 
         const {
@@ -34,6 +123,11 @@ class HorizontalScoreView extends Component {
 
         return (
             <View style={{ flex: 1 }}>
+                <View>
+                  <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar()}>
+                    <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
+                  </TouchableOpacity>
+                </View>
                 <View style={styles.holeHeaderView}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         {/*<Text style={styles.courseName}>{course.name}</Text>
@@ -60,7 +154,7 @@ class HorizontalScoreView extends Component {
                                                 <Text style={[styles.holeNumber, { fontSize: 16 }]}>{hole}</Text>
                                             </View>
                                             <View style={{ width: '100%', paddingVertical: 10 }}>
-                                                {players.map((item, index) => <HorizontalScoreComponent key={index.toString()} item={item} hole={hole} index={index} />)}
+                                                {players.map((item, index) => <HorizontalScoreComponent key={index.toString()} item={item} hole={hole} index={index} clickHandler={this.outputEvent} />)}
                                             </View>
                                         </View>
                                     </View>

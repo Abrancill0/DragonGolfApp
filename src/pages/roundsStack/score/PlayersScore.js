@@ -210,9 +210,18 @@ class PlayersScore extends Component {
         let IDRound = await AsyncStorage.getItem('IDRound')
         console.warn(idUsu)
         console.warn(IDRound)
-        console.warn(this.state.playerHole.toString())
-        console.warn(this.state.playerHole.length)
-        ActualizarRondaHoyos(IDRound, idUsu, '['+this.state.playerHole.toString()+']', this.state.playerHole.length)
+        console.warn(this.state.playerHole)
+        let arreglo = ''
+        for (var i = 0; i <= this.state.playerHole.length - 1; i++) {
+            let HolesAux = []
+            for (var j = 0; j <= 18; j++) {
+                HolesAux.push(this.state.playerHole[i][j])
+            }
+            HolesAux='['+HolesAux.toString()+']'
+            arreglo += HolesAux
+        }
+        console.warn(arreglo)
+        ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
