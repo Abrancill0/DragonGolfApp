@@ -78,7 +78,30 @@ class PlayerScoreComponent extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount = async () => {
+        let playerHole= await AsyncStorage.getItem(this.props.item.id.toString())
+        var myArray = playerHole.split(',');
+        this.setState({
+            ScoreHole1: myArray[1],
+            ScoreHole2: myArray[2],
+            ScoreHole3: myArray[3],
+            ScoreHole4: myArray[4],
+            ScoreHole5: myArray[5],
+            ScoreHole6: myArray[6],
+            ScoreHole7: myArray[7],
+            ScoreHole8: myArray[8],
+            ScoreHole9: myArray[9],
+            ScoreHole10: myArray[10],
+            ScoreHole11: myArray[11],
+            ScoreHole12: myArray[12],
+            ScoreHole13: myArray[13],
+            ScoreHole14: myArray[14],
+            ScoreHole15: myArray[15],
+            ScoreHole16: myArray[16],
+            ScoreHole17: myArray[17],
+            ScoreHole18: myArray[18]
+        })
+        //console.warn(this.state.ScoreHole1)
         const { index, hole, holeInfo} = this.props;
         if (holeInfo) {
             if (holeInfo.length > 0) {
@@ -1800,63 +1823,81 @@ class PlayerScoreComponent extends Component {
         this.saveScore(score);
     }
 
-    onChangeScore = (score, value) => {
+    onChangeScore = async (score, value) => {
         console.warn(score)
         console.warn(value)
         switch (value) {
             case 1:
                 this.setState({ ScoreHole1: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 2:
                 this.setState({ ScoreHole2: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 3:
                 this.setState({ ScoreHole3: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 4:
                 this.setState({ ScoreHole4: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 5:
                 this.setState({ ScoreHole5: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 6:
                 this.setState({ ScoreHole6: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 7:
                 this.setState({ ScoreHole7: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 8:
                 this.setState({ ScoreHole8: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 9:
                 this.setState({ ScoreHole9: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 10:
                 this.setState({ ScoreHole10: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 11:
                 this.setState({ ScoreHole11: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 12:
                 this.setState({ ScoreHole12: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 13:
                 this.setState({ ScoreHole13: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 14:
                 this.setState({ ScoreHole14: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 15:
                 this.setState({ ScoreHole15: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 16:
                 this.setState({ ScoreHole16: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 17:
                 this.setState({ ScoreHole17: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
             case 18:
                 this.setState({ ScoreHole18: score.toString()});
+                AsyncStorage.setItem(value, score.toString());
                 break;
         }
         this.saveScore(score);

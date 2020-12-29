@@ -39,7 +39,7 @@ class HorizontalScoreView extends Component {
         })
         }
 
-      outputEvent(score,id,hole,IDRound) {
+      outputEvent = async (score,id,hole,IDRound) => {
         console.warn(this.props.playerHole)
         console.warn(this.props.players.length)
         console.warn(id)
@@ -53,6 +53,9 @@ class HorizontalScoreView extends Component {
                     if(playersHoleAux[i][j]==id){
                         console.warn('entra')
                         playersHoleAux[i][hole]=score
+                        console.warn(id.toString())
+                        console.warn(playersHoleAux[i].toString())
+                        AsyncStorage.setItem(id.toString(), playersHoleAux[i].toString());
                     }
                 }
             }

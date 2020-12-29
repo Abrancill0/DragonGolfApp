@@ -59,12 +59,14 @@ class ScoreView extends Component {
         let HolesAux = []
         HolesAux.push(players[i].id)
         for (var j = 1; j <= 18; j++) {
-            console.warn(players[i][j])
+            //console.warn(players[i][j])
             HolesAux.push(players[i][j])
         }
         playersHoleAux.push(HolesAux)
+        console.warn(players[i].id.toString())
+        console.warn(HolesAux.toString())
+        AsyncStorage.setItem(players[i].id.toString(), HolesAux.toString());
     }
-
     this.setState({
         language:language,
         playerHole:playersHoleAux
@@ -78,11 +80,11 @@ class ScoreView extends Component {
     this.setState({
         language:language
     })
-    console.warn(idUsu)
-    console.warn(IDRound)
+    //console.warn(idUsu)
+    //console.warn(IDRound)
     ListadoAmigosRonda(idUsu, IDRound)
         .then((res) => {
-          console.warn(res)
+          //console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {

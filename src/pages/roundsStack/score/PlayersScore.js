@@ -44,8 +44,8 @@ class PlayersScore extends Component {
 
     this.outputEvent = this.outputEvent.bind(this);
     }
-    outputEvent(score,id,hole,IDRound) {
-        console.warn(this.props.playerHole)
+    outputEvent = async (score,id,hole,IDRound) => {
+        //console.warn(this.props.playerHole)
         //console.warn(hole)
         // the event context comes from the Child
         let playersHoleAux = this.props.playerHole
@@ -54,6 +54,9 @@ class PlayersScore extends Component {
                 for (var j = 0; j <= 17; j++) {
                     if(playersHoleAux[i][j]==id){
                         playersHoleAux[i][hole]=score
+                        console.warn(id.toString())
+                        console.warn(playersHoleAux[i].toString())
+                        AsyncStorage.setItem(id.toString(), playersHoleAux[i].toString());
                     }
                 }
             }
