@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, ActionSheetIOS, Platform, Alert } from 'react-native';
-import { connect } from 'react-redux';
 import styles from '../styles';
 import Colors from '../../../../utils/Colors';
 import Ripple from 'react-native-material-ripple';
 import * as NavigationService from '../../../../routes/NavigationService';
-import RNBottomActionSheet from 'react-native-bottom-action-sheet';
+//import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 import { Dictionary } from '../../../../utils/Dictionary';
 import Icon from 'react-native-vector-icons';
-import { actionDeleteSNBet, actionUpdatePress, actionSNBetSummary, actionUpdateBible, actionGetBible, actionUpdatePlayerStrokes } from '../../../../store/actions';
 import CalculatePresses from '../../../../utils/CalculatePresses';
 import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import { NavigationEvents } from 'react-navigation';
@@ -186,7 +184,7 @@ class SNBetListComponent extends Component {
                     if (index !== 5) this.doAction(index);
                 },
             );
-        } else {
+        } else {/*
             const resultsIcon = <Icon name='counter' color={Colors.Primary} size={40} family={"MaterialCommunityIcons"} />;
             const editIcon = <Icon name='edit' color={Colors.Primary} size={40} family={"Entypo"} />;
             const addPressIcon = <Icon name='md-add-circle-outline' color={Colors.Primary} size={40} family={"Ionicons"} />;
@@ -206,7 +204,7 @@ class SNBetListComponent extends Component {
                     this.doAction(index);
                 },
             });
-        }
+        */}
     }
 
     doAction = (index) => {
@@ -597,36 +595,4 @@ class SNBetListComponent extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    language: state.reducerLanguage,
-    roundId: state.reducerRoundId,
-    holeInfo: state.reducerHole,
-    switchAdv: state.reducerSwitchAdv,
-    initHole: state.reducerInitHole,
-    round: state.reducerRound,
-    roundPlayers: state.reducerRoundPlayers,
-    players: state.reducerPlayers
-});
-
-const mapDispatchToProps = dispatch => ({
-    deleteSNBet: (value) => {
-        dispatch(actionDeleteSNBet(value));
-    },
-    updatePress: (values) => {
-        dispatch(actionUpdatePress(values));
-    },
-    snBetSummary: (values) => {
-        dispatch(actionSNBetSummary(values));
-    },
-    updateBible: (values) => {
-        dispatch(actionUpdateBible(values));
-    },
-    getBible: () => {
-        dispatch(actionGetBible());
-    },
-    updatePlayer: (values) => {
-        dispatch(actionUpdatePlayerStrokes(values));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SNBetListComponent);
+export default SNBetListComponent;

@@ -25,6 +25,7 @@ import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRo
 import PlayersViewRoundsList2 from './src/pages/roundsStack/players/PlayersViewRound2'
 import StrokesView from './src/pages/roundsStack/players/StrokesView'
 import ScoreView from './src/pages/roundsStack/score/ScoreView'
+import BetsView from './src/pages/roundsStack/bets/BetsView'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeesViewRound from './src/pages/roundsStack/players/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
@@ -412,6 +413,33 @@ export default class App extends Component {
                 <View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <MaterialCommunityIcons
                     name='scoreboard'
+                    color={Colors.Black}
+                    size={25} />
+              </View>
+              )
+            }
+          },
+          })}
+          />
+          <BottomTab.Screen name="BetsView" component={BetsView} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialCommunityIcons
+                    name='coin'
+                    color={Colors.Primary}
+                    size={30} />
+              </View>
+              )
+            }else
+            {
+              return(
+                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialCommunityIcons
+                    name='coin'
                     color={Colors.Black}
                     size={25} />
               </View>

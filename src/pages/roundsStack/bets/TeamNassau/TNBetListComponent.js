@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text, ActionSheetIOS, Platform, Alert } from 'react-native';
-import { connect } from 'react-redux';
 import styles from '../styles';
 import Colors from '../../../../utils/Colors';
 import Ripple from 'react-native-material-ripple';
 import * as NavigationService from '../../../../routes/NavigationService';
-import RNBottomActionSheet from 'react-native-bottom-action-sheet';
+//import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 import { Dictionary } from '../../../../utils/Dictionary';
 import Icon from 'react-native-vector-icons';
-import { actionDeleteTNBet, actionUpdateTNPress, actionTNBetSummary } from '../../../../store/actions';
 import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import { NavigationEvents } from 'react-navigation';
 import CalculatePressesTeam from '../../../../utils/CalculatePressesTeam';
-import Database from '../../../../database/database';
-
-const database = new Database();
 
 
 class TNBetListComponent extends Component {
@@ -175,7 +170,7 @@ class TNBetListComponent extends Component {
                     if (index !== 5) this.doAction(index);
                 },
             );
-        } else {
+        } else {/*
             const resultsIcon = <Icon name='counter' color={Colors.Primary} size={40} family={"MaterialCommunityIcons"} />;
             const editIcon = <Icon name='edit' color={Colors.Primary} size={40} family={"Entypo"} />;
             const addPressIcon = <Icon name='md-add-circle-outline' color={Colors.Primary} size={40} family={"Ionicons"} />;
@@ -195,7 +190,7 @@ class TNBetListComponent extends Component {
                     this.doAction(index);
                 },
             });
-        }
+        */}
     }
 
     doAction = (index) => {
@@ -305,7 +300,7 @@ class TNBetListComponent extends Component {
                 let maxStrokes = 0;
                 let maxStrokesIdx = 0;
                 let courseHcp = 0;
-                const configureStrokes = await database.listTeamNassauPlayersConfrontations(item.member_a_id, item.member_b_id, item.member_c_id, item.member_d_id);
+                //const configureStrokes = await database.listTeamNassauPlayersConfrontations(item.member_a_id, item.member_b_id, item.member_c_id, item.member_d_id);
                 this.holeInfo.forEach((item, index) => {
                     if(configureStrokes[item.id]) {
                         if (configureStrokes[item.id] > maxStrokes) {
@@ -799,24 +794,4 @@ class TNBetListComponent extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    language: state.reducerLanguage,
-    roundId: state.reducerRoundId,
-    holeInfo: state.reducerHole,
-    switchAdv: state.reducerSwitchAdv,
-    initHole: state.reducerInitHole,
-});
-
-const mapDispatchToProps = dispatch => ({
-    deleteTNBet: (value) => {
-        dispatch(actionDeleteTNBet(value));
-    },
-    updateTNPress: (values) => {
-        dispatch(actionUpdateTNPress(values));
-    },
-    tnBetSummary: (value) => {
-        dispatch(actionTNBetSummary(value));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TNBetListComponent);
+export default TNBetListComponent;

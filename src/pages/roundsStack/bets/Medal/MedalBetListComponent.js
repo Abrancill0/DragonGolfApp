@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, Platform, ActionSheetIOS, Alert } from 'react-native';
-import { connect } from 'react-redux';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons';
 import styles from '../styles';
 import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
-import RNBottomActionSheet from 'react-native-bottom-action-sheet';
+//import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 import * as NavigationService from '../../../../routes/NavigationService';
-import { actionDeleteMedalBet, actionMedalBetSummary } from '../../../../store/actions';
 import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import CalculateAdvMedal from '../../../../utils/CalculateAdvMedal';
 
@@ -102,7 +100,7 @@ class MedalBetListComponent extends Component {
                     if (index !== 3) this.doAction(index);
                 },
             );
-        } else {
+        } else {/*
             const resultsIcon = <Icon name='counter' color={Colors.Primary} size={40} family={"MaterialCommunityIcons"} />;
             const editIcon = <Icon name='edit' color={Colors.Primary} size={40} family={"Entypo"} />;
             const removeBetIcon = <Icon name='md-trash' color={Colors.Primary} size={40} family={"Ionicons"} />;
@@ -120,7 +118,7 @@ class MedalBetListComponent extends Component {
                     this.doAction(index);
                 },
             });
-        }
+        */}
     }
 
     doAction = (index) => {
@@ -249,20 +247,4 @@ class MedalBetListComponent extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    language: state.reducerLanguage,
-    holeInfo: state.reducerHole,
-    initHole: state.reducerInitHole,
-    hcpAdj: state.reducerHcpAdj,
-});
-
-const mapDispatchToProps = dispatch => ({
-    removeMedalBet: (value) => {
-        dispatch(actionDeleteMedalBet(value));
-    },
-    medalBetSummary: (value) => {
-        dispatch(actionMedalBetSummary(value));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MedalBetListComponent);
+export default MedalBetListComponent;

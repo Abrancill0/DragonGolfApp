@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, Alert, ActionSheetIOS, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import Colors from '../../../utils/Colors';
 import Ripple from 'react-native-material-ripple';
 import SNBetListComponent from './SingleNassau/SNBetListComponent';
 import Icon from 'react-native-vector-icons';
-import { actionDeleteSNBet, actionDeleteTNBet, actionDeleteMedalBet } from '../../../store/actions';
 import { Dictionary } from '../../../utils/Dictionary';
-import RNBottomActionSheet from 'react-native-bottom-action-sheet';
+//import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 import TNBetListComponent from './TeamNassau/TNBetListComponent';
 import MedalBetListComponent from './Medal/MedalBetListComponent';
 import Collapsible from 'react-native-collapsible';
@@ -119,7 +117,7 @@ class BetsComponent extends Component {
                     );
                 },
             );
-        } else {
+        } else {/*
             const removeIcon = <Icon name='md-trash' color={Colors.Primary} size={40} family={"Ionicons"} />;
 
             RNBottomActionSheet.SheetView.Show({
@@ -152,25 +150,8 @@ class BetsComponent extends Component {
                     );
                 },
             });
-        }
+        */}
     }
 }
 
-const mapStateToProps = state => ({
-    language: state.reducerLanguage,
-    roundId: state.reducerRoundId,
-});
-
-const mapDispatchToProps = dispatch => ({
-    deleteSNBet: (value) => {
-        dispatch(actionDeleteSNBet(value));
-    },
-    deleteTNBet: (value) => {
-        dispatch(actionDeleteTNBet(value));
-    },
-    deleteMedalBet: (value) => {
-        dispatch(actionDeleteMedalBet(value));
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(BetsComponent);
+export default BetsComponent;

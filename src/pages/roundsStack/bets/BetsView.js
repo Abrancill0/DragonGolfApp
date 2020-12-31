@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { View, TextInput, KeyboardAvoidingView } from 'react-native';
-import { connect } from 'react-redux';
 import moment from 'moment';
 import BetsComponent from './BetsComponent';
 import { Dictionary } from '../../../utils/Dictionary';
-import { actionGetSNBet, actionSNBetSummary, actionGetTNBet, actionTNBetSummary, actionGetMedalBets, actionMedalBetSummary } from '../../../store/actions';
 import { NavigationEvents, FlatList } from 'react-navigation';
 import HeaderButton from '../../global/HeaderButton';
 import Collapsible from 'react-native-collapsible';
@@ -61,22 +59,22 @@ class BetsView extends Component {
           break;
       }
 
-      title = props.course.short_name + ` ${month} ${day}`;
+      title = 'Pruebas'//props.course.short_name + ` ${month} ${day}`;
     }
 
-    props.navigation.setParams({
+    /*props.navigation.setParams({
       Title: title,
-    });
+    });*/
 
-    props.getSNBet(props.roundId);
+    /*props.getSNBet(props.roundId);
     props.getTNBet(props.roundId);
-    props.getMedalBet(props.roundId);
+    props.getMedalBet(props.roundId);*/
 
     this.snBetProfits = [];
     this.tnBetProfits = [];
   }
 
-  static navigationOptions = ({ navigation }) => {
+  /*static navigationOptions = ({ navigation }) => {
 
     return {
       title: `${navigation.getParam('Title')}`,
@@ -93,15 +91,15 @@ class BetsView extends Component {
         />
       )
     }
-  };
+  };*/
 
   componentDidMount() {
-    this.props.navigation.setParams({
+    /*this.props.navigation.setParams({
       showSeatchInput: this.showSearchInput
-    });
+    });*/
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {/*
     if (nextProps.snBet !== this.props.snBet) {
       this.snBetProfits = [];
       nextProps.snBet.forEach(_ => this.snBetProfits.push(0));
@@ -121,7 +119,7 @@ class BetsView extends Component {
       nextProps.medalBet.forEach(_ => this.medalBetProfits.push(0));
       this.props.medalBetSummary(this.medalBetProfits);
     }
-  }
+  */}
 
   render() {
 
@@ -223,14 +221,8 @@ class BetsView extends Component {
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={140} enabled={Platform.OS === 'ios'}>
-        <NavigationEvents
-          onWillFocus={_ => {
-            this.props.getSNBet(this.props.roundId);
-            this.props.getTNBet(this.props.roundId);
-          }}
-        />
         {render &&
-          <>
+          <View>
             <Collapsible collapsed={collapsedSearch}>
               <View style={{ backgroundColor: Colors.Gray }}>
                 <TextInput
@@ -243,12 +235,12 @@ class BetsView extends Component {
                 />
               </View>
             </Collapsible>
-            <FlatList
+            {/*<FlatList
               keyboardShouldPersistTaps='handled'
               data={bets}
               keyExtractor={item => item.key}
               stickyHeaderIndices={[0, 2, 4, 6, 8, 10, 12]}
-              renderItem={({ item, index }) => <BetsComponent
+              /*renderItem={({ item, index }) => <BetsComponent
                 header={item.header}
                 betTitle={item.title}
                 type={item.key}
@@ -260,8 +252,8 @@ class BetsView extends Component {
                 bets={bets}
                 index={index}
               />}
-            />
-          </>
+            />*/}
+          </View>
         }
       </KeyboardAvoidingView>
     );
@@ -320,36 +312,4 @@ class BetsView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-  course: state.reducerRoundCourse,
-  round: state.reducerRound,
-  roundId: state.reducerRoundId,
-  snBet: state.reducerSNBet,
-  tnBet: state.reducerTNBet,
-  medalBet: state.reducerMedalBets,
-});
-
-const mapDispatchToProps = dispatch => ({
-  getSNBet: (value) => {
-    dispatch(actionGetSNBet(value));
-  },
-  snBetSummary: (values) => {
-    dispatch(actionSNBetSummary(values));
-  },
-  getTNBet: (value) => {
-    dispatch(actionGetTNBet(value));
-  },
-  tnBetSummary: (value) => {
-    dispatch(actionTNBetSummary(value));
-  },
-  getMedalBet: (value) => {
-    dispatch(actionGetMedalBets(value));
-  },
-  medalBetSummary: (value) => {
-    dispatch(actionMedalBetSummary(value));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(BetsView);
+export default BetsView;

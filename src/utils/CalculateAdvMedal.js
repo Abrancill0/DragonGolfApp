@@ -1,7 +1,3 @@
-import Database from '../database/database';
-
-const database = new Database();
-
 const CalculateAdv = async (handicap, teeId) => {
     let numberHole = null;
     let i = 0;
@@ -18,7 +14,7 @@ const CalculateAdv = async (handicap, teeId) => {
         }
     }
 
-    const dbHoles = await database.holesByTeeId(teeId);
+    //const dbHoles = await database.holesByTeeId(teeId);
     dbHoles.forEach(element => {
         numberHole = parseInt(element.hole_number) - 1;
         adv = parseInt(element.adv) - 1;
