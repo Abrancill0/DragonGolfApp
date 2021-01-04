@@ -428,8 +428,8 @@ export default class App extends Component {
             {
               return(
               <View style={{height:'60%',width:'60%', alignItems:'center'}}>
-                  <MaterialCommunityIcons
-                    name='coin'
+                  <FontAwesomeIcon
+                    name='money'
                     color={Colors.Primary}
                     size={30} />
               </View>
@@ -438,8 +438,8 @@ export default class App extends Component {
             {
               return(
                 <View style={{height:'60%',width:'60%', alignItems:'center'}}>
-                  <MaterialCommunityIcons
-                    name='coin'
+                  <FontAwesomeIcon
+                    name='money'
                     color={Colors.Black}
                     size={25} />
               </View>

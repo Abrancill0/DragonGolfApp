@@ -235,12 +235,12 @@ class BetsView extends Component {
                 />
               </View>
             </Collapsible>
-            {/*<FlatList
+            <FlatList
               keyboardShouldPersistTaps='handled'
               data={bets}
               keyExtractor={item => item.key}
               stickyHeaderIndices={[0, 2, 4, 6, 8, 10, 12]}
-              /*renderItem={({ item, index }) => <BetsComponent
+              renderItem={({ item, index }) => <BetsComponent
                 header={item.header}
                 betTitle={item.title}
                 type={item.key}
@@ -252,7 +252,7 @@ class BetsView extends Component {
                 bets={bets}
                 index={index}
               />}
-            />*/}
+            />
           </View>
         }
       </KeyboardAvoidingView>
