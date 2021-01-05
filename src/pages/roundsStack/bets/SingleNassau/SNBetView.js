@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Picker, Alert, Platform } from 'react-native';
-import { connect } from 'react-redux';
 import styles from '../styles';
 import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
-import * as Validations from '../../../../utils/Validations';
 import DragonButton from '../../../global/DragonButton';
-import Database from '../../../../database/database';
-import { actionSaveSNBet } from '../../../../store/actions';
 import moment from 'moment';
 
-const database = new Database();
 
 class SNBetView extends Component {
   constructor(props) {
@@ -25,8 +20,8 @@ class SNBetView extends Component {
     let autoPress = '2';
     let override = false;
     let advStrokes = '';
-    let playerA = props.players.length > 0 ? props.players[0].id : '';
-    let playerB = props.players.length > 0 ? props.players[0].id : '';
+    let playerA = ''//props.players.length > 0 ? props.players[0].id : '';
+    let playerB = ''//props.players.length > 0 ? props.players[0].id : '';
     this.manualPress = 0;
 
     try {
@@ -39,15 +34,15 @@ class SNBetView extends Component {
       carry = tipoCalculo ? (cantidad * parseFloat(snwData.carry)).toString() : snwData.carry;
       match = tipoCalculo ? (cantidad * parseFloat(snwData.match)).toString() : snwData.match;
       medal = tipoCalculo ? (cantidad * parseFloat(snwData.medal)).toString() : snwData.medal;
-      playerA = props.players[0].id;
-      playerB = props.players[0].id;
+      playerA = 0//props.players[0].id;
+      playerB = 0//props.players[0].id;
     } catch (error) {
       console.log('====================================');
       console.log(error + ' file: SNBetView, line: 74');
       console.log('====================================');
     }
 
-    const item = props.navigation.getParam('item');
+    /*const item = props.navigation.getParam('item');
 
     this.betId = 0;
     if (item) {
@@ -65,7 +60,7 @@ class SNBetView extends Component {
       playerB = item.member_b_id;
       this.manualPress = item.manual_press;
       props.navigation.setParams({ Title: `${item.member_a} vs ${item.member_b}` });
-    }
+    }*/
 
     this.state = {
       useFactor,
@@ -78,11 +73,12 @@ class SNBetView extends Component {
       override,
       advStrokes,
       playerA,
-      playerB
+      playerB,
+      language: 'es'
     };
 
     this.playerSettings = [];
-    this.loadPlayerSettings();
+    //this.loadPlayerSettings();
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -111,7 +107,7 @@ class SNBetView extends Component {
     const {
       language,
       players
-    } = this.props;
+    } = this.state;
 
     const {
       save,
@@ -289,11 +285,11 @@ class SNBetView extends Component {
                 selectedValue={playerA}
                 onValueChange={(playerA) => this.onChangeSwitch(playerA, 'A')}
               >
-                {
+                {/*
                   players.map(player =>
                     <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                   )
-                }
+                */}
               </Picker>
             </View>
             <View style={{ flex: 1, marginLeft: Platform.OS === 'android' && 30 }}>
@@ -302,11 +298,11 @@ class SNBetView extends Component {
                 selectedValue={playerB}
                 onValueChange={(playerB) => this.onChangeSwitch(playerB, 'B')}
               >
-                {
+                {/*
                   players.map(player =>
                     <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                   )
-                }
+                */}
               </Picker>
             </View>
             <View style={{ position: 'absolute' }}>
@@ -346,7 +342,7 @@ class SNBetView extends Component {
 
   loadPlayerSettings = () => {
     this.props.players.forEach(async player => {
-      const snwData = await database.singleSettingsByPlayerId(player.player_id);
+      const snwData = null//await database.singleSettingsByPlayerId(player.player_id);
       if (snwData) this.playerSettings.push(snwData);
     });
   }
@@ -364,7 +360,7 @@ class SNBetView extends Component {
     let advStrokes = 0;
     if (type === 'A') {
       if (player && playerB) {
-        const strokes = await database.listPlayersConfrontations(player);
+        const strokes = 0//await database.listPlayersConfrontations(player);
         const idx = strokes.findIndex(item => item.member_b_id === playerB);
         if (idx >= 0) {
           advStrokes = strokes[idx].adv_strokes;
@@ -399,7 +395,7 @@ class SNBetView extends Component {
 
     if (type === 'B') {
       if (player && playerA) {
-        const strokes = await database.listPlayersConfrontations(playerA);
+        const strokes = 0//await database.listPlayersConfrontations(playerA);
         const idx = strokes.findIndex(item => item.member_b_id === player);
         if (idx >= 0) {
           advStrokes = strokes[idx].adv_strokes;
@@ -475,7 +471,7 @@ class SNBetView extends Component {
 
     const {
       language
-    } = this.props;
+    } = this.state;
 
     const { ok: front9Ok } = Validations.floatNumberValidation(front9 ? front9 : 1);
     if (!front9Ok) {
@@ -605,22 +601,4 @@ class SNBetView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  preferences: state.reducerPreferences,
-  players: state.reducerRoundPlayers,
-  hcpAdj: state.reducerHcpAdj,
-  playersWithStrokes: state.reducerPlayers,
-  roundId: state.reducerRoundId,
-});
-
-const mapDispatchToProps = dispatch => ({
-  saveSNBet: (values) => {
-    dispatch(actionSaveSNBet(values));
-  },
-  getStrokes: (value) => {
-    dispatch(actionGetStrokes(value));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SNBetView);
+export default SNBetView;

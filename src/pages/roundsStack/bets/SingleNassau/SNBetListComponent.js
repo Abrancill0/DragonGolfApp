@@ -21,7 +21,7 @@ class SNBetListComponent extends Component {
             match: null,
             medal: null,
             profit: 0,
-            manualPress: props.item.manual_press ? props.item.manual_press : 0,
+            manualPress: 0,//props.item.manual_press ? props.item.manual_press : 0,
             carry: false,
         };
     }
@@ -67,19 +67,6 @@ class SNBetListComponent extends Component {
 
         return (
             <View>
-                <NavigationEvents
-                    onWillFocus={_ => {
-                        try {
-                            this.destructureHoles(this.props.holeInfo);
-                            this.calculateAdvStrokes();
-                            this.calculatePresses(this.props.switchAdv, manualPress);
-                        } catch (error) {
-                            console.log('====================================');
-                            console.log(error + ': SNBetListComponent, line: 67');
-                            console.log('====================================');
-                        }
-                    }}
-                />
                 <Ripple
                     style={styles.betListView}
                     rippleColor={Colors.Secondary}
@@ -91,14 +78,14 @@ class SNBetListComponent extends Component {
                     <View style={{ flex: 1 }}>
                         <View style={styles.betGeneralInfoView}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={[styles.advInfo, { color: item.adv_strokes < 0 ? 'red' : Colors.Black }]}>[{item.adv_strokes.toFixed(1)}] </Text>
-                                <Text style={styles.vsInfo}> {item.member_a} vs {item.member_b}</Text>
+                                <Text style={[styles.advInfo, { color: /*item.adv_strokes < 0 ?*/ 'red' /*: Colors.Black*/ }]}>[{/*item.adv_strokes.toFixed(1)*/2}] </Text>
+                                <Text style={styles.vsInfo}> {'item.member_a'} vs {'item.member_b'}</Text>
                             </View>
-                            <Text style={[styles.profitText, { color: profit < 0 ? Colors.Primary : profit > 0 ? 'green' : Colors.Black }]}>${profit}</Text>
+                            <Text style={[styles.profitText, { color: profit < 0 ? Colors.Primary : profit > 1 ? 'green' : Colors.Black }]}>${profit}</Text>
                         </View>
                         <View style={styles.betInfoView}>
                             <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                <Text style={{ marginRight: 10 }}>${item.front_9} <Text style={{ fontWeight: 'bold' }}>F9:</Text></Text>
+                                <Text style={{ marginRight: 10 }}>${'item.front_9'} <Text style={{ fontWeight: 'bold' }}>F9:</Text></Text>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
                                         f9Presses.map((item, index) => {
@@ -116,7 +103,7 @@ class SNBetListComponent extends Component {
                                 <View style={{ width: 30 }} />
                             </View>
                             <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                <Text style={{ marginRight: 10 }}>${item.back_9} <Text style={{ fontWeight: 'bold' }}>B9:</Text></Text>
+                                <Text style={{ marginRight: 10 }}>${'item.back_9'} <Text style={{ fontWeight: 'bold' }}>B9:</Text></Text>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
                                         b9Presses.map((item, index) => {
@@ -136,7 +123,7 @@ class SNBetListComponent extends Component {
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Text style={{ textDecorationLine: carry ? 'line-through' : 'none' }}>${item.match} <Text
+                                <Text style={{ textDecorationLine: carry ? 'line-through' : 'none' }}>${'item.match'} <Text
                                     style={{
                                         textDecorationLine: carry ? 'line-through' : 'none',
                                         fontWeight: 'bold',
@@ -145,7 +132,7 @@ class SNBetListComponent extends Component {
                                     Match = {carry ? 0 : match}
                                 </Text></Text>
                                 {carry && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
-                                <Text>${item.medal} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
+                                <Text>${'item.medal'} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
                             </View>
                         </View>
                     </View>
