@@ -252,11 +252,10 @@ export default function RoundsView(route) {
 
 
     const {
-      emptyCourseList,
       round,
       date,
       course,
-      rondas
+      bets
     } = Dictionary;
 
     return (
@@ -271,7 +270,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{rondas[language]}</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
@@ -412,7 +411,7 @@ export default function RoundsView(route) {
               //ListHeaderComponent={renderHeader}
               ListEmptyComponent={
               <ListEmptyComponent
-                text={Dictionary.emptyRoundList[language]}
+                text={Dictionary.emptyBets[language]}
                 iconName="golf-ball"
                 iconFamily='font-awesome'
               />

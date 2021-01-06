@@ -5,6 +5,8 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
+import { ListadoAmigosRonda } from '../../../../Services/Services'
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 class SNBetView extends Component {
@@ -25,7 +27,7 @@ class SNBetView extends Component {
     this.manualPress = 0;
 
     try {
-      const { preferences: { snwData } } = this.props;
+      //const { preferences: { snwData } } = this.props;
       const cantidad = parseFloat(snwData.cantidad);
       const tipoCalculo = snwData.tipo_calculo === 'factor';
       autoPress = snwData.automatic_presses_every;
@@ -74,11 +76,11 @@ class SNBetView extends Component {
       advStrokes,
       playerA,
       playerB,
-      language: 'es'
+      language: '',
+      players: []
     };
 
     this.playerSettings = [];
-    //this.loadPlayerSettings();
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -87,6 +89,10 @@ class SNBetView extends Component {
       title: navigation.getParam('Title', 'Single Nassau'),
     }
   };
+
+  componentDidMount() {
+    this.ListadoTodos()
+  }
 
   render() {
 
@@ -285,11 +291,11 @@ class SNBetView extends Component {
                 selectedValue={playerA}
                 onValueChange={(playerA) => this.onChangeSwitch(playerA, 'A')}
               >
-                {/*
+                {
                   players.map(player =>
-                    <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                    <Picker.Item key={player.PlayerId} label={player.usu_nickname} value={player.PlayerId} />
                   )
-                */}
+                }
               </Picker>
             </View>
             <View style={{ flex: 1, marginLeft: Platform.OS === 'android' && 30 }}>
@@ -298,11 +304,11 @@ class SNBetView extends Component {
                 selectedValue={playerB}
                 onValueChange={(playerB) => this.onChangeSwitch(playerB, 'B')}
               >
-                {/*
+                {
                   players.map(player =>
-                    <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                    <Picker.Item key={player.PlayerId} label={player.usu_nickname} value={player.PlayerId} />
                   )
-                */}
+                }
               </Picker>
             </View>
             <View style={{ position: 'absolute' }}>
@@ -340,11 +346,117 @@ class SNBetView extends Component {
     this.setState(state);
   }
 
-  loadPlayerSettings = () => {
-    this.props.players.forEach(async player => {
-      const snwData = null//await database.singleSettingsByPlayerId(player.player_id);
-      if (snwData) this.playerSettings.push(snwData);
-    });
+  ListadoTodos = async () => {
+    let idUsu = await AsyncStorage.getItem('usu_id')
+    let language = await AsyncStorage.getItem('language')
+    let IDRound = await AsyncStorage.getItem('IDRound')
+    this.setState({
+        language:language
+    })
+    //console.warn(idUsu)
+    //console.warn(IDRound)
+    ListadoAmigosRonda(idUsu, IDRound)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      idUsu: item.IDUsuario,
+                      id: item.PlayerId,
+                      nombre: item.usu_nombre,
+                      apellido: item.usu_apellido_paterno,
+                      nickname: item.usu_nickname,
+                      ghinnumber: item.usu_ghinnumber,
+                      photo: item.usu_imagen,
+                      handicap: item.usu_handicapindex,
+                      strokes: item.usu_golpesventaja,
+                      ho_par1: item.ho_par1,
+                      ho_par2: item.ho_par2,
+                      ho_par3: item.ho_par3,
+                      ho_par4: item.ho_par4,
+                      ho_par5: item.ho_par5,
+                      ho_par6: item.ho_par6,
+                      ho_par7: item.ho_par7,
+                      ho_par8: item.ho_par8,
+                      ho_par9: item.ho_par9,
+                      ho_par10: item.ho_par10,
+                      ho_par11: item.ho_par11,
+                      ho_par12: item.ho_par12,
+                      ho_par13: item.ho_par13,
+                      ho_par14: item.ho_par14,
+                      ho_par15: item.ho_par15,
+                      ho_par16: item.ho_par16,
+                      ho_par17: item.ho_par17,
+                      ho_par18: item.ho_par18,
+                      1: item.ScoreHole1,
+                      2: item.ScoreHole2,
+                      3: item.ScoreHole3,
+                      4: item.ScoreHole4,
+                      5: item.ScoreHole5,
+                      6: item.ScoreHole6,
+                      7: item.ScoreHole7,
+                      8: item.ScoreHole8,
+                      9: item.ScoreHole9,
+                      10: item.ScoreHole10,
+                      11: item.ScoreHole11,
+                      12: item.ScoreHole12,
+                      13: item.ScoreHole13,
+                      14: item.ScoreHole14,
+                      15: item.ScoreHole15,
+                      16: item.ScoreHole16,
+                      17: item.ScoreHole17,
+                      18: item.ScoreHole18,
+                      ScoreHole1: item.ScoreHole1,
+                      ScoreHole2: item.ScoreHole2,
+                      ScoreHole3: item.ScoreHole3,
+                      ScoreHole4: item.ScoreHole4,
+                      ScoreHole5: item.ScoreHole5,
+                      ScoreHole6: item.ScoreHole6,
+                      ScoreHole7: item.ScoreHole7,
+                      ScoreHole8: item.ScoreHole8,
+                      ScoreHole9: item.ScoreHole9,
+                      ScoreHole10: item.ScoreHole10,
+                      ScoreHole11: item.ScoreHole11,
+                      ScoreHole12: item.ScoreHole12,
+                      ScoreHole13: item.ScoreHole13,
+                      ScoreHole14: item.ScoreHole14,
+                      ScoreHole15: item.ScoreHole15,
+                      ScoreHole16: item.ScoreHole16,
+                      ScoreHole17: item.ScoreHole17,
+                      ScoreHole18: item.ScoreHole18,
+                      Ho_Advantage1: item.Ho_Advantage1,
+                      Ho_Advantage2: item.Ho_Advantage2,
+                      Ho_Advantage3: item.Ho_Advantage3,
+                      Ho_Advantage4: item.Ho_Advantage4,
+                      Ho_Advantage5: item.Ho_Advantage5,
+                      Ho_Advantage6: item.Ho_Advantage6,
+                      Ho_Advantage7: item.Ho_Advantage7,
+                      Ho_Advantage8: item.Ho_Advantage8,
+                      Ho_Advantage9: item.Ho_Advantage9,
+                      Ho_Advantage10: item.Ho_Advantage10,
+                      Ho_Advantage11: item.Ho_Advantage11,
+                      Ho_Advantage12: item.Ho_Advantage12,
+                      Ho_Advantage13: item.Ho_Advantage13,
+                      Ho_Advantage14: item.Ho_Advantage14,
+                      Ho_Advantage15: item.Ho_Advantage15,
+                      Ho_Advantage16: item.Ho_Advantage16,
+                      Ho_Advantage17: item.Ho_Advantage17,
+                      Ho_Advantage18: item.Ho_Advantage18,
+                    }
+                ))
+
+                this.setState({
+                  players:list,
+                  carga:false
+                })
+            }
+            else{
+              this.setState({
+                players:[],
+                carga:false
+              })
+            }
+        })
   }
 
   onChangeSwitch = (player, type) => {
