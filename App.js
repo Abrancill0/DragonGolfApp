@@ -838,6 +838,18 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+          <Stack.Screen name='SNBetListComponent' component={SNBetListComponent}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
           <Stack.Screen name='TeeDataViewRound' component={TeeDataViewRound}
           options={({ route }) => ({
             headerBackTitle: '',

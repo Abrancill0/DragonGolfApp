@@ -217,8 +217,10 @@ export default function RoundsView(route) {
   };
 
   async function muestraRonda(IDCourse, IDRound){
+    navigation.navigate("SNBetListComponent")
+    /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
-    AsyncStorage.setItem('IDRound', IDRound.toString());
+    AsyncStorage.setItem('IDRound', IDRound.toString());*/
   }
 
 

@@ -7,6 +7,13 @@ import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
 import { ListadoAmigosRonda } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
+import { showMessage } from "react-native-flash-message";
+
+const {
+  save,
+  useFactor: useFactorText,
+  error
+} = Dictionary;
 
 
 class SNBetView extends Component {
@@ -28,7 +35,7 @@ class SNBetView extends Component {
 
     try {
       //const { preferences: { snwData } } = this.props;
-      const cantidad = parseFloat(snwData.cantidad);
+      //const cantidad = parseFloat(snwData.cantidad);
       const tipoCalculo = snwData.tipo_calculo === 'factor';
       autoPress = 0//snwData.automatic_presses_every;
       front9 = 0//tipoCalculo ? (cantidad * parseFloat(snwData.front_9)).toString() : snwData.front_9;
@@ -114,11 +121,6 @@ class SNBetView extends Component {
       language,
       players
     } = this.state;
-
-    const {
-      save,
-      useFactor: useFactorText
-    } = Dictionary;
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
@@ -677,7 +679,11 @@ class SNBetView extends Component {
   }
 
   submit = () => {
-    if (this.fieldValidations()) {
+    showMessage({
+      message: error[this.state.language],
+      type: 'danger',
+    });
+    /*if (this.fieldValidations()) {
       const {
         useFactor,
         front9,
@@ -718,7 +724,7 @@ class SNBetView extends Component {
       }
 
       this.props.saveSNBet(SNBet);
-    }
+    }*/
   }
 }
 
