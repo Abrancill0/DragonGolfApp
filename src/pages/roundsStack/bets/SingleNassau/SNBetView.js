@@ -14,28 +14,28 @@ class SNBetView extends Component {
     super(props);
 
     let useFactor = false;
-    let front9 = '';
-    let back9 = '';
-    let match = '';
-    let carry = '';
-    let medal = '';
-    let autoPress = '2';
+    let front9 = 0;
+    let back9 = 0;
+    let match = 0;
+    let carry = 0;
+    let medal = 0;
+    let autoPress = 0;
     let override = false;
-    let advStrokes = '';
-    let playerA = ''//props.players.length > 0 ? props.players[0].id : '';
-    let playerB = ''//props.players.length > 0 ? props.players[0].id : '';
+    let advStrokes = 0;
+    let playerA = 0//props.players.length > 0 ? props.players[0].id : 0;
+    let playerB = 0//props.players.length > 0 ? props.players[0].id : 0;
     this.manualPress = 0;
 
     try {
       //const { preferences: { snwData } } = this.props;
       const cantidad = parseFloat(snwData.cantidad);
       const tipoCalculo = snwData.tipo_calculo === 'factor';
-      autoPress = snwData.automatic_presses_every;
-      front9 = tipoCalculo ? (cantidad * parseFloat(snwData.front_9)).toString() : snwData.front_9;
-      back9 = tipoCalculo ? (cantidad * parseFloat(snwData.back_9)).toString() : snwData.back_9;
-      carry = tipoCalculo ? (cantidad * parseFloat(snwData.carry)).toString() : snwData.carry;
-      match = tipoCalculo ? (cantidad * parseFloat(snwData.match)).toString() : snwData.match;
-      medal = tipoCalculo ? (cantidad * parseFloat(snwData.medal)).toString() : snwData.medal;
+      autoPress = 0//snwData.automatic_presses_every;
+      front9 = 0//tipoCalculo ? (cantidad * parseFloat(snwData.front_9)).toString() : snwData.front_9;
+      back9 = 0//tipoCalculo ? (cantidad * parseFloat(snwData.back_9)).toString() : snwData.back_9;
+      carry = 0//tipoCalculo ? (cantidad * parseFloat(snwData.carry)).toString() : snwData.carry;
+      match = 0//tipoCalculo ? (cantidad * parseFloat(snwData.match)).toString() : snwData.match;
+      medal = 0//tipoCalculo ? (cantidad * parseFloat(snwData.medal)).toString() : snwData.medal;
       playerA = 0//props.players[0].id;
       playerB = 0//props.players[0].id;
     } catch (error) {
@@ -152,6 +152,7 @@ class SNBetView extends Component {
                 value={front9}
                 onSubmitEditing={_ => this.back9In.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -170,6 +171,7 @@ class SNBetView extends Component {
                 value={match}
                 onSubmitEditing={_ => this.carryIn.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -191,6 +193,7 @@ class SNBetView extends Component {
                 value={back9}
                 onSubmitEditing={_ => this.autoIn.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -209,6 +212,7 @@ class SNBetView extends Component {
                 value={carry}
                 onSubmitEditing={_ => this.medalIn.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -230,6 +234,7 @@ class SNBetView extends Component {
                 value={autoPress}
                 onSubmitEditing={_ => this.matchIn.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -246,6 +251,7 @@ class SNBetView extends Component {
                 maxLength={5}
                 onChangeText={(medal) => this.setState({ medal })}
                 value={medal}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -279,6 +285,7 @@ class SNBetView extends Component {
                 onChangeText={(advStrokes) => this.setState({ advStrokes })}
                 value={advStrokes}
                 editable={override}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -293,7 +300,7 @@ class SNBetView extends Component {
               >
                 {
                   players.map(player =>
-                    <Picker.Item key={player.PlayerId} label={player.usu_nickname} value={player.PlayerId} />
+                    <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                   )
                 }
               </Picker>
@@ -306,7 +313,7 @@ class SNBetView extends Component {
               >
                 {
                   players.map(player =>
-                    <Picker.Item key={player.PlayerId} label={player.usu_nickname} value={player.PlayerId} />
+                    <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                   )
                 }
               </Picker>
@@ -462,13 +469,15 @@ class SNBetView extends Component {
   onChangeSwitch = (player, type) => {
     if (type === 'A') this.setState({ playerA: player });
     if (type === 'B') this.setState({ playerB: player });
-    this.calculateAdvStrokes(player, type);
-    this.changeBetsValues(player, type);
+    console.warn(player)
+    console.warn(type)
+    //this.calculateAdvStrokes(player, type);
+    //this.changeBetsValues(player, type);
   }
 
   calculateAdvStrokes = async (player, type) => {
-    const { playerA, playerB, override } = this.state;
-    const { players, hcpAdj, playersWithStrokes } = this.props;
+    const { players, playerA, playerB, override } = this.state;
+    //const { players, hcpAdj, playersWithStrokes } = this.props;
     let advStrokes = 0;
     if (type === 'A') {
       if (player && playerB) {

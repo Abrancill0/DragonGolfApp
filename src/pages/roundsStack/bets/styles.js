@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
         minWidth: 16
     },
     betInput: {
-        width: 60,
-        height: 25,
-        borderWidth: 0.8,
-        borderColor: Colors.Gray,
-        borderRadius: 5,
+        minWidth: 50,
+        fontSize: 14,
+        color: Colors.Black,
+        marginVertical: 0,
+        paddingVertical: 0,
         paddingHorizontal: 5,
-        fontSize: 13,
-        fontWeight: 'bold',
+        borderBottomWidth: 0.8,
+        borderColor: Colors.Gray
     },
     switchView: {
         width: 50,
