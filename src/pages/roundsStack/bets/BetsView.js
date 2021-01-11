@@ -24,7 +24,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListarRonda } from '../../../Services/Services'
+import { ListaApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -58,13 +58,12 @@ export default function RoundsView(route) {
 
   async function ListadoRondas() {
                 setStatus(true)
-    let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
     setLanguage(language)
-    ListarRonda(idUsu)
+    ListaApuesta()
         .then((res) => {
           console.warn(res)
-            if(res.estatus == 1){
+            /*if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
                       id: item.IDRounds,
@@ -84,7 +83,7 @@ export default function RoundsView(route) {
             else{
               setRounds([])
               setStatus(false)
-            }
+            }*/
         })
   }
 

@@ -111,6 +111,7 @@ export default function RoundsView(route) {
 
   async function ListadoJugadores() {
     let idUsu = await AsyncStorage.getItem('usu_id')
+    console.warn(idUsu)
     ListaAmigosAgregar(idUsu)
         .then((res) => {
           console.warn(res)

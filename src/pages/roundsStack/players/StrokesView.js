@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   StatusBar,
@@ -40,6 +40,7 @@ import DragonButton from '../../global/DragonButton';
 
 export default function RoundsView(route) {
 
+    //const refInput = useRef();
     const navigation = useNavigation();
     const [IDRound, setIDRound] = useState(route.route.params.IDRound);
     const [IDUsuario, setIDUsuario] = useState(route.route.params.IDUsuario);
@@ -419,7 +420,6 @@ export default function RoundsView(route) {
           <SwipeListView
             refreshControl={
               <RefreshControl
-                refreshing={false}
                 onRefresh={()=>{
                   if(selectedIndex==0)
                     ListadoTodos()
@@ -460,14 +460,16 @@ export default function RoundsView(route) {
                           </View>
                           <View style={{flex:0.8, paddingLeft:0}}>
                             <TextInput
+                              //ref={refInput}
                               editable={false}
                               style={styles3.costInput}
                               selectionColor={Colors.Secondary}
                               placeholder="0"
                               keyboardType="numeric"
                               returnKeyType='done'
-                              //onChangeText={(strokesRegAbs) => setStrokesRegAbs(strokesRegAbs)}
+                              //onChange={()=>refInput.current.setValue(item.strokes.toString())}
                               defaultValue={item.strokes.toString()}
+                              value={item.strokes.toString()}
                               selectTextOnFocus={true}
                             />
                             </View>

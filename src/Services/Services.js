@@ -652,6 +652,21 @@ export const ListarRonda = (IDUsuario) => {
                 });
 };
 
+export const ListaApuesta = () => {
+    const URL = RutaBaseAB + "/ListaApuesta";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListadoInvitacion = (IDUsuario) => {
     const URL = RutaBaseAB + "/ListadoInvitacion";
     return fetch(URL, {
