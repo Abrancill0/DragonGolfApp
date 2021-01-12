@@ -12,7 +12,8 @@ import { showMessage } from "react-native-flash-message";
 const {
   save,
   useFactor: useFactorText,
-  error
+  error,
+  samePlayer
 } = Dictionary;
 
 
@@ -679,10 +680,42 @@ class SNBetView extends Component {
   }
 
   submit = () => {
-    showMessage({
-      message: error[this.state.language],
-      type: 'danger',
-    });
+    const {
+        useFactor,
+        front9,
+        back9,
+        match,
+        carry,
+        medal,
+        autoPress,
+        override,
+        advStrokes,
+        playerA,
+        playerB
+      } = this.state;
+    console.warn(useFactor)
+    console.warn(front9)
+    console.warn(back9)
+    console.warn(match)
+    console.warn(carry)
+    console.warn(medal)
+    console.warn(autoPress)
+    console.warn(override)
+    console.warn(advStrokes)
+    console.warn(playerA)
+    console.warn(playerB)
+    if(playerA == playerB){
+      showMessage({
+        message: samePlayer[this.state.language],
+        type: 'warning',
+      });
+    }
+    else{
+      showMessage({
+        message: error[this.state.language],
+        type: 'danger',
+      });
+    }
     /*if (this.fieldValidations()) {
       const {
         useFactor,

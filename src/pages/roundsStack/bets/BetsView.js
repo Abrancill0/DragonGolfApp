@@ -63,7 +63,7 @@ export default function RoundsView(route) {
     ListaApuesta()
         .then((res) => {
           console.warn(res)
-            /*if(res.estatus == 1){
+            if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
                       id: item.IDRounds,
@@ -83,7 +83,7 @@ export default function RoundsView(route) {
             else{
               setRounds([])
               setStatus(false)
-            }*/
+            }
         })
   }
 
@@ -413,7 +413,7 @@ export default function RoundsView(route) {
               ListEmptyComponent={
               <ListEmptyComponent
                 text={Dictionary.emptyBets[language]}
-                iconName="golf-ball"
+                iconName="money-bill-alt"
                 iconFamily='font-awesome'
               />
             }
