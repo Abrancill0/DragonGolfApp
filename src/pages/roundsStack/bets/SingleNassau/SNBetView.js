@@ -72,6 +72,8 @@ class SNBetView extends Component {
       props.navigation.setParams({ Title: `${item.member_a} vs ${item.member_b}` });
     }*/
 
+    console.warn(this.props)
+
     this.state = {
       useFactor,
       front9,
@@ -86,8 +88,8 @@ class SNBetView extends Component {
       playerB,
       language: '',
       players: [],
-      IDBet:this.props.navigation.getParam("IDBet"),
-      IDRound:this.props.navigation.getParam("IDRound")
+      IDBet:this.props.route.params.IDBet,
+      IDRound:this.props.route.params.IDRound
     };
 
     this.playerSettings = [];
@@ -697,7 +699,9 @@ class SNBetView extends Component {
         IDRound,
         IDBet
       } = this.state;
-    console.warn(useFactor)
+    console.warn('----------------------------------')
+    console.warn(IDBet)
+    console.warn(IDRound)
     console.warn(front9)
     console.warn(back9)
     console.warn(match)
@@ -708,6 +712,7 @@ class SNBetView extends Component {
     console.warn(advStrokes)
     console.warn(playerA)
     console.warn(playerB)
+    console.warn('----------------------------------')
     if(playerA == playerB){
       showMessage({
         message: samePlayer[this.state.language],
@@ -715,7 +720,7 @@ class SNBetView extends Component {
       });
     }
     else{
-      CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9,match,carry,medal,autoPress,override,advStrokes)
+      CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9,match,carry,medal,autoPress,0,advStrokes)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
