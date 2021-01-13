@@ -622,6 +622,10 @@ export const Dictionary = {
         'en': 'Bets',
         'es': 'Apuestas'
     },
+    tipe: {
+        'en': 'Tipe',
+        'es': 'Tipo'
+    },
     more: {
         'en': 'More',
         'es': 'Más'

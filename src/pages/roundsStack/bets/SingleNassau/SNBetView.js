@@ -5,7 +5,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda } from '../../../../Services/Services'
+import { ListadoAmigosRonda, CrearDetalleApuesta } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 
@@ -85,7 +85,9 @@ class SNBetView extends Component {
       playerA,
       playerB,
       language: '',
-      players: []
+      players: [],
+      IDBet:this.props.navigation.getParam("IDBet"),
+      IDRound:this.props.navigation.getParam("IDRound")
     };
 
     this.playerSettings = [];
@@ -691,7 +693,9 @@ class SNBetView extends Component {
         override,
         advStrokes,
         playerA,
-        playerB
+        playerB,
+        IDRound,
+        IDBet
       } = this.state;
     console.warn(useFactor)
     console.warn(front9)
@@ -711,10 +715,22 @@ class SNBetView extends Component {
       });
     }
     else{
-      showMessage({
-        message: error[this.state.language],
-        type: 'danger',
-      });
+      CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9,match,carry,medal,autoPress,override,advStrokes)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+            showMessage({
+              message: error[this.state.language],
+              type: 'danger',
+            });
+          }
+          else{
+            showMessage({
+              message: error[this.state.language],
+              type: 'danger',
+            });
+          }
+        })
     }
     /*if (this.fieldValidations()) {
       const {

@@ -24,7 +24,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -36,6 +36,8 @@ import moment from 'moment';
 export default function RoundsView(route) {
 
     const navigation = useNavigation();
+    const [IDRound, setIDRound] = useState(route.route.params.IDRound);
+    const [IDBet, setIDBet] = useState(route.route.params.IDBet);
     const [rounds, setRounds] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
@@ -60,7 +62,7 @@ export default function RoundsView(route) {
                 setStatus(true)
     let language = await AsyncStorage.getItem('language')
     setLanguage(language)
-    ListaApuesta()
+    ListadoDetalleApuesta(IDRound,IDBet)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -210,9 +212,8 @@ export default function RoundsView(route) {
     );
   };
 
-  async function muestraRonda(IDBet){
-    let IDRound = await AsyncStorage.getItem('IDRound')
-    navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+  async function muestraRonda(IDRound, IDBet){
+    navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound})
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());*/
@@ -262,18 +263,18 @@ export default function RoundsView(route) {
             color={Colors.Primary} />
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.navigate("RoundsStack")}>
-              <MaterialIcon name={'home'} size={25} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
           </View>
-          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>*/}
+          </View>
         </View>
         { visible &&
           <ScrollView>
@@ -374,7 +375,7 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id)}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
