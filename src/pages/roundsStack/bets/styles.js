@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         minHeight: 110,
         paddingVertical: 5,
         paddingHorizontal: 10,
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         borderBottomWidth: 0.8,
         borderBottomColor: Colors.Gray,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ActionSheetIOS, Platform, Alert } from 'react-native';
+import { View, Text, ActionSheetIOS, Platform, Alert, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import Colors from '../../../../utils/Colors';
 import Ripple from 'react-native-material-ripple';
@@ -11,23 +11,35 @@ import CalculatePresses from '../../../../utils/CalculatePresses';
 import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 class SNBetListComponent extends Component {
     constructor(props) {
         super(props);
-        console.warn(this.props.route.params.bets[0].BetD_F9_1)
+        console.warn(this.props.route.params.bets[0])
         this.state = {
+            language:'es',
             f9Presses: [this.props.route.params.bets[0].BetD_F9_1, this.props.route.params.bets[0].BetD_F9_2, this.props.route.params.bets[0].BetD_F9_3, this.props.route.params.bets[0].BetD_F9_4, this.props.route.params.bets[0].BetD_F9_5, this.props.route.params.bets[0].BetD_F9_6, this.props.route.params.bets[0].BetD_F9_7, this.props.route.params.bets[0].BetD_F9_8, this.props.route.params.bets[0].BetD_F9_9],
             b9Presses: [this.props.route.params.bets[0].BetD_B9_1, this.props.route.params.bets[0].BetD_B9_2, this.props.route.params.bets[0].BetD_B9_3, this.props.route.params.bets[0].BetD_B9_4, this.props.route.params.bets[0].BetD_B9_5, this.props.route.params.bets[0].BetD_B9_6, this.props.route.params.bets[0].BetD_B9_7, this.props.route.params.bets[0].BetD_B9_8, this.props.route.params.bets[0].BetD_B9_9],
             match: this.props.route.params.bets[0].BetD_Match,
             medal: this.props.route.params.bets[0].BetD_Medal,
             profit: 0,
-            manualPress: 0,//props.item.manual_press ? props.item.manual_press : 0,
+            manualPress: this.props.route.params.bets[0].BetD_AutoPress ? this.props.route.params.bets[0].BetD_AutoPress : 0,
             carry: false,
+            adv_strokes: this.props.route.params.bets[0].BetD_AdvStrokers,
+            Player1: this.props.route.params.bets[0].Player1,
+            Player2: this.props.route.params.bets[0].Player2,
+            BetD_MontoF9: this.props.route.params.bets[0].BetD_MontoF9,
+            BetD_MontoB9: this.props.route.params.bets[0].BetD_MontoB9,
+            BetD_Medal: this.props.route.params.bets[0].BetD_Medal,
+            BetD_MontoApuestaMedal: this.props.route.params.bets[0].BetD_MontoApuestaMedal,
+            BetD_Match: this.props.route.params.bets[0].BetD_Match,
+            BetD_MachMonto: this.props.route.params.bets[0].BetD_MachMonto,
+            BetD_MontoPerdidoGanado: this.props.route.params.bets[0].BetD_MontoPerdidoGanado
         };
     }
 
-    componentDidMount() {
+    componentDidMount() {/*
         try {
             this.destructureHoles(this.props.holeInfo);
             this.calculateAdvStrokes();
@@ -37,9 +49,9 @@ class SNBetListComponent extends Component {
             console.log(error + ': SNBetListComponent, line: 38');
             console.log('====================================');
         }
-    }
+    */}
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {/*
         if (nextProps.holeInfo !== this.props.holeInfo) {
             this.destructureHoles(nextProps.holeInfo);
             this.calculateAdvStrokes();
@@ -51,7 +63,7 @@ class SNBetListComponent extends Component {
             this.calculateAdvStrokes();
             this.calculatePresses(nextProps.switchAdv, this.state.manualPress);
         }
-    }
+    */}
 
     render() {
 
@@ -63,30 +75,47 @@ class SNBetListComponent extends Component {
             medal,
             profit,
             manualPress,
-            carry
+            carry,
+            adv_strokes,
+            Player1,
+            Player2,
+            BetD_MontoF9,
+            BetD_MontoB9,
+            BetD_Medal,
+            BetD_MontoApuestaMedal,
+            BetD_Match,
+            BetD_MachMonto,
+            BetD_MontoPerdidoGanado,
+            language
         } = this.state;
 
         return (
-            <View>
-                <Ripple
-                    style={styles.betListView}
-                    rippleColor={Colors.Secondary}
-                    onPress={this.showSheetView}
-                >
+            <View  style={{ flex: 1 }}>
+                <View style={styles.betListView}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+                    <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+                      <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+                  <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.result[language]}</Text>
+                  </View>
+                </View>
                     <View style={styles.betIndexView}>
-                        <Text style={styles.betIndexText}>{index}</Text>
+                        <Text style={styles.betIndexText}>{'*'}</Text>
                     </View>
                     <View style={{ flex: 1 }}>
                         <View style={styles.betGeneralInfoView}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={[styles.advInfo, { color: /*item.adv_strokes < 0 ?*/ 'red' /*: Colors.Black*/ }]}>[{/*item.adv_strokes.toFixed(1)*/2}] </Text>
-                                <Text style={styles.vsInfo}> {'item.member_a'} vs {'item.member_b'}</Text>
+                                <Text style={[styles.advInfo, { color: adv_strokes < 0 ? 'red' : Colors.Black }]}>[{adv_strokes}] </Text>
+                                <Text style={styles.vsInfo}> {Player1} vs {Player2}</Text>
                             </View>
-                            <Text style={[styles.profitText, { color: profit < 0 ? Colors.Primary : profit > 1 ? 'green' : Colors.Black }]}>${profit}</Text>
+                            <Text style={[styles.profitText, { color: profit < 0 ? Colors.Primary : profit > 1 ? 'green' : Colors.Black }]}>${BetD_MontoPerdidoGanado}</Text>
                         </View>
                         <View style={styles.betInfoView}>
                             <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                <Text style={{ marginRight: 10 }}>${'item.front_9'} <Text style={{ fontWeight: 'bold' }}>F9:</Text></Text>
+                                <Text style={{ marginRight: 10 }}>${BetD_MontoF9} <Text style={{ fontWeight: 'bold' }}>F9:</Text></Text>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
                                         f9Presses.map((item, index) => {
@@ -104,7 +133,7 @@ class SNBetListComponent extends Component {
                                 <View style={{ width: 30 }} />
                             </View>
                             <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                <Text style={{ marginRight: 10 }}>${'item.back_9'} <Text style={{ fontWeight: 'bold' }}>B9:</Text></Text>
+                                <Text style={{ marginRight: 10 }}>${BetD_MontoB9} <Text style={{ fontWeight: 'bold' }}>B9:</Text></Text>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
                                         b9Presses.map((item, index) => {
@@ -124,7 +153,7 @@ class SNBetListComponent extends Component {
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Text style={{ textDecorationLine: carry ? 'line-through' : 'none' }}>${'item.match'} <Text
+                                <Text style={{ textDecorationLine: carry ? 'line-through' : 'none' }}>${BetD_MachMonto} <Text
                                     style={{
                                         textDecorationLine: carry ? 'line-through' : 'none',
                                         fontWeight: 'bold',
@@ -133,11 +162,11 @@ class SNBetListComponent extends Component {
                                     Match = {carry ? 0 : match}
                                 </Text></Text>
                                 {carry && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
-                                <Text>${'item.medal'} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
+                                <Text>${BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
                             </View>
                         </View>
                     </View>
-                </Ripple>
+                    </View>
             </View>
         );
     }

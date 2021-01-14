@@ -68,9 +68,19 @@ export default function RoundsView(route) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDBet,
-                      nombre: item.Bet_Nombre,
+                      id: item.IDBetDetail,
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
+                      Player1: item.Player1,
+                      Player2: item.Player2,
+                      BetD_AdvStrokers: item.BetD_AdvStrokers,
+                      BetD_AutoPress: item.BetD_AutoPress,
+                      BetD_MontoF9: item.BetD_MontoF9,
+                      BetD_MontoB9: item.BetD_MontoB9,
+                      BetD_Medal: item.BetD_Medal,
+                      BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
+                      BetD_Match: item.BetD_Match,
+                      BetD_MachMonto: item.BetD_MachMonto,
+                      BetD_MontoPerdidoGanado: item.BetD_MontoPerdidoGanado,
                       BetD_F9_1: item.BetD_F9_1,
                       BetD_F9_2: item.BetD_F9_2,
                       BetD_F9_3: item.BetD_F9_3,
@@ -399,7 +409,7 @@ export default function RoundsView(route) {
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{tipe[language]+': '+ item.nombre}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2}</Text>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>*/}
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
