@@ -667,7 +667,7 @@ export const ListaApuesta = () => {
                 });
 };
 
-export const ListadoDetalleApuesta = (IDRound,IDBet) => {
+export const ListadoDetalleApuesta = (IDRonda,IDBet) => {
     const URL = RutaBaseAB + "/ListadoDetalleApuesta";
     return fetch(URL, {
                 method: "POST",
@@ -676,7 +676,7 @@ export const ListadoDetalleApuesta = (IDRound,IDBet) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDRound: IDRound,
+                    IDRonda: IDRonda,
                     IDBet: IDBet
                 }),
             })

@@ -15,11 +15,12 @@ import moment from 'moment';
 class SNBetListComponent extends Component {
     constructor(props) {
         super(props);
+        console.warn(this.props.route.params.bets[0].BetD_F9_1)
         this.state = {
-            f9Presses: [null, null, null, null, null, null, null, null, null],
-            b9Presses: [null, null, null, null, null, null, null, null, null],
-            match: null,
-            medal: null,
+            f9Presses: [this.props.route.params.bets[0].BetD_F9_1, this.props.route.params.bets[0].BetD_F9_2, this.props.route.params.bets[0].BetD_F9_3, this.props.route.params.bets[0].BetD_F9_4, this.props.route.params.bets[0].BetD_F9_5, this.props.route.params.bets[0].BetD_F9_6, this.props.route.params.bets[0].BetD_F9_7, this.props.route.params.bets[0].BetD_F9_8, this.props.route.params.bets[0].BetD_F9_9],
+            b9Presses: [this.props.route.params.bets[0].BetD_B9_1, this.props.route.params.bets[0].BetD_B9_2, this.props.route.params.bets[0].BetD_B9_3, this.props.route.params.bets[0].BetD_B9_4, this.props.route.params.bets[0].BetD_B9_5, this.props.route.params.bets[0].BetD_B9_6, this.props.route.params.bets[0].BetD_B9_7, this.props.route.params.bets[0].BetD_B9_8, this.props.route.params.bets[0].BetD_B9_9],
+            match: this.props.route.params.bets[0].BetD_Match,
+            medal: this.props.route.params.bets[0].BetD_Medal,
             profit: 0,
             manualPress: 0,//props.item.manual_press ? props.item.manual_press : 0,
             carry: false,

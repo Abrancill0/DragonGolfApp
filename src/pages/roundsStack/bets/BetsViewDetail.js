@@ -70,7 +70,25 @@ export default function RoundsView(route) {
                     {
                       id: item.IDBet,
                       nombre: item.Bet_Nombre,
-                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
+                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
+                      BetD_F9_1: item.BetD_F9_1,
+                      BetD_F9_2: item.BetD_F9_2,
+                      BetD_F9_3: item.BetD_F9_3,
+                      BetD_F9_4: item.BetD_F9_4,
+                      BetD_F9_5: item.BetD_F9_5,
+                      BetD_F9_6: item.BetD_F9_6,
+                      BetD_F9_7: item.BetD_F9_7,
+                      BetD_F9_8: item.BetD_F9_8,
+                      BetD_F9_9: item.BetD_F9_9,
+                      BetD_B9_1: item.BetD_B9_1,
+                      BetD_B9_2: item.BetD_B9_2,
+                      BetD_B9_3: item.BetD_B9_3,
+                      BetD_B9_4: item.BetD_B9_4,
+                      BetD_B9_5: item.BetD_B9_5,
+                      BetD_B9_6: item.BetD_B9_6,
+                      BetD_B9_7: item.BetD_B9_7,
+                      BetD_B9_8: item.BetD_B9_8,
+                      BetD_B9_9: item.BetD_B9_9
                     }
                 ))
                 setRounds(list.reverse())
@@ -213,7 +231,7 @@ export default function RoundsView(route) {
   };
 
   async function muestraRonda(IDRound, IDBet){
-    navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound})
+    navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds})
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());*/
