@@ -140,6 +140,7 @@ export default function RoundsView(route) {
     let idUsu = await AsyncStorage.getItem('usu_id')
     ListaInvitadosAgregar(idUsu)
         .then((res) => {
+          console.warn(idUsu)
           console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (

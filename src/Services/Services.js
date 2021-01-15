@@ -599,7 +599,7 @@ export const ListaInvitados = (IDUsuarioCrea) => {
 };
 
 export const ListaInvitadosAgregar = (IDUsuarioCrea) => {
-    const URL = RutaBaseAB + "/ListadoInvitados";
+    const URL = RutaBaseAB + "/ListadoInvitadosAgregar";
     return fetch(URL, {
                 method: "POST",
                 headers: {

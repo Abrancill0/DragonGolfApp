@@ -91,10 +91,9 @@ class SNBetListComponent extends Component {
 
         return (
             <View  style={{ flex: 1 }}>
-                <View style={styles.betListView}>
                 <View style={{ flexDirection: 'row' }}>
                   <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-                    <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+                    <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
                       <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
                     </TouchableOpacity>
                   </View>
@@ -102,10 +101,10 @@ class SNBetListComponent extends Component {
                   <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.result[language]}</Text>
                   </View>
                 </View>
-                    <View style={styles.betIndexView}>
+                    {/*<View style={styles.betIndexView}>
                         <Text style={styles.betIndexText}>{'*'}</Text>
-                    </View>
-                    <View style={{ flex: 1 }}>
+                    </View>*/}
+                    <View style={{ flex: 1, margin:10 }}>
                         <View style={styles.betGeneralInfoView}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={[styles.advInfo, { color: adv_strokes < 0 ? 'red' : Colors.Black }]}>[{adv_strokes}] </Text>
@@ -165,7 +164,6 @@ class SNBetListComponent extends Component {
                                 <Text>${BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
                             </View>
                         </View>
-                    </View>
                     </View>
             </View>
         );
