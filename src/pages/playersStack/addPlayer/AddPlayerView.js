@@ -38,7 +38,8 @@ const {
       name,
       lastName,
       nickname,
-      email
+      email,
+      successSaveTeeData
     } = Dictionary;
 
 
@@ -97,7 +98,7 @@ class RoundsView extends Component {
                   console.warn(res)
                     if(res.estatus == 1){
                       showMessage({
-                        message: "Jugador agregado correctamente",
+                        message: successSaveTeeData[this.state.language],
                         type:'success',
                       });
                       this.props.navigation.navigate("PlayersView")

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Picker, Alert, Platform } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Picker, Alert, Platform, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
@@ -8,11 +8,13 @@ import moment from 'moment';
 import { ListadoAmigosRonda, CrearDetalleApuesta } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const {
   save,
   useFactor: useFactorText,
   error,
+  successSaveTeeData,
   samePlayer
 } = Dictionary;
 
@@ -130,6 +132,17 @@ class SNBetView extends Component {
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled" >
+
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+            <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.CreateBet[language]}</Text>
+          </View>
+        </View>
 
           <View style={styles.betField}>
             <View style={styles.useFactorView}>
@@ -725,9 +738,10 @@ class SNBetView extends Component {
           console.warn(res)
           if(res.estatus == 1){
             showMessage({
-              message: error[this.state.language],
-              type: 'danger',
+              message: successSaveTeeData[this.state.language],
+              type: 'success',
             });
+            this.props.navigation.goBack()
           }
           else{
             showMessage({

@@ -18,7 +18,7 @@ class SNBetListComponent extends Component {
         super(props);
         console.warn(this.props.route.params.bets[0])
         this.state = {
-            language:'es',
+            language:this.props.route.params.language,
             f9Presses: [this.props.route.params.bets[0].BetD_F9_1, this.props.route.params.bets[0].BetD_F9_2, this.props.route.params.bets[0].BetD_F9_3, this.props.route.params.bets[0].BetD_F9_4, this.props.route.params.bets[0].BetD_F9_5, this.props.route.params.bets[0].BetD_F9_6, this.props.route.params.bets[0].BetD_F9_7, this.props.route.params.bets[0].BetD_F9_8, this.props.route.params.bets[0].BetD_F9_9],
             b9Presses: [this.props.route.params.bets[0].BetD_B9_1, this.props.route.params.bets[0].BetD_B9_2, this.props.route.params.bets[0].BetD_B9_3, this.props.route.params.bets[0].BetD_B9_4, this.props.route.params.bets[0].BetD_B9_5, this.props.route.params.bets[0].BetD_B9_6, this.props.route.params.bets[0].BetD_B9_7, this.props.route.params.bets[0].BetD_B9_8, this.props.route.params.bets[0].BetD_B9_9],
             match: this.props.route.params.bets[0].BetD_Match,

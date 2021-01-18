@@ -93,7 +93,14 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
+
+    let isLandscape = false;
+    if (Dimensions.get('window').width > Dimensions.get('window').height) {
+      isLandscape = true;
+    }
+
     this.state={
+      isLandscape,
       language:'es',
       logeado:false,
       isLoading:true,
@@ -130,6 +137,10 @@ export default class App extends Component {
 
   componentDidMount() {
     this.loadSesion()//this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
+    Dimensions.addEventListener('change', (dimensions) => {
+      const { width, height } = dimensions.window;
+      this.setState({ isLandscape: width > height });
+    });
   }
 
   getUserData = async () => {
@@ -367,6 +378,8 @@ export default class App extends Component {
 
     const Tab = createMaterialTopTabNavigator();
 
+    let {isLandscape} = this.state
+
     function RoundTab() {
       return (
         <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
@@ -376,8 +389,13 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+              !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesome5
+                    name='user-friends'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
+              <FontAwesome5
                     name='user-friends'
                     color={Colors.Primary}
                     size={25} />
@@ -386,8 +404,13 @@ export default class App extends Component {
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesome5
+                    name='user-friends'
+                    color={Colors.Black}
+                    size={20} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
+              <FontAwesome5
                     name='user-friends'
                     color={Colors.Black}
                     size={20} />
@@ -403,21 +426,31 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+              !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <MaterialCommunityIcons
                     name='scoreboard'
                     color={Colors.Primary}
-                    size={30} />
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
+              <MaterialCommunityIcons
+                    name='scoreboard'
+                    color={Colors.Primary}
+                    size={25} />
               </View>
               )
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <MaterialCommunityIcons
                     name='scoreboard'
                     color={Colors.Black}
-                    size={25} />
+                    size={20} />
+              </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
+              <MaterialCommunityIcons
+                    name='scoreboard'
+                    color={Colors.Black}
+                    size={20} />
               </View>
               )
             }
@@ -430,21 +463,31 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+              !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesomeIcon
                     name='money'
                     color={Colors.Primary}
-                    size={30} />
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
+              <FontAwesomeIcon
+                    name='money'
+                    color={Colors.Primary}
+                    size={25} />
               </View>
               )
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesomeIcon
                     name='money'
                     color={Colors.Black}
-                    size={25} />
+                    size={20} />
+              </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
+              <FontAwesomeIcon
+                    name='money'
+                    color={Colors.Black}
+                    size={20} />
               </View>
               )
             }
@@ -545,7 +588,12 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+              !this.state.isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialIcons
+                    name='settings'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
                   <MaterialIcons
                     name='settings'
                     color={Colors.Primary}
@@ -555,11 +603,16 @@ export default class App extends Component {
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                !this.state.isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <MaterialIcons
                     name='settings'
                     color={Colors.Black}
                     size={20} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
+                  <MaterialIcons
+                    name='settings'
+                    color={Colors.Black}
+                    size={25} />
               </View>
               )
             }
@@ -571,7 +624,12 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+              !this.state.isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialCommunityIcons
+                    name='golf'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
                   <MaterialCommunityIcons
                     name='golf'
                     color={Colors.Primary}
@@ -581,7 +639,12 @@ export default class App extends Component {
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                !this.state.isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialCommunityIcons
+                    name='golf'
+                    color={Colors.Black}
+                    size={20} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
                   <MaterialCommunityIcons
                     name='golf'
                     color={Colors.Black}
@@ -597,7 +660,12 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+              !this.state.isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='user-friends'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
                   <FontAwesome5
                     name='user-friends'
                     color={Colors.Primary}
@@ -607,7 +675,12 @@ export default class App extends Component {
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                !this.state.isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='user-friends'
+                    color={Colors.Black}
+                    size={20} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
                   <FontAwesome5
                     name='user-friends'
                     color={Colors.Black}
@@ -623,7 +696,12 @@ export default class App extends Component {
             if(focused==true)
             {
               return(
-              <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+              !this.state.isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
                   <FontAwesome5
                     name='golf-ball'
                     color={Colors.Primary}
@@ -633,7 +711,12 @@ export default class App extends Component {
             }else
             {
               return(
-                <View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                !this.state.isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Black}
+                    size={20} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
                   <FontAwesome5
                     name='golf-ball'
                     color={Colors.Black}
