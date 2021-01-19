@@ -324,6 +324,7 @@ export default function RoundsView(route) {
         leftIconContainerStyle={{backgroundColor: 'white'}}
         inputStyle={{backgroundColor: 'white'}}
         containerStyle={{
+        height:50,
         marginHorizontal: 50,
         backgroundColor: '#FFFFFF',
         justifyContent: 'space-around',
@@ -339,6 +340,7 @@ export default function RoundsView(route) {
         leftIconContainerStyle={{backgroundColor: 'white'}}
         inputStyle={{backgroundColor: 'white'}}
         containerStyle={{
+        height:50,
         marginHorizontal: 50,
         backgroundColor: '#FFFFFF',
         justifyContent: 'space-around',
@@ -356,6 +358,7 @@ export default function RoundsView(route) {
         leftIconContainerStyle={{backgroundColor: 'white'}}
         inputStyle={{backgroundColor: 'white'}}
         containerStyle={{
+        height:50,
         marginHorizontal: 50,
         backgroundColor: '#FFFFFF',
         justifyContent: 'space-around',
@@ -373,6 +376,7 @@ export default function RoundsView(route) {
         leftIconContainerStyle={{backgroundColor: 'white'}}
         inputStyle={{backgroundColor: 'white'}}
         containerStyle={{
+        height:50,
         marginHorizontal: 50,
         backgroundColor: '#FFFFFF',
         justifyContent: 'space-around',

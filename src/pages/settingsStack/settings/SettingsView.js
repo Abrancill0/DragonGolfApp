@@ -333,7 +333,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={asAdvMoves}
-                  thumbColor={asAdvMoves ? Colors.Primary : Colors.Primary}
+                  thumbColor={asAdvMoves ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(asAdvMoves) => this.setState({ asAdvMoves })}
                 />
@@ -347,7 +347,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={asDoesCarryMove}
-                  thumbColor={asDoesCarryMove ? Colors.Primary : Colors.Primary}
+                  thumbColor={asDoesCarryMove ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(asDoesCarryMove) => this.setState({ asDoesCarryMove })}
                 />
@@ -522,7 +522,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={skinCarry}
-                  thumbColor={skinCarry ? Colors.Primary : Colors.Primary}
+                  thumbColor={skinCarry ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(skinCarry) => this.setState({ skinCarry })}
                 />
@@ -538,7 +538,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={lowedAdv}
-                  thumbColor={lowedAdv ? Colors.Primary : Colors.Primary}
+                  thumbColor={lowedAdv ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(lowedAdv) => this.setState({ lowedAdv })}
                 />
@@ -572,7 +572,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={snwUseFactor}
-                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Primary}
+                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={this.changeSNUseFactor}
                 />
@@ -813,7 +813,7 @@ class SettingsView extends Component {
               <View style={styles.costInputView}>
                 <Switch
                   value={tnwUseFactor}
-                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Primary}
+                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={this.changeTNUseFactor}
                 />

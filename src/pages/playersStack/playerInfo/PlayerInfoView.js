@@ -536,7 +536,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question} numberOfLines={2}>{advMoves[language]}</Text>
                 <Switch
                   value={advMovesHoles}
-                  thumbColor={advMovesHoles ? Colors.Primary : Colors.Primary}
+                  thumbColor={advMovesHoles ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(advMovesHoles) => this.setState({ advMovesHoles })}
                 />
@@ -546,7 +546,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{carryMove[language]}</Text>
                 <Switch
                   value={carryMoveAdv}
-                  thumbColor={carryMoveAdv ? Colors.Primary : Colors.Primary}
+                  thumbColor={carryMoveAdv ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(carryMoveAdv) => this.setState({ carryMoveAdv })}
                 />
@@ -712,7 +712,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Skin Carry Over</Text>
                 <Switch
                   value={skinCarryOver}
-                  thumbColor={skinCarryOver ? Colors.Primary : Colors.Primary}
+                  thumbColor={skinCarryOver ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(skinCarryOver) => this.setState({ skinCarryOver })}
                 />
@@ -722,7 +722,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>Lowed Adv On F9</Text>
                 <Switch
                   value={lowedAdv}
-                  thumbColor={lowedAdv ? Colors.Primary : Colors.Primary}
+                  thumbColor={lowedAdv ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={(lowedAdv) => this.setState({ lowedAdv })}
                 />
@@ -763,7 +763,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{useFactorText[language]}</Text>
                 <Switch
                   value={snwUseFactor}
-                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Primary}
+                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={this.changeSNUseFactor}
                 />
@@ -991,7 +991,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{useFactorText[language]}</Text>
                 <Switch
                   value={tnwUseFactor}
-                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Primary}
+                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Gray}
                   trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
                   onValueChange={this.changeTNUseFactor}
                 />
