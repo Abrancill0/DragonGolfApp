@@ -746,7 +746,7 @@ class PlayerInfoView extends Component {
                 <Text style={styles.question}>{autoPress[language]}</Text>
                 <View style={styles.costInputView}>
                   <TextInput
-                    style={styles.costInput}
+                    style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
                     selectionColor={Colors.Secondary}
                     placeholder="0"
                     keyboardType="numeric"
@@ -789,7 +789,85 @@ class PlayerInfoView extends Component {
                   />
                 </View>
               </View>
+              {
+                snwUseFactor ?
+                <View>
+                <View style={[styles.switchView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                <Text style={[styles.question,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Back 9</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                  <TextInput
+                    style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                    selectionColor={Colors.Secondary}
+                    placeholder="0"
+                    keyboardType="numeric"
+                    returnKeyType='done'
+                    maxLength={8}
+                    onChangeText={(snwBack9) => this.setState({ snwBack9 })}
+                    value={snwBack9}
+                    ref={ref => this.inputs['snw3'] = ref}
+                    onSubmitEditing={_ => this.focusNextField('snw4')}
+                    blurOnSubmit={false}
+                    selectTextOnFocus={true}
+                  />
+              </View>
 
+              <View style={[styles.switchView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                <Text style={[styles.question,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Match</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                  <TextInput
+                    style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                    selectionColor={Colors.Secondary}
+                    placeholder="0"
+                    keyboardType="numeric"
+                    returnKeyType='done'
+                    maxLength={8}
+                    onChangeText={(snwMatch) => this.setState({ snwMatch })}
+                    value={snwMatch}
+                    ref={ref => this.inputs['snw4'] = ref}
+                    onSubmitEditing={_ => this.focusNextField('snw5')}
+                    blurOnSubmit={false}
+                    selectTextOnFocus={true}
+                  />
+              </View>
+
+              <View style={[styles.switchView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                <Text style={[styles.question,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Carry</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                  <TextInput
+                    style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                    selectionColor={Colors.Secondary}
+                    placeholder="0"
+                    keyboardType="numeric"
+                    returnKeyType='done'
+                    maxLength={8}
+                    onChangeText={(snwCarry) => this.setState({ snwCarry })}
+                    value={snwCarry}
+                    ref={ref => this.inputs['snw5'] = ref}
+                    onSubmitEditing={_ => this.focusNextField('snw6')}
+                    blurOnSubmit={false}
+                    selectTextOnFocus={true}
+                  />
+              </View>
+
+              <View style={[styles.switchView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                <Text style={[styles.question,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Medal</Text>
+                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                  <TextInput
+                    style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                    selectionColor={Colors.Secondary}
+                    placeholder="0"
+                    keyboardType="numeric"
+                    returnKeyType='done'
+                    maxLength={8}
+                    onChangeText={(snwMedal) => this.setState({ snwMedal })}
+                    value={snwMedal}
+                    ref={ref => this.inputs['snw6'] = ref}
+                    selectTextOnFocus={true}
+                  />
+              </View>
+              </View>
+              :
+              <View>
               <View style={styles.switchView}>
                 <Text style={styles.question}>Back 9</Text>
                 <View style={styles.costInputView}>
@@ -875,6 +953,8 @@ class PlayerInfoView extends Component {
                   />
                 </View>
               </View>
+              </View>
+              }
 
             </View>}
           </Collapsible>
@@ -938,91 +1018,172 @@ class PlayerInfoView extends Component {
                 </View>
               </View>
 
-              <View style={styles.switchView}>
-                <Text style={styles.question}>Back 9</Text>
-                <View style={styles.costInputView}>
-                  {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
-                  { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
-                  <TextInput
-                    style={styles.costInput}
-                    selectionColor={Colors.Secondary}
-                    placeholder="0"
-                    keyboardType="numeric"
-                    returnKeyType='done'
-                    maxLength={8}
-                    onChangeText={(tnwBack9) => this.setState({ tnwBack9 })}
-                    value={tnwBack9}
-                    ref={ref => this.inputs['tnw3'] = ref}
-                    onSubmitEditing={_ => this.focusNextField('tnw4')}
-                    blurOnSubmit={false}
-                    selectTextOnFocus={true}
-                  />
+              {
+                tnwUseFactor ?
+                <View>
+                  <View style={[styles.switchView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.question,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Back 9</Text>
+                  <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwBack9) => this.setState({ tnwBack9 })}
+                      value={tnwBack9}
+                      ref={ref => this.inputs['tnw3'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('tnw4')}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
                 </View>
-              </View>
 
-              <View style={styles.switchView}>
-                <Text style={styles.question}>Match</Text>
-                <View style={styles.costInputView}>
-                  {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
-                  { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
-                  <TextInput
-                    style={styles.costInput}
-                    selectionColor={Colors.Secondary}
-                    placeholder="0"
-                    keyboardType="numeric"
-                    returnKeyType='done'
-                    maxLength={8}
-                    onChangeText={(tnwMatch) => this.setState({ tnwMatch })}
-                    value={tnwMatch}
-                    ref={ref => this.inputs['tnw4'] = ref}
-                    onSubmitEditing={_ => this.focusNextField('tnw5')}
-                    blurOnSubmit={false}
-                    selectTextOnFocus={true}
-                  />
+                <View style={[styles.switchView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.question,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Match</Text>
+                  <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwMatch) => this.setState({ tnwMatch })}
+                      value={tnwMatch}
+                      ref={ref => this.inputs['tnw4'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('tnw5')}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
                 </View>
-              </View>
 
-              <View style={styles.switchView}>
-                <Text style={styles.question}>Carry</Text>
-                <View style={styles.costInputView}>
-                  {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
-                  { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
-                  <TextInput
-                    style={styles.costInput}
-                    selectionColor={Colors.Secondary}
-                    placeholder="0"
-                    keyboardType="numeric"
-                    returnKeyType='done'
-                    maxLength={8}
-                    onChangeText={(tnwCarry) => this.setState({ tnwCarry })}
-                    value={tnwCarry}
-                    ref={ref => this.inputs['tnw5'] = ref}
-                    onSubmitEditing={_ => this.focusNextField('tnw6')}
-                    blurOnSubmit={false}
-                    selectTextOnFocus={true}
-                  />
+                <View style={[styles.switchView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.question,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Carry</Text>
+                  <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwCarry) => this.setState({ tnwCarry })}
+                      value={tnwCarry}
+                      ref={ref => this.inputs['tnw5'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('tnw6')}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
                 </View>
-              </View>
 
-              <View style={styles.switchView}>
-                <Text style={styles.question}>Medal</Text>
-                <View style={styles.costInputView}>
-                  {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
-                  { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
-                  <TextInput
-                    style={styles.costInput}
-                    selectionColor={Colors.Secondary}
-                    placeholder="0"
-                    keyboardType="numeric"
-                    returnKeyType='done'
-                    maxLength={8}
-                    onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
-                    value={tnwMedal}
-                    ref={ref => this.inputs['tnw6'] = ref}
-                    selectTextOnFocus={true}
-                  />
+                <View style={[styles.switchView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.question,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Medal</Text>
+                  <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
+                      value={tnwMedal}
+                      ref={ref => this.inputs['tnw6'] = ref}
+                      selectTextOnFocus={true}
+                    />
                 </View>
-              </View>
+                </View>
+                :
+                <View>
+                  <View style={styles.switchView}>
+                  <Text style={styles.question}>Back 9</Text>
+                  <View style={styles.costInputView}>
+                    {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                    { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwBack9) => this.setState({ tnwBack9 })}
+                      value={tnwBack9}
+                      ref={ref => this.inputs['tnw3'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('tnw4')}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+
+                <View style={styles.switchView}>
+                  <Text style={styles.question}>Match</Text>
+                  <View style={styles.costInputView}>
+                    {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                    { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwMatch) => this.setState({ tnwMatch })}
+                      value={tnwMatch}
+                      ref={ref => this.inputs['tnw4'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('tnw5')}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+
+                <View style={styles.switchView}>
+                  <Text style={styles.question}>Carry</Text>
+                  <View style={styles.costInputView}>
+                    {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                    { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwCarry) => this.setState({ tnwCarry })}
+                      value={tnwCarry}
+                      ref={ref => this.inputs['tnw5'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('tnw6')}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+
+                <View style={styles.switchView}>
+                  <Text style={styles.question}>Medal</Text>
+                  <View style={styles.costInputView}>
+                    {!tnwUseFactor && <Text style={styles.dollarText}>$</Text>}
+                    { tnwUseFactor && <Text style={styles.dollarText}>Front X</Text>}
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
+                      value={tnwMedal}
+                      ref={ref => this.inputs['tnw6'] = ref}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+                </View>
+              }
 
               <View style={styles.switchView}>
                 <View style={{ flex: 1 }}>

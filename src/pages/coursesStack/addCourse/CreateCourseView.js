@@ -128,7 +128,7 @@ class AddCourseView extends Component {
                                         tintColor={Colors.Primary}
                                         autoCapitalize="characters"
                                         autoCorrect={false}
-                                        maxLength={5}
+                                        maxLength={6}
                                         onChangeText={(shortName) => this.setState({ shortName })}
                                         value={shortName}
                                         error={shortNameError}

@@ -62,6 +62,7 @@ export default function RoundsView(route) {
     const buttons = ['Todos', 'Amigos', 'Invitados']
     const BlankProfile = require('../../../../assets/globals/blank-profile.png');
     const [selectedIndex, setSelectedIndex] = useState(0)
+    const [dataInState, setDataInState] = useState([]);
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
             ListadoTodos();
@@ -157,7 +158,7 @@ export default function RoundsView(route) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDUsuario,
+                      id: item.Player2Id,
                       nombre: item.usu_nombre,
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
@@ -450,17 +451,17 @@ export default function RoundsView(route) {
                         <View style={styles3.switchView}>
                           <Text style={styles3.question}>{strokes[language]}</Text>
                           
-                          <View style={styles3.costInputView}>
+                          <View style={[styles3.costInputView,{flexDirection:'row', justifyContent:'space-between'}]}>
                           <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
                             <Button
                               title={signoMenos?'+':'-'}
-                              onPress={() => item.strokes=item.strokes-0.5/*setStrokesRegAbs(strokesRegAbs - 0.5)*/}
+                              onPress={() => {item.strokes=item.strokes-0.5;setDataInState([...dataInState, players])}}
                               color={Colors.Primary}
                             />
                           </View>
                           <View style={{flex:0.8, paddingLeft:0}}>
                             <TextInput
-                              //ref={refInput}
+                              ref={ref => item.id = ref}
                               editable={false}
                               style={styles3.costInput}
                               selectionColor={Colors.Secondary}
@@ -476,7 +477,7 @@ export default function RoundsView(route) {
                             <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
                             <Button
                               title={signoMas?'+':'-'}
-                              onPress={() => item.strokes=item.strokes+0.5/*setStrokesRegAbs(strokesRegAbs + 0.5)*/}
+                              onPress={() => {item.strokes=item.strokes+0.5;setDataInState([...dataInState, players])}}
                               color={Colors.Primary}
                             />
                           </View>

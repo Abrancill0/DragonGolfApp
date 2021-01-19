@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     },
     costInput: {
         minWidth: 50,
-        fontSize: 14,
+        fontSize: 16,
         color: Colors.Black,
         marginVertical: 0,
         paddingVertical: 0,
