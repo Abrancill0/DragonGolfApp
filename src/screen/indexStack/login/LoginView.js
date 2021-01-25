@@ -139,6 +139,7 @@ export default function Login({ logeadoHandler }) {
 
                 AsyncStorage.setItem('usu_id', res.Result[0].IDUsuario.toString());
                 AsyncStorage.setItem('actualizar', "false");
+                AsyncStorage.setItem('language', language);
 
                 /*AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());
                 AsyncStorage.setItem('UsuVerContrasena', res.Result[0].UsuVerContrasena.toString());

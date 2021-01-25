@@ -162,7 +162,7 @@ export default class App extends Component {
               handicap: res.Result[0].usu_handicapindex,
               cellphone:res.Result[0].usu_telefono,
               photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen,
-              language: res.Result[0].set_idioma
+              //language: res.Result[0].set_idioma
             }]
             this.setState({
             userData: lista[0]
@@ -238,14 +238,14 @@ export default class App extends Component {
               ghin_number: result.usu_ghinnumber,
               handicap: result.usu_handicapindex,
               cellphone:result.usu_telefono,
-              language: result.set_idioma,
+              //language: result.set_idioma,
               photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + result.usu_imagen,
               //language: result.set_idioma.substring(0,2)
             }]
             //console.warn(result)
             this.setState({
             userData: lista[0],
-            language: lista[0].language
+            //language: lista[0].language
           })
         }  
         else{
@@ -501,13 +501,14 @@ export default class App extends Component {
 
     const DrawerContent = props => {
       const {
-        userData
+        userData,
+        language
       } = this.state;
       return (
         <View style={{flex:1}}>
           <View style={{height:'90%',padding:20}}>
               <View style={{height:'25%',borderBottomWidth:1,borderBottomColor:Colors.Primary,marginBottom:10}}>
-                  <TouchableOpacity style={{marginBottom:20,alignItems:'center'}} onPress={() => props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})}>
+                  <TouchableOpacity style={{marginBottom:20,alignItems:'center'}} onPress={() => props.navigation.navigate('EditUserView', {userData:userData, language:language, getUserData:this.getUserData})}>
                       <Image
                         source={userData ? userData.photo ? { uri: userData.photo } : BlankProfile : BlankProfile}
                         style={{
@@ -533,7 +534,7 @@ export default class App extends Component {
                   labelStyle={{color:Colors.Primary}} />
                 </View>
               </TouchableOpacity> 
-              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})}>
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:language, getUserData:this.getUserData})}>
                   <View style={{flex:.1}}>
                     <FontAwesomeIcon name='user' color='#0F222D' size={20}/>
                   </View>
@@ -541,7 +542,7 @@ export default class App extends Component {
                   <DrawerItem
                   label={profile[this.state.language]}
                   labelStyle={{color:Colors.Primary}}
-                  onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:userData.language, getUserData:this.getUserData})} />
+                  onPress={()=> props.navigation.navigate('EditUserView', {userData:userData, language:language, getUserData:this.getUserData})} />
                 </View>
               </TouchableOpacity> 
               <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('NotificationsView')}>
