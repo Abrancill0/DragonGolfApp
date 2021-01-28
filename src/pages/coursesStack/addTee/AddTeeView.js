@@ -16,7 +16,7 @@ import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
-import { AltaTees } from '../../../Services/Services'
+import { AltaTees, LastTees } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -47,11 +47,8 @@ class AddTeeView extends Component {
       };
     }else {*/
       this.state = {
-        name: '',
         nameError: '',
-        slope: '',
         slopeError: '',
-        rating: '',
         ratingError: '',
         teeColor: 'red',
         modalColor: false,
@@ -62,11 +59,36 @@ class AddTeeView extends Component {
   }
 
   componentDidMount = async () => {
+    this.lastTee(this.state.IDCourse)
     let language = await AsyncStorage.getItem('language')
     this.setState({
         language:language
     })
     }
+
+  lastTee = (IDCourse) => {
+    LastTees(IDCourse)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus==1){
+            console.warn(res.Result[0].Te_TeeName)
+              this.setState({
+                name:res.Result[0].Te_TeeName,
+                slope:res.Result[0].Te_Slope,
+                rating:res.Result[0].Te_Rating,
+                teeColor: res.Result[0].Te_TeeColor
+              })
+          }
+          else{
+            this.setState({
+              name:'',
+              slope:'',
+              rating:'',
+              teeColor: ''
+            })
+          }
+        })
+  }
 
   static navigationOptions = ({ navigation }) => {
     const state = store.getState();
@@ -110,6 +132,7 @@ class AddTeeView extends Component {
                 autoCapitalize="words"
                 onChangeText={(name) => this.setState({ name })}
                 value={name}
+                defaultValue={name}
                 error={nameError}
                 onSubmitEditing={({ nativeEvent: { text } }) => {
                     this.slopeIn.focus();
@@ -130,6 +153,7 @@ class AddTeeView extends Component {
                   returnKeyType='done'
                   onChangeText={(slope) => this.setState({ slope })}
                   value={slope}
+                  defaultValue={slope}
                   error={slopeError}
                   onSubmitEditing={({ nativeEvent: { text } }) => {
                       this.ratingIn.focus();
@@ -148,6 +172,7 @@ class AddTeeView extends Component {
                   returnKeyType='done'
                   onChangeText={(rating) => this.setState({ rating })}
                   value={rating}
+                  defaultValue={rating}
                   error={ratingError}
                   onSubmitEditing={({ nativeEvent: { text } }) => {
                       this.ratingIn.blur();

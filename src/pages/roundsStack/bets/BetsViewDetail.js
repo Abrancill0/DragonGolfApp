@@ -24,7 +24,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoDetalleApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuesta, CalcularApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -240,7 +240,14 @@ export default function RoundsView(route) {
     );
   };
 
-  async function muestraRonda(IDRound, IDBet){
+  async function muestraRonda(IDRound, IDBet, IDBetDetail){
+    CalcularApuesta(IDRound, IDBet, IDBetDetail)
+        .then((res) => {
+          console.warn(IDRound)
+          console.warn(IDBet)
+          console.warn(IDBetDetail)
+          console.warn(res)
+        })
     navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language})
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
@@ -403,7 +410,7 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet)}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet, item.id)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>

@@ -137,7 +137,7 @@ class HorizontalScoreView extends Component {
                         <Text style={styles.cityName}>{course.city}</Text>*/}
                     </View>
                 </View>
-                <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 10 }}>
+                <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 2 }}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <View style={{ width: 70 }}>
                             <View style={{ height: 40 }} />
@@ -148,11 +148,15 @@ class HorizontalScoreView extends Component {
                             )}
                         </View>
                         <View style={{ flex: 1, paddingRight: 20}}>
+                            <View style={{ flex: 0.2, flexDirection: 'row', alignSelf:'center' }}>
+                                <TouchableOpacity style={{ marginHorizontal:20}} onPress={()=> this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})}><Text style={styles.holeTitle}>1-9</Text></TouchableOpacity>
+                                <TouchableOpacity style={{ marginHorizontal:20}} onPress={()=> this.refs.scrollView.scrollToEnd(0)}><Text style={styles.holeTitle}>10-18</Text></TouchableOpacity>
+                            </View>
                             <ScrollView keyboardShouldPersistTaps='handled' horizontal ref="scrollView">
                                 {holes.map(({ hole }) =>
                                     <View key={hole.toString()}>
                                         <View style={styles.horizontalHoleView}>
-                                            <View style={{ alignItems: 'center', height: 40 }}>
+                                            <View style={{ alignItems: 'center', height: 40, marginTop:20 }}>
                                                 <Text style={styles.holeTitle}>{holeText[language]}</Text>
                                                 <Text style={[styles.holeNumber, { fontSize: 16 }]}>{hole}</Text>
                                             </View>
@@ -163,10 +167,6 @@ class HorizontalScoreView extends Component {
                                     </View>
                                 )}
                             </ScrollView>
-                            <View style={{ flex: 0.2, flexDirection: 'row', alignSelf:'center' }}>
-                                <TouchableOpacity style={{ margin:20}} onPress={()=> this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})}><Text style={styles.holeTitle}>1-9</Text></TouchableOpacity>
-                                <TouchableOpacity style={{ margin:20}} onPress={()=> this.refs.scrollView.scrollToEnd(0)}><Text style={styles.holeTitle}>10-18</Text></TouchableOpacity>
-                            </View>
                         </View>
                     </View>
                 </ScrollView>

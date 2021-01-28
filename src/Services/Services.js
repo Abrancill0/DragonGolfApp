@@ -1044,6 +1044,62 @@ export const ListaTees = (IDCourse) => {
                 });
 };
 
+export const LastTees = (IDCourse) => {
+    const URL = RutaBaseAB + "/LastTees";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDCourse: IDCourse
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const LastHole = (IDTees) => {
+    const URL = RutaBaseAB + "/LastHole";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDTees: IDTees
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const CalcularApuesta = (IDRound, IDBet, IDBetDetail) => {
+    const URL = RutaBaseAB + "/CalcularApuesta";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: IDRound,
+                    IDBet: IDBet,
+                    IDBetDetail: IDBetDetail
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaHole = (IDTees) => {
     const URL = RutaBaseAB + "/ListaHole";
     return fetch(URL, {

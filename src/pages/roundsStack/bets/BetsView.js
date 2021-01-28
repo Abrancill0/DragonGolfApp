@@ -276,7 +276,7 @@ export default function RoundsView(route) {
           </View>*/}
         </View>
         { visible &&
-          <ScrollView>
+          <View>
 
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
@@ -371,9 +371,7 @@ export default function RoundsView(route) {
             data={rounds}
             renderItem={({item}) =>
                     <View style={{flex:.2,padding:5}}>
-                        <ScrollView
-                          horizontal={false}
-                          showsHorizontalScrollIndicator={false}>
+                        <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
@@ -401,7 +399,7 @@ export default function RoundsView(route) {
                             <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
                           </TouchableOpacity>
                           </View>*/}
-                          </ScrollView>
+                          </View>
                     </View>
               }
               keyExtractor={item=>item.id}
@@ -418,7 +416,7 @@ export default function RoundsView(route) {
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         
-      </ScrollView>}
+      </View>}
 
       </View>
     );

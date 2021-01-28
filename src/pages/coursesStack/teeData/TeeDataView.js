@@ -20,7 +20,7 @@ import Colors from '../../../utils/Colors';
 import DragonButton from '../../global/DragonButton';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
-import { ListaHole, ActualizarHoles } from '../../../Services/Services'
+import { ListaHole, ActualizarHoles, LastHole } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
@@ -70,8 +70,10 @@ export default function RoundsView(route) {
     setHoles(list)*/
     ListaHole(IDTees)
         .then((res) => {
+          console.warn('HOLA')
           console.warn(res)
-            if(res.estatus == 1){
+          if(res.estatus == 1){
+            console.warn('entró')
                 const list = res.Result.map(item => (
                     {
                       id: item.IDHoles,
@@ -85,8 +87,27 @@ export default function RoundsView(route) {
                 setHolesAux(list)
             }
             else{
-              setHoles([])
-              setHolesAux([])
+              LastHole(IDTees)
+                .then((res1) => {
+                  console.warn(res1)
+                    if(res1.estatus == 1){
+                        const list1 = res1.Result.map(item => (
+                            {
+                              id: item.IDHoles,
+                              hole_number: item.Ho_Hole,
+                              par: item.Ho_Par,
+                              adv: item.Ho_Advantage,
+                              yards: item.Ho_Yards
+                            }
+                        ))
+                        setHoles(list1)
+                        setHolesAux(list1)
+                    }
+                    else{
+                      setHoles([])
+                      setHolesAux([])
+                    }
+                })
             }
         })
   }
