@@ -726,6 +726,14 @@ class SNBetView extends Component {
     console.warn(playerA)
     console.warn(playerB)
     console.warn('----------------------------------')
+    let back9UF = useFactor ? (front9 * back9).toString() : back9.toString()
+    let matchUF = useFactor ? (front9 * match).toString() : match.toString()
+    let carryUF = useFactor ? (front9 * carry).toString() : carry.toString()
+    let medalUF = useFactor ? (front9 * medal).toString() : medal.toString()
+    console.warn(back9UF)
+    console.warn(matchUF)
+    console.warn(carryUF)
+    console.warn(medalUF)
     if(playerA == playerB){
       showMessage({
         message: samePlayer[this.state.language],
@@ -733,7 +741,7 @@ class SNBetView extends Component {
       });
     }
     else{
-      CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9,match,carry,medal,autoPress,0,advStrokes)
+      CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){

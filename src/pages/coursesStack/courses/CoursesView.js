@@ -282,18 +282,18 @@ export default function RoundsView(route) {
                           <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10, marginVertical:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                                <View style={{flex:.85}}>
-                                  <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
+                                <View style={{flex:1}}>
+                                  <View style={{flex:1,justifyContent:'center',paddingHorizontal:10}}>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nombreCorto}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ciudad}, {item.pais}</Text>
                                   </View>
                                 </View>
-                              <View style={{flex:.2,padding:5}}>
+                              {/*<View style={{flex:.2,padding:5}}>
                               <View style={{flex:.5}}>
                                     <Fontisto name={item.tipo=='Copia'?'cloud-down':'cloud-up'} size={30} color={Colors.Primary} />
                               </View>
-                            </View>
+                            </View>*/}
                               </View>
                           </TouchableOpacity>
                           <View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
