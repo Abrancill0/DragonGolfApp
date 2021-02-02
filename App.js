@@ -145,6 +145,13 @@ export default class App extends Component {
 
   getUserData = async () => {
     const token = await AsyncStorage.getItem('usu_id')
+    const language = await AsyncStorage.getItem('language')
+        if (language != null )
+        {
+          this.setState({
+            language:language
+          })
+        }
     if(this.state.conexion){
     InfoUsuarioAB(token)
     .then((res) => {
@@ -518,7 +525,7 @@ export default class App extends Component {
                         }}
                       />
                 <View>
-                  <Text style={{textAlign:'center'}}>{this.state.UsuNombre+' '+this.state.UsuApellidoPaterno+' '+this.state.UsuApelidoMaterno}</Text>
+                  <Text style={{textAlign:'center'}}>{userData.name+' '+userData.last_name+' '+userData.last_name2}</Text>
                 </View>
                 </TouchableOpacity>
               </View>
