@@ -1080,7 +1080,7 @@ export const LastHole = (IDTees) => {
                 });
 };
 
-export const CalcularApuesta = (IDRound, IDBet, IDBetDetail) => {
+export const CalcularApuesta = (IDRonda, IDBet, IDBetDetail) => {
     const URL = RutaBaseAB + "/CalcularApuesta";
     return fetch(URL, {
                 method: "POST",
@@ -1089,7 +1089,7 @@ export const CalcularApuesta = (IDRound, IDBet, IDBetDetail) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDRound: IDRound,
+                    IDRonda: IDRonda,
                     IDBet: IDBet,
                     IDBetDetail: IDBetDetail
                 }),
