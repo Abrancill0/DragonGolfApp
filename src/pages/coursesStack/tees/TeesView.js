@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   StatusBar,
@@ -33,6 +33,7 @@ import Ripple from 'react-native-material-ripple';
 
 export default function RoundsView(route) {
 
+    const scrollViewRef = useRef();
     const navigation = useNavigation();
     const [tees, setTees] = useState([]);
     const [IDCourse, setIDCourse] = useState(route.route.params.IDCourse);
@@ -94,6 +95,7 @@ export default function RoundsView(route) {
                 console.warn(res)
                   if(res.estatus == 1){
                     ListadoTees()
+                    scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true})
                   }
               })
           },
@@ -122,7 +124,7 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});navigation.goBack()}}>
               <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
@@ -130,7 +132,7 @@ export default function RoundsView(route) {
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Tees</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});navigation.navigate('AddTee', {IDCourse:IDCourse})}}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -146,12 +148,13 @@ export default function RoundsView(route) {
               />
             }
             data={tees}
-            renderItem={({item}) =>
+            renderItem={({item, index}) =>
             <View style={{flex:.2,padding:5}}>
               <ScrollView
+                ref={index}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeeDataView', {IDTees: item.id, NameTee: item.nombre,IDCourse: IDCourse})}>
+              <TouchableOpacity activeOpacity={0} onPress={()=> {index.current.scrollTo({x: 0, y: 0, animated: true});navigation.navigate('TeeDataView', {IDTees: item.id, NameTee: item.nombre,IDCourse: IDCourse})}}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:90,backgroundColor:'#f1f2f2',marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                     
@@ -176,7 +179,7 @@ export default function RoundsView(route) {
                   </View>
               </TouchableOpacity>
             <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditTee', {IDTees:item.id ,IDCourse: IDCourse, Nombre: item.nombre, Slope: item.slope, Rating: item.rating, Color: item.teeColor})}>
+              <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});navigation.navigate('EditTee', {IDTees:item.id ,IDCourse: IDCourse, Nombre: item.nombre, Slope: item.slope, Rating: item.rating, Color: item.teeColor})}}>
                 <FontAwesome name={'edit'} size={30} color={Colors.White} />
               </TouchableOpacity>
               <TouchableOpacity style={{flex:.4,padding:5,justifyContent:'center'}} onPress={()=> Elimina(IDCourse,item.id)}>
