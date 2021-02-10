@@ -342,6 +342,10 @@ export const Dictionary = {
         'en': 'Course Name',
         'es': 'Nombre del Campo'
     },
+    courseData: {
+        'en': 'Course Data',
+        'es': 'Datos del Campo'
+    },
     courseShortName: {
         'en': 'Short name',
         'es': 'Nombre corto'
