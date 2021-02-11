@@ -173,7 +173,7 @@ export default function RoundsView(route) {
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{myCourses[language]}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});navigation.navigate('AddCourse')}}>
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddCourse')}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>

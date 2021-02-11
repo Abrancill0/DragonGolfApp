@@ -124,7 +124,7 @@ class ConfigRoundView extends Component {
               <Text style={styles.courseTitle}>{date}</Text>
             </View>
 
-            <View style={styles.formContainer}>
+            {/*<View style={styles.formContainer}>
               <View style={styles.inputContainer}>
                 <TextField
                   label={roundNameText[language]}
@@ -134,7 +134,7 @@ class ConfigRoundView extends Component {
                   onChangeText={this.onChangeName}
                 />
               </View>
-            </View>
+            </View>*/}
 
             {(!editDate || Platform.OS === 'android') && <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
@@ -499,13 +499,13 @@ class ConfigRoundView extends Component {
           IDCourse
         } = this.state;
 
-        if (roundName === "") {
+        /*if (roundName === "") {
           showMessage({
                     message: roundNameText[language]+' ' + required[language],
                     type: "warning",
                   });
           return;
-        }
+        }*/
 
         console.warn(IDCourse)
         console.warn(roundName)

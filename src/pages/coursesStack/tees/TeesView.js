@@ -124,7 +124,7 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});navigation.goBack()}}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View> 
@@ -132,7 +132,7 @@ export default function RoundsView(route) {
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>Tees</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});navigation.navigate('AddTee', {IDCourse:IDCourse})}}>
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddTee', {IDCourse:IDCourse})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
