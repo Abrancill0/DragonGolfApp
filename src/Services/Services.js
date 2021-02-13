@@ -766,6 +766,25 @@ export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
                 });
 };
 
+export const ListadoAmigosRondaData = (IDUsuario, IDRounds) => {
+    const URL = RutaBaseAB + "/ListadoAmigosRondaData";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario,
+                    IDRounds: IDRounds
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ActualizarRondaHoyos = (IDRound, IDUsuario, Arreglo, NumeroArreglo) => {
     const URL = RutaBaseAB + "/ActualizarRondaHoyos";
     return fetch(URL, {

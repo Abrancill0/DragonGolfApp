@@ -5,7 +5,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, CrearDetalleApuesta } from '../../../../Services/Services'
+import { ListadoAmigosRondaData, CrearDetalleApuesta } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -382,7 +382,7 @@ class SNBetView extends Component {
     })
     //console.warn(idUsu)
     //console.warn(IDRound)
-    ListadoAmigosRonda(idUsu, IDRound)
+    ListadoAmigosRondaData(idUsu, IDRound)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
