@@ -29,7 +29,7 @@ import { CrearRonda } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const {
-      save,
+      next,
       required,
       roundName: roundNameText,
       autoAdjust,
@@ -236,7 +236,7 @@ class ConfigRoundView extends Component {
             </View>}
 
             <View style={[styles.bottomButtom,{margin:20}]}>
-                    <DragonButton title={save[language]} onPress={this.submit} />
+                    <DragonButton title={next[language]} onPress={this.submit} />
                 </View>
 
           </ScrollView>

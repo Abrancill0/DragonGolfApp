@@ -233,7 +233,8 @@ export default function RoundsView(route) {
                       message: successSavePlayer[language],
                       type:'success',
                   });
-                    navigation.goBack()
+                    ListadoTodos()
+                    //navigation.goBack()
                   //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
                 }
                 else{

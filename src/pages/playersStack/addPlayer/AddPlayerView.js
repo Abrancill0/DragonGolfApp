@@ -101,7 +101,7 @@ class RoundsView extends Component {
                         message: successSaveTeeData[this.state.language],
                         type:'success',
                       });
-                      this.props.navigation.navigate("PlayersView")
+                      //this.props.navigation.navigate("PlayersView")
                     }
                 })
           },

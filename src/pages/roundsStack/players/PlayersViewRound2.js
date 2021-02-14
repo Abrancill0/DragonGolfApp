@@ -425,7 +425,7 @@ export default function RoundsView(route) {
               <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                      <View style={{flex:.08,backgroundColor:item.colorTee}}/>
+                      <TouchableOpacity onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}><View style={{flex:1,backgroundColor:item.colorTee}}><Text style={{textAlign:'center'}}>Selec Tee</Text></View></TouchableOpacity>
                     <View style={{flex:1}}>
                       <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
                       <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
@@ -460,9 +460,9 @@ export default function RoundsView(route) {
               <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
               </TouchableOpacity>
-              <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
+              {/*<TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
                 <FontAwesome name={'edit'} size={30} color={Colors.White} />
-              </TouchableOpacity>
+              </TouchableOpacity>*/}
             </View>
           </ScrollView>
         </View>

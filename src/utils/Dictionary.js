@@ -792,6 +792,10 @@ export const Dictionary = {
         'en': 'Next Strokes',
         'es': 'Strokes Siguientes'
     },
+    next: {
+        'en': 'Next',
+        'es': 'Siguiente'
+    },
     strokesPlayer: {
         'en': 'Edit Strokes',
         'es': 'Editar Golpes de ventaja'
