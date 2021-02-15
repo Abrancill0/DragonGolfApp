@@ -12,6 +12,7 @@ import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import DragonButton from '../../../global/DragonButton';
 
 class SNBetListComponent extends Component {
     constructor(props) {
@@ -114,7 +115,7 @@ class SNBetListComponent extends Component {
                         </View>
                         <View style={styles.betInfoView}>
                             <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                <Text style={{ marginRight: 10 }}>${BetD_MontoF9} <Text style={{ fontWeight: 'bold' }}>F9:</Text></Text>
+                                <Text style={{ marginRight: 10, color: BetD_MontoF9 < 0 ? 'red' : Colors.Black }}>${BetD_MontoF9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>F9:</Text></Text>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
                                         f9Presses.map((item, index) => {
@@ -163,6 +164,9 @@ class SNBetListComponent extends Component {
                                 {carry && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
                                 <Text>${BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
                             </View>
+                        </View>
+                        <View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
+                          <DragonButton title={Dictionary.update[language]} onPress={()=>finalizar()} />
                         </View>
                     </View>
             </View>

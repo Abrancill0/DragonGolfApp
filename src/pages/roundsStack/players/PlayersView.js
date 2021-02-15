@@ -84,7 +84,7 @@ export default function RoundsView(route) {
     setButtons([all[language], friends[language], guests[language]])
     setLanguage(language)
     console.warn(idUsu)
-    ListaTodosAgregar(idUsu)
+    ListaTodosAgregar(idUsu, IDRound)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -112,7 +112,8 @@ export default function RoundsView(route) {
   async function ListadoJugadores() {
     let idUsu = await AsyncStorage.getItem('usu_id')
     console.warn(idUsu)
-    ListaAmigosAgregar(idUsu)
+    console.warn(IDRound)
+    ListaAmigosAgregar(idUsu, IDRound)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -138,7 +139,7 @@ export default function RoundsView(route) {
 
   async function ListadoInvitados() {
     let idUsu = await AsyncStorage.getItem('usu_id')
-    ListaInvitadosAgregar(idUsu)
+    ListaInvitadosAgregar(idUsu, IDRound)
         .then((res) => {
           console.warn(idUsu)
           console.warn(res)

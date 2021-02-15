@@ -526,7 +526,7 @@ export const ListaTodos = (IDUsuario) => {
                 });
 };
 
-export const ListaTodosAgregar = (IDUsuario) => {
+export const ListaTodosAgregar = (IDUsuario, IDRonda) => {
     const URL = RutaBaseAB + "/ListaTodosAgregar";
     return fetch(URL, {
                 method: "POST",
@@ -535,7 +535,8 @@ export const ListaTodosAgregar = (IDUsuario) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDUsuario: IDUsuario
+                    IDUsuario: IDUsuario,
+                    IDRonda: IDRonda
                 }),
             })
             .then((response) => response.json())
@@ -562,7 +563,7 @@ export const ListaAmigos = (IDUsuario) => {
                 });
 };
 
-export const ListaAmigosAgregar = (IDUsuario) => {
+export const ListaAmigosAgregar = (IDUsuario, IDRonda) => {
     const URL = RutaBaseAB + "/ListaAmigosAgregar";
     return fetch(URL, {
                 method: "POST",
@@ -571,7 +572,8 @@ export const ListaAmigosAgregar = (IDUsuario) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDUsuario: IDUsuario
+                    IDUsuario: IDUsuario,
+                    IDRonda: IDRonda
                 }),
             })
             .then((response) => response.json())
@@ -598,7 +600,7 @@ export const ListaInvitados = (IDUsuarioCrea) => {
                 });
 };
 
-export const ListaInvitadosAgregar = (IDUsuarioCrea) => {
+export const ListaInvitadosAgregar = (IDUsuarioCrea, IDRonda) => {
     const URL = RutaBaseAB + "/ListadoInvitadosAgregar";
     return fetch(URL, {
                 method: "POST",
@@ -607,7 +609,8 @@ export const ListaInvitadosAgregar = (IDUsuarioCrea) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDUsuarioCrea: IDUsuarioCrea
+                    IDUsuarioCrea: IDUsuarioCrea,
+                    IDRonda: IDRonda
                 }),
             })
             .then((response) => response.json())
@@ -766,7 +769,7 @@ export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
                 });
 };
 
-export const ListadoAmigosRondaData = (IDUsuario, IDRounds) => {
+export const ListadoAmigosRondaData = (Player1, Player2) => {
     const URL = RutaBaseAB + "/ListadoAmigosRondaData";
     return fetch(URL, {
                 method: "POST",
@@ -775,8 +778,8 @@ export const ListadoAmigosRondaData = (IDUsuario, IDRounds) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDUsuario: IDUsuario,
-                    IDRounds: IDRounds
+                    Player1: Player1,
+                    Player2: Player2
                 }),
             })
             .then((response) => response.json())
