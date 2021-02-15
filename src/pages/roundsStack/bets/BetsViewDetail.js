@@ -249,7 +249,7 @@ export default function RoundsView(route) {
           console.warn(res)
         })
         ListadoRondas()
-        navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language})
+        navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail})
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());*/

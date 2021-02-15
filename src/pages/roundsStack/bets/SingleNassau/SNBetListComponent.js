@@ -4,6 +4,7 @@ import styles from '../styles';
 import Colors from '../../../../utils/Colors';
 import Ripple from 'react-native-material-ripple';
 import * as NavigationService from '../../../../routes/NavigationService';
+import { ListadoDetalleApuestaIndividual } from '../../../../Services/Services'
 //import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 import { Dictionary } from '../../../../utils/Dictionary';
 import Icon from 'react-native-vector-icons';
@@ -19,6 +20,7 @@ class SNBetListComponent extends Component {
         super(props);
         console.warn(this.props.route.params.bets[0])
         this.state = {
+            IDBetDetail:this.props.route.params.IDBetDetail,
             language:this.props.route.params.language,
             f9Presses: [this.props.route.params.bets[0].BetD_F9_1, this.props.route.params.bets[0].BetD_F9_2, this.props.route.params.bets[0].BetD_F9_3, this.props.route.params.bets[0].BetD_F9_4, this.props.route.params.bets[0].BetD_F9_5, this.props.route.params.bets[0].BetD_F9_6, this.props.route.params.bets[0].BetD_F9_7, this.props.route.params.bets[0].BetD_F9_8, this.props.route.params.bets[0].BetD_F9_9],
             b9Presses: [this.props.route.params.bets[0].BetD_B9_1, this.props.route.params.bets[0].BetD_B9_2, this.props.route.params.bets[0].BetD_B9_3, this.props.route.params.bets[0].BetD_B9_4, this.props.route.params.bets[0].BetD_B9_5, this.props.route.params.bets[0].BetD_B9_6, this.props.route.params.bets[0].BetD_B9_7, this.props.route.params.bets[0].BetD_B9_8, this.props.route.params.bets[0].BetD_B9_9],
@@ -165,13 +167,50 @@ class SNBetListComponent extends Component {
                                 <Text>${BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
                             </View>
                         </View>
-                        <View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
-                          <DragonButton title={Dictionary.update[language]} onPress={()=>finalizar()} />
+                        <View style={[styles.bottomButtom,{flex:0.1, margin:10}]}>
+                          <DragonButton title={Dictionary.update[language]} onPress={()=> this.finalizar()} />
                         </View>
                     </View>
             </View>
         );
     }
+
+    finalizar = () => {
+
+    console.warn("Hola")
+      ListadoDetalleApuestaIndividual(this.state.IDBetDetail)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){      
+              this.setState({
+                f9Presses:[res.Result[0].BetD_F9_1,
+                      res.Result[0].BetD_F9_2,
+                      res.Result[0].BetD_F9_3,
+                      res.Result[0].BetD_F9_4,
+                      res.Result[0].BetD_F9_5,
+                      res.Result[0].BetD_F9_6,
+                      res.Result[0].BetD_F9_7,
+                      res.Result[0].BetD_F9_8,
+                      res.Result[0].BetD_F9_9],
+                b9Presses:[res.Result[0].BetD_B9_1,
+                      res.Result[0].BetD_B9_2,
+                      res.Result[0].BetD_B9_3,
+                      res.Result[0].BetD_B9_4,
+                      res.Result[0].BetD_B9_5,
+                      res.Result[0].BetD_B9_6,
+                      res.Result[0].BetD_B9_7,
+                      res.Result[0].BetD_B9_8,
+                      res.Result[0].BetD_B9_9]
+                })
+            }
+            else{
+              showMessage({
+                message: error[language],
+                type:'danger',
+              });
+            }
+        })
+  }
 
     showSheetView = () => {
 

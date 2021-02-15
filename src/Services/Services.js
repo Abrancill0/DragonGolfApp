@@ -689,6 +689,24 @@ export const ListadoDetalleApuesta = (IDRonda,IDBet) => {
                 });
 };
 
+export const ListadoDetalleApuestaIndividual = (IDBetDetail) => {
+    const URL = RutaBaseAB + "/ListadoDetalleApuestaIndividual";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDBetDetail: IDBetDetail
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const CrearDetalleApuesta = (IDBet,IDRonda,BetD_Player1,BetD_Player2,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers) => {
     const URL = RutaBaseAB + "/CrearDetalleApuesta";
     console.warn('---------------SER-------------------')
