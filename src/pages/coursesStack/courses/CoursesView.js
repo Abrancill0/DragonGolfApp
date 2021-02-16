@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StatusBar,
@@ -34,7 +34,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function RoundsView(route) {
 
-    const scrollViewRef = useRef();
     const navigation = useNavigation();
     const [courses, setCourses] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
@@ -134,7 +133,6 @@ export default function RoundsView(route) {
                 console.warn(res)
                   if(res.estatus == 1){
                     ListadoCourses()
-                    scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true})
                   }
               })
           },
@@ -186,7 +184,7 @@ export default function RoundsView(route) {
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});setSearch(!search)}}>
+            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
               <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -279,10 +277,9 @@ export default function RoundsView(route) {
             renderItem={({item}) =>
                     <View style={{flex:.2,padding:5}}>
                         <ScrollView
-                          ref={scrollViewRef}
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});navigation.navigate('TeesView', {IDCourse: item.id})}}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10, marginVertical:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:1}}>
@@ -300,7 +297,7 @@ export default function RoundsView(route) {
                               </View>
                           </TouchableOpacity>
                           <View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
-                          <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> {scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}}>
+                          <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
                             <FontAwesome name={'edit'} size={30} color={Colors.White} />
                           </TouchableOpacity>
                           <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id, item.tipo)}>
