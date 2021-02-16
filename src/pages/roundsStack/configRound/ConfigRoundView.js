@@ -50,6 +50,7 @@ class ConfigRoundView extends Component {
     let pickerDate = moment().toDate();
     let pickerTextDate = moment().format('DD/MM/YYYY');
     let pickerTextDate2 = moment().format('YYYY-MM-DD');
+    console.warn((new Date()).valueOf());
 
     this.hcpAdjustment = [1, 0.95, 0.90, 0.85, 0.80];
 
@@ -71,10 +72,14 @@ class ConfigRoundView extends Component {
   }
 
   componentDidMount = async () => {
+    const  timestamp  = (new Date()).valueOf();
     let language = await AsyncStorage.getItem('language')
     this.setState({
-        language:language
+        language:language,
+        roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000),
+        date: this.formatDate(timestamp / 1000)
     })
+    this.refs.nombre.setValue(this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
     }
 
   render() {
@@ -124,7 +129,7 @@ class ConfigRoundView extends Component {
               <Text style={styles.courseTitle}>{date}</Text>
             </View>
 
-            {/*<View style={styles.formContainer}>
+            <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
                 <TextField
                   label={roundNameText[language]}
@@ -132,9 +137,10 @@ class ConfigRoundView extends Component {
                   autoCapitalize="words"
                   value={roundName}
                   onChangeText={this.onChangeName}
+                  ref='nombre'
                 />
               </View>
-            </View>*/}
+            </View>
 
             {(!editDate || Platform.OS === 'android') && <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
@@ -336,6 +342,7 @@ class ConfigRoundView extends Component {
   }
 
   onChangeDate = (date) => {
+    console.warn(date)
 
     const {
       roundName,
@@ -354,8 +361,11 @@ class ConfigRoundView extends Component {
           date: this.formatDate(timestamp / 1000),
           showDatePicker: false,
           editDate: false,
+          roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000)
 
         });
+
+        this.refs.nombre.setValue(this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
 
         this.refs.fecha.setValue(this.state.pickerTextDate)
 
@@ -385,7 +395,10 @@ class ConfigRoundView extends Component {
         pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
         pickerDate: moment.unix(timestamp / 1000).toDate(),
         date: this.formatDate(timestamp / 1000),
-      });
+        roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000)
+        });
+
+      this.refs.nombre.setValue(this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
 
       this.refs.fecha.setValue(this.state.pickerTextDate)
 
@@ -487,6 +500,7 @@ class ConfigRoundView extends Component {
   }
 
   submit = async () => {
+    console.warn(this.state.roundName)
     const token = await AsyncStorage.getItem('usu_id')
 
         const {
@@ -499,13 +513,13 @@ class ConfigRoundView extends Component {
           IDCourse
         } = this.state;
 
-        /*if (roundName === "") {
+        if (roundName === "") {
           showMessage({
                     message: roundNameText[language]+' ' + required[language],
                     type: "warning",
                   });
           return;
-        }*/
+        }
 
         console.warn(IDCourse)
         console.warn(roundName)

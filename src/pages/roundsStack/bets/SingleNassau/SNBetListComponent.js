@@ -200,7 +200,19 @@ class SNBetListComponent extends Component {
                       res.Result[0].BetD_B9_6,
                       res.Result[0].BetD_B9_7,
                       res.Result[0].BetD_B9_8,
-                      res.Result[0].BetD_B9_9]
+                      res.Result[0].BetD_B9_9],
+                BetD_MontoF9: res.Result[0].BetD_MontoCalculoF9,
+                BetD_MontoB9: res.Result[0].BetD_MontoCalculoB9,
+                BetD_Medal: res.Result[0].BetD_Medal,
+                BetD_MontoApuestaMedal: res.Result[0].BetD_MontoApuestaMedal,
+                BetD_Match: res.Result[0].BetD_Match,
+                BetD_MachMonto: res.Result[0].BetD_MachMonto,
+                BetD_MontoPerdidoGanado: res.Result[0].BetD_MontoPerdidoGanado,
+                match: res.Result[0].BetD_Match,
+                medal: res.Result[0].BetD_Medal,
+                Player1: res.Result[0].Player1,
+                Player2: res.Result[0].Player2,
+                adv_strokes: res.Result[0].BetD_AdvStrokers
                 })
             }
             else{

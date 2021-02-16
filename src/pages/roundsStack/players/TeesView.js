@@ -87,7 +87,25 @@ export default function RoundsView(route) {
     console.warn(idUsu)
     console.warn(PlayerID)
     console.warn(IDTees)
-    Alert.alert(
+    AgregarTeesRonda(IDRound,idUsu,PlayerID,IDTees)
+      .then((res) => {
+        console.warn(res)
+        if(res.estatus == 1){
+          showMessage({
+            message: successSaveTeeData[language],
+            type:'success',
+          });
+          navigation.goBack()
+          //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
+        }
+        else{
+          showMessage({
+            message: error[language],
+            type:'danger',
+          });
+       }
+    })
+    /*Alert.alert(
       "DragonGolf",
       SelectTee3[language],
       [
@@ -121,7 +139,7 @@ export default function RoundsView(route) {
         },
       ],
       { cancelable: false }
-    );
+    );*/
   }
 
   function Elimina(idCourse,id){
