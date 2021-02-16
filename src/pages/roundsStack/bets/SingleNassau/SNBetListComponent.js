@@ -18,27 +18,27 @@ import DragonButton from '../../../global/DragonButton';
 class SNBetListComponent extends Component {
     constructor(props) {
         super(props);
-        console.warn(this.props.route.params.bets[0])
+        console.warn(this.props.route.params.index)
         this.state = {
             IDBetDetail:this.props.route.params.IDBetDetail,
             language:this.props.route.params.language,
-            f9Presses: [this.props.route.params.bets[0].BetD_F9_1, this.props.route.params.bets[0].BetD_F9_2, this.props.route.params.bets[0].BetD_F9_3, this.props.route.params.bets[0].BetD_F9_4, this.props.route.params.bets[0].BetD_F9_5, this.props.route.params.bets[0].BetD_F9_6, this.props.route.params.bets[0].BetD_F9_7, this.props.route.params.bets[0].BetD_F9_8, this.props.route.params.bets[0].BetD_F9_9],
-            b9Presses: [this.props.route.params.bets[0].BetD_B9_1, this.props.route.params.bets[0].BetD_B9_2, this.props.route.params.bets[0].BetD_B9_3, this.props.route.params.bets[0].BetD_B9_4, this.props.route.params.bets[0].BetD_B9_5, this.props.route.params.bets[0].BetD_B9_6, this.props.route.params.bets[0].BetD_B9_7, this.props.route.params.bets[0].BetD_B9_8, this.props.route.params.bets[0].BetD_B9_9],
-            match: this.props.route.params.bets[0].BetD_Match,
-            medal: this.props.route.params.bets[0].BetD_Medal,
+            f9Presses: [this.props.route.params.bets[this.props.route.params.index].BetD_F9_1, this.props.route.params.bets[this.props.route.params.index].BetD_F9_2, this.props.route.params.bets[this.props.route.params.index].BetD_F9_3, this.props.route.params.bets[this.props.route.params.index].BetD_F9_4, this.props.route.params.bets[this.props.route.params.index].BetD_F9_5, this.props.route.params.bets[this.props.route.params.index].BetD_F9_6, this.props.route.params.bets[this.props.route.params.index].BetD_F9_7, this.props.route.params.bets[this.props.route.params.index].BetD_F9_8, this.props.route.params.bets[this.props.route.params.index].BetD_F9_9],
+            b9Presses: [this.props.route.params.bets[this.props.route.params.index].BetD_B9_1, this.props.route.params.bets[this.props.route.params.index].BetD_B9_2, this.props.route.params.bets[this.props.route.params.index].BetD_B9_3, this.props.route.params.bets[this.props.route.params.index].BetD_B9_4, this.props.route.params.bets[this.props.route.params.index].BetD_B9_5, this.props.route.params.bets[this.props.route.params.index].BetD_B9_6, this.props.route.params.bets[this.props.route.params.index].BetD_B9_7, this.props.route.params.bets[this.props.route.params.index].BetD_B9_8, this.props.route.params.bets[this.props.route.params.index].BetD_B9_9],
+            match: this.props.route.params.bets[this.props.route.params.index].BetD_Match,
+            medal: this.props.route.params.bets[this.props.route.params.index].BetD_Medal,
             profit: 0,
-            manualPress: this.props.route.params.bets[0].BetD_AutoPress ? this.props.route.params.bets[0].BetD_AutoPress : 0,
+            manualPress: this.props.route.params.bets[this.props.route.params.index].BetD_AutoPress ? this.props.route.params.bets[this.props.route.params.index].BetD_AutoPress : this.props.route.params.index,
             carry: false,
-            adv_strokes: this.props.route.params.bets[0].BetD_AdvStrokers,
-            Player1: this.props.route.params.bets[0].Player1,
-            Player2: this.props.route.params.bets[0].Player2,
-            BetD_MontoF9: this.props.route.params.bets[0].BetD_MontoF9,
-            BetD_MontoB9: this.props.route.params.bets[0].BetD_MontoB9,
-            BetD_Medal: this.props.route.params.bets[0].BetD_Medal,
-            BetD_MontoApuestaMedal: this.props.route.params.bets[0].BetD_MontoApuestaMedal,
-            BetD_Match: this.props.route.params.bets[0].BetD_Match,
-            BetD_MachMonto: this.props.route.params.bets[0].BetD_MachMonto,
-            BetD_MontoPerdidoGanado: this.props.route.params.bets[0].BetD_MontoPerdidoGanado
+            adv_strokes: this.props.route.params.bets[this.props.route.params.index].BetD_AdvStrokers,
+            Player1: this.props.route.params.bets[this.props.route.params.index].Player1,
+            Player2: this.props.route.params.bets[this.props.route.params.index].Player2,
+            BetD_MontoF9: this.props.route.params.bets[this.props.route.params.index].BetD_MontoF9,
+            BetD_MontoB9: this.props.route.params.bets[this.props.route.params.index].BetD_MontoB9,
+            BetD_Medal: this.props.route.params.bets[this.props.route.params.index].BetD_Medal,
+            BetD_MontoApuestaMedal: this.props.route.params.bets[this.props.route.params.index].BetD_MontoApuestaMedal,
+            BetD_Match: this.props.route.params.bets[this.props.route.params.index].BetD_Match,
+            BetD_MachMonto: this.props.route.params.bets[this.props.route.params.index].BetD_MachMonto,
+            BetD_MontoPerdidoGanado: this.props.route.params.bets[this.props.route.params.index].BetD_MontoPerdidoGanado
         };
     }
 

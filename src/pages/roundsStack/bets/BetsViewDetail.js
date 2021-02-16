@@ -240,16 +240,16 @@ export default function RoundsView(route) {
     );
   };
 
-  async function muestraRonda(IDRound, IDBet, IDBetDetail){
+  async function muestraRonda(IDRound, IDBet, IDBetDetail, index){
     CalcularApuesta(IDRound, IDBet, IDBetDetail)
         .then((res) => {
-          console.warn(IDRound)
+          console.warn(index)
           console.warn(IDBet)
           console.warn(IDBetDetail)
           console.warn(res)
         })
         ListadoRondas()
-        navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail})
+        navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail, index:index})
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());*/
@@ -406,12 +406,12 @@ export default function RoundsView(route) {
               />
             }
             data={rounds}
-            renderItem={({item}) =>
+            renderItem={({item, index}) =>
                     <View style={{flex:.2,padding:5}}>
                         <ScrollView
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet, item.id)}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet, item.id, index)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
