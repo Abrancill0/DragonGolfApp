@@ -274,22 +274,6 @@ class SNBetView extends Component {
                 selectTextOnFocus={true}
               />
             </View>
-          </View>
-
-          <View style={styles.betField}>
-            {/*<View style={styles.betRow}>
-              <Text style={[styles.betText, { fontSize: 9, width: 60 }]} numberOfLines={2} adjustsFontSizeToFit={true}>Manually{'\n'}Override Adv. </Text>
-              <View style={{ width: 10 }} />
-              <Text style={styles.dollarSym}></Text>
-              <View style={styles.switchView}>
-                <Switch
-                  value={override}
-                  thumbColor={override ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity }}
-                  onValueChange={(override) => this.setState({ override })}
-                />
-              </View>
-            </View>*/}
             <View style={styles.betRow}>
               <Text style={[styles.betText, { fontSize: null }]} numberOfLines={2} adjustsFontSizeToFit={true}>Adv. Strokes: </Text>
               <View style={{ width: 10 }} />
@@ -308,6 +292,40 @@ class SNBetView extends Component {
                 selectTextOnFocus={true}
               />
             </View>
+          </View>
+
+          <View style={styles.betField}>
+            {/*<View style={styles.betRow}>
+              <Text style={[styles.betText, { fontSize: 9, width: 60 }]} numberOfLines={2} adjustsFontSizeToFit={true}>Manually{'\n'}Override Adv. </Text>
+              <View style={{ width: 10 }} />
+              <Text style={styles.dollarSym}></Text>
+              <View style={styles.switchView}>
+                <Switch
+                  value={override}
+                  thumbColor={override ? Colors.Primary : Colors.Gray}
+                  trackColor={{ true: Colors.PrimaryWithOpacity }}
+                  onValueChange={(override) => this.setState({ override })}
+                />
+              </View>
+            </View>
+            <View style={styles.betRow}>
+              <Text style={[styles.betText, { fontSize: null }]} numberOfLines={2} adjustsFontSizeToFit={true}>Adv. Strokes: </Text>
+              <View style={{ width: 10 }} />
+              <Text style={styles.dollarSym}></Text>
+              <TextInput
+                style={styles.betInput}
+                selectionColor={Colors.Primary}
+                placeholder="0"
+                placeholderTextColor={Colors.Black}
+                keyboardType={Platform.OS === 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                returnKeyType='done'
+                maxLength={6}
+                onChangeText={(advStrokes) => this.setState({ advStrokes })}
+                value={advStrokes}
+                editable={override}
+                selectTextOnFocus={true}
+              />
+            </View>*/}
           </View>
 
           {/*<View style={{ height: 20 }} />
