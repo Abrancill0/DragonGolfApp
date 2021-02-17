@@ -77,6 +77,7 @@ export default function RoundsView(route) {
                       BetD_MontoF9: item.BetD_MontoCalculoF9,
                       BetD_MontoB9: item.BetD_MontoB9,
                       BetD_Medal: item.BetD_Medal,
+                      BetD_Carry: item.BetD_Carry,
                       BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
                       BetD_Match: item.BetD_Match,
                       BetD_MachMonto: item.BetD_MachMonto,
@@ -98,7 +99,8 @@ export default function RoundsView(route) {
                       BetD_B9_6: item.BetD_B9_6,
                       BetD_B9_7: item.BetD_B9_7,
                       BetD_B9_8: item.BetD_B9_8,
-                      BetD_B9_9: item.BetD_B9_9
+                      BetD_B9_9: item.BetD_B9_9,
+                      BetD_AdvStrokers: item.BetD_AdvStrokers
                     }
                 ))
                 setRounds(list.reverse())
@@ -253,6 +255,13 @@ export default function RoundsView(route) {
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());*/
+  }
+
+  async function infoRonda(IDRound,IDBet,BetD_MontoF9,BetD_MontoB9,BetD_Medal,BetD_Carry,BetD_Match, BetD_AdvStrokers){
+    navigation.navigate('SNBetViewInfo',{IDBet:IDBet, IDRound:IDRound, BetD_MontoF9:BetD_MontoF9, BetD_MontoB9:BetD_MontoB9, BetD_Medal:BetD_Medal, BetD_Carry:BetD_Carry, BetD_Match:BetD_Match, BetD_AdvStrokers:BetD_AdvStrokers})
+    console.warn('hola')
+    //ListadoRondas()
+    //navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail, index:index})
   }
 
 
@@ -411,7 +420,7 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet, item.id, index)}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>

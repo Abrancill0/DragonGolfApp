@@ -159,6 +159,10 @@ export const Dictionary = {
         'en': 'Create Bet',
         'es': 'Crear Apuesta'
     },
+    InfoBet: {
+        'en': 'Information Bet',
+        'es': 'Información Apuesta'
+    },
     friends: {
         'en': 'Friends',
         'es': 'Amigos'
