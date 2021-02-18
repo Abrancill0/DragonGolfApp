@@ -61,8 +61,11 @@ export default function RoundsView(route) {
   async function ListadoRondas() {
                 setStatus(true)
     let language = await AsyncStorage.getItem('language')
+    let IDUsuario = await AsyncStorage.getItem('usu_id')
+    console.warn(IDUsuario)
+    console.warn('IDUsuario')
     setLanguage(language)
-    ListadoDetalleApuesta(IDRound,IDBet)
+    ListadoDetalleApuesta(IDRound,IDBet, IDUsuario)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){

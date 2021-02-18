@@ -14,6 +14,8 @@ import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import DragonButton from '../../../global/DragonButton';
+import AsyncStorage from '@react-native-community/async-storage';
+import { showMessage } from "react-native-flash-message";
 
 class SNBetListComponent extends Component {
     constructor(props) {
@@ -113,7 +115,7 @@ class SNBetListComponent extends Component {
                                 <Text style={[styles.advInfo, { color: adv_strokes < 0 ? 'red' : Colors.Black }]}>[{adv_strokes}] </Text>
                                 <Text style={styles.vsInfo}> {Player1} vs {Player2}</Text>
                             </View>
-                            <Text style={[styles.profitText, { color: profit < 0 ? Colors.Primary : profit > 1 ? 'green' : Colors.Black }]}>${BetD_MontoPerdidoGanado}</Text>
+                            <Text style={[styles.profitText, { color: BetD_MontoPerdidoGanado < 0 ? Colors.Primary : BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${BetD_MontoPerdidoGanado}</Text>
                         </View>
                         <View style={styles.betInfoView}>
                             <View style={{ flexDirection: 'row', marginBottom: 5 }}>
@@ -135,7 +137,7 @@ class SNBetListComponent extends Component {
                                 <View style={{ width: 30 }} />
                             </View>
                             <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                <Text style={{ marginRight: 10 }}>${BetD_MontoB9} <Text style={{ fontWeight: 'bold' }}>B9:</Text></Text>
+                                <Text style={{ marginRight: 10, color: BetD_MontoB9 < 0 ? 'red' : Colors.Black  }}>${BetD_MontoB9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>B9:</Text></Text>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
                                         b9Presses.map((item, index) => {
@@ -155,7 +157,7 @@ class SNBetListComponent extends Component {
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Text style={{ textDecorationLine: carry ? 'line-through' : 'none' }}>${BetD_MachMonto} <Text
+                                <Text style={{ textDecorationLine: carry ? 'line-through' : 'none', color: BetD_MachMonto < 0 ? 'red' : Colors.Black   }}>${BetD_MachMonto} <Text
                                     style={{
                                         textDecorationLine: carry ? 'line-through' : 'none',
                                         fontWeight: 'bold',
@@ -164,7 +166,7 @@ class SNBetListComponent extends Component {
                                     Match = {carry ? 0 : match}
                                 </Text></Text>
                                 {carry && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
-                                <Text>${BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
+                                <Text style={{ fontWeight: 'bold', color: BetD_MontoApuestaMedal < 0 ? Colors.Primary : Colors.Black }}>${BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {medal}</Text></Text>
                             </View>
                         </View>
                         <View style={[styles.bottomButtom,{flex:0.1, margin:10}]}>
@@ -175,10 +177,14 @@ class SNBetListComponent extends Component {
         );
     }
 
-    finalizar = () => {
+    async finalizar() {
+
+    let IDUsuario = await AsyncStorage.getItem('usu_id')
+
+    console.warn(IDUsuario)
 
     console.warn("Hola")
-      ListadoDetalleApuestaIndividual(this.state.IDBetDetail)
+      ListadoDetalleApuestaIndividual(this.state.IDBetDetail, IDUsuario)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){      
@@ -217,7 +223,7 @@ class SNBetListComponent extends Component {
             }
             else{
               showMessage({
-                message: error[language],
+                message: Dictionary.error[this.state.language],
                 type:'danger',
               });
             }

@@ -670,7 +670,7 @@ export const ListaApuesta = () => {
                 });
 };
 
-export const ListadoDetalleApuesta = (IDRonda,IDBet) => {
+export const ListadoDetalleApuesta = (IDRonda,IDBet, IDUsuario) => {
     const URL = RutaBaseAB + "/ListadoDetalleApuesta";
     return fetch(URL, {
                 method: "POST",
@@ -680,7 +680,8 @@ export const ListadoDetalleApuesta = (IDRonda,IDBet) => {
                 },
                 body: JSON.stringify({
                     IDRonda: IDRonda,
-                    IDBet: IDBet
+                    IDBet: IDBet,
+                    IDUsuario: IDUsuario
                 }),
             })
             .then((response) => response.json())
@@ -689,7 +690,7 @@ export const ListadoDetalleApuesta = (IDRonda,IDBet) => {
                 });
 };
 
-export const ListadoDetalleApuestaIndividual = (IDBetDetail) => {
+export const ListadoDetalleApuestaIndividual = (IDBetDetail, IDUsuario) => {
     const URL = RutaBaseAB + "/ListadoDetalleApuestaIndividual";
     return fetch(URL, {
                 method: "POST",
@@ -698,7 +699,8 @@ export const ListadoDetalleApuestaIndividual = (IDBetDetail) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDBetDetail: IDBetDetail
+                    IDBetDetail: IDBetDetail,
+                    IDUsuario: IDUsuario
                 }),
             })
             .then((response) => response.json())
