@@ -77,7 +77,7 @@ export default function RoundsView(route) {
                       Player2: item.Player2,
                       BetD_AdvStrokers: item.BetD_AdvStrokers,
                       BetD_AutoPress: item.BetD_AutoPress,
-                      BetD_MontoF9: item.BetD_MontoCalculoF9,
+                      BetD_MontoF9: item.BetD_MontoF9,
                       BetD_MontoB9: item.BetD_MontoB9,
                       BetD_Medal: item.BetD_Medal,
                       BetD_Carry: item.BetD_Carry,

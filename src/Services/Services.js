@@ -789,7 +789,7 @@ export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
                 });
 };
 
-export const ListadoAmigosRondaData = (Player1, Player2) => {
+export const ListadoAmigosRondaData = (Player1, Player2, IDRound) => {
     const URL = RutaBaseAB + "/ListadoAmigosRondaData";
     return fetch(URL, {
                 method: "POST",
@@ -799,7 +799,8 @@ export const ListadoAmigosRondaData = (Player1, Player2) => {
                 },
                 body: JSON.stringify({
                     Player1: Player1,
-                    Player2: Player2
+                    Player2: Player2,
+                    IDRonda: IDRound
                 }),
             })
             .then((response) => response.json())

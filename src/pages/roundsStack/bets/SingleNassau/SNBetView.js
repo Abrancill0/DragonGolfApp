@@ -410,7 +410,7 @@ class SNBetView extends Component {
   onChangeSwitch = (player, type) => {
     if (type === 'A'){
        this.setState({ playerA: player });
-       ListadoAmigosRondaData(player,this.state.playerB)
+       ListadoAmigosRondaData(player,this.state.playerB, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -449,7 +449,7 @@ class SNBetView extends Component {
     }
     if (type === 'B'){
       this.setState({ playerB: player });
-      ListadoAmigosRondaData(this.state.playerA,player)
+      ListadoAmigosRondaData(this.state.playerA,player, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){

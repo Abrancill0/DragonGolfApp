@@ -126,8 +126,8 @@ class SNBetListComponent extends Component {
                                             switch (item) {
                                                 case null:
                                                     return <Text key={'snf9' + index}>_</Text>;
-                                                case 0:
-                                                    return <Text key={'snf9' + index}>=</Text>;
+                                                case '0':
+                                                    return <Text key={'snf9' + index}>-</Text>;
                                                 default:
                                                     return <Text key={'snf9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
                                             }
@@ -144,8 +144,8 @@ class SNBetListComponent extends Component {
                                             switch (item) {
                                                 case null:
                                                     return <Text key={'snb9' + index}>_</Text>;
-                                                case 0:
-                                                    return <Text key={'snb9' + index}>=</Text>;
+                                                case '0':
+                                                    return <Text key={'snb9' + index}>-</Text>;
                                                 default:
                                                     return <Text key={'snb9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
                                             }
