@@ -56,9 +56,6 @@ class ScoreView extends Component {
     let language = await AsyncStorage.getItem('language')
     let playersHoleAux = []
     for (var i = 0; i <= players.length - 1; i++) {
-        AsyncStorage.setItem(players[i].id.toString(), '0');
-    }
-    for (var i = 0; i <= players.length - 1; i++) {
         let HolesAux = []
         HolesAux.push(players[i].id)
         for (var j = 1; j <= 18; j++) {
@@ -68,6 +65,7 @@ class ScoreView extends Component {
         playersHoleAux.push(HolesAux)
         console.warn(players[i].id.toString())
         console.warn(HolesAux.toString())
+        AsyncStorage.setItem(players[i].id.toString(), '0');
         AsyncStorage.setItem(players[i].id.toString(), HolesAux.toString());
     }
     this.setState({

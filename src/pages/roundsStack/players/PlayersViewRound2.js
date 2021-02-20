@@ -25,7 +25,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, EliminarAmigosRonda, ListaInvitados, ListadoAmigosRonda } from '../../../Services/Services'
+import { ListaAmigos, EliminarAmigosRonda, ListaInvitados, ListadoAmigosRonda2 } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -43,6 +43,8 @@ export default function RoundsView(route) {
     const [IDCourse, setIDCourse] = useState(route.route.params.IDCourse);
     const [IDRound, setIDRound] = useState(route.route.params.IDRound);
     const [players, setPlayers] = useState([]);
+    const [UsuarioCreo, setUsuarioCreo] = useState(1);
+    const [ValidaUsuarioCreo, setValidaUsuarioCreo] = useState(0);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
@@ -71,7 +73,7 @@ export default function RoundsView(route) {
     setLanguage(language)
     console.warn(idUsu)
     console.warn(IDRound)
-    ListadoAmigosRonda(idUsu, IDRound)
+    ListadoAmigosRonda2(idUsu, IDRound)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -88,6 +90,9 @@ export default function RoundsView(route) {
                     }
                 ))
                 setPlayers(list)
+                console.warn(res.Result[0].ValidaUsuarioCreo)
+                setUsuarioCreo(res.Result[0].ValidaUsuarioCreo)
+                setValidaUsuarioCreo(idUsu)
                 setArrayholder(list)
                 setStatus(false)
             }
@@ -277,6 +282,40 @@ export default function RoundsView(route) {
         );  
     };
 
+    function navegaStrokes(id,strokes,nickname){
+      if(UsuarioCreo == 1){
+        navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:id, strokes:strokes, Nickname:nickname})
+      }
+      else{
+        if(ValidaUsuarioCreo == id){
+          navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:id, strokes:strokes, Nickname:nickname})
+        }
+        else{
+          showMessage({
+            message: sinPermiso[language],
+            type:'warning',
+          });
+        }
+      }
+    }
+
+    function navegaTees(id){
+      if(UsuarioCreo == 1){
+        navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:id})
+      }
+      else{
+        if(ValidaUsuarioCreo == id){
+          navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:id})
+        }
+        else{
+          showMessage({
+            message: sinPermiso[language],
+            type:'warning',
+          });
+        }
+      }
+    }
+
     const {
       emptyPlayerList,
       finish,
@@ -286,7 +325,8 @@ export default function RoundsView(route) {
       continuar,
       needTwoPlayers,
       deletePlayer,
-      deleted
+      deleted,
+      sinPermiso
     } = Dictionary;
 
     return (
@@ -304,11 +344,11 @@ export default function RoundsView(route) {
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{FriendsinRound[language]}</Text>
           </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+          {UsuarioCreo==1 && <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRounds', {IDCourse:IDCourse, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>
+          </View>}
         </View>
         { visible &&
           <ScrollView>
@@ -422,10 +462,10 @@ export default function RoundsView(route) {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
+              <TouchableOpacity activeOpacity={0} onPress={()=> navegaStrokes(item.id,item.strokes,item.nickname)}>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                      <TouchableOpacity onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}><View style={{flex:1,backgroundColor:item.colorTee}}><Text style={{textAlign:'center'}}>Selec Tee</Text></View></TouchableOpacity>
+                    <TouchableOpacity onPress={()=> navegaTees(item.id)}><View style={{flex:1,backgroundColor:item.colorTee}}><Text style={{textAlign:'center'}}>Selec Tee</Text></View></TouchableOpacity>
                     <View style={{flex:1}}>
                       <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
                       <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
@@ -457,9 +497,9 @@ export default function RoundsView(route) {
                     </View>
                   </TouchableOpacity>
             <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
+              {UsuarioCreo == 1 && <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
-              </TouchableOpacity>
+              </TouchableOpacity>}
               {/*<TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
                 <FontAwesome name={'edit'} size={30} color={Colors.White} />
               </TouchableOpacity>*/}

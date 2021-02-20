@@ -486,6 +486,26 @@ export const Dictionary = {
         'en': 'Automatic press every:',
         'es': 'Presión automática cada:'
     },
+    auto: {
+        'en': 'Auto Press',
+        'es': 'Presión aut.'
+    },
+    Press: {
+        'en': 'every:',
+        'es': 'cada:'
+    },
+    Manually: {
+        'en': 'Manually',
+        'es': 'Conf.'
+    },
+    OverrideAdv: {
+        'en': 'Override Adv.',
+        'es': 'Manual Strokes:'
+    },
+    sinPermiso: {
+        'en': 'You do not have permission for this action',
+        'es': 'No tienes permiso para está acción'
+    },
     useFactor: {
         'en': 'Use factor',
         'es': 'Usar factor'

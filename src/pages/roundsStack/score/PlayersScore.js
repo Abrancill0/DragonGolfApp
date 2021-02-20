@@ -56,6 +56,7 @@ class PlayersScore extends Component {
                         playersHoleAux[i][hole]=score
                         console.warn(id.toString())
                         console.warn(playersHoleAux[i].toString())
+                        AsyncStorage.setItem(id.toString(), '0');
                         AsyncStorage.setItem(id.toString(), playersHoleAux[i].toString());
                     }
                 }

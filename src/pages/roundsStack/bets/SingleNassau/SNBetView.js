@@ -15,7 +15,11 @@ const {
   useFactor: useFactorText,
   error,
   successSaveTeeData,
-  samePlayer
+  samePlayer,
+  Manually,
+  OverrideAdv,
+  auto,
+  Press
 } = Dictionary;
 
 
@@ -239,7 +243,7 @@ class SNBetView extends Component {
 
           <View style={styles.betField}>
             <View style={styles.betRow}>
-              <Text numberOfLines={2} adjustsFontSizeToFit={true}>Auto Press{'\n'}Every: </Text>
+              <Text numberOfLines={2} adjustsFontSizeToFit={true}>{auto['es']}{'\n'}{Press['es']} </Text>
               <View style={{ width: 10 }} />
               <Text style={styles.dollarSym}></Text>
               <TextInput
@@ -278,7 +282,7 @@ class SNBetView extends Component {
 
           <View style={styles.betField}>
             <View style={styles.betRow}>
-              <Text style={[styles.betText, { fontSize: 9, width: 60 }]} numberOfLines={2} adjustsFontSizeToFit={true}>Manually{'\n'}Override Adv. </Text>
+              <Text style={[styles.betText, { fontSize: 14, width: 60 }]} numberOfLines={2} adjustsFontSizeToFit={true}>{Manually['es']}{'\n'}{OverrideAdv['es']} </Text>
               <View style={{ width: 10 }} />
               <Text style={styles.dollarSym}></Text>
               <View style={styles.switchView}>

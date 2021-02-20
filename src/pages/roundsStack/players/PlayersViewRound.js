@@ -25,7 +25,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, EliminarAmigosRonda, ListaInvitados, ListadoAmigosRonda } from '../../../Services/Services'
+import { ListaAmigos, EliminarAmigosRonda, ListaInvitados, ListadoAmigosRonda2 } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -69,7 +69,7 @@ export default function RoundsView(route) {
     setLanguage(language)
     console.warn(idUsu)
     console.warn(IDRound)
-    ListadoAmigosRonda(idUsu, IDRound)
+    ListadoAmigosRonda2(idUsu, IDRound)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
