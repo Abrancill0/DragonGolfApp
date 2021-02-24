@@ -26,6 +26,7 @@ import PlayersViewRoundsList2 from './src/pages/roundsStack/players/PlayersViewR
 import StrokesView from './src/pages/roundsStack/players/StrokesView'
 import ScoreView from './src/pages/roundsStack/score/ScoreView'
 import BetsView from './src/pages/roundsStack/bets/BetsView'
+import More from './src/pages/roundsStack/more/MoreView'
 import BetsViewDetail from './src/pages/roundsStack/bets/BetsViewDetail'
 import SNBetListComponent from './src/pages/roundsStack/bets/SingleNassau/SNBetListComponent'
 import SNBetView from './src/pages/roundsStack/bets/SingleNassau/SNBetView'
@@ -466,6 +467,43 @@ export default class App extends Component {
           })}
           />
           <BottomTab.Screen name="BetsView" component={BetsView} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesomeIcon
+                    name='money'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
+              <FontAwesomeIcon
+                    name='money'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>
+              )
+            }else
+            {
+              return(
+                !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesomeIcon
+                    name='money'
+                    color={Colors.Black}
+                    size={20} />
+              </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
+              <FontAwesomeIcon
+                    name='money'
+                    color={Colors.Black}
+                    size={20} />
+              </View>
+              )
+            }
+          },
+          })}
+          />
+          <BottomTab.Screen name="More" component={More} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
