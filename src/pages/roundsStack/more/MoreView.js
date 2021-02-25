@@ -21,10 +21,10 @@ class MoreView extends Component {
 
     return (
       <View style={styles.container}>
-        <MoreOptionComponent title='Score Card' onPress={() => navigation.navigate('ScoreCardView')} />
+        <MoreOptionComponent title='Score Card' onPress={() => this.props.navigation.navigate('ScoreCardView')} />
         <MoreOptionComponent
           title={earningDetails[language]}
-          onPress={() => navigation.navigate('SummaryView')}
+          onPress={() => this.props.navigation.navigate('SummaryView')}
           iconName='ios-cash'
           iconFamily='Ionicons'
         />

@@ -27,6 +27,8 @@ import StrokesView from './src/pages/roundsStack/players/StrokesView'
 import ScoreView from './src/pages/roundsStack/score/ScoreView'
 import BetsView from './src/pages/roundsStack/bets/BetsView'
 import More from './src/pages/roundsStack/more/MoreView'
+import ScoreCardView from './src/pages/roundsStack/more/ScoreCardView'
+import SummaryView from './src/pages/coursesStack/courses/CoursesView'
 import BetsViewDetail from './src/pages/roundsStack/bets/BetsViewDetail'
 import SNBetListComponent from './src/pages/roundsStack/bets/SingleNassau/SNBetListComponent'
 import SNBetView from './src/pages/roundsStack/bets/SingleNassau/SNBetView'
@@ -511,12 +513,12 @@ export default class App extends Component {
               return(
               !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesomeIcon
-                    name='money'
+                    name='star'
                     color={Colors.Primary}
                     size={25} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <FontAwesomeIcon
-                    name='money'
+                    name='star'
                     color={Colors.Primary}
                     size={25} />
               </View>
@@ -526,12 +528,12 @@ export default class App extends Component {
               return(
                 !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
                   <FontAwesomeIcon
-                    name='money'
+                    name='star'
                     color={Colors.Black}
                     size={20} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <FontAwesomeIcon
-                    name='money'
+                    name='star'
                     color={Colors.Black}
                     size={20} />
               </View>
@@ -629,7 +631,7 @@ export default class App extends Component {
 
     CreateHomeBottomTabNavigator = () =>
       <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-          <BottomTab.Screen name='SettingsView' component={SettingsView} 
+          {/*<BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -664,7 +666,7 @@ export default class App extends Component {
               )
             }
           },
-          })} />
+          })} />*/}
           <BottomTab.Screen name='CoursesView' component={CoursesView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -1054,6 +1056,30 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='CoursesViewRounds' component={CoursesViewRounds}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='ScoreCardView' component={ScoreCardView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='SummaryView' component={SummaryView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

@@ -16,118 +16,27 @@ export default class ScoreVerticalComponent extends Component {
         }
         const newHoles = ChangeStartingHole(props.initHole, holes);
 
-        let f9H = newHoles.front9;
-        let b9H = newHoles.back9;
+        console.warn(this.props.holeInfo[0][1])
 
-        let holeInfo = [];
-        props.holeInfo.forEach(item => {
-            let newHoles = [];
-            item.holes.forEach(hole => {
-                const newHoleObj = {
-                    adv: hole.adv,
-                    hole_number: hole.hole_number,
-                    par: hole.par,
-                    strokes: hole.strokes
-                };
-                newHoles.push(newHoleObj);
-            });
-            const newHoleInfo = {
-                handicap: item.handicap,
-                holes: newHoles,
-                id: item.id,
-                id_sync: item.id_sync,
-                nick_name: item.nick_name,
-                photo: item.photo,
-                player: item.player,
-                round_id: item.round_id,
-                tee: item.tee,
-                ultimate_sync: item.ultimate_sync
-            };
-            holeInfo.push(newHoleInfo);
-        });
-
-        if (props.switchAdv) {
-            let info = holeInfo;
-            info.forEach((item, i) => {
-                item.holes.forEach((hole, j) => {
-                    if (hole.adv % 2 === 0) hole.adv = hole.adv - 1;
-                    else hole.adv = hole.adv + 1;
-                });
-            });
-        }
+        let f9H = [this.props.holeInfo[0][1], this.props.holeInfo[0][2], this.props.holeInfo[0][3], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1]]
+        let b9H = [this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1]]
         this.state = {
+            language: 'es',
             f9H,
-            b9H,
-            holeInfo,
+            b9H
         };
-    }
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        console.log('$$$$$$$$$$$$$$$$$$$$$ Entra componentWillReceiveProps $$$$$$$$$$$$$$$$');
-        console.log([nextProps.switchAdv,this.props.switchAdv]);
-        if (nextProps.holeInfo !== this.props.holeInfo) {
-            let holeInfo = [];
-            nextProps.holeInfo.forEach(item => {
-                let newHoles = [];
-                item.holes.forEach(hole => {
-                    const newHoleObj = {
-                        adv: hole.adv,
-                        hole_number: hole.hole_number,
-                        par: hole.par,
-                        strokes: hole.strokes
-                    };
-                    newHoles.push(newHoleObj);
-                });
-                const newHoleInfo = {
-                    handicap: item.handicap,
-                    holes: newHoles,
-                    id: item.id,
-                    id_sync: item.id_sync,
-                    nick_name: item.nick_name,
-                    photo: item.photo,
-                    player: item.player,
-                    round_id: item.round_id,
-                    tee: item.tee,
-                    ultimate_sync: item.ultimate_sync
-                };
-                holeInfo.push(newHoleInfo);
-            });
-            this.setState({ holeInfo })
-        }
-
-        if (nextProps.initHole !== this.props.initHole) {
-            let holes = [];
-            for (let index = 0; index < 18; index++) {
-                holes.push(index);
-            }
-            const newHoles = ChangeStartingHole(nextProps.initHole, holes);
-            this.setState({
-                f9H: newHoles.front9,
-                b9H: newHoles.back9
-            });
-        }
-
-        if (nextProps.switchAdv !== this.props.switchAdv) {
-            const { holeInfo } = this.state;
-            holeInfo.forEach((item, i) => {
-                item.holes.forEach((hole, j) => {
-                    if (hole.adv % 2 === 0) hole.adv = hole.adv - 1;
-                    else hole.adv = hole.adv + 1;
-                });
-            });
-        }
     }
 
     render() {
 
         const {
+            language,
             f9H,
             b9H,
-            holeInfo,
         } = this.state;
 
         const {
-            language,
+            holeInfo,
             tees,
             hcpAdj,
             totalScore,
@@ -162,7 +71,7 @@ export default class ScoreVerticalComponent extends Component {
                     <View style={styles.holesView}>
                         {f9H.map(item =>
                             <View key={item} style={styles.holeInfoView}>
-                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{item + 1}</Text>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{item}</Text>
                                 {tees.map(tee =>
                                     <Text
                                         key={tee.id}
@@ -179,21 +88,21 @@ export default class ScoreVerticalComponent extends Component {
                 {holeInfo.map((item, index) =>
                     <View style={styles.scoreView} key={index}>
                         <View style={styles.holeTextView}>
-                            <Text style={styles.nickName} numberOfLines={1} adjustsFontSizeToFit>{item.nick_name}</Text>
+                            <Text style={styles.nickName} numberOfLines={1} adjustsFontSizeToFit>{item.nickname}</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <FontAwesome name='square' size={13} color={Colors.Black} />
                                     <FontAwesome
                                         name='square'
                                         size={12}
-                                        color={item.tee.color}
+                                        color={'red'}
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
-                                <Text style={styles.hcpNumber}>{((item.handicap * item.tee.slope / 113) * hcpAdj).toFixed(0)}</Text>
+                                <Text style={styles.hcpNumber}>{(item.handicap).toFixed(0)}</Text>
                             </View>
                         </View>
-                        <View style={styles.holesView}>
+                        {/*<View style={styles.holesView}>
                             {f9H.map((holeIndex, i) =>
                                 <View key={holeIndex}>
                                     <Text style={styles.advText}>{item.holes[holeIndex].adv}</Text>
@@ -214,7 +123,7 @@ export default class ScoreVerticalComponent extends Component {
                                 <Text style={styles.strokesTotal}>{this.totalScore(index, 'f').subTotal}</Text>
                                 {advTotalStrokes.length === holeInfo.length && <Text style={styles.strokesTotalAdv}>{this.totalScore(index, 'f').total}</Text>}
                             </View>
-                        </View>
+                        </View>*/}
                     </View>)
                 }
                 <View style={{ height: 15 }} />
@@ -239,7 +148,7 @@ export default class ScoreVerticalComponent extends Component {
                     <View style={styles.holesView}>
                         {b9H.map(item =>
                             <View key={item} style={styles.holeInfoView}>
-                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{item + 1}</Text>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{item}</Text>
                                 {tees.map(tee =>
                                     <Text
                                         key={tee.id}
@@ -256,21 +165,21 @@ export default class ScoreVerticalComponent extends Component {
                 {holeInfo.map((item, index) =>
                     <View style={styles.scoreView} key={index}>
                         <View style={styles.holeTextView}>
-                            <Text style={styles.nickName} numberOfLines={1} adjustsFontSizeToFit>{item.nick_name}</Text>
+                            <Text style={styles.nickName} numberOfLines={1} adjustsFontSizeToFit>{item.nickname}</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <FontAwesome name='square' size={13} color={Colors.Black} />
                                     <FontAwesome
                                         name='square'
                                         size={12}
-                                        color={item.tee.color}
+                                        color={'blue'}
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
-                                <Text style={styles.hcpNumber}>{((item.handicap * item.tee.slope / 113) * hcpAdj).toFixed(0)}</Text>
+                                <Text style={styles.hcpNumber}>{(item.handicap).toFixed(0)}</Text>
                             </View>
                         </View>
-                        <View style={styles.holesView}>
+                        {/*<View style={styles.holesView}>
                             {b9H.map((holeIndex, i) =>
                                 <View key={holeIndex}>
                                     <Text style={styles.advText}>{item.holes[holeIndex].adv}</Text>
@@ -289,7 +198,7 @@ export default class ScoreVerticalComponent extends Component {
                                 <Text style={styles.strokesTotal}>{this.totalScore(index, 'b').subTotal}</Text>
                                 {advTotalStrokes.length === holeInfo.length && <Text style={styles.strokesTotalAdv}>{this.totalScore(index, 'b').total}</Text>}
                             </View>
-                        </View>
+                        </View>*/}
                     </View>)
                 }
             </View>
