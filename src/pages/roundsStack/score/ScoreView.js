@@ -39,10 +39,10 @@ class ScoreView extends Component {
 
   componentDidMount() {
     this.ListadoTodos()
-    this.props.navigation.setParams({
+    /*this.props.navigation.setParams({
       onPressRight: () => this.pager.setPage(1),
       onPressLeft: () => this.pager.setPage(17),
-    });
+    });*/
 
     Dimensions.addEventListener('change', (dimensions) => {
       const { width, height } = dimensions.window;
@@ -59,7 +59,7 @@ class ScoreView extends Component {
         let HolesAux = []
         HolesAux.push(players[i].id)
         for (var j = 1; j <= 18; j++) {
-            //console.warn(players[i][j])
+            console.warn(players[i][j])
             HolesAux.push(players[i][j])
         }
         playersHoleAux.push(HolesAux)
@@ -197,7 +197,7 @@ class ScoreView extends Component {
     }
   }
 
-  static navigationOptions = ({ navigation }) => {
+  /*static navigationOptions = ({ navigation }) => {
     const state = store.getState();
     const language = state.reducerLanguage;
 
@@ -222,7 +222,7 @@ class ScoreView extends Component {
         />
       )
     }
-  };
+  };*/
 
   render() {
 
@@ -238,7 +238,7 @@ class ScoreView extends Component {
           <ViewPager
             initialPage={0/*this.props.initHole - 1*/}
             ref={ref => this.pager = ref}
-            onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
+            //onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}
           >
             {this.holes.map(item => (
@@ -252,7 +252,7 @@ class ScoreView extends Component {
     );
   }
 
-  onChangePage = (page) => {
+  /*onChangePage = (page) => {
     this.props.navigation.setParams({
       hole: page + 1,
       leftButton: page ? page : 18,
@@ -260,7 +260,7 @@ class ScoreView extends Component {
       onPressLeft: () => this.pager.setPage((page - 1) >= 0 ? page - 1 : 17),
       onPressRight: () => this.pager.setPage((page + 1) <= 17 ? page + 1 : 0),
     });
-  }
+  }*/
 
   changeTitleText = () => {
     this.props.navigation.setParams({

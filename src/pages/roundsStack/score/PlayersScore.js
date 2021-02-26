@@ -74,7 +74,7 @@ class PlayersScore extends Component {
         console.warn(IDRound)//this.setState({ count: this.state.count++ });*/
     }
 
-    llenaArreglo = async () => {
+    /*llenaArreglo = async () => {
     //console.warn('Entró')
     let language = await AsyncStorage.getItem('language')
     let playersHoleAux = []
@@ -91,7 +91,7 @@ class PlayersScore extends Component {
         language:language,
         playerHole:playersHoleAux
     })
-    }
+    }*/
 
   componentDidMount = async () => {
     //console.warn('Entró')
