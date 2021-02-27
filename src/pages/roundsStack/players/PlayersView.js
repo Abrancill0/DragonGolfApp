@@ -234,7 +234,12 @@ export default function RoundsView(route) {
                       message: successSavePlayer[language],
                       type:'success',
                   });
-                    ListadoTodos()
+                    if(selectedIndex==0)
+                      ListadoTodos()
+                    if(selectedIndex==1)
+                      ListadoJugadores()
+                    if(selectedIndex==2)
+                      ListadoInvitados()
                     //navigation.goBack()
                   //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
                 }

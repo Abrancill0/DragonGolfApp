@@ -11,7 +11,8 @@ import {
   ScrollView,
   Image,
   Button,
-  TextInput
+  TextInput,
+  FlatList
 } from 'react-native';
 import { SearchBar, ButtonGroup } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -25,7 +26,6 @@ import Snackbar from 'react-native-snackbar';
 import Colors from '../../../utils/Colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListaAmigos, ActualizaStrokerPvPRonda, ListaInvitados, ListadoRondaStroker } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -418,23 +418,7 @@ export default function RoundsView(route) {
         borderBottomWidth:2}}
       />
       </View>}
-          <SwipeListView
-            refreshControl={
-              <RefreshControl
-                onRefresh={()=>{
-                  if(selectedIndex==0)
-                    ListadoTodos()
-                  if(selectedIndex==1)
-                    ListadoJugadores()
-                  if(selectedIndex==2)
-                    ListadoInvitados()
-                  setValue1('')
-                  setValue2('')
-                  setValue3('')
-                  setValue4('')
-                }}
-              />
-            }
+          <FlatList
             data={players}
             renderItem={({item}) =>
             <View style={{flex:.2,padding:5}}>
@@ -515,7 +499,7 @@ export default function RoundsView(route) {
           </ScrollView>
         </View>
               }
-              keyExtractor={item=>item.id}
+              keyExtractor={item=>item.Player2Id}
               ListEmptyComponent={
               <View style={styles.emptyView}>
                   <FontAwesome5 name={"user-friends"} size={50} color="red" />

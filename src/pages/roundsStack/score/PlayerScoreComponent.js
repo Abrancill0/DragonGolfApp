@@ -79,9 +79,7 @@ class PlayerScoreComponent extends Component {
     }
 
     componentDidMount = async () => {
-        /*let playerHole= await AsyncStorage.getItem(this.props.item.id.toString())
-        console.warn('playerHole')
-        console.warn(playerHole)
+        let playerHole= await AsyncStorage.getItem(this.props.item.id.toString())
         var myArray = playerHole.split(',');
         this.setState({
             ScoreHole1: myArray[1],
@@ -102,7 +100,7 @@ class PlayerScoreComponent extends Component {
             ScoreHole16: myArray[16],
             ScoreHole17: myArray[17],
             ScoreHole18: myArray[18]
-        })*/
+        })
         //console.warn(this.state.ScoreHole1)
         const { index, hole, holeInfo} = this.props;
         if (holeInfo) {
