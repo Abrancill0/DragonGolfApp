@@ -79,7 +79,7 @@ class PlayerScoreComponent extends Component {
     }
 
     componentDidMount = async () => {
-        let playerHole= await AsyncStorage.getItem(this.props.item.id.toString())
+        /*let playerHole= await AsyncStorage.getItem(this.props.item.id.toString())
         var myArray = playerHole.split(',');
         this.setState({
             ScoreHole1: myArray[1],
@@ -100,7 +100,7 @@ class PlayerScoreComponent extends Component {
             ScoreHole16: myArray[16],
             ScoreHole17: myArray[17],
             ScoreHole18: myArray[18]
-        })
+        })*/
         //console.warn(this.state.ScoreHole1)
         const { index, hole, holeInfo} = this.props;
         if (holeInfo) {
@@ -639,7 +639,7 @@ class PlayerScoreComponent extends Component {
         switch(hole){
             case '1': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par1!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par1,0)}
@@ -671,7 +671,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '2': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par2!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par2,0)}
@@ -703,7 +703,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '3': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par3!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par3,0)}
@@ -735,7 +735,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '4': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par4!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par4,0)}
@@ -767,7 +767,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '5': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par5!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par5,0)}
@@ -799,7 +799,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '6': 
                 return (
-                    <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
+                    item.ho_par6!=0&&<View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par6,0)}
@@ -831,7 +831,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '7': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par7!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par7,0)}
@@ -863,7 +863,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '8': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par8!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par8,0)}
@@ -895,7 +895,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '9': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par9!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par9,0)}
@@ -927,7 +927,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '10': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par10!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par10,0)}
@@ -959,7 +959,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '11': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par11!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par11,0)}
@@ -991,7 +991,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '12': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par12!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par12,0)}
@@ -1023,7 +1023,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '13': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par13!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par13,0)}
@@ -1055,7 +1055,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '14': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par14!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par14,0)}
@@ -1087,7 +1087,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '15': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par15!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par15,0)}
@@ -1119,7 +1119,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '16': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par16!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par16,0)}
@@ -1151,7 +1151,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '17': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par17!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par17,0)}
@@ -1183,7 +1183,7 @@ class PlayerScoreComponent extends Component {
             break;
             case '18': 
                 return (
-                     <View style={styles.buttonGroupView}>
+                     item.ho_par18!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
                             onPress={_ => this.onPressButtonGroup(item.ho_par18,0)}
@@ -1829,75 +1829,75 @@ class PlayerScoreComponent extends Component {
         switch (value) {
             case 1:
                 this.setState({ ScoreHole1: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 2:
                 this.setState({ ScoreHole2: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 3:
                 this.setState({ ScoreHole3: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 4:
                 this.setState({ ScoreHole4: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 5:
                 this.setState({ ScoreHole5: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 6:
                 this.setState({ ScoreHole6: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 7:
                 this.setState({ ScoreHole7: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 8:
                 this.setState({ ScoreHole8: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 9:
                 this.setState({ ScoreHole9: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 10:
                 this.setState({ ScoreHole10: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 11:
                 this.setState({ ScoreHole11: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 12:
                 this.setState({ ScoreHole12: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 13:
                 this.setState({ ScoreHole13: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 14:
                 this.setState({ ScoreHole14: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 15:
                 this.setState({ ScoreHole15: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 16:
                 this.setState({ ScoreHole16: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 17:
                 this.setState({ ScoreHole17: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
             case 18:
                 this.setState({ ScoreHole18: score.toString()});
-                AsyncStorage.setItem(value, score.toString());
+                //AsyncStorage.setItem(value, score.toString());
                 break;
         }
         this.saveScore(score);

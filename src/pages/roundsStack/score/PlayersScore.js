@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import { Dictionary } from '../../../utils/Dictionary';
 import PlayerScoreComponent from './PlayerScoreComponent';
@@ -56,8 +56,8 @@ class PlayersScore extends Component {
                         playersHoleAux[i][hole]=score
                         console.warn(id.toString())
                         console.warn(playersHoleAux[i].toString())
-                        AsyncStorage.setItem(id.toString(), '0');
-                        AsyncStorage.setItem(id.toString(), playersHoleAux[i].toString());
+                        //AsyncStorage.setItem(id.toString(), '0');
+                        //AsyncStorage.setItem(id.toString(), playersHoleAux[i].toString());
                     }
                 }
             }
@@ -96,6 +96,9 @@ class PlayersScore extends Component {
   componentDidMount = async () => {
     //console.warn('Entró')
     let language = await AsyncStorage.getItem('language')
+    Dimensions.addEventListener('change', (dimensions) => {
+      this.guardar(2)
+    });
     /*let playersHoleAux = []
     for (var i = 0; i <= this.props.players.length - 1; i++) {
         let HolesAux = []
@@ -209,7 +212,7 @@ class PlayersScore extends Component {
             }
     }*/
 
-    guardar = async () => {
+    guardar = async (tipo) => {
         let idUsu = await AsyncStorage.getItem('usu_id')
         let IDRound = await AsyncStorage.getItem('IDRound')
         console.warn(idUsu)
@@ -228,6 +231,7 @@ class PlayersScore extends Component {
         ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
         .then((res) => {
           console.warn(res)
+          if(tipo==1){
             if(res.estatus == 1){
               showMessage({
                 message: Dictionary.successSaveTeeData[this.state.language],
@@ -240,6 +244,7 @@ class PlayersScore extends Component {
                 type:'danger',
               });
             }
+          }
         })
     }
 
@@ -260,7 +265,7 @@ class PlayersScore extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View>
-          <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar()}>
+          <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar(1)}>
             <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
           </TouchableOpacity>
         </View>

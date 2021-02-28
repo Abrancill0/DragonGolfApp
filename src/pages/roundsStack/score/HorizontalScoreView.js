@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
 import PlayerScoreComponent from './PlayerScoreComponent';
@@ -23,6 +23,9 @@ class HorizontalScoreView extends Component {
       componentDidMount = async () => {
         //console.warn('Entró')
         let language = await AsyncStorage.getItem('language')
+        Dimensions.addEventListener('change', (dimensions) => {
+          this.guardar(2)
+        });
         /*let playersHoleAux = []
         for (var i = 0; i <= this.props.players.length - 1; i++) {
             let HolesAux = []
@@ -53,9 +56,9 @@ class HorizontalScoreView extends Component {
                     if(playersHoleAux[i][j]==id){
                         console.warn('entra')
                         playersHoleAux[i][hole]=score
-                        console.warn(id.toString())
-                        console.warn(playersHoleAux[i].toString())
-                        AsyncStorage.setItem(id.toString(), playersHoleAux[i].toString());
+                        //console.warn(id.toString())
+                        //console.warn(playersHoleAux[i].toString())
+                        //AsyncStorage.setItem(id.toString(), playersHoleAux[i].toString());
                     }
                 }
             }
@@ -73,7 +76,7 @@ class HorizontalScoreView extends Component {
         console.warn(IDRound)//this.setState({ count: this.state.count++ });*/
     }
 
-    guardar = async () => {
+    guardar = async (tipo) => {
         let idUsu = await AsyncStorage.getItem('usu_id')
         let IDRound = await AsyncStorage.getItem('IDRound')
         console.warn(idUsu)
@@ -92,6 +95,7 @@ class HorizontalScoreView extends Component {
         ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
         .then((res) => {
           console.warn(res)
+          if(tipo==1){
             if(res.estatus == 1){
               showMessage({
                 message: Dictionary.successSaveTeeData[this.state.language],
@@ -104,6 +108,7 @@ class HorizontalScoreView extends Component {
                 type:'danger',
               });
             }
+          }
         })
     }
 
@@ -127,7 +132,7 @@ class HorizontalScoreView extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View>
-                  <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar()}>
+                  <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar(1)}>
                     <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
                   </TouchableOpacity>
                 </View>

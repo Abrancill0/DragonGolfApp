@@ -76,7 +76,7 @@ class HorizontalScoreComponent extends Component {
     }
 
     componentDidMount = async () => {
-        let playerHole= await AsyncStorage.getItem(this.props.item.id.toString())
+        /*let playerHole= await AsyncStorage.getItem(this.props.item.id.toString())
         var myArray = playerHole.split(',');
         this.setState({
             ScoreHole1: myArray[1],
@@ -97,7 +97,7 @@ class HorizontalScoreComponent extends Component {
             ScoreHole16: myArray[16],
             ScoreHole17: myArray[17],
             ScoreHole18: myArray[18]
-        })
+        })*/
         const { index, hole, holeInfo } = this.props;
         if (holeInfo) {
             if (holeInfo.length > 0) {

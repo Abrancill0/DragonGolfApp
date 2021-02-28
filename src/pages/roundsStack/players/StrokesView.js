@@ -209,11 +209,11 @@ export default function RoundsView(route) {
       .then((res) => {
         console.warn(res)
           if(res.estatus == 1){
-            showMessage({
+            /*showMessage({
               message: successSaveTeeData[language],
               type:'success',
             });
-            ListadoTodos()
+            ListadoTodos()*/
           }
           else{
             showMessage({
@@ -423,7 +423,7 @@ export default function RoundsView(route) {
             renderItem={({item}) =>
             <View style={{flex:.2,padding:5}}>
               <ScrollView
-                horizontal={true}
+                horizontal={false}
                 showsHorizontalScrollIndicator={false}>
               <View /*activeOpacity={0} /*onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}*/>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
@@ -439,11 +439,11 @@ export default function RoundsView(route) {
                           <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
                             <Button
                               title={signoMenos?'+':'-'}
-                              onPress={() => {item.strokes=item.strokes-0.5;setDataInState([...dataInState, players])}}
+                              onPress={() => {item.strokes=item.strokes-0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
                               color={Colors.Primary}
                             />
                           </View>
-                          <View style={{flex:0.8, paddingLeft:0}}>
+                          <View style={{flex:1, paddingLeft:0}}>
                             <TextInput
                               ref={ref => item.id = ref}
                               editable={false}
@@ -461,7 +461,7 @@ export default function RoundsView(route) {
                             <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
                             <Button
                               title={signoMas?'+':'-'}
-                              onPress={() => {item.strokes=item.strokes+0.5;setDataInState([...dataInState, players])}}
+                              onPress={() => {item.strokes=item.strokes+0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
                               color={Colors.Primary}
                             />
                           </View>
@@ -491,11 +491,11 @@ export default function RoundsView(route) {
                       </View>
                     </View>
                   </View>
-            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+            {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity style={{flex:1,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}>
                 <FontAwesome name={'save'} size={30} color={Colors.White} />
               </TouchableOpacity>
-            </View>
+            </View>*/}
           </ScrollView>
         </View>
               }

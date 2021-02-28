@@ -30,6 +30,10 @@ class ScoreView extends Component {
     };
 
     this.holes = [];
+    this.holesHor = [];
+    for (let index = 0; index < 21; index++) {
+      this.holesHor.push({ key: `${index}`, hole: `${index + 1}` });
+    }
     for (let index = 0; index < 18; index++) {
       this.holes.push({ key: `${index}`, hole: `${index + 1}` });
     }
@@ -59,14 +63,14 @@ class ScoreView extends Component {
         let HolesAux = []
         HolesAux.push(players[i].id)
         for (var j = 1; j <= 18; j++) {
-            console.warn(players[i][j])
+            //console.warn(players[i][j])
             HolesAux.push(players[i][j])
         }
         playersHoleAux.push(HolesAux)
-        console.warn(players[i].id.toString())
-        console.warn(HolesAux.toString())
-        AsyncStorage.setItem(players[i].id.toString(), '0');
-        AsyncStorage.setItem(players[i].id.toString(), HolesAux.toString());
+        //console.warn(players[i].id.toString())
+        //console.warn(HolesAux.toString())
+        //AsyncStorage.setItem(players[i].id.toString(), '0');
+        //AsyncStorage.setItem(players[i].id.toString(), HolesAux.toString());
     }
     this.setState({
         language:language,
@@ -241,7 +245,7 @@ class ScoreView extends Component {
             //onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}
           >
-            {this.holes.map(item => (
+            {this.holesHor.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
                 <PlayersScore item={item.hole} players={players} playerHole={playerHole} />
               </View>
