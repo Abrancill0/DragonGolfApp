@@ -31,7 +31,7 @@ class ScoreView extends Component {
 
     this.holes = [];
     this.holesHor = [];
-    for (let index = 0; index < 21; index++) {
+    for (let index = 18; index < 21; index++) {
       this.holesHor.push({ key: `${index}`, hole: `${index + 1}` });
     }
     for (let index = 0; index < 18; index++) {
@@ -102,6 +102,9 @@ class ScoreView extends Component {
                       photo: item.usu_imagen,
                       handicap: item.usu_handicapindex,
                       strokes: item.usu_golpesventaja,
+                      out: item.ScoreOut,
+                      in: item.ScoreIn,
+                      tot: item.TotalScore,
                       ho_par1: item.ho_par1,
                       ho_par2: item.ho_par2,
                       ho_par3: item.ho_par3,
@@ -238,14 +241,14 @@ class ScoreView extends Component {
             visible={carga}
             color={Colors.Primary} />
         {isLandscape ?
-          <HorizontalScoreView holes={this.holes} players={players} playerHole={playerHole} /> :
+          <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} /> :
           <ViewPager
             initialPage={0/*this.props.initHole - 1*/}
             ref={ref => this.pager = ref}
             //onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}
           >
-            {this.holesHor.map(item => (
+            {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
                 <PlayersScore item={item.hole} players={players} playerHole={playerHole} />
               </View>
