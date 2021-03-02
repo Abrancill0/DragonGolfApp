@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, ScrollView, FlatList, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
 import PlayerScoreComponent from './PlayerScoreComponent';
@@ -116,6 +116,7 @@ class HorizontalScoreView extends Component {
 
         const {
             holes,
+            holes2,
             players,
             playerHole
         } = this.props;
@@ -145,7 +146,7 @@ class HorizontalScoreView extends Component {
                 <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 2 }}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <View style={{ width: 70 }}>
-                            <View style={{ height: 40 }} />
+                            <View style={{ height: 80 }} />
                             {players.map(item =>
                                 <View key={item.id.toString()} style={[styles.playerScoreNameView, {height: 55, justifyContent: 'flex-end'}]}>
                                     <Text style={styles.playerScoreNameText} numberOfLines={1} adjustsFontSizeToFit >{item.nickname}</Text>
@@ -171,6 +172,75 @@ class HorizontalScoreView extends Component {
                                         </View>
                                     </View>
                                 )}
+                                <View style={styles.horizontalHoleView}>
+                                            <View style={{ alignItems: 'center', height: 40, marginTop:20 }}>
+                                                <Text style={styles.holeTitle}></Text>
+                                                <Text style={[styles.holeNumber, { fontSize: 16 }]}>IN</Text>
+                                                <View style={{ width: '100%', paddingVertical: 10 }}>
+                                                    {players.map((item, index) => 
+                                                    <View style={[styles.inputView, { height: 40 }]}>
+                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8}}>
+                                                            <TextInput
+                                                                editable={false}
+                                                                selectTextOnFocus={true}
+                                                                style={styles.parInput}
+                                                                maxLength={2}
+                                                                value={item.in.toString()}
+                                                                onChangeText={(score)=>this.onChangeScore(score,1)}
+                                                                keyboardType='number-pad'
+                                                                color='black'
+                                                            />
+                                                        </View>
+                                                    </View>)}
+                                                </View>
+                                            </View>
+                                        </View>
+                                <View style={styles.horizontalHoleView}>
+                                            <View style={{ alignItems: 'center', height: 40, marginTop:20 }}>
+                                                <Text style={styles.holeTitle}></Text>
+                                                <Text style={[styles.holeNumber, { fontSize: 16 }]}>OUT</Text>
+                                                <View style={{ width: '100%', paddingVertical: 10 }}>
+                                                    {players.map((item, index) => 
+                                                    <View style={[styles.inputView, { height: 40 }]}>
+                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8}}>
+                                                            <TextInput
+                                                                editable={false}
+                                                                selectTextOnFocus={true}
+                                                                style={styles.parInput}
+                                                                maxLength={2}
+                                                                value={item.out.toString()}
+                                                                onChangeText={(score)=>this.onChangeScore(score,1)}
+                                                                keyboardType='number-pad'
+                                                                color='black'
+                                                            />
+                                                        </View>
+                                                    </View>)}
+                                                </View>
+                                            </View>
+                                </View>
+                                        <View style={styles.horizontalHoleView}>
+                                            <View style={{ alignItems: 'center', height: 40, marginTop:20 }}>
+                                                <Text style={styles.holeTitle}></Text>
+                                                <Text style={[styles.holeNumber, { fontSize: 16 }]}>TOT</Text>
+                                                <View style={{ width: '100%', paddingVertical: 10 }}>
+                                                    {players.map((item, index) => 
+                                                        <View style={[styles.inputView, { height: 40 }]}>
+                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8}}>
+                                                                <TextInput
+                                                                    editable={false}
+                                                                    selectTextOnFocus={true}
+                                                                    style={styles.parInput}
+                                                                    maxLength={2}
+                                                                    value={item.tot.toString()}
+                                                                    onChangeText={(score)=>this.onChangeScore(score,1)}
+                                                                    keyboardType='number-pad'
+                                                                    color='black'
+                                                                />
+                                                            </View>
+                                                    </View>)}
+                                                </View>
+                                            </View>
+                                        </View>
                             </ScrollView>
                         </View>
                     </View>
