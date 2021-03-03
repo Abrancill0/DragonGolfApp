@@ -18,8 +18,9 @@ export default class ScoreVerticalComponent extends Component {
 
         console.warn(this.props.holeInfo[0][1])
 
-        let f9H = [this.props.holeInfo[0][1], this.props.holeInfo[0][2], this.props.holeInfo[0][3], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1]]
-        let b9H = [this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1], this.props.holeInfo[0][1]]
+        let f9H = [this.props.holeInfo[0][1], this.props.holeInfo[0][2], this.props.holeInfo[0][3], this.props.holeInfo[0][4], this.props.holeInfo[0][5], this.props.holeInfo[0][6], this.props.holeInfo[0][7], this.props.holeInfo[0][8], this.props.holeInfo[0][9]]
+        let b9H = [this.props.holeInfo[0][10], this.props.holeInfo[0][11], this.props.holeInfo[0][12], this.props.holeInfo[0][13], this.props.holeInfo[0][14], this.props.holeInfo[0][15], this.props.holeInfo[0][16], this.props.holeInfo[0][17], this.props.holeInfo[0][18]]   
+        let tees = [this.props.holeInfo[0]['ho_par1'], this.props.holeInfo[0]['ho_par2'], this.props.holeInfo[0]['ho_par3'], this.props.holeInfo[0]['ho_par4'], this.props.holeInfo[0]['ho_par5'], this.props.holeInfo[0]['ho_par6'], this.props.holeInfo[0]['ho_par7'], this.props.holeInfo[0]['ho_par8'], this.props.holeInfo[0]['ho_par9'], this.props.holeInfo[0]['ho_par10'], this.props.holeInfo[0]['ho_par11'], this.props.holeInfo[0]['ho_par12'], this.props.holeInfo[0]['ho_par13'], this.props.holeInfo[0]['ho_par14'], this.props.holeInfo[0]['ho_par15'], this.props.holeInfo[0]['ho_par16'], this.props.holeInfo[0]['ho_par17'], this.props.holeInfo[0]['ho_par18']]
         this.state = {
             language: 'es',
             f9H,
@@ -32,12 +33,12 @@ export default class ScoreVerticalComponent extends Component {
         const {
             language,
             f9H,
+            tees,
             b9H,
         } = this.state;
 
         const {
             holeInfo,
-            tees,
             hcpAdj,
             totalScore,
             advStrokes,

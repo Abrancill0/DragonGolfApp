@@ -630,8 +630,8 @@ export const Dictionary = {
         'es': 'Hoyo Inicial'
     },
     exitRound: {
-        'en': 'Are you sure you want to finish the round?',
-        'es': '¿Seguro que quieres terminar la ronda?'
+        'en': 'Finish the initial round setup?',
+        'es': '¿Terminar la configuración inicial de la ronda?'
     },
     exit: {
         'en': 'Exit',

@@ -116,6 +116,9 @@ export default function RoundsView(route) {
             text: continuar[language],
             onPress: () => {
               navigation.navigate('RoundsStack')
+              navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
+              AsyncStorage.setItem('IDRound', IDRound.toString());
+              //navigation.navigate('RoundsStack')
             },
           }
         ],

@@ -505,7 +505,7 @@ export default class App extends Component {
           },
           })}
           />
-          {/*<BottomTab.Screen name="More" component={More} 
+          <BottomTab.Screen name="More" component={More} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -541,7 +541,7 @@ export default class App extends Component {
             }
           },
           })}
-          />*/}
+          />
         </BottomTab.Navigator>
       );
     }
