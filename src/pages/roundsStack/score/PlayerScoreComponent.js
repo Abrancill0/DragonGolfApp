@@ -1270,8 +1270,8 @@ class PlayerScoreComponent extends Component {
                 if (adv % 2 === 0) adv--;
                 else adv++;
             }
-            const inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-            const inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+            const inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+            const inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
             this.setState({
                 par,
                 adv,
@@ -1322,8 +1322,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole1: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '2':
@@ -1351,8 +1351,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole2: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '3':
@@ -1380,8 +1380,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole3: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '4':
@@ -1409,8 +1409,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole4: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '5':
@@ -1438,8 +1438,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole5: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '6':
@@ -1467,8 +1467,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole6: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '7':
@@ -1496,8 +1496,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole7: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '8':
@@ -1525,8 +1525,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole8: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '9':
@@ -1554,8 +1554,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole9: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '10':
@@ -1583,8 +1583,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole10: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '11':
@@ -1612,8 +1612,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole11: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '12':
@@ -1641,8 +1641,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole12: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '13':
@@ -1670,8 +1670,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole13: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '14':
@@ -1699,8 +1699,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole14: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '15':
@@ -1728,8 +1728,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole15: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '16':
@@ -1757,8 +1757,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole16: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '17':
@@ -1786,8 +1786,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole17: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
             case '18':
@@ -1815,8 +1815,8 @@ class PlayerScoreComponent extends Component {
                         break;
                 }
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ ScoreHole18: score.toString(), buttonIndex, inputStyle, inputBorder });
             break;
         }
@@ -1906,8 +1906,8 @@ class PlayerScoreComponent extends Component {
                 const par = holeInfo[index].holes[hole - 1].par;
                 score = score ? parseInt(score) : '';
                 buttonIndex = score === par - 1 ? 0 : score === par ? 1 : score === par + 1 ? 2 : score === par + 2 ? 3 : null;
-                inputStyle = score === par - 2 ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
-                inputBorder = score === par - 2 ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
+                inputStyle = score === par - par ? styles.eagleInput2 : score === par - 1 ? styles.birdieInput : score === par ? styles.parInput : score === par + 1 ? styles.bogeyInput : score >= par + 2 ? styles.dblInput2 : styles.input;
+                inputBorder = score === par - par ? styles.eagleInput1 : score >= par + 2 ? styles.dblInput1 : {};
                 this.setState({ holeScore: score.toString(), buttonIndex, inputStyle, inputBorder });
                 this.saveScore(score);
             }*/

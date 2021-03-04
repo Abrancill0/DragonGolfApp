@@ -20,11 +20,14 @@ export default class ScoreVerticalComponent extends Component {
 
         let f9H = [this.props.holeInfo[0][1], this.props.holeInfo[0][2], this.props.holeInfo[0][3], this.props.holeInfo[0][4], this.props.holeInfo[0][5], this.props.holeInfo[0][6], this.props.holeInfo[0][7], this.props.holeInfo[0][8], this.props.holeInfo[0][9]]
         let b9H = [this.props.holeInfo[0][10], this.props.holeInfo[0][11], this.props.holeInfo[0][12], this.props.holeInfo[0][13], this.props.holeInfo[0][14], this.props.holeInfo[0][15], this.props.holeInfo[0][16], this.props.holeInfo[0][17], this.props.holeInfo[0][18]]   
-        let tees = [this.props.holeInfo[0]['ho_par1'], this.props.holeInfo[0]['ho_par2'], this.props.holeInfo[0]['ho_par3'], this.props.holeInfo[0]['ho_par4'], this.props.holeInfo[0]['ho_par5'], this.props.holeInfo[0]['ho_par6'], this.props.holeInfo[0]['ho_par7'], this.props.holeInfo[0]['ho_par8'], this.props.holeInfo[0]['ho_par9'], this.props.holeInfo[0]['ho_par10'], this.props.holeInfo[0]['ho_par11'], this.props.holeInfo[0]['ho_par12'], this.props.holeInfo[0]['ho_par13'], this.props.holeInfo[0]['ho_par14'], this.props.holeInfo[0]['ho_par15'], this.props.holeInfo[0]['ho_par16'], this.props.holeInfo[0]['ho_par17'], this.props.holeInfo[0]['ho_par18']]
+        let teesf9 = [this.props.holeInfo[0]['ho_par1'], this.props.holeInfo[0]['ho_par2'], this.props.holeInfo[0]['ho_par3'], this.props.holeInfo[0]['ho_par4'], this.props.holeInfo[0]['ho_par5'], this.props.holeInfo[0]['ho_par6'], this.props.holeInfo[0]['ho_par7'], this.props.holeInfo[0]['ho_par8'], this.props.holeInfo[0]['ho_par9']]
+        let teesb9 = [this.props.holeInfo[0]['ho_par10'], this.props.holeInfo[0]['ho_par11'], this.props.holeInfo[0]['ho_par12'], this.props.holeInfo[0]['ho_par13'], this.props.holeInfo[0]['ho_par14'], this.props.holeInfo[0]['ho_par15'], this.props.holeInfo[0]['ho_par16'], this.props.holeInfo[0]['ho_par17'], this.props.holeInfo[0]['ho_par18']]
         this.state = {
             language: 'es',
             f9H,
-            b9H
+            b9H,
+            teesf9,
+            teesb9
         };
     }
 
@@ -33,7 +36,8 @@ export default class ScoreVerticalComponent extends Component {
         const {
             language,
             f9H,
-            tees,
+            teesf9,
+            teesb9,
             b9H,
         } = this.state;
 
@@ -54,33 +58,29 @@ export default class ScoreVerticalComponent extends Component {
                 <View style={styles.holeHeader}>
                     <View style={styles.holeTextView}>
                         <Text style={styles.holeText}>{hole[language]}</Text>
-                        {tees.map(item =>
-                            <View key={item.id} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View  style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={styles.parText}>PAR</Text>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <FontAwesome name='square' size={13} color={Colors.Black} />
                                     <FontAwesome
                                         name='square'
                                         size={12}
-                                        color={item.color}
+                                        color={Colors.Black}
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
-                            </View>)
-                        }
+                            </View>
                     </View>
                     <View style={styles.holesView}>
-                        {f9H.map(item =>
-                            <View key={item} style={styles.holeInfoView}>
-                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{item}</Text>
-                                {tees.map(tee =>
-                                    <Text
-                                        key={tee.id}
+                        {teesf9.map((item,index) =>
+                            <View key={index} style={styles.holeInfoView}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{index + 1}</Text>
+                                <Text
+                                        key={index}
                                         style={styles.parNumber}
                                     >
-                                        {tee.holes[item].par}
-                                    </Text>)
-                                }
+                                        {item}
+                                    </Text>
                             </View>)
                         }
                     </View>
@@ -92,72 +92,68 @@ export default class ScoreVerticalComponent extends Component {
                             <Text style={styles.nickName} numberOfLines={1} adjustsFontSizeToFit>{item.nickname}</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <FontAwesome name='square' size={13} color={Colors.Black} />
+                                    <FontAwesome name='square' size={13} color={item.Te_TeeColor} />
                                     <FontAwesome
                                         name='square'
                                         size={12}
-                                        color={'red'}
+                                        color={item.Te_TeeColor}
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
                                 <Text style={styles.hcpNumber}>{(item.handicap).toFixed(0)}</Text>
                             </View>
                         </View>
-                        {/*<View style={styles.holesView}>
+                        <View style={styles.holesView}>
                             {f9H.map((holeIndex, i) =>
                                 <View key={holeIndex}>
-                                    <Text style={styles.advText}>{item.holes[holeIndex].adv}</Text>
+                                    <Text style={styles.advText}>{item.strokes}</Text>
                                     <View
                                         style={[styles.strokesView,
                                         {
                                             borderRightWidth: i < f9H.length - 1 ? 0 : 0.5,
-                                            backgroundColor: this.scoreBackgroundColor(tees, item, holeIndex),
+                                            backgroundColor: this.scoreBackgroundColor(teesf9, item, holeIndex),
                                         }
                                         ]}
                                     >
-                                        <Text style={[styles.holeNumber]}>{item.holes[holeIndex].strokes}</Text>
-                                        {advStrokes.length === holeInfo.length && <Text style={styles.advStrokes}>{advStrokes[index][item.holes[holeIndex].adv - 1] ? advStrokes[index][item.holes[holeIndex].adv - 1] : ''}</Text>}
+                                        <Text style={[styles.holeNumber]}>{item.strokes}</Text>
+                                        <Text style={styles.advStrokes}>{item.strokes ? item.strokes : ''}</Text>
                                     </View>
                                 </View>
                             )}
                             <View style={styles.strokesTotalView}>
                                 <Text style={styles.strokesTotal}>{this.totalScore(index, 'f').subTotal}</Text>
-                                {advTotalStrokes.length === holeInfo.length && <Text style={styles.strokesTotalAdv}>{this.totalScore(index, 'f').total}</Text>}
+                                <Text style={styles.strokesTotalAdv}>{this.totalScore(index, 'f').total}</Text>
                             </View>
-                        </View>*/}
+                        </View>
                     </View>)
                 }
                 <View style={{ height: 15 }} />
                 <View style={styles.holeHeader}>
                     <View style={styles.holeTextView}>
                         <Text style={styles.holeText}>{hole[language]}</Text>
-                        {tees.map(item =>
-                            <View key={item.id} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View  style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={styles.parText}>PAR</Text>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <FontAwesome name='square' size={13} color={Colors.Black} />
                                     <FontAwesome
                                         name='square'
                                         size={12}
-                                        color={item.color}
+                                        color={Colors.Black}
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
-                            </View>)
-                        }
+                            </View>
                     </View>
                     <View style={styles.holesView}>
-                        {b9H.map(item =>
+                        {teesb9.map((item,index) =>
                             <View key={item} style={styles.holeInfoView}>
-                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{item}</Text>
-                                {tees.map(tee =>
-                                    <Text
-                                        key={tee.id}
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{index + 10}</Text>
+                                <Text
+                                        key={index}
                                         style={styles.parNumber}
                                     >
-                                        {tee.holes[item].par}
-                                    </Text>)
-                                }
+                                        {item}
+                                    </Text>
                             </View>)
                         }
                     </View>
@@ -169,11 +165,11 @@ export default class ScoreVerticalComponent extends Component {
                             <Text style={styles.nickName} numberOfLines={1} adjustsFontSizeToFit>{item.nickname}</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <FontAwesome name='square' size={13} color={Colors.Black} />
+                                    <FontAwesome name='square' size={13} color={item.Te_TeeColor} />
                                     <FontAwesome
                                         name='square'
                                         size={12}
-                                        color={'blue'}
+                                        color={item.Te_TeeColor}
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>

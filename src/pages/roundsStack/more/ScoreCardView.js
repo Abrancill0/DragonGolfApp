@@ -99,6 +99,7 @@ class ScoreCardView extends Component {
                       nombre: item.usu_nombre,
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
+                      Te_TeeColor: item.Te_TeeColor,
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
                       handicap: item.usu_handicapindex,
