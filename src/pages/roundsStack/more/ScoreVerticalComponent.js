@@ -16,15 +16,34 @@ export default class ScoreVerticalComponent extends Component {
         }
         const newHoles = ChangeStartingHole(props.initHole, holes);
 
-        console.warn(this.props.holeInfo[0][1])
+        console.warn(this.props.holeInfo)
 
+        let f9H = []
+        let f9HA = []
+        let b9H = []
+        let teesf9 = []
+        let teesb9 = []
+
+        for (var i = 0 ; i <= this.props.holeInfo.length - 1; i++) {
+            f9H.push([this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9]])
+            f9HA.push([this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9']])
+            b9H.push([this.props.holeInfo[i][this.props.holeInfo[i]], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18]]   )
+            teesf9.push([this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9']])
+            teesb9.push([this.props.holeInfo[i]['ho_par1this.props.holeInfo[i]'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18']])
+        }
+
+        console.warn(f9H[0][0])
+
+        /*
         let f9H = [this.props.holeInfo[0][1], this.props.holeInfo[0][2], this.props.holeInfo[0][3], this.props.holeInfo[0][4], this.props.holeInfo[0][5], this.props.holeInfo[0][6], this.props.holeInfo[0][7], this.props.holeInfo[0][8], this.props.holeInfo[0][9]]
+        let f9HA = [this.props.holeInfo[0]['Ho_Advantage1'], this.props.holeInfo[0]['Ho_Advantage2'], this.props.holeInfo[0]['Ho_Advantage3'], this.props.holeInfo[0]['Ho_Advantage4'], this.props.holeInfo[0]['Ho_Advantage5'], this.props.holeInfo[0]['Ho_Advantage6'], this.props.holeInfo[0]['Ho_Advantage7'], this.props.holeInfo[0]['Ho_Advantage8'], this.props.holeInfo[0]['Ho_Advantage9']]
         let b9H = [this.props.holeInfo[0][10], this.props.holeInfo[0][11], this.props.holeInfo[0][12], this.props.holeInfo[0][13], this.props.holeInfo[0][14], this.props.holeInfo[0][15], this.props.holeInfo[0][16], this.props.holeInfo[0][17], this.props.holeInfo[0][18]]   
         let teesf9 = [this.props.holeInfo[0]['ho_par1'], this.props.holeInfo[0]['ho_par2'], this.props.holeInfo[0]['ho_par3'], this.props.holeInfo[0]['ho_par4'], this.props.holeInfo[0]['ho_par5'], this.props.holeInfo[0]['ho_par6'], this.props.holeInfo[0]['ho_par7'], this.props.holeInfo[0]['ho_par8'], this.props.holeInfo[0]['ho_par9']]
-        let teesb9 = [this.props.holeInfo[0]['ho_par10'], this.props.holeInfo[0]['ho_par11'], this.props.holeInfo[0]['ho_par12'], this.props.holeInfo[0]['ho_par13'], this.props.holeInfo[0]['ho_par14'], this.props.holeInfo[0]['ho_par15'], this.props.holeInfo[0]['ho_par16'], this.props.holeInfo[0]['ho_par17'], this.props.holeInfo[0]['ho_par18']]
+        let teesb9 = [this.props.holeInfo[0]['ho_par10'], this.props.holeInfo[0]['ho_par11'], this.props.holeInfo[0]['ho_par12'], this.props.holeInfo[0]['ho_par13'], this.props.holeInfo[0]['ho_par14'], this.props.holeInfo[0]['ho_par15'], this.props.holeInfo[0]['ho_par16'], this.props.holeInfo[0]['ho_par17'], this.props.holeInfo[0]['ho_par18']]*/
         this.state = {
             language: 'es',
             f9H,
+            f9HA,
             b9H,
             teesf9,
             teesb9
@@ -36,6 +55,7 @@ export default class ScoreVerticalComponent extends Component {
         const {
             language,
             f9H,
+            f9HA,
             teesf9,
             teesb9,
             b9H,
@@ -79,7 +99,7 @@ export default class ScoreVerticalComponent extends Component {
                                         key={index}
                                         style={styles.parNumber}
                                     >
-                                        {item}
+                                        {item[0]}
                                     </Text>
                             </View>)
                         }
@@ -106,7 +126,7 @@ export default class ScoreVerticalComponent extends Component {
                         <View style={styles.holesView}>
                             {f9H.map((holeIndex, i) =>
                                 <View key={holeIndex}>
-                                    <Text style={styles.advText}>{item.strokes}</Text>
+                                    <Text style={styles.advText}>{f9HA[i][index]}</Text>
                                     <View
                                         style={[styles.strokesView,
                                         {
@@ -115,8 +135,8 @@ export default class ScoreVerticalComponent extends Component {
                                         }
                                         ]}
                                     >
-                                        <Text style={[styles.holeNumber]}>{item.strokes}</Text>
-                                        <Text style={styles.advStrokes}>{item.strokes ? item.strokes : ''}</Text>
+                                        <Text style={[styles.holeNumber]}>{holeIndex[index]}</Text>
+                                        <Text style={styles.advStrokes}>{item.strokes}</Text>
                                     </View>
                                 </View>
                             )}

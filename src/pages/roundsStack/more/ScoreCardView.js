@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Dimensions } from 'react-native';
+import { View, ScrollView, Dimensions, TouchableOpacity, Text } from 'react-native';
 import ScoreHorizontalComponent from './ScoreHorizontalComponent';
 import ScoreVerticalComponent from './ScoreVerticalComponent';
 import { Dictionary } from '../../../utils/Dictionary';
+import Colors from '../../../utils/Colors';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListadoAmigosRonda } from '../../../Services/Services'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 class ScoreCardView extends Component {
     constructor(props) {
@@ -222,6 +224,21 @@ class ScoreCardView extends Component {
         console.log('holeInfo: ', holeInfo);
         return (
             <View style={{ flex: 1 }}>
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+                  <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+                    <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+                <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.result[language]}</Text>
+                </View>
+                {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+                  <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
+                    <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+                  </TouchableOpacity>
+                </View>*/}
+              </View>
                 {holeInfo.length > 0 ? <ScrollView style={{ width: '100%' }}>
                     {horizontal ?
                         <ScoreHorizontalComponent
