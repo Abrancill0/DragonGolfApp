@@ -433,7 +433,7 @@ class SNBetView extends Component {
               match : res.Result[0].set_snw_match.toString(),
               carry : res.Result[0].set_snw_carry.toString(),
               medal : res.Result[0].set_snw_medal.toString(),
-              autoPress : res.Result[0].set_snw_automatic_press,
+              autoPress : res.Result[0].set_snw_automatic_press.toString(),
               advStrokes : res.Result[0].set_golpesventaja.toString()
             })
           }
@@ -472,7 +472,7 @@ class SNBetView extends Component {
               match : res.Result[0].set_snw_match.toString(),
               carry : res.Result[0].set_snw_carry.toString(),
               medal : res.Result[0].set_snw_medal.toString(),
-              autoPress : res.Result[0].set_snw_automatic_press,
+              autoPress : res.Result[0].set_snw_automatic_press.toString(),
               advStrokes : res.Result[0].set_golpesventaja.toString()
             })
           }

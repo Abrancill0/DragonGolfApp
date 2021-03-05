@@ -106,6 +106,8 @@ class ScoreCardView extends Component {
                       photo: item.usu_imagen,
                       handicap: item.usu_handicapindex,
                       strokes: item.usu_golpesventaja,
+                      ScoreIn: item.ScoreIn,
+                      ScoreOut: item.ScoreOut,
                       ho_par1: item.ho_par1,
                       ho_par2: item.ho_par2,
                       ho_par3: item.ho_par3,

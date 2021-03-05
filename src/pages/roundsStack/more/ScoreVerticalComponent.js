@@ -21,15 +21,21 @@ export default class ScoreVerticalComponent extends Component {
         let f9H = []
         let f9HA = []
         let b9H = []
+        let b9HA = []
         let teesf9 = []
         let teesb9 = []
+        let ScoreIn = []
+        let ScoreOut = []
 
         for (var i = 0 ; i <= this.props.holeInfo.length - 1; i++) {
             f9H.push([this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9]])
             f9HA.push([this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9']])
-            b9H.push([this.props.holeInfo[i][this.props.holeInfo[i]], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18]]   )
+            b9H.push([this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18]]   )
             teesf9.push([this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9']])
-            teesb9.push([this.props.holeInfo[i]['ho_par1this.props.holeInfo[i]'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18']])
+            teesb9.push([this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18']])
+            ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+            ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
+            b9HA.push([this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18']])
         }
 
         console.warn(f9H[0][0])
@@ -45,8 +51,11 @@ export default class ScoreVerticalComponent extends Component {
             f9H,
             f9HA,
             b9H,
+            b9HA,
             teesf9,
-            teesb9
+            teesb9,
+            ScoreIn,
+            ScoreOut
         };
     }
 
@@ -58,13 +67,15 @@ export default class ScoreVerticalComponent extends Component {
             f9HA,
             teesf9,
             teesb9,
+            ScoreIn,
+            ScoreOut,
             b9H,
+            b9HA
         } = this.state;
 
         const {
             holeInfo,
             hcpAdj,
-            totalScore,
             advStrokes,
             advTotalStrokes
         } = this.props;
@@ -92,14 +103,14 @@ export default class ScoreVerticalComponent extends Component {
                             </View>
                     </View>
                     <View style={styles.holesView}>
-                        {teesf9.map((item,index) =>
+                        {teesf9[0].map((item,index) =>
                             <View key={index} style={styles.holeInfoView}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{index + 1}</Text>
                                 <Text
                                         key={index}
                                         style={styles.parNumber}
                                     >
-                                        {item[0]}
+                                        {item}
                                     </Text>
                             </View>)
                         }
@@ -124,25 +135,25 @@ export default class ScoreVerticalComponent extends Component {
                             </View>
                         </View>
                         <View style={styles.holesView}>
-                            {f9H.map((holeIndex, i) =>
+                            {f9H[index].map((holeIndex, i) =>
                                 <View key={holeIndex}>
-                                    <Text style={styles.advText}>{f9HA[i][index]}</Text>
+                                    <Text style={styles.advText}>{f9HA[index][i]}</Text>
                                     <View
                                         style={[styles.strokesView,
                                         {
-                                            borderRightWidth: i < f9H.length - 1 ? 0 : 0.5,
+                                            borderRightWidth: i < f9H[index].length - 1 ? 0 : 0.5,
                                             backgroundColor: this.scoreBackgroundColor(teesf9, item, holeIndex),
                                         }
                                         ]}
                                     >
-                                        <Text style={[styles.holeNumber]}>{holeIndex[index]}</Text>
+                                        <Text style={[styles.holeNumber]}>{holeIndex}</Text>
                                         <Text style={styles.advStrokes}>{item.strokes}</Text>
                                     </View>
                                 </View>
                             )}
                             <View style={styles.strokesTotalView}>
-                                <Text style={styles.strokesTotal}>{this.totalScore(index, 'f').subTotal}</Text>
-                                <Text style={styles.strokesTotalAdv}>{this.totalScore(index, 'f').total}</Text>
+                                <Text style={styles.strokesTotal}>{ScoreIn[index]}</Text>
+                                <Text style={styles.strokesTotalAdv}>{ScoreIn[index]}</Text>
                             </View>
                         </View>
                     </View>)
@@ -165,7 +176,7 @@ export default class ScoreVerticalComponent extends Component {
                             </View>
                     </View>
                     <View style={styles.holesView}>
-                        {teesb9.map((item,index) =>
+                        {teesb9[0].map((item,index) =>
                             <View key={item} style={styles.holeInfoView}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{index + 10}</Text>
                                 <Text
@@ -196,33 +207,33 @@ export default class ScoreVerticalComponent extends Component {
                                 <Text style={styles.hcpNumber}>{(item.handicap).toFixed(0)}</Text>
                             </View>
                         </View>
-                        {/*<View style={styles.holesView}>
-                            {b9H.map((holeIndex, i) =>
+                        <View style={styles.holesView}>
+                            {b9H[index].map((holeIndex, i) =>
                                 <View key={holeIndex}>
-                                    <Text style={styles.advText}>{item.holes[holeIndex].adv}</Text>
+                                    <Text style={styles.advText}>{b9HA[index][i]}</Text>
                                     <View style={[styles.strokesView,
                                     {
-                                        borderRightWidth: i < b9H.length - 1 ? 0 : 0.5,
-                                        backgroundColor: this.scoreBackgroundColor(tees, item, holeIndex),
+                                        borderRightWidth: i < b9H[index].length - 1 ? 0 : 0.5,
+                                        backgroundColor: this.scoreBackgroundColor(teesb9, item, holeIndex),
                                     }
                                     ]}>
-                                        <Text style={styles.holeNumber}>{item.holes[holeIndex].strokes}</Text>
-                                        {advStrokes.length === holeInfo.length && <Text style={styles.advStrokes}>{advStrokes[index][item.holes[holeIndex].adv - 1] ? advStrokes[index][item.holes[holeIndex].adv - 1] : ''}</Text>}
+                                        <Text style={styles.holeNumber}>{holeIndex}</Text>
+                                        <Text style={styles.advStrokes}>{item.strokes}</Text>
                                     </View>
                                 </View>
                             )}
                             <View style={styles.strokesTotalView}>
-                                <Text style={styles.strokesTotal}>{this.totalScore(index, 'b').subTotal}</Text>
-                                {advTotalStrokes.length === holeInfo.length && <Text style={styles.strokesTotalAdv}>{this.totalScore(index, 'b').total}</Text>}
+                                <Text style={styles.strokesTotal}>{ScoreOut[index]}</Text>
+                                <Text style={styles.strokesTotalAdv}>{ScoreOut[index]}</Text>
                             </View>
-                        </View>*/}
+                        </View>
                     </View>)
                 }
             </View>
         );
     }
 
-    totalScore = (index, type) => {
+    ScoreIn = (index, type) => {
         const { advStrokes } = this.props;
         const { holeInfo } = this.state;
         let subTotal = 0;
