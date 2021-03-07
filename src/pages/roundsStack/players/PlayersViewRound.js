@@ -35,12 +35,14 @@ import styles from './styles';
 import styles4 from './styles4';
 import { showMessage } from "react-native-flash-message";
 import DragonButton from '../../global/DragonButton';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function RoundsView(route) {
 
     const navigation = useNavigation();
     const [IDCourse, setIDCourse] = useState(route.route.params.IDCourse);
     const [IDRound, setIDRound] = useState(route.route.params.IDRound);
+    const [carga, setStatus] = useState(false);
     const [players, setPlayers] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
@@ -115,6 +117,7 @@ export default function RoundsView(route) {
           {
             text: continuar[language],
             onPress: () => {
+              setStatus(true)
               navigation.navigate('RoundsStack')
               navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
               AsyncStorage.setItem('IDRound', IDRound.toString());
@@ -290,11 +293,9 @@ export default function RoundsView(route) {
 
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar
-          backgroundColor="#FFFFFF"
-          barStyle="dark-content"
-          translucent={false}
-        />
+        <Spinner
+            visible={carga}
+            color={Colors.Primary} />
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
@@ -333,7 +334,7 @@ export default function RoundsView(route) {
           </View>
         </View>*/}
 
-      {search && <View>
+      {search && <View> 
       <SearchBar
         placeholder="Nombre"
         onChangeText={(text) => searchFilterFunction(text,1)}
