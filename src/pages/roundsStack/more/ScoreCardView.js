@@ -7,7 +7,7 @@ import Colors from '../../../utils/Colors';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoAmigosRonda } from '../../../Services/Services'
+import { ListadoAmigosRonda, ListadoTeesRonda } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 class ScoreCardView extends Component {
@@ -92,7 +92,7 @@ class ScoreCardView extends Component {
     //console.warn(IDRound)
     ListadoAmigosRonda(idUsu, IDRound)
         .then((res) => {
-          console.warn(res)
+          //console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -182,6 +182,44 @@ class ScoreCardView extends Component {
                       Ho_Advantage18: item.Ho_Advantage18,
                     }
                 ))
+
+                ListadoTeesRonda(IDRound)
+                  .then((res2) => {
+                    console.warn(res2)
+                      if(res2.estatus == 1){
+                        const list2 = res2.Result.map(item2 => (
+                        {
+                          id: item2.IDTees,
+                          Par_Hole1: item2.Par_Hole1,
+                          Par_Hole2: item2.Par_Hole2,
+                          Par_Hole3: item2.Par_Hole3,
+                          Par_Hole4: item2.Par_Hole4,
+                          Par_Hole5: item2.Par_Hole5,
+                          Par_Hole6: item2.Par_Hole6,
+                          Par_Hole7: item2.Par_Hole7,
+                          Par_Hole8: item2.Par_Hole8,
+                          Par_Hole9: item2.Par_Hole9,
+                          Par_Hole10: item2.Par_Hole10,
+                          Par_Hole11: item2.Par_Hole11,
+                          Par_Hole12: item2.Par_Hole12,
+                          Par_Hole13: item2.Par_Hole13,
+                          Par_Hole14: item2.Par_Hole14,
+                          Par_Hole15: item2.Par_Hole15,
+                          Par_Hole16: item2.Par_Hole16,
+                          Par_Hole17: item2.Par_Hole17,
+                          Par_Hole18: item2.Par_Hole18,
+                        }
+                    ))
+                        this.setState({
+                          tees:list2
+                        })
+                      }
+                      else{
+                        this.setState({
+                          tees:[]
+                        })
+                      }
+                  })
 
                 //this.llenaArreglo(list)
 

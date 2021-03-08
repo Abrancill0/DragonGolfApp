@@ -18,31 +18,12 @@ export default class SummaryComponent extends Component {
     }
 
     componentDidMount() {
-        if (this.props.playerProfit) {
-            const profits = this.props.playerProfit;
-            const { index } = this.props;
-            const totalProfit = profits[index].snBet + profits[index].tnBet + profits[index].medal;
-            this.setState({
-                totalProfit,
-                snProfit: profits[index].snBet,
-                tnProfit: profits[index].tnBet,
-                medalProfit: profits[index].medal
-            });
-        }
-    }
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.playerProfit !== this.props.playerProfit) {
-            const profits = nextProps.playerProfit;
-            const { index } = this.props;
-            const totalProfit = profits[index].snBet + profits[index].tnBet + profits[index].medal;
-            this.setState({
-                totalProfit,
-                snProfit: profits[index].snBet,
-                tnProfit: profits[index].tnBet,
-                medalProfit: profits[index].medal
-            });
-        }
+        this.setState({
+            totalProfit:100,
+            snProfit: 30,
+            tnProfit: 30,
+            medalProfit: 40
+        });
     }
 
     render() {
@@ -63,7 +44,7 @@ export default class SummaryComponent extends Component {
                     rippleColor={Colors.Primary}
                     onPress={_ => this.setState({collapsed: !collapsed})}
                 >
-                    <Text style={styles.profitNameText}>{item.nick_name}</Text>
+                    <Text style={styles.profitNameText}>{item.nickname}</Text>
                     <Text style={[styles.profitText, { color: totalProfit < 0 ? Colors.Primary : totalProfit > 0 ? 'green' : Colors.Black }]}>
                         ${totalProfit}
                     </Text>
