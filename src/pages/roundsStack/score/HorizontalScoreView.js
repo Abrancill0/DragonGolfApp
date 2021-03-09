@@ -176,10 +176,10 @@ class HorizontalScoreView extends Component {
                                             <View style={{ alignItems: 'center', height: 40, marginTop:20 }}>
                                                 <Text style={styles.holeTitle}></Text>
                                                 <Text style={[styles.holeNumber, { fontSize: 16 }]}>IN</Text>
+                                            </View>
                                                 <View style={{ width: '100%', paddingVertical: 10 }}>
                                                     {players.map((item, index) => 
-                                                    <View style={[styles.inputView, { height: 40 }]}>
-                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8}}>
+                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8, width: 40, height:34}}>
                                                             <TextInput
                                                                 editable={false}
                                                                 selectTextOnFocus={true}
@@ -191,18 +191,17 @@ class HorizontalScoreView extends Component {
                                                                 color='black'
                                                             />
                                                         </View>
-                                                    </View>)}
+                                                    )}
                                                 </View>
-                                            </View>
                                         </View>
                                 <View style={styles.horizontalHoleView}>
                                             <View style={{ alignItems: 'center', height: 40, marginTop:20 }}>
                                                 <Text style={styles.holeTitle}></Text>
                                                 <Text style={[styles.holeNumber, { fontSize: 16 }]}>OUT</Text>
+                                            </View>
                                                 <View style={{ width: '100%', paddingVertical: 10 }}>
                                                     {players.map((item, index) => 
-                                                    <View style={[styles.inputView, { height: 40 }]}>
-                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8}}>
+                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8, width: 40, height:34}}>
                                                             <TextInput
                                                                 editable={false}
                                                                 selectTextOnFocus={true}
@@ -213,19 +212,17 @@ class HorizontalScoreView extends Component {
                                                                 keyboardType='number-pad'
                                                                 color='black'
                                                             />
-                                                        </View>
-                                                    </View>)}
+                                                        </View>)}
                                                 </View>
-                                            </View>
                                 </View>
                                         <View style={styles.horizontalHoleView}>
                                             <View style={{ alignItems: 'center', height: 40, marginTop:20 }}>
                                                 <Text style={styles.holeTitle}></Text>
                                                 <Text style={[styles.holeNumber, { fontSize: 16 }]}>TOT</Text>
+                                            </View>
                                                 <View style={{ width: '100%', paddingVertical: 10 }}>
                                                     {players.map((item, index) => 
-                                                        <View style={[styles.inputView, { height: 40 }]}>
-                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8}}>
+                                                            <View style={{marginTop:20, borderRadius: 5,borderColor: Colors.Primary,borderWidth: 0.8, width: 40, height:34}}>
                                                                 <TextInput
                                                                     editable={false}
                                                                     selectTextOnFocus={true}
@@ -236,10 +233,8 @@ class HorizontalScoreView extends Component {
                                                                     keyboardType='number-pad'
                                                                     color='black'
                                                                 />
-                                                            </View>
-                                                    </View>)}
+                                                            </View>)}
                                                 </View>
-                                            </View>
                                         </View>
                             </ScrollView>
                         </View>
