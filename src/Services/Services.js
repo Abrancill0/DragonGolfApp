@@ -828,6 +828,25 @@ export const ListadoAmigosRondaData = (Player1, Player2, IDRound) => {
                 });
 };
 
+export const ListadoAmigosRondaTodos = (IDUsuario, IDRounds) => {
+    const URL = RutaBaseAB + "/ListadoAmigosRondaTodos";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario,
+                    IDRounds: IDRounds
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListadoTeesRonda = (IDRound) => {
     const URL = RutaBaseAB + "/ListadoTeesRonda";
     return fetch(URL, {

@@ -265,7 +265,7 @@ class PlayersScore extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View>
-          <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar(1)}>
+          <TouchableOpacity style={{margin:20, marginTop:0}} onPress={()=> this.guardar(1)}>
             <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
           </TouchableOpacity>
         </View>

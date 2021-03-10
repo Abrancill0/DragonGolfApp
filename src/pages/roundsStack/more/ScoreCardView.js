@@ -7,7 +7,7 @@ import Colors from '../../../utils/Colors';
 import ListEmptyComponent from '../../global/ListEmptyComponent';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoAmigosRonda, ListadoTeesRonda } from '../../../Services/Services'
+import { ListadoAmigosRondaTodos, ListadoTeesRonda } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 class ScoreCardView extends Component {
@@ -90,9 +90,9 @@ class ScoreCardView extends Component {
     })
     //console.warn(idUsu)
     //console.warn(IDRound)
-    ListadoAmigosRonda(idUsu, IDRound)
+    ListadoAmigosRondaTodos(idUsu, IDRound)
         .then((res) => {
-          //console.warn(res)
+          console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -144,24 +144,24 @@ class ScoreCardView extends Component {
                       16: item.ScoreHole16,
                       17: item.ScoreHole17,
                       18: item.ScoreHole18,
-                      ScoreHole1: item.ScoreHole1,
-                      ScoreHole2: item.ScoreHole2,
-                      ScoreHole3: item.ScoreHole3,
-                      ScoreHole4: item.ScoreHole4,
-                      ScoreHole5: item.ScoreHole5,
-                      ScoreHole6: item.ScoreHole6,
-                      ScoreHole7: item.ScoreHole7,
-                      ScoreHole8: item.ScoreHole8,
-                      ScoreHole9: item.ScoreHole9,
-                      ScoreHole10: item.ScoreHole10,
-                      ScoreHole11: item.ScoreHole11,
-                      ScoreHole12: item.ScoreHole12,
-                      ScoreHole13: item.ScoreHole13,
-                      ScoreHole14: item.ScoreHole14,
-                      ScoreHole15: item.ScoreHole15,
-                      ScoreHole16: item.ScoreHole16,
-                      ScoreHole17: item.ScoreHole17,
-                      ScoreHole18: item.ScoreHole18,
+                      GolpesVentaja1: item.GolpesVentaja1,
+                      GolpesVentaja2: item.GolpesVentaja2,
+                      GolpesVentaja3: item.GolpesVentaja3,
+                      GolpesVentaja4: item.GolpesVentaja4,
+                      GolpesVentaja5: item.GolpesVentaja5,
+                      GolpesVentaja6: item.GolpesVentaja6,
+                      GolpesVentaja7: item.GolpesVentaja7,
+                      GolpesVentaja8: item.GolpesVentaja8,
+                      GolpesVentaja9: item.GolpesVentaja9,
+                      GolpesVentaja10: item.GolpesVentaja10,
+                      GolpesVentaja11: item.GolpesVentaja11,
+                      GolpesVentaja12: item.GolpesVentaja12,
+                      GolpesVentaja13: item.GolpesVentaja13,
+                      GolpesVentaja14: item.GolpesVentaja14,
+                      GolpesVentaja15: item.GolpesVentaja15,
+                      GolpesVentaja16: item.GolpesVentaja16,
+                      GolpesVentaja17: item.GolpesVentaja17,
+                      GolpesVentaja18: item.GolpesVentaja18,
                       Ho_Advantage1: item.Ho_Advantage1,
                       Ho_Advantage2: item.Ho_Advantage2,
                       Ho_Advantage3: item.Ho_Advantage3,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, TouchableOpacity } from 'react-native';
 import { Dictionary } from '../../../utils/Dictionary';
 import HeaderButton from './HeaderButton';
 import ViewPager from '@react-native-community/viewpager';
@@ -10,6 +10,7 @@ import { ListadoAmigosRonda } from '../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Colors from '../../../utils/Colors';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 class ScoreView extends Component {
   constructor(props) {
@@ -240,6 +241,11 @@ class ScoreView extends Component {
       <Spinner
             visible={carga}
             color={Colors.Primary} />
+        <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.navigate("RoundsStack")}>
+              <MaterialIcon name={'home'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
         {isLandscape ?
           <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} /> :
           <ViewPager

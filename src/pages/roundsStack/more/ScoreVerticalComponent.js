@@ -17,6 +17,7 @@ export default class ScoreVerticalComponent extends Component {
         const newHoles = ChangeStartingHole(props.initHole, holes);
 
         console.warn(this.props.holeInfo)
+        console.warn('Tees')
         console.warn(this.props.tees)
 
         let f9H = []
@@ -27,6 +28,8 @@ export default class ScoreVerticalComponent extends Component {
         let teesb9 = []
         let ScoreIn = []
         let ScoreOut = []
+        let f9GV = []
+        let b9GV = []
 
         for (var i = 0 ; i <= this.props.holeInfo.length - 1; i++) {
             f9H.push([this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9]])
@@ -35,6 +38,8 @@ export default class ScoreVerticalComponent extends Component {
             ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
             ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
             b9HA.push([this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18']])
+            f9GV.push([this.props.holeInfo[i]['GolpesVentaja1'], this.props.holeInfo[i]['GolpesVentaja2'], this.props.holeInfo[i]['GolpesVentaja3'], this.props.holeInfo[i]['GolpesVentaja4'], this.props.holeInfo[i]['GolpesVentaja5'], this.props.holeInfo[i]['GolpesVentaja6'], this.props.holeInfo[i]['GolpesVentaja7'], this.props.holeInfo[i]['GolpesVentaja8'], this.props.holeInfo[i]['GolpesVentaja9']])
+            b9GV.push([this.props.holeInfo[i]['GolpesVentaja10'], this.props.holeInfo[i]['GolpesVentaja11'], this.props.holeInfo[i]['GolpesVentaja12'], this.props.holeInfo[i]['GolpesVentaja13'], this.props.holeInfo[i]['GolpesVentaja14'], this.props.holeInfo[i]['GolpesVentaja15'], this.props.holeInfo[i]['GolpesVentaja16'], this.props.holeInfo[i]['GolpesVentaja17'], this.props.holeInfo[i]['GolpesVentaja18']]   )
         }
 
          for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -56,6 +61,8 @@ export default class ScoreVerticalComponent extends Component {
             f9HA,
             b9H,
             b9HA,
+            f9GV,
+            b9GV,
             teesf9,
             teesb9,
             ScoreIn,
@@ -69,6 +76,8 @@ export default class ScoreVerticalComponent extends Component {
             language,
             f9H,
             f9HA,
+            f9GV,
+            b9GV,
             teesf9,
             teesb9,
             ScoreIn,
@@ -152,7 +161,7 @@ export default class ScoreVerticalComponent extends Component {
                                         ]}
                                     >
                                         <Text style={[styles.holeNumber]}>{holeIndex}</Text>
-                                        <Text style={styles.advStrokes}>{item.strokes}</Text>
+                                        <Text style={styles.advStrokes}>{f9GV[index][i]}</Text>
                                     </View>
                                 </View>
                             )}
@@ -224,7 +233,7 @@ export default class ScoreVerticalComponent extends Component {
                                     }
                                     ]}>
                                         <Text style={styles.holeNumber}>{holeIndex}</Text>
-                                        <Text style={styles.advStrokes}>{item.strokes}</Text>
+                                        <Text style={styles.advStrokes}>{b9GV[index][i]}</Text>
                                     </View>
                                 </View>
                             )}

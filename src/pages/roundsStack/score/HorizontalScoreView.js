@@ -133,15 +133,9 @@ class HorizontalScoreView extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View>
-                  <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar(1)}>
+                  <TouchableOpacity style={{margin:20, marginTop:0}} onPress={()=> this.guardar(1)}>
                     <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
                   </TouchableOpacity>
-                </View>
-                <View style={styles.holeHeaderView}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        {/*<Text style={styles.courseName}>{course.name}</Text>
-                        <Text style={styles.cityName}>{course.city}</Text>*/}
-                    </View>
                 </View>
                 <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 2 }}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
