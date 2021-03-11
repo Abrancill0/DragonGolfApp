@@ -19,10 +19,10 @@ export default class SummaryComponent extends Component {
 
     componentDidMount() {
         this.setState({
-            totalProfit:100,
-            snProfit: 30,
-            tnProfit: 30,
-            medalProfit: 40
+            totalProfit:this.props.item.MontoPerdidoGanado,
+            snProfit: this.props.item.MontoPerdidoGanado,
+            tnProfit: 0,
+            medalProfit: 0
         });
     }
 

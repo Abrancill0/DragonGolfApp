@@ -20,7 +20,7 @@ class ScoreCardView extends Component {
         }
 
         this.state = {
-            language: 'es',
+            language: 'en',
             horizontal,
             tees: [],
             totalScore: [],
@@ -65,13 +65,7 @@ class ScoreCardView extends Component {
         });
     }
 
-    static navigationOptions = ({ navigation }) => {
-        return {
-            title: `${navigation.getParam('Title', 'Score Card')}`,
-        }
-    }
-
-    componentDidMount() {
+    componentDidMount = async () => {
         this.ListadoTodos()
         //this.destructureHoles(this.props.holeInfo);
         //this.calculateAdvStrokes(this.props.holeInfo, this.props.hcpAdj);
@@ -108,6 +102,10 @@ class ScoreCardView extends Component {
                       strokes: item.usu_golpesventaja,
                       ScoreIn: item.ScoreIn,
                       ScoreOut: item.ScoreOut,
+                      ScoreInGP: item.ScoreInGP,
+                      ScoreOutGP: item.ScoreOutGP,
+                      TotalScore: item.TotalScore,
+                      TotalScoreGP: item.TotalScoreGP,
                       ho_par1: item.ho_par1,
                       ho_par2: item.ho_par2,
                       ho_par3: item.ho_par3,
@@ -190,6 +188,7 @@ class ScoreCardView extends Component {
                         const list2 = res2.Result.map(item2 => (
                         {
                           id: item2.IDTees,
+                          Te_TeeColor: item2.Te_TeeColor,
                           Par_Hole1: item2.Par_Hole1,
                           Par_Hole2: item2.Par_Hole2,
                           Par_Hole3: item2.Par_Hole3,

@@ -28,8 +28,11 @@ export default class ScoreVerticalComponent extends Component {
         let teesb9 = []
         let ScoreIn = []
         let ScoreOut = []
+        let ScoreInGP = []
+        let ScoreOutGP = []
         let f9GV = []
         let b9GV = []
+        let TeeColor = []
 
         for (var i = 0 ; i <= this.props.holeInfo.length - 1; i++) {
             f9H.push([this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9]])
@@ -37,6 +40,8 @@ export default class ScoreVerticalComponent extends Component {
             b9H.push([this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18]]   )
             ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
             ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
+            ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+            ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
             b9HA.push([this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18']])
             f9GV.push([this.props.holeInfo[i]['GolpesVentaja1'], this.props.holeInfo[i]['GolpesVentaja2'], this.props.holeInfo[i]['GolpesVentaja3'], this.props.holeInfo[i]['GolpesVentaja4'], this.props.holeInfo[i]['GolpesVentaja5'], this.props.holeInfo[i]['GolpesVentaja6'], this.props.holeInfo[i]['GolpesVentaja7'], this.props.holeInfo[i]['GolpesVentaja8'], this.props.holeInfo[i]['GolpesVentaja9']])
             b9GV.push([this.props.holeInfo[i]['GolpesVentaja10'], this.props.holeInfo[i]['GolpesVentaja11'], this.props.holeInfo[i]['GolpesVentaja12'], this.props.holeInfo[i]['GolpesVentaja13'], this.props.holeInfo[i]['GolpesVentaja14'], this.props.holeInfo[i]['GolpesVentaja15'], this.props.holeInfo[i]['GolpesVentaja16'], this.props.holeInfo[i]['GolpesVentaja17'], this.props.holeInfo[i]['GolpesVentaja18']]   )
@@ -45,6 +50,7 @@ export default class ScoreVerticalComponent extends Component {
          for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
             teesf9.push([this.props.tees[i]['Par_Hole1'], this.props.tees[i]['Par_Hole2'], this.props.tees[i]['Par_Hole3'], this.props.tees[i]['Par_Hole4'], this.props.tees[i]['Par_Hole5'], this.props.tees[i]['Par_Hole6'], this.props.tees[i]['Par_Hole7'], this.props.tees[i]['Par_Hole8'], this.props.tees[i]['Par_Hole9']])
             teesb9.push([this.props.tees[i]['Par_Hole10'], this.props.tees[i]['Par_Hole11'], this.props.tees[i]['Par_Hole12'], this.props.tees[i]['Par_Hole13'], this.props.tees[i]['Par_Hole14'], this.props.tees[i]['Par_Hole15'], this.props.tees[i]['Par_Hole16'], this.props.tees[i]['Par_Hole17'], this.props.tees[i]['Par_Hole18']])
+            TeeColor.push(this.props.tees[i]['Te_TeeColor'])
         }
 
         console.warn(f9H[0][0])
@@ -66,7 +72,10 @@ export default class ScoreVerticalComponent extends Component {
             teesf9,
             teesb9,
             ScoreIn,
-            ScoreOut
+            ScoreOut,
+            ScoreInGP,
+            ScoreOutGP,
+            TeeColor
         };
     }
 
@@ -82,6 +91,9 @@ export default class ScoreVerticalComponent extends Component {
             teesb9,
             ScoreIn,
             ScoreOut,
+            ScoreInGP,
+            ScoreOutGP,
+            TeeColor,
             b9H,
             b9HA
         } = this.state;
@@ -107,11 +119,11 @@ export default class ScoreVerticalComponent extends Component {
                         <View  style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={styles.parText}>PAR</Text>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <FontAwesome name='square' size={13} color={Colors.Black} />
+                                    <FontAwesome name='square' size={13} color={TeeColor[index]} />
                                     <FontAwesome
                                         name='square'
                                         size={12}
-                                        color={Colors.Black}
+                                        color={TeeColor[index]}
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
@@ -167,7 +179,7 @@ export default class ScoreVerticalComponent extends Component {
                             )}
                             <View style={styles.strokesTotalView}>
                                 <Text style={styles.strokesTotal}>{ScoreIn[index]}</Text>
-                                <Text style={styles.strokesTotalAdv}>{ScoreIn[index]}</Text>
+                                <Text style={styles.strokesTotalAdv}>{ScoreInGP[index]}</Text>
                             </View>
                         </View>
                     </View>)
@@ -180,11 +192,11 @@ export default class ScoreVerticalComponent extends Component {
                         <View  style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={styles.parText}>PAR</Text>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <FontAwesome name='square' size={13} color={Colors.Black} />
+                                    <FontAwesome name='square' size={13} color={TeeColor[index]} />
                                     <FontAwesome
                                         name='square'
                                         size={12}
-                                        color={Colors.Black}
+                                        color={TeeColor[index]}
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
@@ -239,7 +251,7 @@ export default class ScoreVerticalComponent extends Component {
                             )}
                             <View style={styles.strokesTotalView}>
                                 <Text style={styles.strokesTotal}>{ScoreOut[index]}</Text>
-                                <Text style={styles.strokesTotalAdv}>{ScoreOut[index]}</Text>
+                                <Text style={styles.strokesTotalAdv}>{ScoreOutGP[index]}</Text>
                             </View>
                         </View>
                     </View>)

@@ -5,6 +5,7 @@ import Colors from '../../../utils/Colors';
 import styles from './styles';
 import MoreOptionComponent from './MoreOptionComponent';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class MoreView extends Component {
   constructor(props) {
@@ -13,6 +14,14 @@ class MoreView extends Component {
       language: 'es'
     };
   }
+
+  componentDidMount = async () => {
+    let language = await AsyncStorage.getItem('language')
+
+    this.setState({
+        language:language
+    })
+    }
 
   render() {
 
