@@ -9,6 +9,7 @@ import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListadoAmigosRondaTodos, ListadoTeesRonda } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class ScoreCardView extends Component {
     constructor(props) {
@@ -26,7 +27,8 @@ class ScoreCardView extends Component {
             totalScore: [],
             advStrokes: [],
             advTotalStrokes: [],
-            holeInfo: []
+            holeInfo: [],
+            carga: true
         };
 
         let numMonth = '';
@@ -98,7 +100,7 @@ class ScoreCardView extends Component {
                       Te_TeeColor: item.Te_TeeColor,
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
-                      handicap: item.usu_handicapindex,
+                      handicap: item.handicapAuto,
                       strokes: item.usu_golpesventaja,
                       ScoreIn: item.ScoreIn,
                       ScoreOut: item.ScoreOut,
@@ -210,12 +212,14 @@ class ScoreCardView extends Component {
                         }
                     ))
                         this.setState({
-                          tees:list2
+                          tees:list2,
+                          carga: false
                         })
                       }
                       else{
                         this.setState({
-                          tees:[]
+                          tees:[],
+                          carga: false
                         })
                       }
                   })
@@ -223,8 +227,7 @@ class ScoreCardView extends Component {
                 //this.llenaArreglo(list)
 
                 this.setState({
-                  holeInfo:list,
-                  carga:false
+                  holeInfo:list
                 })
             }
             else{
@@ -252,7 +255,8 @@ class ScoreCardView extends Component {
             totalScore,
             advStrokes,
             advTotalStrokes,
-            holeInfo
+            holeInfo,
+            carga
         } = this.state;
 
         const {
@@ -263,6 +267,9 @@ class ScoreCardView extends Component {
         console.log('holeInfo: ', holeInfo);
         return (
             <View style={{ flex: 1 }}>
+              <Spinner
+                visible={carga}
+                color={Colors.Primary} />
               <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
                   <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
@@ -278,7 +285,7 @@ class ScoreCardView extends Component {
                   </TouchableOpacity>
                 </View>*/}
               </View>
-                {holeInfo.length > 0 ? <ScrollView style={{ width: '100%' }}>
+                {tees.length > 0 ? <ScrollView style={{ width: '100%' }}>
                     {horizontal ?
                         <ScoreHorizontalComponent
                             language={language}
