@@ -118,7 +118,8 @@ class HorizontalScoreView extends Component {
             holes,
             holes2,
             players,
-            playerHole
+            playerHole,
+            props
         } = this.props;
 
         const {
@@ -132,10 +133,17 @@ class HorizontalScoreView extends Component {
 
         return (
             <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flex:0.8, justifyContent: 'flex-start' }}>
+                        <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> props.navigation.navigate("RoundsStack")}>
+                          <MaterialIcon name={'home'} size={25} color={Colors.Primary} />
+                        </TouchableOpacity>
+                      </View>
                 <View>
-                  <TouchableOpacity style={{margin:20, marginTop:0}} onPress={()=> this.guardar(1)}>
+                  <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar(1)}>
                     <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
                   </TouchableOpacity>
+                </View>
                 </View>
                 <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 2 }}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>

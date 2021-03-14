@@ -82,6 +82,21 @@ class ConfigRoundView extends Component {
     this.refs.nombre.setValue(this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
     }
 
+    navegaBack (){
+      Alert.alert(
+              Dictionary.exitRound[this.state.language],
+              '',
+              [
+                { text: Dictionary.cancel[this.state.language], style: 'cancel' },
+                {
+                  text: Dictionary.exit[this.state.language], style: 'destructive', onPress: () => {
+                    this.props.navigation.goBack();
+                  }
+                },
+              ]
+            )
+    }
+
   render() {
 
     const {
@@ -110,7 +125,7 @@ class ConfigRoundView extends Component {
 
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-              <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+              <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.navegaBack()}>
                 <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
               </TouchableOpacity>
             </View>

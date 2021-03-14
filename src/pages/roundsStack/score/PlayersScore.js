@@ -252,7 +252,8 @@ class PlayersScore extends Component {
 
     const {
       item: hole,
-      players
+      players,
+      props
     } = this.props;
 
      const {
@@ -264,10 +265,17 @@ class PlayersScore extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <View>
+      <View style={{ flexDirection: 'row' }}>
+        <View style={{ flex:0.8, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> props.navigation.navigate("RoundsStack")}>
+              <MaterialIcon name={'home'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+        <View style={{ flex:0.2, justifyContent: 'flex-end' }}>
           <TouchableOpacity style={{margin:20, marginTop:0}} onPress={()=> this.guardar(1)}>
             <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
           </TouchableOpacity>
+        </View>
         </View>
         <FlatList
           ListHeaderComponent={<HoleHeader hole={hole} />}

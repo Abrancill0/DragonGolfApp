@@ -241,13 +241,13 @@ class ScoreView extends Component {
       <Spinner
             visible={carga}
             color={Colors.Primary} />
-        <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+        {/*<View style={{ flex:0.2, justifyContent: 'flex-start' }}>
             <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.navigate("RoundsStack")}>
               <MaterialIcon name={'home'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>
+          </View>*/}
         {isLandscape ?
-          <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} /> :
+          <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} props={this.props} /> :
           <ViewPager
             initialPage={0/*this.props.initHole - 1*/}
             ref={ref => this.pager = ref}
@@ -256,7 +256,7 @@ class ScoreView extends Component {
           >
             {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
-                <PlayersScore item={item.hole} players={players} playerHole={playerHole} />
+                <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} />
               </View>
             ))}
           </ViewPager>

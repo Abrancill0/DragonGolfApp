@@ -129,6 +129,7 @@ class AddTeeView extends Component {
                 ref={ref => this.teeNameIn = ref}
                 label={teeName[language]}
                 tintColor={Colors.Primary}
+                selectionColor={Colors.Secondary}
                 autoCapitalize="words"
                 onChangeText={(name) => this.setState({ name })}
                 value={name}
@@ -138,6 +139,7 @@ class AddTeeView extends Component {
                     this.slopeIn.focus();
                 }}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
 
@@ -147,6 +149,7 @@ class AddTeeView extends Component {
                   ref={ref => this.slopeIn = ref}
                   label="Slope"
                   tintColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   autoCapitalize="none"
                   maxLength={5}
                   keyboardType="numeric"
@@ -159,6 +162,7 @@ class AddTeeView extends Component {
                       this.ratingIn.focus();
                   }}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
               <View style={styles.twoInputContainer}>
@@ -166,6 +170,7 @@ class AddTeeView extends Component {
                   ref={ref => this.ratingIn = ref}
                   label="Rating"
                   tintColor={Colors.Primary}
+                  selectionColor={Colors.Secondary}
                   autoCapitalize="none"
                   maxLength={5}
                   keyboardType="numeric"
@@ -178,6 +183,7 @@ class AddTeeView extends Component {
                       this.ratingIn.blur();
                   }}
                   blurOnSubmit={false}
+                  selectTextOnFocus={true}
                 />
               </View>
             </View>
