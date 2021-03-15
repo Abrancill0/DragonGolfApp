@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Text, Image, Alert, Dimensions } from 'react-native';
+import { TouchableOpacity, View, Text, Image, Alert, Dimensions, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator,DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer'
@@ -86,6 +86,9 @@ const {
       home,
       profile,
       notifications,
+      players,
+      myCourses,
+      rondas,
       signOutAsk,
       signOut,
       cancel,
@@ -570,6 +573,7 @@ export default class App extends Component {
                 </View>
                 </TouchableOpacity>
               </View>
+              <ScrollView>
               <View>
               <TouchableOpacity  style={{width:'100%',flexDirection:'row',alignItems:'center'}}>
                   <View style={{flex:.1}}>
@@ -604,7 +608,41 @@ export default class App extends Component {
                   onPress={()=> props.navigation.navigate('NotificationsView')}/>
                 </View>
               </TouchableOpacity> 
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('PlayersView')}>
+                  <View style={{flex:.1}}>
+                    <FontAwesome5 name='user-friends' color='#0F222D' size={20}/>
+                  </View>
+                <View style={{flex:.9}}>
+                  <DrawerItem
+                  label={players[this.state.language]}
+                  labelStyle={{color:Colors.Primary}}
+                  onPress={()=> props.navigation.navigate('PlayersView')}/>
+                </View>
+              </TouchableOpacity> 
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('CoursesView')}>
+                  <View style={{flex:.1}}>
+                    <MaterialCommunityIcons name='golf' color='#0F222D' size={20}/>
+                  </View>
+                <View style={{flex:.9}}>
+                  <DrawerItem
+                  label={myCourses[this.state.language]}
+                  labelStyle={{color:Colors.Primary}}
+                  onPress={()=> props.navigation.navigate('CoursesView')}/>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('RoundsStack')}>
+                  <View style={{flex:.1}}>
+                    <FontAwesome5 name='golf-ball' color='#0F222D' size={20}/>
+                  </View>
+                <View style={{flex:.9}}>
+                  <DrawerItem
+                  label={rondas[this.state.language]}
+                  labelStyle={{color:Colors.Primary}}
+                  onPress={()=> props.navigation.navigate('RoundsStack')}/>
+                </View>
+              </TouchableOpacity> 
               </View>
+            </ScrollView>
           </View>
           <TouchableOpacity 
             activeOpacity={0.8}

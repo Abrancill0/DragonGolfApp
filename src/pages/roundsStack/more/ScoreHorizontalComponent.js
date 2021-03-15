@@ -183,7 +183,7 @@ export default class ScoreHorizontalComponent extends Component {
                                         }
                                         ]}
                                     >
-                                        <Text style={styles.holeNumber}>{holeIndex}</Text>
+                                        {holeIndex!=0 &&<Text style={styles.holeNumber}>{holeIndex}</Text>}
                                         <Text style={styles.advStrokes}>{f9GV[index][i]}</Text>
                                     </View>
                                 </View>
@@ -197,7 +197,7 @@ export default class ScoreHorizontalComponent extends Component {
                                         backgroundColor: this.scoreBackgroundColor(teesb9, item, holeIndex),
                                     }
                                     ]}>
-                                        <Text style={styles.holeNumber}>{holeIndex}</Text>
+                                        {holeIndex!=0 &&<Text style={styles.holeNumber}>{holeIndex}</Text>}
                                         <Text style={styles.advStrokes}>{b9GV[index][i]}</Text>
                                     </View>
                                 </View>

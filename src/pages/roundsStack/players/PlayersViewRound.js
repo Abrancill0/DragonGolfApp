@@ -267,6 +267,21 @@ export default function RoundsView(route) {
     setPlayers(newData)
   };
 
+  function navegaBack (){
+      Alert.alert(
+              Dictionary.exitRound[language],
+              '',
+              [
+                { text: Dictionary.cancel[language], style: 'cancel' },
+                {
+                  text: Dictionary.exit[language], style: 'destructive', onPress: () => {
+                    navigation.navigate('RoundsStack');
+                  }
+                },
+              ]
+            )
+    }
+
    function renderSeparator(){  
         return (  
             <View  
@@ -299,7 +314,7 @@ export default function RoundsView(route) {
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navegaBack()}>
               <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>

@@ -262,8 +262,8 @@ export default function RoundsView(route) {
             color={Colors.Primary} />
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.navigate("RoundsStack")}>
-              <MaterialIcon name={'home'} size={25} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
+              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>

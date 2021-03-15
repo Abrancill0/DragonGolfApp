@@ -90,7 +90,7 @@ class ConfigRoundView extends Component {
                 { text: Dictionary.cancel[this.state.language], style: 'cancel' },
                 {
                   text: Dictionary.exit[this.state.language], style: 'destructive', onPress: () => {
-                    this.props.navigation.goBack();
+                    this.props.navigation.navigate('RoundsStack');
                   }
                 },
               ]
