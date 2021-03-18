@@ -33,6 +33,8 @@ export default class ScoreVerticalComponent extends Component {
         let f9GV = []
         let b9GV = []
         let TeeColor = []
+        let teeParf9 = []
+        let teeParb9 = []
 
         for (var i = 0 ; i <= this.props.holeInfo.length - 1; i++) {
             f9H.push([this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9]])
@@ -45,6 +47,8 @@ export default class ScoreVerticalComponent extends Component {
             b9HA.push([this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18']])
             f9GV.push([this.props.holeInfo[i]['GolpesVentaja1'], this.props.holeInfo[i]['GolpesVentaja2'], this.props.holeInfo[i]['GolpesVentaja3'], this.props.holeInfo[i]['GolpesVentaja4'], this.props.holeInfo[i]['GolpesVentaja5'], this.props.holeInfo[i]['GolpesVentaja6'], this.props.holeInfo[i]['GolpesVentaja7'], this.props.holeInfo[i]['GolpesVentaja8'], this.props.holeInfo[i]['GolpesVentaja9']])
             b9GV.push([this.props.holeInfo[i]['GolpesVentaja10'], this.props.holeInfo[i]['GolpesVentaja11'], this.props.holeInfo[i]['GolpesVentaja12'], this.props.holeInfo[i]['GolpesVentaja13'], this.props.holeInfo[i]['GolpesVentaja14'], this.props.holeInfo[i]['GolpesVentaja15'], this.props.holeInfo[i]['GolpesVentaja16'], this.props.holeInfo[i]['GolpesVentaja17'], this.props.holeInfo[i]['GolpesVentaja18']]   )
+            teeParf9.push([this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9']])
+            teeParb9.push([this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18']]   )
         }
 
          for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -71,6 +75,8 @@ export default class ScoreVerticalComponent extends Component {
             b9GV,
             teesf9,
             teesb9,
+            teeParf9,
+            teeParb9,
             ScoreIn,
             ScoreOut,
             ScoreInGP,
@@ -95,7 +101,9 @@ export default class ScoreVerticalComponent extends Component {
             ScoreOutGP,
             TeeColor,
             b9H,
-            b9HA
+            b9HA,
+            teeParf9,
+            teeParb9
         } = this.state;
 
         const {
@@ -168,7 +176,7 @@ export default class ScoreVerticalComponent extends Component {
                                         style={[styles.strokesView,
                                         {
                                             borderRightWidth: i < f9H[index].length - 1 ? 0 : 0.5,
-                                            backgroundColor: this.scoreBackgroundColor(teesf9, item, holeIndex),
+                                            backgroundColor: this.scoreBackgroundColor(teeParf9, index, i, holeIndex),
                                         }
                                         ]}
                                     >
@@ -241,7 +249,7 @@ export default class ScoreVerticalComponent extends Component {
                                     <View style={[styles.strokesView,
                                     {
                                         borderRightWidth: i < b9H[index].length - 1 ? 0 : 0.5,
-                                        backgroundColor: this.scoreBackgroundColor(teesb9, item, holeIndex),
+                                        backgroundColor: this.scoreBackgroundColor(teeParb9, index, i, holeIndex),
                                     }
                                     ]}>
                                         {holeIndex!=0 &&<Text style={styles.holeNumber}>{holeIndex}</Text>}
@@ -290,14 +298,13 @@ export default class ScoreVerticalComponent extends Component {
         return { subTotal, total }
     }
 
-    scoreBackgroundColor = (tee, player, hole) => {
-       /*console.warn(tee)
-        console.warn(player)
-        console.warn(hole)*/
-        /*try {
-            const index = tee.findIndex(item => item.id === player.tee.id);
-            const par = tee[index].holes[hole].par;
-            const strokes = player.holes[hole].strokes;
+    scoreBackgroundColor = (tee, index, i, strokes) => {
+       console.warn(tee)
+        try {
+            //const index = tee.findIndex(item => item.id === player.tee.id);
+            const par = tee[index][i];
+            console.warn(par)
+            console.warn(strokes)
 
             if (strokes) {
                 if (strokes === par - 1) {
@@ -315,7 +322,7 @@ export default class ScoreVerticalComponent extends Component {
             }
         } catch (error) {
             console.log(error);
-        }*/
+        }
         return null;
     }
 }
