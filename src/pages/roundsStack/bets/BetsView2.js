@@ -8,11 +8,16 @@ import HeaderButton from '../../global/HeaderButton';
 import Collapsible from 'react-native-collapsible';
 import styles from './styles';
 import Colors from '../../../utils/Colors';
+import AsyncStorage from '@react-native-community/async-storage';
+import { ListaApuesta } from '../../../Services/Services'
 
 class BetsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      status: false,
+      language:'es',
+      rondas: [],
       render: true,
       collapsedSearch: true,
       query: '',
@@ -62,64 +67,45 @@ class BetsView extends Component {
       title = 'Pruebas'//props.course.short_name + ` ${month} ${day}`;
     }
 
-    /*props.navigation.setParams({
-      Title: title,
-    });*/
-
-    /*props.getSNBet(props.roundId);
-    props.getTNBet(props.roundId);
-    props.getMedalBet(props.roundId);*/
-
     this.snBetProfits = [];
     this.tnBetProfits = [];
   }
 
-  /*static navigationOptions = ({ navigation }) => {
-
-    return {
-      title: `${navigation.getParam('Title')}`,
-      headerLeft: (
-        <HeaderButton
-          iconName="md-list"
-          onPress={_ => navigation.navigate('SummaryView')}
-        />
-      ),
-      headerRight: (
-        <HeaderButton
-          iconName="ios-search"
-          onPress={navigation.getParam('showSeatchInput')}
-        />
-      )
-    }
-  };*/
 
   componentDidMount() {
-    /*this.props.navigation.setParams({
-      showSeatchInput: this.showSearchInput
-    });*/
+    this.ListadoRondas()
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {/*
-    if (nextProps.snBet !== this.props.snBet) {
-      this.snBetProfits = [];
-      nextProps.snBet.forEach(_ => this.snBetProfits.push(0));
-      this.props.snBetSummary(this.snBetProfits);
-      this.setState({ render: false });
-      setTimeout(_ => this.setState({ render: true }), 50);
-    }
-
-    if (nextProps.tnBet !== this.props.snBet) {
-      this.tnBetProfits = [];
-      nextProps.tnBet.forEach(item => this.tnBetProfits.push(0));
-      this.props.tnBetSummary(this.tnBetProfits);
-    }
-
-    if (nextProps.medalBet !== this.props.medalBet) {
-      this.medalBetProfits = [];
-      nextProps.medalBet.forEach(_ => this.medalBetProfits.push(0));
-      this.props.medalBetSummary(this.medalBetProfits);
-    }
-  */}
+  ListadoRondas = async (players) => {
+    let language = await AsyncStorage.getItem('language')
+    this.setState({
+        language:language,
+        status:true
+    })
+    ListaApuesta()
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDBet,
+                      nombre: item.Bet_Nombre,
+                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
+                    }
+                ))
+                this.setState({
+                  rondas:list.reverse(),
+                  status:false
+                })
+            }
+            else{
+              this.setState({
+                rondas:[],
+                status:false
+              })
+            }
+        })
+  }
 
   render() {
 
@@ -130,7 +116,8 @@ class BetsView extends Component {
       query,
       medalFilter,
       snFilter,
-      tnFilter
+      tnFilter,
+      rondas
     } = this.state;
 
     /*const {
@@ -237,7 +224,7 @@ class BetsView extends Component {
             </Collapsible>
             <FlatList
               keyboardShouldPersistTaps='handled'
-              data={bets}
+              data={rondas}
               keyExtractor={item => item.key}
               stickyHeaderIndices={[0, 2, 4, 6, 8, 10, 12]}
               renderItem={({ item, index }) => <BetsComponent

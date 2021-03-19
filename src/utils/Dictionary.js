@@ -684,8 +684,12 @@ export const Dictionary = {
         'es': 'Seleccione el Tee'
     },
     SelectTee3: {
-        'en': 'Are you sure to select this tee for this player?',
-        'es': '¿Está seguro de seleccionar este tee para este jugador?'
+        'en': 'The tee affects?',
+        'es': '¿El tee afecta a?'
+    },
+    mi: {
+        'en': 'me',
+        'es': 'mi'
     },
     wasAdded: {
         'en': 'was added to the round',

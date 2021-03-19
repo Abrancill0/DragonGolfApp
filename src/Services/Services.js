@@ -928,7 +928,7 @@ export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_Starting
                 });
 };
 
-export const AgregarTeesRonda = (IDRound, IDUsuario, PlayerId, IDTees) => {
+export const AgregarTeesRonda = (IDRound, IDUsuario, PlayerId, IDTees, estatus) => {
     const URL = RutaBaseAB + "/AgregarTeesRonda";
     return fetch(URL, {
                 method: "POST",
@@ -940,7 +940,8 @@ export const AgregarTeesRonda = (IDRound, IDUsuario, PlayerId, IDTees) => {
                     IDRounds: IDRound,
                     IDUsuario: IDUsuario,
                     PlayerId: PlayerId,
-                    IDTees: IDTees
+                    IDTees: IDTees,
+                    estatus: estatus
                 }),
             })
             .then((response) => response.json())

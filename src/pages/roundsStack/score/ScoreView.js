@@ -43,7 +43,12 @@ class ScoreView extends Component {
   }
 
   componentDidMount() {
-    this.ListadoTodos()
+    this.props.navigation.addListener('focus', () => {
+      this.setState({
+        carga:true
+      })
+      this.ListadoTodos()
+    });
     /*this.props.navigation.setParams({
       onPressRight: () => this.pager.setPage(1),
       onPressLeft: () => this.pager.setPage(17),

@@ -87,25 +87,7 @@ export default function RoundsView(route) {
     console.warn(idUsu)
     console.warn(PlayerID)
     console.warn(IDTees)
-    AgregarTeesRonda(IDRound,idUsu,PlayerID,IDTees)
-      .then((res) => {
-        console.warn(res)
-        if(res.estatus == 1){
-          showMessage({
-            message: successSaveTeeData[language],
-            type:'success',
-          });
-          navigation.goBack()
-          //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
-        }
-        else{
-          showMessage({
-            message: error[language],
-            type:'danger',
-          });
-       }
-    })
-    /*Alert.alert(
+    Alert.alert(
       "DragonGolf",
       SelectTee3[language],
       [
@@ -114,32 +96,54 @@ export default function RoundsView(route) {
           style: 'cancel',
         },
         {
-          text: continuar[language],
+          text: mi[language],
           onPress: () => {
-            AgregarTeesRonda(IDRound,idUsu,PlayerID,IDTees)
-            .then((res) => {
-              console.warn(res)
+            AgregarTeesRonda(IDRound,idUsu,PlayerID,IDTees,0)
+              .then((res) => {
+                console.warn(res)
                 if(res.estatus == 1){
-                    showMessage({
-                      message: successSaveTeeData[language],
-                      type:'success',
+                  showMessage({
+                    message: successSaveTeeData[language],
+                    type:'success',
                   });
-                    navigation.goBack()
+                  navigation.goBack()
                   //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
                 }
                 else{
                   showMessage({
-                      message: error[language],
-                      type:'danger',
+                    message: error[language],
+                    type:'danger',
                   });
-                  navig
+               }
+            })
+          },
+        },
+        {
+          text: all[language],
+          onPress: () => {
+            AgregarTeesRonda(IDRound,idUsu,PlayerID,IDTees,1)
+              .then((res) => {
+                console.warn(res)
+                if(res.estatus == 1){
+                  showMessage({
+                    message: successSaveTeeData[language],
+                    type:'success',
+                  });
+                  navigation.goBack()
+                  //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
                 }
+                else{
+                  showMessage({
+                    message: error[language],
+                    type:'danger',
+                  });
+               }
             })
           },
         },
       ],
-      { cancelable: false }
-    );*/
+      { cancelable: true }
+    );
   }
 
   function Elimina(idCourse,id){
@@ -174,6 +178,8 @@ export default function RoundsView(route) {
       teeColor: teeColorText,
       SelectTee2,
       SelectTee3,
+      mi,
+      all,
       cancel,
       continuar,
       successSaveTeeData,

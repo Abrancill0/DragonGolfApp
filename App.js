@@ -582,7 +582,7 @@ export default class App extends Component {
                 <View style={{flex:.9}}>
                   <DrawerItem
                   label={home[this.state.language]}
-                  onPress={() => props.navigation.closeDrawer()}
+                  onPress={() => props.navigation.navigate('SettingsView')}
                   labelStyle={{color:Colors.Primary}} />
                 </View>
               </TouchableOpacity> 
