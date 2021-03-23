@@ -32,6 +32,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
+import Collapsible from 'react-native-collapsible';
+import styles from './styles';
 
 export default function RoundsView(route) {
 
@@ -40,6 +42,8 @@ export default function RoundsView(route) {
     const [IDBet, setIDBet] = useState(route.route.params.IDBet);
     const [rounds, setRounds] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
+    let collapsedArray = [];
+    const [collapsed, setCollapsed] = useState([]);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
     const [value3, setValue3] = useState('');
@@ -48,18 +52,21 @@ export default function RoundsView(route) {
     const [search, setSearch] = useState(false);
     const [visible, setVisible] = useState(true);
     const [carga, setStatus] = useState(false);
+    const [carry, setcarry] = useState(false);
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
-        ListadoRondas();
+        ListadoRondas(1);
           });
 
         return unsubscribe;
       }, [rounds]);
     
 
-  async function ListadoRondas() {
-                setStatus(true)
+  async function ListadoRondas(tipo) {
+    if(tipo==1){
+      setStatus(true)
+    }
     let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
     console.warn(IDUsuario)
@@ -79,6 +86,8 @@ export default function RoundsView(route) {
                       BetD_AutoPress: item.BetD_AutoPress,
                       BetD_MontoF9: item.BetD_MontoF9,
                       BetD_MontoB9: item.BetD_MontoB9,
+                      BetD_MontoCalculoF9: item.BetD_MontoCalculoF9,
+                      BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
                       BetD_Medal: item.BetD_Medal,
                       BetD_Carry: item.BetD_Carry,
                       BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
@@ -103,10 +112,18 @@ export default function RoundsView(route) {
                       BetD_B9_7: item.BetD_B9_7,
                       BetD_B9_8: item.BetD_B9_8,
                       BetD_B9_9: item.BetD_B9_9,
-                      BetD_AdvStrokers: item.BetD_AdvStrokers
+                      f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
+                      b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
+                      BetD_AdvStrokers: item.BetD_AdvStrokers,
+                      collapsed: true
                     }
                 ))
                 setRounds(list.reverse())
+                for (var i = 0; i<=list.length - 1; i++) {
+                  console.warn(list[i].collapsed)
+                  collapsedArray.push(list[i].collapsed)
+                }
+                setCollapsed(collapsedArray)
                 setArrayholder(list)
                 setStatus(false)
             }
@@ -253,8 +270,11 @@ export default function RoundsView(route) {
           console.warn(IDBetDetail)
           console.warn(res)
         })
-        ListadoRondas()
-        navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail, index:index})
+        ListadoRondas(2)
+        console.warn(rounds[index].BetD_MontoCalculoF9)
+        collapsedArray[index]=(!collapsed[index])
+        setCollapsed(collapsedArray)
+        //navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail, index:index})
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());*/
@@ -409,7 +429,7 @@ export default function RoundsView(route) {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  ListadoRondas()
+                  ListadoRondas(1)
                   setValue1('')
                   setValue2('')
                   setValue3('')
@@ -442,6 +462,71 @@ export default function RoundsView(route) {
                             </View>*/}
                               </View>
                           </TouchableOpacity>
+                        <Collapsible collapsed={collapsed[index]}>
+                          <View style={{ flex: 1, margin:10 }}>
+                            <View style={styles.betGeneralInfoView}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={[styles.advInfo, { color: rounds[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds[index].BetD_AdvStrokers}] </Text>
+                                    <Text style={styles.vsInfo}> {rounds[index].Player1} vs {rounds[index].Player2}</Text>
+                                </View>
+                                <Text style={[styles.profitText, { color: rounds[index].BetD_MontoPerdidoGanado < 0 ? Colors.Primary : rounds[index].BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${rounds[index].BetD_MontoPerdidoGanado}</Text>
+                            </View>
+                            <View style={styles.betInfoView}>
+                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                    <Text style={{ marginRight: 10, color: rounds[index].BetD_MontoCalculoF9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoCalculoF9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>F9:</Text></Text>
+                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
+                                        {
+                                            rounds[index].f9Presses.map((item, index) => {
+                                                switch (item) {
+                                                    case null:
+                                                        return <Text key={'snf9' + index}>_</Text>;
+                                                    case '0':
+                                                        return <Text key={'snf9' + index}>-</Text>;
+                                                    default:
+                                                        return <Text key={'snf9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
+                                                }
+                                            })
+                                        }
+                                    </View>
+                                    <View style={{ width: 30 }} />
+                                </View>
+                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                    <Text style={{ marginRight: 10, color: rounds[index].BetD_MontoCalculoB9 < 0 ? 'red' : Colors.Black  }}>${rounds[index].BetD_MontoCalculoB9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>B9:</Text></Text>
+                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
+                                        {
+                                            rounds[index].b9Presses.map((item, index) => {
+                                                switch (item) {
+                                                    case null:
+                                                        return <Text key={'snb9' + index}>_</Text>;
+                                                    case '0':
+                                                        return <Text key={'snb9' + index}>-</Text>;
+                                                    default:
+                                                        return <Text key={'snb9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
+                                                }
+                                            })
+                                        }
+                                    </View>
+                                    <View style={{ width: 30, alignItems: 'flex-end' }}>
+                                        <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{rounds[index].BetD_AutoPress ? `${rounds[index].BetD_AutoPress}P` : ''}</Text>
+                                    </View>
+                                </View>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <Text style={{ textDecorationLine: carry ? 'line-through' : 'none', color: rounds[index].BetD_MachMonto < 0 ? 'red' : Colors.Black   }}>${rounds[index].BetD_MachMonto} <Text
+                                        style={{
+                                            textDecorationLine: carry ? 'line-through' : 'none',
+                                            fontWeight: 'bold',
+                                            color: rounds[index].BetD_Match && !carry < 0 ? Colors.Primary : Colors.Black
+                                        }}>
+                                        Match = {carry ? 0 : rounds[index].BetD_Match}
+                                    </Text></Text>
+                                    {carry && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
+                                    <Text style={{ fontWeight: 'bold', color: rounds[index].BetD_MontoApuestaMedal < 0 ? Colors.Primary : Colors.Black }}>${rounds[index].BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: rounds[index].BetD_Medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {rounds[index].BetD_Medal}</Text></Text>
+                                </View>
+                            </View>
+                            {/*<View style={[styles.bottomButtom,{flex:0.1, margin:10}]}>
+                              <DragonButton title={Dictionary.update[language]} onPress={()=> this.finalizar()} />
+                            </View>*/}
+                        </View>
                           {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
                             <FontAwesome name={'edit'} size={30} color={Colors.White} />
@@ -450,6 +535,7 @@ export default function RoundsView(route) {
                             <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
                           </TouchableOpacity>
                           </View>*/}
+                        </Collapsible>
                           </ScrollView>
                     </View>
               }
