@@ -193,6 +193,7 @@ export default class ScoreVerticalComponent extends Component {
                     </View>)
                 }
                 <View style={{ height: 15 }} />
+                {this.renderPressTable(f9H, pressesArray.front9, 'f9')}
                 {teesb9.map((item,index) =>
                 <View style={styles.holeHeader}>
                     <View style={styles.holeTextView}>
@@ -324,5 +325,53 @@ export default class ScoreVerticalComponent extends Component {
             console.log(error);
         }
         return null;
+    }
+
+    renderPressTable = (holes, pressesArray, type) => {
+
+        const {
+            advTotalStrokes,
+        } = this.props;
+
+        let totalStrokesMA = 0;
+        let totalStrokesMB = 0;
+        if (type === 'f9') {
+            if (advTotalStrokes[0].totalStrokesf9) totalStrokesMA = advTotalStrokes[0].totalStrokesf9;
+            if (advTotalStrokes[1].totalStrokesf9) totalStrokesMB = advTotalStrokes[1].totalStrokesf9;
+        } else {
+            if (advTotalStrokes[0].totalStrokesb9) totalStrokesMA = advTotalStrokes[0].totalStrokesb9;
+            if (advTotalStrokes[1].totalStrokesb9) totalStrokesMB = advTotalStrokes[1].totalStrokesb9;
+        }
+
+        const havePress = pressesArray[0].filter(press => press === null).length !== 9;
+
+        if (havePress)
+            return (
+                <View style={styles.scoreView}>
+                    <View style={[styles.holeTextView, { paddingRight: 5 }]}>
+                        {totalStrokesMA ?
+                            <Text>{totalStrokesMA}</Text>
+                            : totalStrokesMB ?
+                                <Text style={{ color: Colors.Primary }}>-{totalStrokesMB}</Text>
+                                : null
+                        }
+                    </View>
+                    <View style={styles.holesView}>
+                        {holes.map((hole, i) => <View key={i.toString()} style={[styles.advView, {
+                            borderRightWidth: i < holes.length - 1 ? 0 : 0.5,
+                        }]}>
+                            {pressesArray.map((press, j) => {
+                                if (press[i] !== null) {
+                                    const indexPress = press.indexOf(0);
+                                    if (indexPress === i && j > 0) return null;
+                                    return (<Text key={j.toString()} style={{ fontSize: 12, color: press[i] < 0 ? Colors.Primary : Colors.Black }}>{press[i] === 0 ? '=' : press[i]}</Text>);
+                                } else
+                                    return null;
+                            })}
+                        </View>)}
+                    </View>
+                </View>
+            );
+        else return null;
     }
 }
