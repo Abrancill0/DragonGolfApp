@@ -28,6 +28,7 @@ import ScoreView from './src/pages/roundsStack/score/ScoreView'
 import BetsView from './src/pages/roundsStack/bets/BetsView'
 import More from './src/pages/roundsStack/more/MoreView'
 import ScoreCardView from './src/pages/roundsStack/more/ScoreCardView'
+import SNScoreCardView from './src/pages/roundsStack/bets/SingleNassau/ScoreCardView'
 import SummaryView from './src/pages/roundsStack/bets/SummaryView'
 import BetsViewDetail from './src/pages/roundsStack/bets/BetsViewDetail'
 import SNBetListComponent from './src/pages/roundsStack/bets/SingleNassau/SNBetListComponent'
@@ -1022,6 +1023,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='SNBetListComponent' component={SNBetListComponent}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='SNScoreCardView' component={SNScoreCardView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

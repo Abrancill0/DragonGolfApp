@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { View, Dimensions, ScrollView } from 'react-native';
 import ScoreHorizontalComponent from './ScoreHorizontalComponent';
 import ScoreVerticalComponent from './ScoreVerticalComponent';
 import ListEmptyComponent from '../../../global/ListEmptyComponent';
 import { Dictionary } from '../../../../utils/Dictionary';
-import { NavigationEvents } from 'react-navigation';
-import CalculatePresses from '../../../../utils/CalculatePresses';
 
 class SNScoreCardView extends Component {
   constructor(props) {
@@ -90,15 +87,8 @@ class SNScoreCardView extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <NavigationEvents
-          onWillFocus={_ => {
-            this.destructureHoles(this.props.holeInfo);
-            this.calculateAdvStrokes();
-            this.calculatePresses(switchAdv);
-          }}
-        />
         {holeInfo.length > 0 ? <ScrollView style={{ width: '100%' }}>
-          {render && <>
+          {render && <View>
             {horizontal ?
               <ScoreHorizontalComponent
                 language={language}
@@ -126,7 +116,7 @@ class SNScoreCardView extends Component {
                 pressesArray={pressesArray}
               />
             }
-          </>}
+          </View>}
         </ScrollView> : <ListEmptyComponent
             text={Dictionary.emptyRoundPlayerList[language]}
             iconName="user-friends"
@@ -266,18 +256,5 @@ class SNScoreCardView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  language: state.reducerLanguage,
-  userData: state.reducerUserData,
-  course: state.reducerRoundCourse,
-  round: state.reducerRound,
-  holeInfo: state.reducerHole,
-  hcpAdj: state.reducerHcpAdj,
-  initHole: state.reducerInitHole,
-  switchAdv: state.reducerSwitchAdv
-});
 
-const mapDispatchToProps = dispatch => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SNScoreCardView);
+export default SNScoreCardView;

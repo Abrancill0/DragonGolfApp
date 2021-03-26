@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   RefreshControl,
   Text,
-  ScrollView
+  ScrollView,
+  ActionSheetIOS
 } from 'react-native';
+import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Dictionary } from '../../../utils/Dictionary';
@@ -29,7 +31,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
 import Collapsible from 'react-native-collapsible';
@@ -316,6 +318,95 @@ export default function RoundsView(route) {
     );
   }
 
+  function showSheetView(index){
+        const {
+            seeResults,
+            editBet,
+            addPress,
+            removePress,
+            removeBet,
+            cancel
+        } = Dictionary;
+
+        if (Platform.OS === 'ios') {
+            ActionSheetIOS.showActionSheetWithOptions(
+                {
+                    options: [
+                        seeResults[language],
+                        /*editBet[language],
+                        addPress[language],
+                        removePress[language],
+                        removeBet[language],*/
+                        cancel[language],
+                    ],
+                    destructiveButtonIndex: 4,
+                    cancelButtonIndex: 5,
+                },
+                (index2) => {
+                    if (index2 !== 5) doAction(index2);
+                },
+            );
+        } else {
+            const resultsIcon = <Icon name='counter' color={Colors.Primary} size={40} family={"MaterialCommunityIcons"} />;
+            const editIcon = <Icon name='edit' color={Colors.Primary} size={40} family={"Entypo"} />;
+            const addPressIcon = <Icon name='md-add-circle-outline' color={Colors.Primary} size={40} family={"Ionicons"} />;
+            const removePressIcon = <Icon name='md-remove-circle-outline' color={Colors.Primary} size={40} family={"Ionicons"} />;
+            const removeBetIcon = <Icon name='md-trash' color={Colors.Primary} size={40} family={"Ionicons"} />;
+
+            RNBottomActionSheet.SheetView.Show({
+                title: `${rounds[index].Player1} vs ${rounds[index].Player2}`,
+                items: [
+                    { title: seeResults[language], icon: resultsIcon },
+                    /*{ title: editBet[language], icon: editIcon },
+                    { title: addPress[language], icon: addPressIcon },
+                    { title: removePress[language], icon: removePressIcon },
+                    { title: removeBet[language], icon: removeBetIcon },*/
+                ],
+                onSelection: (index2) => {
+                    doAction(index2);
+                },
+            });
+        }
+    }
+
+    function doAction(index){
+      console.warn('Adios')
+        switch (index) {
+            case 0:
+                navigation.navigate('SNScoreCardView');
+                break;
+            case 1:
+                navigation.navigate('SNBetView');
+                break;
+            /*case 2:
+                item.manual_press = manualPress + 1;
+                this.props.updatePress(item);
+                this.calculatePresses(this.props.switchAdv, manualPress + 1);
+                this.setState({ manualPress: manualPress + 1 });
+                break;
+            case 3:
+                if (manualPress > 0) {
+                    item.manual_press = manualPress - 1;
+                    this.props.updatePress(item);
+                    this.calculatePresses(this.props.switchAdv, manualPress - 1);
+                    this.setState({ manualPress: manualPress - 1 });
+                }
+                break;
+            case 4:
+                Alert.alert(
+                    Dictionary.sureToDeleteBet[this.props.language],
+                    '',
+                    [
+                        { text: Dictionary.cancel[this.props.language], style: 'cancel' },
+                        { text: Dictionary.delete[this.props.language], onPress: _ => this.props.deleteSNBet({ id: item.id, round_id: this.props.roundId, type: 'single' }), style: 'destructive' }
+                    ]
+                )
+                break;*/
+            default:
+                Alert.alert('Error', Dictionary.noFeature[language]);
+        }
+    }
+
 
     const {
       round,
@@ -463,6 +554,10 @@ export default function RoundsView(route) {
                               </View>
                           </TouchableOpacity>
                         <Collapsible collapsed={collapsed[index]}>
+                        <Ripple
+                          rippleColor={Colors.Secondary}
+                          onPress={()=>showSheetView(index)}
+                        >
                           <View style={{ flex: 1, margin:10 }}>
                             <View style={styles.betGeneralInfoView}>
                                 <View style={{ flexDirection: 'row' }}>
@@ -535,6 +630,7 @@ export default function RoundsView(route) {
                             <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
                           </TouchableOpacity>
                           </View>*/}
+                      </Ripple>
                         </Collapsible>
                           </ScrollView>
                     </View>
