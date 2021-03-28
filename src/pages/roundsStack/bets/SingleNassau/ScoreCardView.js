@@ -7,7 +7,7 @@ import Colors from '../../../../utils/Colors';
 import ListEmptyComponent from '../../../global/ListEmptyComponent';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoAmigosRondaTodos, ListadoTeesRonda } from '../../../../Services/Services'
+import { ListadoAmigosRondaIndividual, ListadoTeesRondaBetDetails } from '../../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -21,6 +21,7 @@ class ScoreCardView extends Component {
         }
 
         this.state = {
+            id: props.route.params.Item.id,
             language: 'en',
             horizontal,
             tees: [],
@@ -84,11 +85,11 @@ class ScoreCardView extends Component {
     this.setState({
         language:language
     })
-    //console.warn(idUsu)
-    //console.warn(IDRound)
-    ListadoAmigosRondaTodos(idUsu, IDRound)
+    ////console.warn(idUsu)
+    ////console.warn(IDRound)
+    ListadoAmigosRondaIndividual(this.state.id)
         .then((res) => {
-          console.warn(res)
+          //console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -180,10 +181,28 @@ class ScoreCardView extends Component {
                       Ho_Advantage16: item.Ho_Advantage16,
                       Ho_Advantage17: item.Ho_Advantage17,
                       Ho_Advantage18: item.Ho_Advantage18,
+                      Hoyo1Presion: item.Hoyo1Presion,
+                      Hoyo2Presion: item.Hoyo2Presion,
+                      Hoyo3Presion: item.Hoyo3Presion,
+                      Hoyo4Presion: item.Hoyo4Presion,
+                      Hoyo5Presion: item.Hoyo5Presion,
+                      Hoyo6Presion: item.Hoyo6Presion,
+                      Hoyo7Presion: item.Hoyo7Presion,
+                      Hoyo8Presion: item.Hoyo8Presion,
+                      Hoyo9Presion: item.Hoyo9Presion,
+                      Hoyo10Presion: item.Hoyo10Presion,
+                      Hoyo11Presion: item.Hoyo11Presion,
+                      Hoyo12Presion: item.Hoyo12Presion,
+                      Hoyo13Presion: item.Hoyo13Presion,
+                      Hoyo14Presion: item.Hoyo14Presion,
+                      Hoyo15Presion: item.Hoyo15Presion,
+                      Hoyo16Presion: item.Hoyo16Presion,
+                      Hoyo17Presion: item.Hoyo17Presion,
+                      Hoyo18Presion: item.Hoyo18Presion,
                     }
                 ))
 
-                ListadoTeesRonda(IDRound)
+                ListadoTeesRondaBetDetails(this.state.id)
                   .then((res2) => {
                     console.warn(res2)
                       if(res2.estatus == 1){
@@ -264,7 +283,7 @@ class ScoreCardView extends Component {
             initHole,
             switchAdv
         } = this.props;
-        console.log('holeInfo: ', holeInfo);
+        //console.log('holeInfo: ', holeInfo);
         return (
             <View style={{ flex: 1 }}>
               <Spinner
@@ -361,7 +380,7 @@ class ScoreCardView extends Component {
             advStrokesArray.push(advStrokes);
             this.setState({advStrokes: advStrokesArray, advTotalStrokes});
         });
-        console.log('Adv Strokes Array: ', advStrokesArray);
+        //console.log('Adv Strokes Array: ', advStrokesArray);
     }
 }
 

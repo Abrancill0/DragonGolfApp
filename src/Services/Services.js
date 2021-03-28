@@ -847,6 +847,24 @@ export const ListadoAmigosRondaTodos = (IDUsuario, IDRounds) => {
                 });
 };
 
+export const ListadoAmigosRondaIndividual = (IDBetDetail) => {
+    const URL = RutaBaseAB + "/ListadoAmigosRondaIndividual";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDBetDetail: IDBetDetail
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListadoMontoPerdidoGanado = (IDRound) => {
     const URL = RutaBaseAB + "/ListadoMontoPerdidoGanado";
     return fetch(URL, {
@@ -875,6 +893,24 @@ export const ListadoTeesRonda = (IDRound) => {
                 },
                 body: JSON.stringify({
                     IDRound: IDRound
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const ListadoTeesRondaBetDetails = (IDBet_Detail) => {
+    const URL = RutaBaseAB + "/ListadoTeesRondaBetDetails";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDBet_Detail: IDBet_Detail
                 }),
             })
             .then((response) => response.json())

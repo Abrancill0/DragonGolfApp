@@ -33,6 +33,8 @@ export default class ScoreHorizontalComponent extends Component {
         let TeeColor = []
         let teeParf9 = []
         let teeParb9 = []
+        let Presionf9 = []
+        let Presionb9 = []
 
         for (var i = 0 ; i <= this.props.holeInfo.length - 1; i++) {
             f9H.push([this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9]])
@@ -47,6 +49,8 @@ export default class ScoreHorizontalComponent extends Component {
             b9GV.push([this.props.holeInfo[i]['GolpesVentaja10'], this.props.holeInfo[i]['GolpesVentaja11'], this.props.holeInfo[i]['GolpesVentaja12'], this.props.holeInfo[i]['GolpesVentaja13'], this.props.holeInfo[i]['GolpesVentaja14'], this.props.holeInfo[i]['GolpesVentaja15'], this.props.holeInfo[i]['GolpesVentaja16'], this.props.holeInfo[i]['GolpesVentaja17'], this.props.holeInfo[i]['GolpesVentaja18']]   )
             teeParf9.push([this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9']])
             teeParb9.push([this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18']]   )
+            Presionf9.push([this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion']])
+            Presionb9.push([this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion']]   )
         }
 
         for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -75,6 +79,8 @@ export default class ScoreHorizontalComponent extends Component {
             teesb9,
             teeParf9,
             teeParb9,
+            Presionf9,
+            Presionb9,
             TotalScore,
             ScoreOut,
             TotalScoreGP,
@@ -95,6 +101,8 @@ export default class ScoreHorizontalComponent extends Component {
             teesb9,
             teeParf9,
             teeParb9,
+            Presionf9,
+            Presionb9,
             TotalScore,
             ScoreOut,
             TotalScoreGP,
@@ -217,8 +225,61 @@ export default class ScoreHorizontalComponent extends Component {
                         </View>
                     </View>)
                 }
+                <View style={{ height: 15 }} />
+                {this.renderPressTable(f9H[0], Presionf9, Presionb9, 'f9')}
             </View>
         );
+    }
+
+    renderPressTable = (holes, pressesArray, pressesArray2, type) => {
+        console.warn('entró')
+        console.warn(holes)
+        console.warn(pressesArray)
+
+        let totalStrokesMA = 0;
+        let totalStrokesMB = 0;
+        /*if (type === 'f9') {
+            if (advTotalStrokes[0].totalStrokesf9) totalStrokesMA = advTotalStrokes[0].totalStrokesf9;
+            if (advTotalStrokes[1].totalStrokesf9) totalStrokesMB = advTotalStrokes[1].totalStrokesf9;
+        } else {
+            if (advTotalStrokes[0].totalStrokesb9) totalStrokesMA = advTotalStrokes[0].totalStrokesb9;
+            if (advTotalStrokes[1].totalStrokesb9) totalStrokesMB = advTotalStrokes[1].totalStrokesb9;
+        }*/
+
+        //const havePress = pressesArray[0].filter(press => press === null).length !== 9;
+
+        if (pressesArray.length>0)
+            return (
+                <View style={styles.scoreView}>
+                    <View style={styles.holesView}>
+                        {holes.map((hole, i) => <View key={i.toString()} style={[styles.advView, {
+                            borderRightWidth: i < holes.length - 1 ? 0 : 0.5,
+                        }]}>
+                            {pressesArray.map((press, j) => {
+                                if (press[i] !== null && j==0) {
+                                    //const indexPress[i] = press[i].indexOf(0);
+                                    //if (indexPress[i] === i && j > 0) return null;
+                                    return (<Text key={j.toString()} style={{ fontSize: 12, color: press[i] < 0 ? Colors.Primary : Colors.Black }}>{press[i] === 0 ? '=' : press[i]}</Text>);
+                                } else
+                                    return null;
+                            })}
+                        </View>)}
+                        {holes.map((hole, i) => <View key={i.toString()} style={[styles.advView, {
+                            borderRightWidth: i < holes.length - 1 ? 0 : 0.5,
+                        }]}>
+                            {pressesArray2.map((press, j) => {
+                                if (press[i] !== null && j==0) {
+                                    //const indexPress[i] = press[i].indexOf(0);
+                                    //if (indexPress[i] === i && j > 0) return null;
+                                    return (<Text key={j.toString()} style={{ fontSize: 12, color: press[i] < 0 ? Colors.Primary : Colors.Black }}>{press[i] === 0 ? '=' : press[i]}</Text>);
+                                } else
+                                    return null;
+                            })}
+                        </View>)}
+                    </View>
+                </View>
+            );
+        else return null;
     }
 
     totalScore = (index) => {

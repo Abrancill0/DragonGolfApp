@@ -318,7 +318,8 @@ export default function RoundsView(route) {
     );
   }
 
-  function showSheetView(index){
+  function showSheetView(item){
+    console.warn(item.id)
         const {
             seeResults,
             editBet,
@@ -343,7 +344,7 @@ export default function RoundsView(route) {
                     cancelButtonIndex: 5,
                 },
                 (index2) => {
-                    if (index2 !== 5) doAction(index2);
+                    if (index2 !== 5) doAction(index2, item);
                 },
             );
         } else {
@@ -354,7 +355,7 @@ export default function RoundsView(route) {
             const removeBetIcon = <Icon name='md-trash' color={Colors.Primary} size={40} family={"Ionicons"} />;
 
             RNBottomActionSheet.SheetView.Show({
-                title: `${rounds[index].Player1} vs ${rounds[index].Player2}`,
+                title: `${item.Player1} vs ${item.Player2}`,
                 items: [
                     { title: seeResults[language], icon: resultsIcon },
                     /*{ title: editBet[language], icon: editIcon },
@@ -363,20 +364,20 @@ export default function RoundsView(route) {
                     { title: removeBet[language], icon: removeBetIcon },*/
                 ],
                 onSelection: (index2) => {
-                    doAction(index2);
+                    doAction(index2, item);
                 },
             });
         }
     }
 
-    function doAction(index){
-      console.warn('Adios')
+    function doAction(index, item){
+      console.warn(item)
         switch (index) {
             case 0:
-                navigation.navigate('SNScoreCardView');
+                navigation.navigate('SNScoreCardView',{Item:item});
                 break;
             case 1:
-                navigation.navigate('SNBetView');
+                navigation.navigate('SNBetView',{Item:item});
                 break;
             /*case 2:
                 item.manual_press = manualPress + 1;
@@ -556,7 +557,7 @@ export default function RoundsView(route) {
                         <Collapsible collapsed={collapsed[index]}>
                         <Ripple
                           rippleColor={Colors.Secondary}
-                          onPress={()=>showSheetView(index)}
+                          onPress={()=>showSheetView(item)}
                         >
                           <View style={{ flex: 1, margin:10 }}>
                             <View style={styles.betGeneralInfoView}>
