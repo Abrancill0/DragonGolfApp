@@ -256,10 +256,15 @@ export default class ScoreHorizontalComponent extends Component {
                             borderRightWidth: i < holes.length - 1 ? 0 : 0.5,
                         }]}>
                             {pressesArray.map((press, j) => {
+                                let array = []
                                 if (press[i] !== null && j==0) {
+                                    let arrayPress = press[i].split(',')
+                                    for (var k = 0; k <= arrayPress.length - 1; k++) {
+                                        array.push(<Text key={j.toString()} style={{ fontSize: 12, color: arrayPress[k] < 0 ? Colors.Primary : Colors.Black }}>{arrayPress[k] === 0 ? '=' : arrayPress[k]}</Text>)
+                                    }
                                     //const indexPress[i] = press[i].indexOf(0);
                                     //if (indexPress[i] === i && j > 0) return null;
-                                    return (<Text key={j.toString()} style={{ fontSize: 12, color: press[i] < 0 ? Colors.Primary : Colors.Black }}>{press[i] === 0 ? '=' : press[i]}</Text>);
+                                    return (array);
                                 } else
                                     return null;
                             })}
@@ -268,10 +273,15 @@ export default class ScoreHorizontalComponent extends Component {
                             borderRightWidth: i < holes.length - 1 ? 0 : 0.5,
                         }]}>
                             {pressesArray2.map((press, j) => {
+                                let array = []
                                 if (press[i] !== null && j==0) {
+                                    let arrayPress = press[i].split(',')
+                                    for (var k = 0; k <= arrayPress.length - 1; k++) {
+                                        array.push(<Text key={j.toString()} style={{ fontSize: 12, color: arrayPress[k] < 0 ? Colors.Primary : Colors.Black }}>{arrayPress[k] === 0 ? '=' : arrayPress[k]}</Text>)
+                                    }
                                     //const indexPress[i] = press[i].indexOf(0);
                                     //if (indexPress[i] === i && j > 0) return null;
-                                    return (<Text key={j.toString()} style={{ fontSize: 12, color: press[i] < 0 ? Colors.Primary : Colors.Black }}>{press[i] === 0 ? '=' : press[i]}</Text>);
+                                    return (array);
                                 } else
                                     return null;
                             })}
