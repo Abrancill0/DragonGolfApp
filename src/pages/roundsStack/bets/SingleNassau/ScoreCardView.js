@@ -89,7 +89,7 @@ class ScoreCardView extends Component {
     ////console.warn(IDRound)
     ListadoAmigosRondaIndividual(this.state.id)
         .then((res) => {
-          //console.warn(res)
+          console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -145,24 +145,24 @@ class ScoreCardView extends Component {
                       16: item.ScoreHole16,
                       17: item.ScoreHole17,
                       18: item.ScoreHole18,
-                      GolpesVentaja1: item.GolpesVentaja1,
-                      GolpesVentaja2: item.GolpesVentaja2,
-                      GolpesVentaja3: item.GolpesVentaja3,
-                      GolpesVentaja4: item.GolpesVentaja4,
-                      GolpesVentaja5: item.GolpesVentaja5,
-                      GolpesVentaja6: item.GolpesVentaja6,
-                      GolpesVentaja7: item.GolpesVentaja7,
-                      GolpesVentaja8: item.GolpesVentaja8,
-                      GolpesVentaja9: item.GolpesVentaja9,
-                      GolpesVentaja10: item.GolpesVentaja10,
-                      GolpesVentaja11: item.GolpesVentaja11,
-                      GolpesVentaja12: item.GolpesVentaja12,
-                      GolpesVentaja13: item.GolpesVentaja13,
-                      GolpesVentaja14: item.GolpesVentaja14,
-                      GolpesVentaja15: item.GolpesVentaja15,
-                      GolpesVentaja16: item.GolpesVentaja16,
-                      GolpesVentaja17: item.GolpesVentaja17,
-                      GolpesVentaja18: item.GolpesVentaja18,
+                      GolpesVentaja1_tee: item.GolpesVentaja1_tee,
+                      GolpesVentaja2_tee: item.GolpesVentaja2_tee,
+                      GolpesVentaja3_tee: item.GolpesVentaja3_tee,
+                      GolpesVentaja4_tee: item.GolpesVentaja4_tee,
+                      GolpesVentaja5_tee: item.GolpesVentaja5_tee,
+                      GolpesVentaja6_tee: item.GolpesVentaja6_tee,
+                      GolpesVentaja7_tee: item.GolpesVentaja7_tee,
+                      GolpesVentaja8_tee: item.GolpesVentaja8_tee,
+                      GolpesVentaja9_tee: item.GolpesVentaja9_tee,
+                      GolpesVentaja10_tee: item.GolpesVentaja10_tee,
+                      GolpesVentaja11_tee: item.GolpesVentaja11_tee,
+                      GolpesVentaja12_tee: item.GolpesVentaja12_tee,
+                      GolpesVentaja13_tee: item.GolpesVentaja13_tee,
+                      GolpesVentaja14_tee: item.GolpesVentaja14_tee,
+                      GolpesVentaja15_tee: item.GolpesVentaja15_tee,
+                      GolpesVentaja16_tee: item.GolpesVentaja16_tee,
+                      GolpesVentaja17_tee: item.GolpesVentaja17_tee,
+                      GolpesVentaja18_tee: item.GolpesVentaja18_tee,
                       Ho_Advantage1: item.Ho_Advantage1,
                       Ho_Advantage2: item.Ho_Advantage2,
                       Ho_Advantage3: item.Ho_Advantage3,

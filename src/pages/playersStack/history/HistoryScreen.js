@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, FlatList } from 'react-native';
-import { connect } from 'react-redux';
-import store from '../../../store/store';
 import { Dictionary } from '../../../utils/Dictionary';
 import styles from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../../utils/Colors';
-import { actionGetBible } from '../../../store/actions';
 import HistoryComponent from './HistoryComponent';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class HistoryScreen extends Component {
     constructor(props) {
@@ -17,43 +15,20 @@ class HistoryScreen extends Component {
             landscape: Dimensions.get('window').width > Dimensions.get('window').height,
             topToBottomDate: true,
             topToBottomPlayer: null,
-            topToBottomCourse: null
+            topToBottomCourse: null,
+            language: 'es'
         };
 
-        props.getBible();
-
-        this.playerId = props.navigation.getParam('playerId');
-        if (this.playerId) {
+        let playerId = props.route.params.playerId
+        let playernickname = props.route.params.playernickname
+        props.navigation.setParams({ Title: playernickname });
+        /*if (this.playerId) {
             const idx = props.history.findIndex(item => item.player_id === this.playerId);
             if (idx >= 0) props.navigation.setParams({ Title: props.history[idx].nick_name });
-        }
+        }*/
 
-        this.total = 0;
+        this.total = 10;
     }
-
-    static navigationOptions = ({ navigation }) => {
-        const state = store.getState();
-        const language = state.reducerLanguage;
-        const money = navigation.getParam('total', null);
-        const title = navigation.getParam('Title', Dictionary.history[language]);
-        return {
-            title: title,
-            headerRight: (
-                <View style={{ paddingHorizontal: 10 }}>
-                    {money && <Text
-                        style={[styles.rowText,
-                        {
-                            fontSize: 14,
-                            color: money < 0 ? 'red' : money > 0 ? 'green' : Colors.Black
-                        }
-                        ]}
-                    >
-                        ${money}
-                    </Text>}
-                </View>
-            )
-        }
-    };
 
     componentDidMount() {
         Dimensions.addEventListener('change', ({ window: { height, width } }) => {
@@ -64,17 +39,12 @@ class HistoryScreen extends Component {
     render() {
 
         const {
+            language,
             landscape,
             topToBottomDate,
             topToBottomPlayer,
             topToBottomCourse
         } = this.state;
-
-        const {
-            language,
-            history,
-            navigation
-        } = this.props;
 
         const {
             date,
@@ -84,11 +54,25 @@ class HistoryScreen extends Component {
             nextHcp,
             debt,
             notes,
-            player
+            player,
+            history
         } = Dictionary;
 
         return (
             <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+                    <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+                      <MaterialIcons name={'arrow-back'} size={25} color={Colors.Primary} />
+                    </TouchableOpacity>
+                  </View> 
+                  <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
+                  <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{history[language]}</Text>
+                  </View>
+                  <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+                    <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color: this.total < 0 ? Colors.Primary : this.total === 0 ? Colors.Black: Colors.Secondary ,fontWeight:'bold'}}>${this.total}</Text>
+                  </View>
+                </View>
                 <View style={styles.headersView}>
                     <TouchableOpacity style={styles.headers} onPress={this.sortDate}>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -120,16 +104,16 @@ class HistoryScreen extends Component {
                     <View style={styles.headers}>
                         <Text style={styles.headerText}>$</Text>
                     </View>
-                    {landscape && <>
+                    {landscape && <View>
                         <View style={styles.headers}>
                             <Text style={styles.headerText}>{debt[language]}</Text>
                         </View>
                         <View style={styles.headers}>
                             <Text style={styles.headerText}>{notes[language]}</Text>
                         </View>
-                    </>}
+                    </View>}
                 </View>
-                <FlatList
+                {/*<FlatList
                     data={history}
                     style={{ flex: 1, marginTop: 2 }}
                     extraData={history}
@@ -143,7 +127,7 @@ class HistoryScreen extends Component {
                             calculateTotal={this.calculateTotal}
                         />
                     }
-                />
+                />*/}
             </View>
         )
     }
@@ -184,15 +168,5 @@ class HistoryScreen extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    language: state.reducerLanguage,
-    history: state.reducerBible
-})
 
-const mapDispatchToProps = dispatch => ({
-    getBible: () => {
-        dispatch(actionGetBible());
-    }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(HistoryScreen)
+export default HistoryScreen

@@ -343,7 +343,7 @@ class PlayerInfoView extends Component {
                 </View>
               </View>
               <View style={{ flex: 1, height: '100%', alignItems: 'flex-end' }}>
-                {item.id !== 1 && <TouchableOpacity /*onPress={_ => navigation.navigate('HistoryScreen', { playerId: item.id })}*/>
+                {item.id !== 1 && <TouchableOpacity onPress={_ => this.props.navigation.navigate('HistoryScreen', { playerId: item.id, playernickname: item.nickname })}>
                   <MaterialIcons name='history' size={25} color={Colors.Black} />
                 </TouchableOpacity>}
               </View>
@@ -392,7 +392,7 @@ class PlayerInfoView extends Component {
                 </View>
               </View>
               <View style={{ flex: 1, height: '100%', alignItems: 'flex-end' }}>
-                {item.id !== 1 && <TouchableOpacity /*onPress={_ => navigation.navigate('HistoryScreen', { playerId: item.id })}*/>
+                {item.id !== 1 && <TouchableOpacity onPress={_ => this.props.navigation.navigate('HistoryScreen', { playerId: item.id, playernickname: item.nickname })}>
                   <MaterialIcons name='history' size={25} color={Colors.Black} />
                 </TouchableOpacity>}
               </View>

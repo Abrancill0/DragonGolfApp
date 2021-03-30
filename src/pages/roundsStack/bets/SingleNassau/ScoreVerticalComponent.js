@@ -47,8 +47,8 @@ export default class ScoreVerticalComponent extends Component {
             ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
             ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
             b9HA.push([this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18']])
-            f9GV.push([this.props.holeInfo[i]['GolpesVentaja1'], this.props.holeInfo[i]['GolpesVentaja2'], this.props.holeInfo[i]['GolpesVentaja3'], this.props.holeInfo[i]['GolpesVentaja4'], this.props.holeInfo[i]['GolpesVentaja5'], this.props.holeInfo[i]['GolpesVentaja6'], this.props.holeInfo[i]['GolpesVentaja7'], this.props.holeInfo[i]['GolpesVentaja8'], this.props.holeInfo[i]['GolpesVentaja9']])
-            b9GV.push([this.props.holeInfo[i]['GolpesVentaja10'], this.props.holeInfo[i]['GolpesVentaja11'], this.props.holeInfo[i]['GolpesVentaja12'], this.props.holeInfo[i]['GolpesVentaja13'], this.props.holeInfo[i]['GolpesVentaja14'], this.props.holeInfo[i]['GolpesVentaja15'], this.props.holeInfo[i]['GolpesVentaja16'], this.props.holeInfo[i]['GolpesVentaja17'], this.props.holeInfo[i]['GolpesVentaja18']]   )
+            f9GV.push([this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee']])
+            b9GV.push([this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee']]   )
             teeParf9.push([this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9']])
             teeParb9.push([this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18']]   )
             Presionf9.push([this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion']])
@@ -357,14 +357,14 @@ export default class ScoreVerticalComponent extends Component {
         if (pressesArray.length>0)
             return (
                 <View style={styles.scoreView}>
-                    {/*<View style={[styles.holeTextView, { paddingRight: 5 }]}>
+                    <View style={[styles.holeTextView, { paddingRight: 5 }]}>
                         {totalStrokesMA ?
                             <Text>{totalStrokesMA}</Text>
                             : totalStrokesMB ?
                                 <Text style={{ color: Colors.Primary }}>-{totalStrokesMB}</Text>
                                 : null
                         }
-                    </View>*/}
+                    </View>
                     <View style={styles.holesView}>
                         {holes.map((hole, i) => <View key={i.toString()} style={[styles.advView, {
                             borderRightWidth: i < holes.length - 1 ? 0 : 0.5,
@@ -374,7 +374,7 @@ export default class ScoreVerticalComponent extends Component {
                                 if (press[i] !== null && j==0) {
                                     let arrayPress = press[i].split(',')
                                     for (var k = 0; k <= arrayPress.length - 1; k++) {
-                                        array.push(<Text key={j.toString()} style={{ fontSize: 12, color: arrayPress[k] < 0 ? Colors.Primary : Colors.Black }}>{arrayPress[k] === 0 ? '=' : arrayPress[k]}</Text>)
+                                        array.push(<Text key={j.toString()} style={{ fontSize: 12, color: arrayPress[k] < 0 ? Colors.Primary : Colors.Black }}>{arrayPress[k].replace(' ','') === '0' ? '=' : arrayPress[k]}</Text>)
                                     }
                                     //const indexPress[i] = press[i].indexOf(0);
                                     //if (indexPress[i] === i && j > 0) return null;

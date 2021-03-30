@@ -25,7 +25,7 @@ export default class HistoryComponent extends Component {
         } = this.props;
 
         return (
-            <>
+            <View>
                 {
                     playerId ? item.player_id === playerId ?
                         <View style={styles.rowView}>
@@ -50,16 +50,16 @@ export default class HistoryComponent extends Component {
                             <View style={styles.headers}>
                                 <Text style={[styles.rowText, { color: item.money < 0 ? 'red' : item.money > 0 ? 'green' : Colors.Black }]}>{item.money}</Text>
                             </View>
-                            {landscape && <>
+                            {landscape && <View>
                                 <TouchableOpacity style={styles.headers} onPress={_ => navigation.navigate('DebtsComponent', { playerId: item.player_id, bible: item })}>
                                     <Text numberOfLines={2} ellipsizeMode='tail' style={styles.rowText}>{item.debts}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.headers} onPress={_ => navigation.navigate('NoteComponent', { playerId: item.player_id, bible: item })}>
                                     <Text numberOfLines={2} ellipsizeMode='tail' style={styles.rowText}>{item.notes}</Text>
                                 </TouchableOpacity>
-                            </>}
+                            </View>}
                         </View>
-                        : <></> :
+                        : <View></View> :
                         <View style={styles.rowView}>
                             <View style={styles.headers}>
                                 <Text style={styles.rowText}>{item.date}</Text>
@@ -82,17 +82,17 @@ export default class HistoryComponent extends Component {
                             <View style={styles.headers}>
                                 <Text style={styles.rowText}>{item.money}</Text>
                             </View>
-                            {landscape && <>
+                            {landscape && <View>
                                 <TouchableOpacity style={styles.headers} onPress={_ => navigation.navigate('DebtComponent', { playerId: item.player_id, bible: item })}>
                                     <Text numberOfLines={2} ellipsizeMode='tail' style={styles.rowText}>{item.debts}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.headers} onPress={_ => navigation.navigate('NoteComponent', { playerId: item.player_id, bible: item })}>
                                     <Text numberOfLines={2} ellipsizeMode='tail' style={styles.rowText}>{item.notes}</Text>
                                 </TouchableOpacity>
-                            </>}
+                            </View>}
                         </View>
                 }
-            </>
+            </View>
         );
     }
 }

@@ -41,6 +41,7 @@ import TeeDataViewRound from './src/pages/roundsStack/players/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
 import AddPlayer from './src/pages/playersStack/addPlayer/AddPlayerView'
 import PlayerInfo from './src/pages/playersStack/playerInfo/PlayerInfoView'
+import HistoryScreen from './src/pages/playersStack/history/HistoryScreen'
 import AddTee from './src/pages/coursesStack/addTee/AddTeeView'
 import EditTee from './src/pages/coursesStack/addTee/EditTeeView'
 import AddHole from './src/pages/coursesStack/teeData/AddHoleView'
@@ -903,6 +904,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='PlayerInfo' component={PlayerInfo}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='HistoryScreen' component={HistoryScreen}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
