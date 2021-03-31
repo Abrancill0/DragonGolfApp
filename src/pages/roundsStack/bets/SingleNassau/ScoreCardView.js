@@ -101,7 +101,7 @@ class ScoreCardView extends Component {
                       Te_TeeColor: item.Te_TeeColor,
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
-                      handicap: item.handicapAuto,
+                      handicap: -1*(item.SumaGolpesVentaja),
                       strokes: item.usu_golpesventaja,
                       ScoreIn: item.ScoreIn,
                       ScoreOut: item.ScoreOut,
@@ -199,6 +199,7 @@ class ScoreCardView extends Component {
                       Hoyo16Presion: item.Hoyo16Presion,
                       Hoyo17Presion: item.Hoyo17Presion,
                       Hoyo18Presion: item.Hoyo18Presion,
+                      ventaja: item.ventaja
                     }
                 ))
 

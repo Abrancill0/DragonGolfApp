@@ -92,6 +92,7 @@ export default function RoundsView(route) {
                       BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
                       BetD_Medal: item.BetD_Medal,
                       BetD_Carry: item.BetD_Carry,
+                      BetD_CarryCalculado: item.BetD_CarryCalculado,
                       BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
                       BetD_Match: item.BetD_Match,
                       BetD_MachMonto: item.BetD_MachMonto,
@@ -607,15 +608,15 @@ export default function RoundsView(route) {
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={{ textDecorationLine: carry ? 'line-through' : 'none', color: rounds[index].BetD_MachMonto < 0 ? 'red' : Colors.Black   }}>${rounds[index].BetD_MachMonto} <Text
+                                    <Text style={{ textDecorationLine: rounds[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none', color: rounds[index].BetD_MachMonto < 0 ? 'red' : Colors.Black   }}>${rounds[index].BetD_MachMonto} <Text
                                         style={{
-                                            textDecorationLine: carry ? 'line-through' : 'none',
+                                            textDecorationLine: rounds[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none',
                                             fontWeight: 'bold',
-                                            color: rounds[index].BetD_Match && !carry < 0 ? Colors.Primary : Colors.Black
+                                            color: rounds[index].BetD_Match && rounds[index].BetD_CarryCalculado !=0 ? Colors.Primary : Colors.Black
                                         }}>
-                                        Match = {carry ? 0 : rounds[index].BetD_Match}
+                                        Match = {rounds[index].BetD_CarryCalculado !=0 ? 0 : rounds[index].BetD_Match}
                                     </Text></Text>
-                                    {carry && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
+                                    {rounds[index].BetD_CarryCalculado !=0 && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
                                     <Text style={{ fontWeight: 'bold', color: rounds[index].BetD_MontoApuestaMedal < 0 ? Colors.Primary : Colors.Black }}>${rounds[index].BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: rounds[index].BetD_Medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {rounds[index].BetD_Medal}</Text></Text>
                                 </View>
                             </View>
