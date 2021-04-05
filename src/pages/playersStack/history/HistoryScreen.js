@@ -27,7 +27,7 @@ class HistoryScreen extends Component {
             if (idx >= 0) props.navigation.setParams({ Title: props.history[idx].nick_name });
         }*/
 
-        this.total = 10;
+        this.total = 0;
     }
 
     componentDidMount() {

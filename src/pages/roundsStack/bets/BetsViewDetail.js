@@ -117,14 +117,12 @@ export default function RoundsView(route) {
                       BetD_B9_9: item.BetD_B9_9,
                       f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
                       b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
-                      BetD_AdvStrokers: item.BetD_AdvStrokers,
-                      collapsed: true
+                      BetD_AdvStrokers: item.BetD_AdvStrokers
                     }
                 ))
                 setRounds(list.reverse())
                 for (var i = 0; i<=list.length - 1; i++) {
-                  console.warn(list[i].collapsed)
-                  collapsedArray.push(list[i].collapsed)
+                  collapsedArray.push(true)
                 }
                 setCollapsed(collapsedArray)
                 setArrayholder(list)
@@ -269,9 +267,9 @@ export default function RoundsView(route) {
     CalcularApuesta(IDRound, IDBet, IDBetDetail)
         .then((res) => {
           console.warn(index)
-          console.warn(IDBet)
+          /*console.warn(IDBet)
           console.warn(IDBetDetail)
-          console.warn(res)
+          console.warn(res)*/
         })
         ListadoRondas(2)
         console.warn(rounds[index].BetD_MontoCalculoF9)

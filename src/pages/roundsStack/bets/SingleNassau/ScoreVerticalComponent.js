@@ -173,7 +173,7 @@ export default class ScoreVerticalComponent extends Component {
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
-                                <Text style={styles.hcpNumber}>{(item.handicap).toFixed(0)}</Text>
+                                {item.handicap>0&&<Text style={styles.hcpNumber}>{(item.handicap).toFixed(0)}</Text>}
                             </View>
                         </View>
                         <View style={styles.holesView}>
@@ -248,7 +248,7 @@ export default class ScoreVerticalComponent extends Component {
                                         style={{ position: 'absolute' }}
                                     />
                                 </View>
-                                <Text style={styles.hcpNumber}>{(item.handicap).toFixed(0)}</Text>
+                                {item.handicap>0&&<Text style={styles.hcpNumber}>{(item.handicap).toFixed(0)}</Text>}
                             </View>
                         </View>
                         <View style={styles.holesView}>

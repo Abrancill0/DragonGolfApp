@@ -30,41 +30,6 @@ class ScoreCardView extends Component {
             holeInfo: [],
             carga: true
         };
-
-        let numMonth = '';
-        let day = '';
-        let title = '';
-        if (props.round) {
-            title = props.round.name;
-        } else {
-            numMonth = moment().format('M');
-            day = moment().format('DD');
-
-            let month = '';
-            switch (numMonth) {
-                case '1':
-                    month = Dictionary.january[language];
-                    break;
-                case '4':
-                    month = Dictionary.april[language];
-                    break;
-                case '8':
-                    month = Dictionary.august[language];
-                    break;
-                case '12':
-                    month = Dictionary.december[language];
-                    break;
-                default:
-                    month = moment().format('MMM');
-                    break;
-            }
-
-            title = 'props.course.short_name + ` ${month} ${day}`';
-        }
-
-        props.navigation.setParams({
-            Title: title,
-        });
     }
 
     componentDidMount = async () => {
