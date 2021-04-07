@@ -573,10 +573,10 @@ export default function RoundsView(route) {
                                         {
                                             rounds[index].f9Presses.map((item, index) => {
                                                 switch (item) {
-                                                    case null:
+                                                    case '':
                                                         return <Text key={'snf9' + index}>_</Text>;
                                                     case '0':
-                                                        return <Text key={'snf9' + index}>-</Text>;
+                                                        return <Text key={'snf9' + index}>=</Text>;
                                                     default:
                                                         return <Text key={'snf9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
                                                 }
@@ -591,10 +591,10 @@ export default function RoundsView(route) {
                                         {
                                             rounds[index].b9Presses.map((item, index) => {
                                                 switch (item) {
-                                                    case null:
+                                                    case '':
                                                         return <Text key={'snb9' + index}>_</Text>;
                                                     case '0':
-                                                        return <Text key={'snb9' + index}>-</Text>;
+                                                        return <Text key={'snb9' + index}>=</Text>;
                                                     default:
                                                         return <Text key={'snb9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
                                                 }
