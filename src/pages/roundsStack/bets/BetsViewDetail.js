@@ -26,7 +26,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoDetalleApuesta, CalcularApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuesta, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -65,8 +65,8 @@ export default function RoundsView(route) {
       }, [rounds]);
     
 
-  async function ListadoRondas(tipo) {
-    if(tipo==1){
+  async function ListadoRondas(tipo, index) {
+    if(tipo!=3){
       setStatus(true)
     }
     let language = await AsyncStorage.getItem('language')
@@ -120,13 +120,28 @@ export default function RoundsView(route) {
                       BetD_AdvStrokers: item.BetD_AdvStrokers
                     }
                 ))
-                setRounds(list.reverse())
-                for (var i = 0; i<=list.length - 1; i++) {
-                  collapsedArray.push(true)
+                if(tipo==2){
+                  console.warn(rounds[index].BetD_MontoCalculoF9)
+                  for (var i = 0; i<=list.length - 1; i++) {
+                    if(index==i){
+                      collapsedArray[index]=(!collapsed[index])
+                    }
+                    else{
+                      collapsedArray[i]=true
+                    }
+                  }
+                  setCollapsed(collapsedArray)
+                  setStatus(false)
                 }
-                setCollapsed(collapsedArray)
-                setArrayholder(list)
-                setStatus(false)
+                else{
+                  setRounds(list.reverse())
+                  for (var i = 0; i<=list.length - 1; i++) {
+                    collapsedArray.push(true)
+                  }
+                  setCollapsed(collapsedArray)
+                  setArrayholder(list)
+                  setStatus(false)
+                }
             }
             else{
               setRounds([])
@@ -267,14 +282,11 @@ export default function RoundsView(route) {
     CalcularApuesta(IDRound, IDBet, IDBetDetail)
         .then((res) => {
           console.warn(index)
+          ListadoRondas(2,index)
           /*console.warn(IDBet)
           console.warn(IDBetDetail)
           console.warn(res)*/
         })
-        ListadoRondas(2)
-        console.warn(rounds[index].BetD_MontoCalculoF9)
-        collapsedArray[index]=(!collapsed[index])
-        setCollapsed(collapsedArray)
         //navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail, index:index})
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
@@ -289,32 +301,15 @@ export default function RoundsView(route) {
   }
 
 
-  async function Elimina(id, tipo){
-    console.warn(tipo)
-    let idUsu = await AsyncStorage.getItem('usu_id')
-    Alert.alert(
-      "DragonGolf",
-      "¿Está seguro de eliminar este campo?",
-      [
-        {
-          text: "Cancelar",
-          style: 'cancel',
-        },
-        {
-          text: "Continuar",
-          onPress: () => {
-            EliminarCampo(id, tipo, idUsu)
-              .then((res) => {
-                console.warn(res)
-                  if(res.estatus == 1){
-                    ListadoRounds()
-                  }
-              })
-          },
-        },
-      ],
-      { cancelable: false }
-    );
+  async function Elimina(id){
+    console.warn(id)
+    EliminarApuesta(id)
+      .then((res) => {
+        console.warn(res)
+        if(res.estatus == 1){
+          ListadoRondas(3)
+        }
+      })
   }
 
   function showSheetView(item){
@@ -333,6 +328,7 @@ export default function RoundsView(route) {
                 {
                     options: [
                         seeResults[language],
+                        removeBet[language],
                         /*editBet[language],
                         addPress[language],
                         removePress[language],
@@ -357,6 +353,7 @@ export default function RoundsView(route) {
                 title: `${item.Player1} vs ${item.Player2}`,
                 items: [
                     { title: seeResults[language], icon: resultsIcon },
+                    { title: removeBet[language], icon: removeBetIcon }
                     /*{ title: editBet[language], icon: editIcon },
                     { title: addPress[language], icon: addPressIcon },
                     { title: removePress[language], icon: removePressIcon },
@@ -376,7 +373,14 @@ export default function RoundsView(route) {
                 navigation.navigate('SNScoreCardView',{Item:item});
                 break;
             case 1:
-                navigation.navigate('SNBetView',{Item:item});
+                Alert.alert(
+                    Dictionary.sureToDeleteBet[language],
+                    '',
+                    [
+                        { text: Dictionary.cancel[language], style: 'cancel' },
+                        { text: Dictionary.delete[language], onPress: _ => Elimina(item.id), style: 'destructive' }
+                    ]
+                )
                 break;
             /*case 2:
                 item.manual_press = manualPress + 1;
@@ -572,7 +576,7 @@ export default function RoundsView(route) {
                                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                         {
                                             rounds[index].f9Presses.map((item, index) => {
-                                                switch (item) {
+                                                switch (item.replace(' ','')) {
                                                     case '':
                                                         return <Text key={'snf9' + index}>_</Text>;
                                                     case '0':
@@ -590,7 +594,7 @@ export default function RoundsView(route) {
                                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                         {
                                             rounds[index].b9Presses.map((item, index) => {
-                                                switch (item) {
+                                                switch (item.replace(' ','')) {
                                                     case '':
                                                         return <Text key={'snb9' + index}>_</Text>;
                                                     case '0':

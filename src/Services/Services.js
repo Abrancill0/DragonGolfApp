@@ -1254,6 +1254,24 @@ export const CalcularApuesta = (IDRonda, IDBet, IDBetDetail) => {
                 });
 };
 
+export const EliminarApuesta = (IDBetDetail) => {
+    const URL = RutaBaseAB + "/EliminarApuesta";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDBetDetail: IDBetDetail
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaHole = (IDTees) => {
     const URL = RutaBaseAB + "/ListaHole";
     return fetch(URL, {
