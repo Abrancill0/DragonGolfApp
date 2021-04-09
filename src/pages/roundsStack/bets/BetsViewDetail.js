@@ -121,6 +121,7 @@ export default function RoundsView(route) {
                     }
                 ))
                 if(tipo==2){
+                  setRounds(list.reverse())
                   console.warn(rounds[index].BetD_MontoCalculoF9)
                   for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
@@ -132,6 +133,19 @@ export default function RoundsView(route) {
                   }
                   setCollapsed(collapsedArray)
                   setStatus(false)
+                }
+                else if(tipo == 3){
+                  for (var i = 0; i<=list.length - 1; i++) {
+                    if(index==i){
+                      collapsedArray[index]=true
+                    }
+                    else{
+                      collapsedArray[i]=true
+                    }
+                  }
+                  setCollapsed(collapsedArray)
+                  setStatus(false)
+                  setRounds(list.reverse())
                 }
                 else{
                   setRounds(list.reverse())
@@ -301,18 +315,18 @@ export default function RoundsView(route) {
   }
 
 
-  async function Elimina(id){
+  async function Elimina(id, index){
     console.warn(id)
     EliminarApuesta(id)
       .then((res) => {
         console.warn(res)
         if(res.estatus == 1){
-          ListadoRondas(3)
+          ListadoRondas(3, index)
         }
       })
   }
 
-  function showSheetView(item){
+  function showSheetView(item,index){
     console.warn(item.id)
         const {
             seeResults,
@@ -339,7 +353,7 @@ export default function RoundsView(route) {
                     cancelButtonIndex: 5,
                 },
                 (index2) => {
-                    if (index2 !== 5) doAction(index2, item);
+                    if (index2 !== 5) doAction(index,index2, item);
                 },
             );
         } else {
@@ -360,15 +374,15 @@ export default function RoundsView(route) {
                     { title: removeBet[language], icon: removeBetIcon },*/
                 ],
                 onSelection: (index2) => {
-                    doAction(index2, item);
+                    doAction(index,index2, item);
                 },
             });
         }
     }
 
-    function doAction(index, item){
+    function doAction(index, index2, item){
       console.warn(item)
-        switch (index) {
+        switch (index2) {
             case 0:
                 navigation.navigate('SNScoreCardView',{Item:item});
                 break;
@@ -378,7 +392,7 @@ export default function RoundsView(route) {
                     '',
                     [
                         { text: Dictionary.cancel[language], style: 'cancel' },
-                        { text: Dictionary.delete[language], onPress: _ => Elimina(item.id), style: 'destructive' }
+                        { text: Dictionary.delete[language], onPress: _ => Elimina(item.id,index), style: 'destructive' }
                     ]
                 )
                 break;
@@ -560,7 +574,7 @@ export default function RoundsView(route) {
                         <Collapsible collapsed={collapsed[index]}>
                         <Ripple
                           rippleColor={Colors.Secondary}
-                          onPress={()=>showSheetView(item)}
+                          onPress={()=>showSheetView(item, index)}
                         >
                           <View style={{ flex: 1, margin:10 }}>
                             <View style={styles.betGeneralInfoView}>

@@ -1255,7 +1255,7 @@ export const CalcularApuesta = (IDRonda, IDBet, IDBetDetail) => {
 };
 
 export const EliminarApuesta = (IDBetDetail) => {
-    const URL = RutaBaseAB + "/EliminarApuesta";
+    const URL = RutaBaseAB + "/EliminaApuesta";
     return fetch(URL, {
                 method: "POST",
                 headers: {
