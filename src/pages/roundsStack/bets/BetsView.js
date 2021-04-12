@@ -212,7 +212,12 @@ export default function RoundsView(route) {
 
   async function muestraRonda(IDBet){
     let IDRound = await AsyncStorage.getItem('IDRound')
-    navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+    if(IDBet == 2){
+      navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+    }
+    else{
+      navigation.navigate("BetsViewDetailTN",{IDBet:IDBet, IDRound:IDRound})
+    }
     /*
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());*/

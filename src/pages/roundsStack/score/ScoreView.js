@@ -95,7 +95,7 @@ class ScoreView extends Component {
     //console.warn(IDRound)
     ListadoAmigosRonda(idUsu, IDRound)
         .then((res) => {
-          //console.warn(res)
+          console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {

@@ -490,6 +490,84 @@ class SNBetView extends Component {
           }
         })
       }
+      if (type === 'C'){
+      this.setState({ playerC: player });
+      ListadoAmigosRondaData(this.state.playerA,player, this.state.IDRound)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+            let useFactor = false
+            if(res.Result[0].set_snw_use_factor == 1 ){
+              useFactor = true
+            }
+              else{
+              useFactor = false
+              }
+              console.warn(useFactor)
+            this.setState({
+              useFactor : useFactor,
+              front9 : res.Result[0].set_snw_front_9.toString(),
+              back9 : res.Result[0].set_snw_back_9.toString(),
+              match : res.Result[0].set_snw_match.toString(),
+              carry : res.Result[0].set_snw_carry.toString(),
+              medal : res.Result[0].set_snw_medal.toString(),
+              autoPress : res.Result[0].set_snw_automatic_press.toString(),
+              advStrokes : res.Result[0].set_golpesventaja.toString()
+            })
+          }
+          else{
+            this.setState({
+              useFactor : false,
+              front9 : 0,
+              back9 : 0,
+              match : 0,
+              carry : 0,
+              medal : 0,
+              autoPress : 0,
+              advStrokes : 0
+            })
+          }
+        })
+      }
+      if (type === 'D'){
+      this.setState({ playerD: player });
+      ListadoAmigosRondaData(this.state.playerA,player, this.state.IDRound)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+            let useFactor = false
+            if(res.Result[0].set_snw_use_factor == 1 ){
+              useFactor = true
+            }
+              else{
+              useFactor = false
+              }
+              console.warn(useFactor)
+            this.setState({
+              useFactor : useFactor,
+              front9 : res.Result[0].set_snw_front_9.toString(),
+              back9 : res.Result[0].set_snw_back_9.toString(),
+              match : res.Result[0].set_snw_match.toString(),
+              carry : res.Result[0].set_snw_carry.toString(),
+              medal : res.Result[0].set_snw_medal.toString(),
+              autoPress : res.Result[0].set_snw_automatic_press.toString(),
+              advStrokes : res.Result[0].set_golpesventaja.toString()
+            })
+          }
+          else{
+            this.setState({
+              useFactor : false,
+              front9 : 0,
+              back9 : 0,
+              match : 0,
+              carry : 0,
+              medal : 0,
+              autoPress : 0,
+              advStrokes : 0
+            })
+          }
+        })
+      }
     //this.calculateAdvStrokes(player, type);
     //this.changeBetsValues(player, type);
   }
