@@ -54,7 +54,7 @@ class TNBetView extends Component {
       carry = 0//tipoCalculo ? (cantidad * parseFloat(snwData.carry)).toString() : snwData.carry;
       match = 0//tipoCalculo ? (cantidad * parseFloat(snwData.match)).toString() : snwData.match;
       medal = 0//tipoCalculo ? (cantidad * parseFloat(snwData.medal)).toString() : snwData.medal;
-      const whoGetsString = 0;//Data.who_gets_the_adv_strokes;
+      const whoGetsString = 'hihcp';//Data.who_gets_the_adv_strokes;
       whoGetsAdv = whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
       playerA = 0//props.players[0].id;
       playerB = 0//props.players[0].id;
@@ -150,6 +150,17 @@ class TNBetView extends Component {
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled" >
+
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+            <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.CreateBet[language]}</Text>
+          </View>
+        </View>
 
           <View style={styles.betField}>
             <View style={styles.useFactorView}>
@@ -333,7 +344,7 @@ class TNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                     )
                   }
                 </Picker>
@@ -346,7 +357,7 @@ class TNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                     )
                   }
                 </Picker>
@@ -359,7 +370,7 @@ class TNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                     )
                   }
                 </Picker>
@@ -372,7 +383,7 @@ class TNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                     )
                   }
                 </Picker>
@@ -390,7 +401,7 @@ class TNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                     )
                   }
                 </Picker>
@@ -401,7 +412,7 @@ class TNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                     )
                   }
                 </Picker>
@@ -414,7 +425,7 @@ class TNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                     )
                   }
                 </Picker>
@@ -425,7 +436,7 @@ class TNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
                     )
                   }
                 </Picker>
