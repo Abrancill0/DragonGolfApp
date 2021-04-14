@@ -212,7 +212,7 @@ export default function RoundsView(route) {
 
   async function muestraRonda(IDBet){
     let IDRound = await AsyncStorage.getItem('IDRound')
-    if(IDBet == 2){
+    if(IDBet == 1){
       navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
     }
     else{

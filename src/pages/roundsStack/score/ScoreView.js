@@ -185,7 +185,7 @@ class ScoreView extends Component {
                       Ho_Advantage16: item.Ho_Advantage16,
                       Ho_Advantage17: item.Ho_Advantage17,
                       Ho_Advantage18: item.Ho_Advantage18,
-                      initHole: 5
+                      initHole: 1
                     }
                 ))
 

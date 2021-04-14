@@ -27,6 +27,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import { CrearRonda } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const {
       next,
@@ -55,6 +56,7 @@ class ConfigRoundView extends Component {
     this.hcpAdjustment = [1, 0.95, 0.90, 0.85, 0.80];
 
     this.state = {
+      carga: false,
       language: 'es',
       IDCourse: props.route.params.IDCourse,
       courseName: props.route.params.courseName,
@@ -100,6 +102,7 @@ class ConfigRoundView extends Component {
   render() {
 
     const {
+      carga,
       language,
       IDCourse,
       roundName,
@@ -115,11 +118,9 @@ class ConfigRoundView extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar
-          backgroundColor='#FFFFFF'
-          barStyle='dark-content'
-          translucent={false}
-        />
+        <Spinner
+            visible={carga}
+            color={Colors.Primary} />
         <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
           <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
 
@@ -536,6 +537,10 @@ class ConfigRoundView extends Component {
           return;
         }
 
+        this.setState({
+          carga:true
+        })
+
         console.warn(IDCourse)
         console.warn(roundName)
         console.warn(holeNumber)
@@ -571,6 +576,9 @@ class ConfigRoundView extends Component {
         .then((res) => {
           console.warn(res)
             if(res.estatus > 0){
+              this.setState({
+                carga:false
+              })
                 /*showMessage({
                 message: "Ronda creada correctamente",
                 type:'success',
@@ -581,6 +589,9 @@ class ConfigRoundView extends Component {
             //AsyncStorage.setItem('IDRound', res.idround.toString());
             }
             else{
+              this.setState({
+                carga:false
+              })
               showMessage({
                 message: "Ocurrió un error, intente más tarde",
                 type:'danger',

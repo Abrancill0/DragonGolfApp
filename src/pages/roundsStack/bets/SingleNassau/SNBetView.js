@@ -10,6 +10,7 @@ import { ListadoAmigosRonda, CrearDetalleApuesta, ListadoAmigosRondaData } from 
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const {
   save,
@@ -116,6 +117,7 @@ class SNBetView extends Component {
   render() {
 
     const {
+      carga,
       useFactor,
       front9,
       back9,
@@ -136,6 +138,9 @@ class SNBetView extends Component {
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
+        <Spinner
+            visible={carga}
+            color={Colors.Primary} />
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled" >
 
         <View style={{ flexDirection: 'row' }}>
@@ -743,6 +748,9 @@ class SNBetView extends Component {
       });
     }
     else{
+      this.setState({
+        carga:true
+      })
       CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
         .then((res) => {
           console.warn(res)
@@ -751,9 +759,15 @@ class SNBetView extends Component {
               message: successSaveTeeData[this.state.language],
               type: 'success',
             });
+            this.setState({
+              carga:false
+            })
             this.props.navigation.goBack()
           }
           else{
+            this.setState({
+              carga:false
+            })
             showMessage({
               message: error[this.state.language],
               type: 'danger',
