@@ -190,6 +190,7 @@ class TNBetView extends Component {
                 value={front9}
                 onSubmitEditing={_ => this.back9In.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -208,6 +209,7 @@ class TNBetView extends Component {
                 value={match}
                 onSubmitEditing={_ => this.carryIn.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -229,6 +231,7 @@ class TNBetView extends Component {
                 value={back9}
                 onSubmitEditing={_ => this.autoIn.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -247,6 +250,7 @@ class TNBetView extends Component {
                 value={carry}
                 onSubmitEditing={_ => this.medalIn.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -268,6 +272,7 @@ class TNBetView extends Component {
                 value={autoPress}
                 onSubmitEditing={_ => this.matchIn.focus()}
                 blurOnSubmit={false}
+                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -284,6 +289,7 @@ class TNBetView extends Component {
                 maxLength={5}
                 onChangeText={(medal) => this.setState({ medal })}
                 value={medal}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -317,6 +323,7 @@ class TNBetView extends Component {
                 onChangeText={(advStrokes) => this.setState({ advStrokes })}
                 value={advStrokes}
                 editable={override}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -518,7 +525,7 @@ class TNBetView extends Component {
   onChangeSwitch = (player, type) => {
     if (type === 'A'){
        this.setState({ playerA: player });
-       ListadoAmigosRondaData(player,this.state.playerB, this.state.IDRound)
+       ListadoAmigosRondaData(player,this.state.playerC, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -557,7 +564,85 @@ class TNBetView extends Component {
     }
     if (type === 'B'){
       this.setState({ playerB: player });
+      ListadoAmigosRondaData(player, this.state.playerD, this.state.IDRound)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+            let useFactor = false
+            if(res.Result[0].set_snw_use_factor == 1 ){
+              useFactor = true
+            }
+              else{
+              useFactor = false
+              }
+              console.warn(useFactor)
+            this.setState({
+              useFactor : useFactor,
+              front9 : res.Result[0].set_snw_front_9.toString(),
+              back9 : res.Result[0].set_snw_back_9.toString(),
+              match : res.Result[0].set_snw_match.toString(),
+              carry : res.Result[0].set_snw_carry.toString(),
+              medal : res.Result[0].set_snw_medal.toString(),
+              autoPress : res.Result[0].set_snw_automatic_press.toString(),
+              advStrokes : res.Result[0].set_golpesventaja.toString()
+            })
+          }
+          else{
+            this.setState({
+              useFactor : false,
+              front9 : 0,
+              back9 : 0,
+              match : 0,
+              carry : 0,
+              medal : 0,
+              autoPress : 0,
+              advStrokes : 0
+            })
+          }
+        })
+      }
+      if (type === 'C'){
+      this.setState({ playerC: player });
       ListadoAmigosRondaData(this.state.playerA,player, this.state.IDRound)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+            let useFactor = false
+            if(res.Result[0].set_snw_use_factor == 1 ){
+              useFactor = true
+            }
+              else{
+              useFactor = false
+              }
+              console.warn(useFactor)
+            this.setState({
+              useFactor : useFactor,
+              front9 : res.Result[0].set_snw_front_9.toString(),
+              back9 : res.Result[0].set_snw_back_9.toString(),
+              match : res.Result[0].set_snw_match.toString(),
+              carry : res.Result[0].set_snw_carry.toString(),
+              medal : res.Result[0].set_snw_medal.toString(),
+              autoPress : res.Result[0].set_snw_automatic_press.toString(),
+              advStrokes : res.Result[0].set_golpesventaja.toString()
+            })
+          }
+          else{
+            this.setState({
+              useFactor : false,
+              front9 : 0,
+              back9 : 0,
+              match : 0,
+              carry : 0,
+              medal : 0,
+              autoPress : 0,
+              advStrokes : 0
+            })
+          }
+        })
+      }
+      if (type === 'D'){
+      this.setState({ playerD: player });
+      ListadoAmigosRondaData(this.state.playerB,player, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -810,8 +895,11 @@ class TNBetView extends Component {
         autoPress,
         override,
         advStrokes,
+        whoGetsAdv,
         playerA,
         playerB,
+        playerC,
+        playerD,
         IDRound,
         IDBet
       } = this.state;
@@ -826,8 +914,11 @@ class TNBetView extends Component {
     console.warn(autoPress)
     console.warn(override)
     console.warn(advStrokes)
+    console.warn(whoGetsAdv)
     console.warn(playerA)
     console.warn(playerB)
+    console.warn(playerC)
+    console.warn(playerD)
     console.warn('----------------------------------')
     let back9UF = useFactor ? (front9 * back9).toString() : back9.toString()
     let matchUF = useFactor ? (front9 * match).toString() : match.toString()
@@ -837,7 +928,7 @@ class TNBetView extends Component {
     console.warn(matchUF)
     console.warn(carryUF)
     console.warn(medalUF)
-    if(playerA == playerB){
+    if(playerA == playerB || playerA == playerC || playerA == playerD || playerB == playerC || playerB == playerD || playerC == playerD){
       showMessage({
         message: samePlayer[this.state.language],
         type: 'warning',
