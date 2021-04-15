@@ -27,7 +27,9 @@ class ScoreView extends Component {
       isLandscape,
       players: [],
       playerHole: [],
-      carga:true
+      carga:true,
+      initHole: 0,
+      pagestate:0
     };
 
     this.holes = [];
@@ -95,7 +97,7 @@ class ScoreView extends Component {
     //console.warn(IDRound)
     ListadoAmigosRonda(idUsu, IDRound)
         .then((res) => {
-          //console.warn(res)
+          console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -183,14 +185,18 @@ class ScoreView extends Component {
                       Ho_Advantage16: item.Ho_Advantage16,
                       Ho_Advantage17: item.Ho_Advantage17,
                       Ho_Advantage18: item.Ho_Advantage18,
+                      initHole: 5
                     }
                 ))
+
+                console.warn(list[0].initHole)
 
                 this.llenaArreglo(list)
 
                 this.setState({
                   players:list,
-                  carga:false
+                  carga:false,
+                  initHole: list[0].initHole
                 })
             }
             else{
@@ -239,7 +245,7 @@ class ScoreView extends Component {
 
   render() {
 
-    const { isLandscape, players, playerHole, carga } = this.state;
+    const { isLandscape, players, playerHole, carga, initHole, pagestate } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
@@ -253,32 +259,46 @@ class ScoreView extends Component {
           </View>*/}
         {isLandscape ?
           <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} props={this.props} /> :
+        initHole !=0 ?
           <ViewPager
-            initialPage={0/*this.props.initHole - 1*/}
+            initialPage={initHole-1}
             ref={ref => this.pager = ref}
-            //onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
+            onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}
           >
+            {pagestate==18 &&<View style={{ flexDirection: 'row' }}>
+              <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+                <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
+                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                </TouchableOpacity>
+              </View>
+            </View>}
             {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
                 <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} />
               </View>
             ))}
           </ViewPager>
+          :null
         }
       </View>
     );
   }
 
-  /*onChangePage = (page) => {
+  onChangePage = (page) => {
+    console.warn(page)
+    if(page==17)
+      this.setState({
+        pagestate: 18
+      }) /*
     this.props.navigation.setParams({
       hole: page + 1,
       leftButton: page ? page : 18,
       rightButton: page + 1 > 17 ? 1 : page + 2,
       onPressLeft: () => this.pager.setPage((page - 1) >= 0 ? page - 1 : 17),
       onPressRight: () => this.pager.setPage((page + 1) <= 17 ? page + 1 : 0),
-    });
-  }*/
+    });*/
+  }
 
   changeTitleText = () => {
     this.props.navigation.setParams({

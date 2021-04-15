@@ -31,8 +31,10 @@ import ScoreCardView from './src/pages/roundsStack/more/ScoreCardView'
 import SNScoreCardView from './src/pages/roundsStack/bets/SingleNassau/ScoreCardView'
 import SummaryView from './src/pages/roundsStack/bets/SummaryView'
 import BetsViewDetail from './src/pages/roundsStack/bets/BetsViewDetail'
+import BetsViewDetailTN from './src/pages/roundsStack/bets/BetsViewDetailTN'
 import SNBetListComponent from './src/pages/roundsStack/bets/SingleNassau/SNBetListComponent'
 import SNBetView from './src/pages/roundsStack/bets/SingleNassau/SNBetView'
+import TNBetView from './src/pages/roundsStack/bets/TeamNassau/TNBetView'
 import SNBetViewInfo from './src/pages/roundsStack/bets/SingleNassau/SNBetViewInfo'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeesViewRound from './src/pages/roundsStack/players/TeesView'
@@ -1023,6 +1025,18 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+          <Stack.Screen name='TNBetView' component={TNBetView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
           <Stack.Screen name='SNBetViewInfo' component={SNBetViewInfo}
           options={({ route }) => ({
             headerBackTitle: '',
@@ -1060,6 +1074,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='BetsViewDetail' component={BetsViewDetail}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='BetsViewDetailTN' component={BetsViewDetailTN}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
