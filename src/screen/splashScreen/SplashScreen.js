@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {View, StatusBar, Image, Animated, Text, Platform} from 'react-native';
 import styles from './styles';
 import {getLanguage, getSessionToken} from '../../utils/Session';
-import messaging from '@react-native-firebase/messaging';
+//import messaging from '@react-native-firebase/messaging';
 import {showMessage} from 'react-native-flash-message';
-import PushNotification from 'react-native-push-notification';
+//import PushNotification from 'react-native-push-notification';
 
 //assets
 import SplashImage from '../../../assets/splash.png';
@@ -38,71 +38,10 @@ class SplashScreen extends Component {
   };
 
   componentDidMount() {
-    this.requestUserPermission();
-    this.LoadHandlers();
+   // this.requestUserPermission();
+   // this.LoadHandlers();
   }
 
-  requestUserPermission = async () => {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    if (enabled) {
-      console.log('Authorization status:', authStatus);
-    }
-  };
-
-  LoadHandlers() {
-    messaging().onNotificationOpenedApp((remoteMessage) => {
-      console.log(
-        'Notification caused app to open from background state:',
-        remoteMessage.notification,
-      );
-    });
-
-    // Check whether an initial notification is available
-    messaging()
-      .getInitialNotification()
-      .then((remoteMessage) => {
-        if (remoteMessage) {
-        }
-      });
-
-    messaging().onMessage(async (remoteMessage) => {
-      /*  showMessage({
-        message: remoteMessage.notification.title,
-        description: remoteMessage.notification.body,
-        type: 'success',
-        autoHide: false,
-      }); */
-
-      let Titulo = remoteMessage.notification.title;
-      let Descripcion = remoteMessage.notification.body;
-      console.warn(Titulo);
-      this.testfunction(Titulo, Descripcion);
-    });
-  }
-
-  testfunction = (Titulo, Descripcion) => {
-    if (Platform.OS === 'android') {
-      PushNotification.localNotification({
-        title: Titulo,
-        message: Descripcion,
-      });
-
-      // let Badget = DatosUser.Badget + 1;
-    } else {
-      //let Badget = DatosUser.Badget + 1;
-      /* 
-      PushNotificationIOS.presentLocalNotification({
-        alertTitle: Titulo,
-        alertBody: Descripcion,
-        fireDate: new Date().toISOString(),
-        applicationIconBadgeNumber: Badget,
-      }); */
-    }
-  };
 
   render() {
     const {

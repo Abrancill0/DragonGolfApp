@@ -414,8 +414,8 @@ class ConfigRoundView extends Component {
         });
 
       this.refs.nombre.setValue(this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
-
-      this.refs.fecha.setValue(this.state.pickerTextDate)
+      this.setState({ showDatePicker: false, editDate: false });
+      //this.refs.fecha.setValue(this.state.pickerTextDate)
 
       /*const roundData = {
         id: this.props.roundId,
