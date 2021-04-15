@@ -28,8 +28,7 @@ class ScoreView extends Component {
       players: [],
       playerHole: [],
       carga:true,
-      initHole: 0,
-      pagestate:0
+      initHole: 0
     };
 
     this.holes = [];
@@ -245,7 +244,7 @@ class ScoreView extends Component {
 
   render() {
 
-    const { isLandscape, players, playerHole, carga, initHole, pagestate } = this.state;
+    const { isLandscape, players, playerHole, carga, initHole } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
@@ -266,13 +265,6 @@ class ScoreView extends Component {
             onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}
           >
-            {pagestate==18 &&<View style={{ flexDirection: 'row' }}>
-              <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-                <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
-                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-                </TouchableOpacity>
-              </View>
-            </View>}
             {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
                 <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} />
@@ -287,10 +279,7 @@ class ScoreView extends Component {
 
   onChangePage = (page) => {
     console.warn(page)
-    if(page==17)
-      this.setState({
-        pagestate: 18
-      }) /*
+    /*
     this.props.navigation.setParams({
       hole: page + 1,
       leftButton: page ? page : 18,
