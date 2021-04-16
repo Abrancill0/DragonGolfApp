@@ -228,6 +228,7 @@ class PlayersScore extends Component {
             arreglo += HolesAux
         }
         console.warn(arreglo)
+        if(arreglo!= ''){
         ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
         .then((res) => {
           console.warn(res)
@@ -246,6 +247,7 @@ class PlayersScore extends Component {
             }
           }
         })
+    }
     }
 
   render() {

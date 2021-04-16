@@ -251,6 +251,14 @@ export default class ScoreHorizontalComponent extends Component {
         if (pressesArray.length>0)
             return (
                 <View style={styles.scoreView}>
+                    <View style={[styles.holeTextView, { paddingRight: 5 }]}>
+                        {totalStrokesMA ?
+                            <Text>{totalStrokesMA}</Text>
+                            : totalStrokesMB ?
+                                <Text style={{ color: Colors.Primary }}>-{totalStrokesMB}</Text>
+                                : null
+                        }
+                    </View>
                     <View style={styles.holesView}>
                         {holes.map((hole, i) => <View key={i.toString()} style={[styles.advView, {
                             borderRightWidth: i < holes.length - 1 ? 0 : 0.5,

@@ -27,8 +27,7 @@ class ScoreView extends Component {
       isLandscape,
       players: [],
       playerHole: [],
-      carga:true,
-      initHole: 0
+      carga:true
     };
 
     this.holes = [];
@@ -44,10 +43,8 @@ class ScoreView extends Component {
   }
 
   componentDidMount() {
+    this.ListadoTodos()
     this.props.navigation.addListener('focus', () => {
-      this.setState({
-        carga:true
-      })
       this.ListadoTodos()
     });
     /*this.props.navigation.setParams({
@@ -58,7 +55,6 @@ class ScoreView extends Component {
     Dimensions.addEventListener('change', (dimensions) => {
       const { width, height } = dimensions.window;
       this.setState({ isLandscape: width > height });
-      this.props.navigation.setParams({isLandscape: width > height});
     });
   }
 
@@ -90,6 +86,7 @@ class ScoreView extends Component {
     let language = await AsyncStorage.getItem('language')
     let IDRound = await AsyncStorage.getItem('IDRound')
     this.setState({
+        carga:true,
         language:language
     })
     //console.warn(idUsu)
@@ -183,19 +180,15 @@ class ScoreView extends Component {
                       Ho_Advantage15: item.Ho_Advantage15,
                       Ho_Advantage16: item.Ho_Advantage16,
                       Ho_Advantage17: item.Ho_Advantage17,
-                      Ho_Advantage18: item.Ho_Advantage18,
-                      initHole: 1
+                      Ho_Advantage18: item.Ho_Advantage18
                     }
                 ))
-
-                console.warn(list[0].initHole)
 
                 this.llenaArreglo(list)
 
                 this.setState({
                   players:list,
-                  carga:false,
-                  initHole: list[0].initHole
+                  carga:false
                 })
             }
             else{
@@ -244,7 +237,7 @@ class ScoreView extends Component {
 
   render() {
 
-    const { isLandscape, players, playerHole, carga, initHole } = this.state;
+    const { isLandscape, players, playerHole, carga } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
@@ -258,11 +251,10 @@ class ScoreView extends Component {
           </View>*/}
         {isLandscape ?
           <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} props={this.props} /> :
-        initHole !=0 ?
           <ViewPager
-            initialPage={initHole-1}
+            initialPage={0/*initHole-1*/}
             ref={ref => this.pager = ref}
-            onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
+            //onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}
           >
             {this.holes.map(item => (
@@ -271,15 +263,14 @@ class ScoreView extends Component {
               </View>
             ))}
           </ViewPager>
-          :null
         }
       </View>
     );
   }
 
   onChangePage = (page) => {
-    console.warn(page)
-    /*
+    /*console.warn(page)
+    
     this.props.navigation.setParams({
       hole: page + 1,
       leftButton: page ? page : 18,

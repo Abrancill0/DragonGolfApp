@@ -620,7 +620,7 @@ export default function RoundsView(route) {
                                         }
                                     </View>
                                     <View style={{ width: 30, alignItems: 'flex-end' }}>
-                                        <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{rounds[index].BetD_AutoPress ? `${rounds[index].BetD_AutoPress}P` : ''}</Text>
+                                        <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{/*rounds[index].BetD_AutoPress ? `${rounds[index].BetD_AutoPress}P` : ''*/}</Text>
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
