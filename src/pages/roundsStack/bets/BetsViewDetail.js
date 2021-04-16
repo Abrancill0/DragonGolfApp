@@ -353,7 +353,7 @@ export default function RoundsView(route) {
                     cancelButtonIndex: 5,
                 },
                 (index2) => {
-                    if (index2 !== 5) doAction(index,index2, item);
+                    if (index2 !== 2) doAction(index,index2, item);
                 },
             );
         } else {
