@@ -37,11 +37,11 @@ import moment from 'moment';
 import Collapsible from 'react-native-collapsible';
 import styles from './styles';
 
-export default function RoundsView(route) {
+export default function RoundsView(props) {
 
     const navigation = useNavigation();
-    const [IDRound, setIDRound] = useState(route.route.params.IDRound);
-    const [IDBet, setIDBet] = useState(route.route.params.IDBet);
+    const [IDRound, setIDRound] = useState(props.IDRound);
+    const [IDBet, setIDBet] = useState(props.IDBet);
     const [rounds, setRounds] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     let collapsedArray = [];
@@ -440,15 +440,15 @@ export default function RoundsView(route) {
             color={Colors.Primary} />
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+            {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
+          <Text style={{ margin:20, marginTop:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView',{IDBet:IDBet, IDRound:IDRound})}>
+            <TouchableOpacity style={{margin:20, marginTop:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView',{IDBet:IDBet, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -548,14 +548,13 @@ export default function RoundsView(route) {
             }
             data={rounds}
             renderItem={({item, index}) =>
-                    <View style={{flex:.2,padding:5}}>
-                        <ScrollView
+                        <ScrollView style={{flex:.2,padding:5,paddingHorizontal:25}}
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
+                            <View style={{width: ScreenWidth, flexDirection:'row',height:50,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                                <View style={{flex:.85}}>
+                                <View style={{flex:.65}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>*/}
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2}</Text>
@@ -651,7 +650,6 @@ export default function RoundsView(route) {
                       </Ripple>
                         </Collapsible>
                           </ScrollView>
-                    </View>
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}

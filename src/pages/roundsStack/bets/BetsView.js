@@ -32,12 +32,17 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
+import Collapsible from 'react-native-collapsible';
+import BetsViewDetail from './BetsViewDetail';
 
-export default function RoundsView(route) {
+export default function betsView(route) {
 
     const navigation = useNavigation();
-    const [rounds, setRounds] = useState([]);
+    const [bets2, setbets] = useState([]);
+    let collapsedArray = [];
+    const [collapsed2, setCollapsed] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
+    const [IDRound, setIDRound] = useState(0);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
     const [value3, setValue3] = useState('');
@@ -49,17 +54,19 @@ export default function RoundsView(route) {
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
-        ListadoRondas();
+        ListadoBets();
           });
 
         return unsubscribe;
-      }, [rounds]);
+      }, [bets2]);
     
 
-  async function ListadoRondas() {
+  async function ListadoBets() {
                 setStatus(true)
     let language = await AsyncStorage.getItem('language')
+    let IDRound = await AsyncStorage.getItem('IDRound')
     setLanguage(language)
+    setIDRound(IDRound)
     ListaApuesta()
         .then((res) => {
           console.warn(res)
@@ -71,12 +78,12 @@ export default function RoundsView(route) {
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
                     }
                 ))
-                setRounds(list.reverse())
+                setbets(list.reverse())
                 setArrayholder(list)
                 setStatus(false)
             }
             else{
-              setRounds([])
+              setbets([])
               setStatus(false)
             }
         })
@@ -108,7 +115,7 @@ export default function RoundsView(route) {
     return itemData.indexOf(textData) > -1;
 
     });
-    setRounds(newData)
+    setbets(newData)
   };
 
    function renderSeparator(){  
@@ -211,9 +218,12 @@ export default function RoundsView(route) {
   };
 
   async function muestraRonda(IDBet){
-    let IDRound = await AsyncStorage.getItem('IDRound')
+    //let IDRound = await AsyncStorage.getItem('IDRound')
     if(IDBet == 1){
-      navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+      collapsedArray[1]=(!collapsed2[1])
+      collapsedArray[2]=(true)
+      setCollapsed(collapsedArray)
+      //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
     }
     else{
       navigation.navigate("BetsViewDetailTN",{IDBet:IDBet, IDRound:IDRound})
@@ -242,7 +252,7 @@ export default function RoundsView(route) {
               .then((res) => {
                 console.warn(res)
                   if(res.estatus == 1){
-                    ListadoRounds()
+                    ListadoBets()
                   }
               })
           },
@@ -272,7 +282,7 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets2[language]}</Text>
           </View>
           {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
@@ -365,7 +375,7 @@ export default function RoundsView(route) {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  ListadoRondas()
+                  ListadoBets()
                   setValue1('')
                   setValue2('')
                   setValue3('')
@@ -373,14 +383,14 @@ export default function RoundsView(route) {
                 }}
               />
             }
-            data={rounds}
+            data={bets2}
             renderItem={({item}) =>
                     <View style={{flex:.2,padding:5}}>
                         <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
+                            <View style={{width: ScreenWidth, flexDirection:'row',height:50,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                                <View style={{flex:.85}}>
+                                <View style={{flex:.65}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>*/}
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{tipe[language]+': '+ item.nombre}</Text>
@@ -396,6 +406,9 @@ export default function RoundsView(route) {
                             </View>*/}
                               </View>
                           </TouchableOpacity>
+                          <Collapsible collapsed={collapsed2[item.id]}>
+                            <BetsViewDetail IDBet={item.id} IDRound={IDRound} />
+                          </Collapsible>
                           {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
                             <FontAwesome name={'edit'} size={30} color={Colors.White} />
