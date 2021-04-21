@@ -39,8 +39,8 @@ export default function betsView(route) {
 
     const navigation = useNavigation();
     const [bets2, setbets] = useState([]);
-    let collapsedArray = [];
-    const [collapsed2, setCollapsed] = useState([]);
+    let collapsedArray2 = [];
+    const [collapsed2, setCollapsed2] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [IDRound, setIDRound] = useState(0);
     const [value1, setValue1] = useState('');
@@ -220,9 +220,9 @@ export default function betsView(route) {
   async function muestraRonda(IDBet){
     //let IDRound = await AsyncStorage.getItem('IDRound')
     if(IDBet == 1){
-      collapsedArray[1]=(!collapsed2[1])
-      collapsedArray[2]=(true)
-      setCollapsed(collapsedArray)
+      collapsedArray2[1]=(!collapsed2[1])
+      collapsedArray2[2]=(true)
+      setCollapsed2(collapsedArray2)
       //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
     }
     else{
