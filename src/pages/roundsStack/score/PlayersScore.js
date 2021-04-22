@@ -64,6 +64,7 @@ class PlayersScore extends Component {
             this.setState({
                 playerHole:playersHoleAux
             })
+            this.guardar(2)
         }
         else{
             //this.llenaArreglo()
@@ -273,11 +274,11 @@ class PlayersScore extends Component {
               <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-        <View style={{ flex:0.2, justifyContent: 'flex-end' }}>
+        {/*<View style={{ flex:0.2, justifyContent: 'flex-end' }}>
           <TouchableOpacity style={{margin:20, marginTop:0}} onPress={()=> this.guardar(1)}>
             <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
           </TouchableOpacity>
-        </View>
+        </View>*/}
         </View>
         <FlatList
           ListHeaderComponent={<HoleHeader hole={hole} />}

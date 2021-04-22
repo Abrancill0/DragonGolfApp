@@ -38,7 +38,7 @@ import BetsViewDetail from './BetsViewDetail';
 export default function betsView(route) {
 
     const navigation = useNavigation();
-    const [bets2, setbets] = useState([]);
+    const [bets2, setbets2] = useState([]);
     let collapsedArray2 = [];
     const [collapsed2, setCollapsed2] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
@@ -78,12 +78,12 @@ export default function betsView(route) {
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
                     }
                 ))
-                setbets(list.reverse())
+                setbets2(list.reverse())
                 setArrayholder(list)
                 setStatus(false)
             }
             else{
-              setbets([])
+              setbets2([])
               setStatus(false)
             }
         })
@@ -115,7 +115,7 @@ export default function betsView(route) {
     return itemData.indexOf(textData) > -1;
 
     });
-    setbets(newData)
+    setbets2(newData)
   };
 
    function renderSeparator(){  
@@ -282,7 +282,7 @@ export default function betsView(route) {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets2[language]}</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
           </View>
           {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>

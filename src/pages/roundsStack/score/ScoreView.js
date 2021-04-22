@@ -27,7 +27,8 @@ class ScoreView extends Component {
       isLandscape,
       players: [],
       playerHole: [],
-      carga:true
+      carga:true,
+      initHole: 0
     };
 
     this.holes = [];
@@ -180,7 +181,8 @@ class ScoreView extends Component {
                       Ho_Advantage15: item.Ho_Advantage15,
                       Ho_Advantage16: item.Ho_Advantage16,
                       Ho_Advantage17: item.Ho_Advantage17,
-                      Ho_Advantage18: item.Ho_Advantage18
+                      Ho_Advantage18: item.Ho_Advantage18,
+                      initHole:5
                     }
                 ))
 
@@ -188,7 +190,8 @@ class ScoreView extends Component {
 
                 this.setState({
                   players:list,
-                  carga:false
+                  carga:false,
+                  initHole: list[0].initHole
                 })
             }
             else{
@@ -237,7 +240,7 @@ class ScoreView extends Component {
 
   render() {
 
-    const { isLandscape, players, playerHole, carga } = this.state;
+    const { isLandscape, players, playerHole, carga, initHole } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
@@ -251,10 +254,10 @@ class ScoreView extends Component {
           </View>*/}
         {isLandscape ?
           <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} props={this.props} /> :
-          <ViewPager
-            initialPage={0/*initHole-1*/}
+          initHole != 0 ? <ViewPager
+            initialPage={initHole-1}
             ref={ref => this.pager = ref}
-            //onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
+            onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}
           >
             {this.holes.map(item => (
@@ -262,16 +265,19 @@ class ScoreView extends Component {
                 <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} />
               </View>
             ))}
-          </ViewPager>
+          </ViewPager>:null
         }
       </View>
     );
   }
 
   onChangePage = (page) => {
-    /*console.warn(page)
+    console.warn(page)
+    if(page==6){
+      this.pager.setPage(17)
+    }
     
-    this.props.navigation.setParams({
+    /*this.props.navigation.setParams({
       hole: page + 1,
       leftButton: page ? page : 18,
       rightButton: page + 1 > 17 ? 1 : page + 2,

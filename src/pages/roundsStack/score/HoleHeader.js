@@ -32,10 +32,22 @@ class HoleHeader extends Component {
 
     return (
       <View style={{ flex: 1, flexDirection: 'row', alignSelf:'center' }}>
+      <View style={[styles.holeView, {alignSelf:'center'}]}>
+          <Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>
+          <View style={styles.holeNumberView}>
+            <Text style={styles.holeNumber}>{hole-1}</Text>
+          </View>
+        </View>
         <View style={[styles.holeView, {alignSelf:'center'}]}>
           <Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>
           <View style={styles.holeNumberView}>
             <Text style={styles.holeNumber}>{hole}</Text>
+          </View>
+        </View>
+        <View style={[styles.holeView, {alignSelf:'center'}]}>
+          <Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>
+          <View style={styles.holeNumberView}>
+            <Text style={styles.holeNumber}>{hole+1}</Text>
           </View>
         </View>
         <View>

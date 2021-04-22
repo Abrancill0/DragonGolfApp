@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     },
     holesView: {
         flex: 1,
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'flex-start',

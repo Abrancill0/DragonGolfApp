@@ -65,7 +65,8 @@ class HorizontalScoreView extends Component {
             this.setState({
                 playerHole:playersHoleAux
             })
-        console.warn(this.props.playerHole)
+            console.warn(this.props.playerHole)
+            this.guardar(2)
         }
         else{
             //this.llenaArreglo()
@@ -141,11 +142,11 @@ class HorizontalScoreView extends Component {
                           <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
                         </TouchableOpacity>
                       </View>
-                <View>
+                {/*<View>
                   <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar(1)}>
                     <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
                   </TouchableOpacity>
-                </View>
+                </View>*/}
                 </View>
                 <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 2 }}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
