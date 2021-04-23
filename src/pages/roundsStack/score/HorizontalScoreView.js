@@ -23,9 +23,9 @@ class HorizontalScoreView extends Component {
       componentDidMount = async () => {
         //console.warn('Entró')
         let language = await AsyncStorage.getItem('language')
-        Dimensions.addEventListener('change', (dimensions) => {
+        /*Dimensions.addEventListener('change', (dimensions) => {
           this.guardar(2)
-        });
+        });*/
         /*let playersHoleAux = []
         for (var i = 0; i <= this.props.players.length - 1; i++) {
             let HolesAux = []

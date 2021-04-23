@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { Dictionary } from '../../../utils/Dictionary';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -32,24 +32,31 @@ class HoleHeader extends Component {
 
     return (
       <View style={{ flex: 1, flexDirection: 'row', alignSelf:'center' }}>
-      <View style={[styles.holeView, {alignSelf:'center'}]}>
-          <Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>
+      <TouchableOpacity onPress={()=> this.props.clickHandlerI2(hole-1)}><View style={[styles.holeView, {alignSelf:'center'}]}>
+          <Text style={[styles.holeTitle,{opacity: 0.5}]}>{Dictionary.hole[language]}</Text>
+          {hole-1>0?<View style={styles.holeNumberView}>
+            <Text style={[styles.holeNumber,{opacity: 0.5}]}>{hole-1}</Text>
+          </View>:
           <View style={styles.holeNumberView}>
-            <Text style={styles.holeNumber}>{hole-1}</Text>
+            <Text style={[styles.holeNumber,{opacity: 0.5}]}>{18}</Text>
           </View>
-        </View>
-        <View style={[styles.holeView, {alignSelf:'center'}]}>
+        }
+        </View></TouchableOpacity>
+        <View style={[styles.holeView, {alignSelf:'center', marginHorizontal:40}]}>
           <Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>
           <View style={styles.holeNumberView}>
             <Text style={styles.holeNumber}>{hole}</Text>
           </View>
         </View>
-        <View style={[styles.holeView, {alignSelf:'center'}]}>
-          <Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>
-          <View style={styles.holeNumberView}>
-            <Text style={styles.holeNumber}>{hole+1}</Text>
-          </View>
-        </View>
+        <TouchableOpacity onPress={()=> this.props.clickHandlerD2(parseInt(hole,10))}><View style={[styles.holeView, {alignSelf:'center'}]}>
+          <Text style={[styles.holeTitle,{opacity: 0.5}]}>{Dictionary.hole[language]}</Text>
+          {hole<18?<View style={styles.holeNumberView}>
+            <Text style={[styles.holeNumber,{opacity: 0.5}]}>{parseInt(hole,10)+1}</Text>
+          </View>:
+        <View style={styles.holeNumberView}>
+            <Text style={[styles.holeNumber,{opacity: 0.5}]}>{1}</Text>
+          </View>}
+        </View></TouchableOpacity>
         <View>
           {/*<Text style={styles.courseName}>{course.name}</Text>
           <Text style={styles.cityName}>{course.city}</Text>*/}

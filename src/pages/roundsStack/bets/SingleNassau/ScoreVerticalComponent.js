@@ -222,7 +222,7 @@ export default class ScoreVerticalComponent extends Component {
                     <View style={styles.holesView}>
                         {item.map((item2,index2) =>
                             <View  style={styles.holeInfoView}>
-                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{index2 + 10}</Text>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.holeNumber,{fontSize: 13}]}>{index2 + 10}</Text>
                                 <Text
                                         key={index2}
                                         style={styles.parNumber}

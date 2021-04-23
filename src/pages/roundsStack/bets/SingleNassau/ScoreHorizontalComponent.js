@@ -157,7 +157,7 @@ export default class ScoreHorizontalComponent extends Component {
                         }
                         {item.map((item3,index3) =>
                             <View key={index3} style={styles.holeInfoView}>
-                                <Text numberOfLines={1} adjustsFontSizeToFit style={styles.holeNumber}>{index3 + 10}</Text>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.holeNumber,{fontSize: 13}]}>{index3 + 10}</Text>
                                 <Text
                                         key={index3}
                                         style={styles.parNumber}

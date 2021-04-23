@@ -87,6 +87,10 @@ export const Dictionary = {
         'en': 'PHOTO',
         'es': 'FOTO'
     },
+    playerData: {
+        'en': 'Player Data',
+        'es': 'Datos del Jugador'
+    },
     name: {
         'en': 'Name',
         'es': 'Nombre'

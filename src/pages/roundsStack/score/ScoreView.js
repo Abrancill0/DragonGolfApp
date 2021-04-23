@@ -257,12 +257,12 @@ class ScoreView extends Component {
           initHole != 0 ? <ViewPager
             initialPage={initHole-1}
             ref={ref => this.pager = ref}
-            onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
+            //onPageSelected={(e) => this.onChangePage(e.nativeEvent.position)}
             style={{ flex: 1 }}
           >
             {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
-                <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} />
+                <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} clickHandlerI={this.onChangePage} clickHandlerD={this.onChangePage2} />
               </View>
             ))}
           </ViewPager>:null
@@ -272,18 +272,21 @@ class ScoreView extends Component {
   }
 
   onChangePage = (page) => {
-    console.warn(page)
-    if(page==6){
+    if(page>0){
+      this.pager.setPage(page-1)
+    }
+    else{
       this.pager.setPage(17)
     }
-    
-    /*this.props.navigation.setParams({
-      hole: page + 1,
-      leftButton: page ? page : 18,
-      rightButton: page + 1 > 17 ? 1 : page + 2,
-      onPressLeft: () => this.pager.setPage((page - 1) >= 0 ? page - 1 : 17),
-      onPressRight: () => this.pager.setPage((page + 1) <= 17 ? page + 1 : 0),
-    });*/
+  }
+
+  onChangePage2 = (page) => {
+    if(page<17){
+      this.pager.setPage(page)
+    }
+    else{
+      this.pager.setPage(0)
+    }
   }
 
   changeTitleText = () => {

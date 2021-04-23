@@ -71,7 +71,8 @@ export default function RoundsView(route) {
                       nombreCorto: item.Cou_NombreCorto,
                       ciudad: item.Cou_Ciudad,
                       pais: item.Cou_Pais,
-                      tipo: item.Tipo
+                      tipo: item.Tipo,
+                      todos: item.Cou_Nombre + item.Cou_NombreCorto + item.Cou_Ciudad + item.Cou_Pais
                     }
                 ))
                 setCourses(list)
@@ -92,7 +93,7 @@ export default function RoundsView(route) {
     switch(busqueda){
       case 1:
         setValue1(text) 
-        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+        itemData = `${item.nombre} ${item.todos.toUpperCase()}`;
         break;
       case 2:
         setValue2(text) 
@@ -147,7 +148,7 @@ export default function RoundsView(route) {
       emptyCourseList,
       Search,
       myCourses,
-      courseName,
+      courseData,
       courseShortName,
       courseCity,
       country,
@@ -192,7 +193,7 @@ export default function RoundsView(route) {
 
       {search && <View>
       <SearchBar
-        placeholder={courseName[language]}
+        placeholder={courseData[language]}
         onChangeText={(text) => searchFilterFunction(text,1)}
         autoCorrect={false}
         value={value1}
@@ -207,7 +208,7 @@ export default function RoundsView(route) {
         borderTopWidth:0,
         borderBottomWidth:0.5}}
       />
-      <SearchBar
+      {/*<SearchBar
         placeholder={courseShortName[language]}
         onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
@@ -258,7 +259,7 @@ export default function RoundsView(route) {
         justifyContent: 'space-around',
         borderTopWidth:1,
         borderBottomWidth:2}}
-      />
+      />*/}
       </View>}
           <SwipeListView
             refreshControl={

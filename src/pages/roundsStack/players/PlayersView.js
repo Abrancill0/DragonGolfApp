@@ -41,7 +41,7 @@ const {
       all,
       guests,
       Search,
-      name,
+      playerData,
       lastName,
       nickname,
       ghinNumber,
@@ -96,7 +96,8 @@ export default function RoundsView(route) {
                       nickname: item.usu_nickname,
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
-                      handicap: item.usu_handicapindex
+                      handicap: item.usu_handicapindex,
+                      todos: item.usu_nombre + item.usu_apellido_paterno + item.usu_nickname + item.usu_ghinnumber
                     }
                 ))
                 setPlayers(list)
@@ -125,7 +126,8 @@ export default function RoundsView(route) {
                       nickname: item.usu_nickname,
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
-                      handicap: item.usu_handicapindex
+                      handicap: item.usu_handicapindex,
+                      todos: item.usu_nombre + item.usu_apellido_paterno + item.usu_nickname + item.usu_ghinnumber
                     }
                 ))
                 setPlayers(list)
@@ -152,7 +154,8 @@ export default function RoundsView(route) {
                       nickname: item.usu_nickname,
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
-                      handicap: item.usu_handicapindex
+                      handicap: item.usu_handicapindex,
+                      todos: item.usu_nombre + item.usu_apellido_paterno + item.usu_nickname + item.usu_ghinnumber
                     }
                 ))
                 setPlayers(list)
@@ -293,7 +296,7 @@ export default function RoundsView(route) {
     switch(busqueda){
       case 1:
         setValue1(text) 
-        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+        itemData = `${item.nombre} ${item.todos.toUpperCase()}`;
         break;
       case 2:
         setValue2(text) 
@@ -374,7 +377,7 @@ export default function RoundsView(route) {
 
       {search && <View>
       <SearchBar
-        placeholder={name[language]}
+        placeholder={playerData[language]}
         onChangeText={(text) => searchFilterFunction(text,1)}
         autoCorrect={false}
         value={value1}
@@ -389,7 +392,7 @@ export default function RoundsView(route) {
         borderTopWidth:0,
         borderBottomWidth:0.5}}
       />
-      <SearchBar
+      {/*<SearchBar
         placeholder={lastName[language]}
         onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
@@ -440,7 +443,7 @@ export default function RoundsView(route) {
         justifyContent: 'space-around',
         borderTopWidth:1,
         borderBottomWidth:2}}
-      />
+      />*/}
       </View>}
           <SwipeListView
             refreshControl={
