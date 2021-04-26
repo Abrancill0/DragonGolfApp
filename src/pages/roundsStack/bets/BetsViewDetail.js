@@ -135,6 +135,7 @@ export default function RoundsView(props) {
                   setStatus(false)
                 }
                 else if(tipo == 3){
+                  setRounds(list.reverse())
                   for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
                       collapsedArray3[index]=true
@@ -145,7 +146,6 @@ export default function RoundsView(props) {
                   }
                   setCollapsed3(collapsedArray3)
                   setStatus(false)
-                  setRounds(list.reverse())
                 }
                 else{
                   setRounds(list.reverse())
@@ -551,6 +551,7 @@ export default function RoundsView(props) {
                         <ScrollView style={{flex:.2,padding:5,paddingHorizontal:25}}
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
+                          <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:50,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
@@ -647,6 +648,7 @@ export default function RoundsView(props) {
                           </TouchableOpacity>
                           </View>*/}
                       </Ripple>}
+                      </View>
                           </ScrollView>
               }
               keyExtractor={item=>item.id}

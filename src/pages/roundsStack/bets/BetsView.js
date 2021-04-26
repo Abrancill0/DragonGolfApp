@@ -166,6 +166,13 @@ export default function betsView(route) {
                   setStatus(false)
             }
             else{
+              if(IDBet == 1){
+                collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
+                //collapsedArray2[2]=(true)
+                setCollapsed2(collapsedArray2)
+                //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+              }
+              setCollapsed2(collapsedArray2)
               setRounds2([])
               setStatus(false)
             }
@@ -491,7 +498,7 @@ export default function betsView(route) {
                             </View>*/}
                               </View>
                           </TouchableOpacity>
-                          {rounds2.length!= 0 && collapsed2[item.id-1] && collapsedArray.length!= 0?
+                          {collapsed2[item.id-1]?
                             <BetsViewDetail rounds2={rounds2} collapsedD={collapsed} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />
                           :null}
                           {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>

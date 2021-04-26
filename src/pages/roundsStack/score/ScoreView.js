@@ -182,7 +182,7 @@ class ScoreView extends Component {
                       Ho_Advantage16: item.Ho_Advantage16,
                       Ho_Advantage17: item.Ho_Advantage17,
                       Ho_Advantage18: item.Ho_Advantage18,
-                      initHole:item.initHole
+                      initHole:item.initHole?item.initHole:1
                     }
                 ))
 
@@ -281,7 +281,7 @@ class ScoreView extends Component {
   }
 
   onChangePage2 = (page) => {
-    if(page<17){
+    if(page<=17){
       this.pager.setPage(page)
     }
     else{
