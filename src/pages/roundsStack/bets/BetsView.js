@@ -40,7 +40,7 @@ export default function betsView(route) {
     const navigation = useNavigation();
     const [rounds2, setRounds2] = useState([]);
     const [bets2, setbets2] = useState([]);
-    let collapsedArray = [];
+    const [collapsedArray, setCollapsedArray] = useState([]);
     const [collapsed, setCollapsed] = useState([]);
     let collapsedArray2 = [];
     const [collapsed2, setCollapsed2] = useState([]);
@@ -83,7 +83,7 @@ export default function betsView(route) {
                 ))
                 setbets2(list.reverse())
                 for (var i = 0; i<=list.length - 1; i++) {
-                    collapsedArray2.push(true)
+                    collapsedArray2.push(false)
                   }
                   setCollapsed2(collapsedArray2)
                 setArrayholder(list)
@@ -149,9 +149,12 @@ export default function betsView(route) {
                     }
                 ))
                   setRounds2(list.reverse())
+                  setCollapsed([])
                   for (var i = 0; i<=list.length - 1; i++) {
                     collapsedArray.push(true)
                   }
+                  console.warn(collapsedArray.length)
+                  setCollapsedArray(collapsedArray)
                   setCollapsed(collapsedArray)
                   setArrayholder(list)
                   if(IDBet == 1){
@@ -488,9 +491,9 @@ export default function betsView(route) {
                             </View>*/}
                               </View>
                           </TouchableOpacity>
-                          {rounds2.length!= 0 ?<Collapsible2 collapsed={collapsed2[item.id-1]}>
+                          {rounds2.length!= 0 && collapsed2[item.id-1] && collapsedArray.length!= 0?
                             <BetsViewDetail rounds2={rounds2} collapsedD={collapsed} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />
-                          </Collapsible2>:null}
+                          :null}
                           {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
                             <FontAwesome name={'edit'} size={30} color={Colors.White} />

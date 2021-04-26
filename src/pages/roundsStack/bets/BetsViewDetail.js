@@ -67,7 +67,7 @@ export default function RoundsView(props) {
 
   async function ListadoRondas2(tipo, index) {
     if(tipo!=3){
-      //setStatus(true)
+      setStatus(true)
     }
     let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
@@ -570,8 +570,7 @@ export default function RoundsView(props) {
                             </View>*/}
                               </View>
                           </TouchableOpacity>
-                        <Collapsible collapsed={collapsed3[index]}>
-                        <Ripple
+                        {!collapsed3[index]&&<Ripple
                           rippleColor={Colors.Secondary}
                           onPress={()=>showSheetView(item, index)}
                         >
@@ -647,8 +646,7 @@ export default function RoundsView(props) {
                             <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
                           </TouchableOpacity>
                           </View>*/}
-                      </Ripple>
-                        </Collapsible>
+                      </Ripple>}
                           </ScrollView>
               }
               keyExtractor={item=>item.id}
