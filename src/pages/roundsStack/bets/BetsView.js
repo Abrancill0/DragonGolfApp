@@ -56,11 +56,12 @@ export default function betsView(route) {
     const [carga, setStatus] = useState(false);
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
-         const unsubscribe = navigation.addListener("focus", () => {
+          ListadoBets();
+         /*const unsubscribe = navigation.addListener("focus", () => {
           ListadoBets();
           });
 
-        return unsubscribe;
+        return unsubscribe;*/
       }, [bets2]);
     
 
@@ -499,7 +500,7 @@ export default function betsView(route) {
                               </View>
                           </TouchableOpacity>
                           {collapsed2[item.id-1]?
-                            <BetsViewDetail rounds2={rounds2} collapsedD={collapsed} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />
+                            <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />
                           :null}
                           {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>

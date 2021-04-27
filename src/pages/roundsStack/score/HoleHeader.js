@@ -42,7 +42,7 @@ class HoleHeader extends Component {
           </View>
         }
         </View></TouchableOpacity>
-        <View style={[styles.holeView, {alignSelf:'center', marginHorizontal:40}]}>
+        <View style={[styles.holeView, {alignSelf:'center', marginHorizontal:80}]}>
           <Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>
           <View style={styles.holeNumberView}>
             <Text style={styles.holeNumber}>{hole}</Text>

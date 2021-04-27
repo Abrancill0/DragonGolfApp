@@ -9,7 +9,7 @@ import {
   RefreshControl,
   Text,
   ScrollView,
-  Image
+  Image,
 } from 'react-native';
 import { SearchBar, ButtonGroup } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -59,12 +59,7 @@ export default function RoundsView(route) {
     const BlankProfile = require('../../../../assets/globals/blank-profile.png');
     const [selectedIndex, setSelectedIndex] = useState(0)
         useEffect(() => {
-         const unsubscribe = navigation.addListener("focus", () => {
-            ListadoTodos();
-            setSelectedIndex(0)
-          });
-
-        return unsubscribe;
+          ListadoTodos();
       }, [navigation]);
 
   async function ListadoTodos() {
@@ -350,9 +345,6 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>}
         </View>
-        { visible &&
-          <ScrollView>
-
         {/*<ButtonGroup
               onPress={updateIndex}
               selectedIndex={selectedIndex}
@@ -514,15 +506,13 @@ export default function RoundsView(route) {
                 <Text style={styles.emptyText}>{emptyPlayerList[language]}</Text>
               </View>
             }
-            stopLeftSwipe={Dimensions.get('window').width * .5}
-            stopRightSwipe={-(Dimensions.get('window').width * .5)}
+            //stopLeftSwipe={Dimensions.get('window').width * .5}
+            //stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         {/*<View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
           <DragonButton title={finish[language]} onPress={()=>finalizar()} />
         </View>*/}
-        
-      </ScrollView>}
       </View>
     );
 }

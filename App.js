@@ -55,6 +55,7 @@ import InfoScreen from './src/pages/InfoScreen/InfoScreen';
 import EditUserView from './src/pages/settingsStack/editUser/EditUserView';
 import EditPlayerView from './src/pages/playersStack/editPlayer/EditPlayerView';
 import configureRounds from './src/pages/roundsStack/configRound/ConfigRoundView'
+import EditRound from './src/pages/roundsStack/configRound/EditRound'
 import FlashMessage from "react-native-flash-message";
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -541,6 +542,43 @@ export default class App extends Component {
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <FontAwesomeIcon
                     name='star'
+                    color={Colors.Black}
+                    size={20} />
+              </View>
+              )
+            }
+          },
+          })}
+          />
+        <BottomTab.Screen name="EditRound" component={EditRound} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialIcons
+                    name='settings'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
+              <MaterialIcons
+                    name='settings'
+                    color={Colors.Primary}
+                    size={25} />
+              </View>
+              )
+            }else
+            {
+              return(
+                !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <MaterialIcons
+                    name='settings'
+                    color={Colors.Black}
+                    size={20} />
+              </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
+              <MaterialIcons
+                    name='settings'
                     color={Colors.Black}
                     size={20} />
               </View>

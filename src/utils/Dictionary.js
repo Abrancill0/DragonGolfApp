@@ -159,6 +159,10 @@ export const Dictionary = {
         'en': 'Create Round',
         'es': 'Crear Ronda'
     },
+    EditRound: {
+        'en': 'Edit Round',
+        'es': 'Editar Ronda'
+    },
     CreateBet: {
         'en': 'Create Bet',
         'es': 'Crear Apuesta'

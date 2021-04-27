@@ -548,7 +548,7 @@ export default function RoundsView(props) {
             }
             data={rounds}
             renderItem={({item, index}) =>
-                        <ScrollView style={{flex:.2,padding:5,paddingHorizontal:25}}
+                        <View style={{flex:.2,padding:5,paddingHorizontal:25}}
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
                           <View>
@@ -649,7 +649,7 @@ export default function RoundsView(props) {
                           </View>*/}
                       </Ripple>}
                       </View>
-                          </ScrollView>
+                          </View>
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}
