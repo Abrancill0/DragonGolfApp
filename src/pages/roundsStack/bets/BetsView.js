@@ -56,12 +56,11 @@ export default function betsView(route) {
     const [carga, setStatus] = useState(false);
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
-          ListadoBets();
-         /*const unsubscribe = navigation.addListener("focus", () => {
+         const unsubscribe = navigation.addListener("focus", () => {
           ListadoBets();
           });
 
-        return unsubscribe;*/
+        return unsubscribe;
       }, [bets2]);
     
 
