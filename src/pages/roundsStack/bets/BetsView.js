@@ -65,6 +65,8 @@ export default function betsView(route) {
     
 
   async function ListadoBets() {
+    setCollapsed([])
+    setCollapsedArray([])
                 setStatus(true)
     let language = await AsyncStorage.getItem('language')
     let IDRound = await AsyncStorage.getItem('IDRound')
