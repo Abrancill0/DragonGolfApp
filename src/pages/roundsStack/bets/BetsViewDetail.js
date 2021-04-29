@@ -454,7 +454,7 @@ export default function RoundsView(props) {
           </View>
         </View>
         { visible &&
-          <ScrollView>
+          <ScrollView contentContainerStyle={{paddingBottom:100}}>
 
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>

@@ -25,7 +25,7 @@ import Details from '../../../utils/Details';
 import DragonButton from '../../global/DragonButton';
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
-import { CrearRonda } from '../../../Services/Services'
+import { ActualizarRonda } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -74,14 +74,48 @@ class ConfigRoundView extends Component {
   }
 
   componentDidMount = async () => {
-    const  timestamp  = (new Date()).valueOf();
     let language = await AsyncStorage.getItem('language')
+    let nombreRonda = await AsyncStorage.getItem('nombreRonda');
+    let handicap = await AsyncStorage.getItem('handicap');
+    let hole = await AsyncStorage.getItem('hole');
+    let adv = await AsyncStorage.getItem('adv')==1?true:false;
+    let fecha = await AsyncStorage.getItem('fecha');
+    let IDCourse = await AsyncStorage.getItem('IDCourse');
+    let nombre = await AsyncStorage.getItem('nombre');
+    let selectedButton = 0
+    switch(handicap){
+          case '100': selectedButton = 0
+          break;
+          case '95': selectedButton = 1
+          break;
+          case '90': selectedButton = 2
+          break;
+          case '85': selectedButton = 3
+          break;
+          case '80': selectedButton = 4
+          break;
+        }
+    console.warn(nombreRonda)
+    console.warn(handicap)
+    console.warn(hole)
+    console.warn(adv)
+    console.warn(fecha)
     this.setState({
         language:language,
-        roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000),
-        date: this.formatDate(timestamp / 1000)
+        roundName: nombreRonda,// + ' ' + this.formatDate(timestamp / 1000),
+        date: fecha,//this.formatDate(timestamp / 1000),
+        holeNumber: parseInt(hole),
+        switchAdv: adv,
+        IDCourse: IDCourse,
+        courseName: nombre,
+        selectedButton: selectedButton,
+        pickerTextDate: fecha,
+        pickerTextDate2: fecha.split('/').reverse().join('/')
     })
-    this.refs.nombre.setValue(this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
+    this.refs.nombre.setValue(nombreRonda)//this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
+    if(Platform.OS === 'android'){
+      this.refs.fecha.setValue(fecha)
+      }
     }
 
     navegaBack (){
@@ -126,10 +160,10 @@ class ConfigRoundView extends Component {
 
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-              {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.navegaBack()}>
-                <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-              </TouchableOpacity>*/}
-            </View>
+              <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.openDrawer()}>
+              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
             <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
             <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{EditRound[language]}</Text>
             </View>
@@ -258,7 +292,7 @@ class ConfigRoundView extends Component {
             </View>}
 
             <View style={[styles.bottomButtom,{margin:20}]}>
-                    <DragonButton title={update[language]} /*onPress={this.submit}*/ />
+                    <DragonButton title={update[language]} onPress={this.submit} />
                 </View>
 
           </ScrollView>
@@ -572,7 +606,7 @@ class ConfigRoundView extends Component {
         console.warn(Ro_HandicapAdjustment)
         console.warn(pickerTextDate2)
 
-        CrearRonda(IDCourse, roundName, Ro_HandicapAdjustment, holeNumber, Ro_SwitchAdventage, token, pickerTextDate2)
+        ActualizarRonda(IDCourse, roundName, Ro_HandicapAdjustment, holeNumber, Ro_SwitchAdventage, token, pickerTextDate2)
         .then((res) => {
           console.warn(res)
             if(res.estatus > 0){

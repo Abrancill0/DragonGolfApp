@@ -216,9 +216,16 @@ export default function RoundsView(route) {
     );
   };
 
-  async function muestraRonda(IDCourse, IDRound){
+  async function muestraRonda(IDCourse, IDRound, nombreRonda, handicap, hole, adv, fecha, nombre){
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());
+    AsyncStorage.setItem('nombreRonda', nombreRonda.toString());
+    AsyncStorage.setItem('handicap', handicap.toString());
+    AsyncStorage.setItem('hole', hole.toString());
+    AsyncStorage.setItem('adv', adv.toString());
+    AsyncStorage.setItem('fecha', fecha.toString());
+    AsyncStorage.setItem('IDCourse', IDCourse.toString());
+    AsyncStorage.setItem('nombre', nombre.toString());
   }
 
 
@@ -378,7 +385,7 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idCourse,item.id)}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
