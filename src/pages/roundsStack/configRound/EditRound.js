@@ -36,7 +36,8 @@ const {
       autoAdjust,
       startingHole,
       roundDate: roundDateText,
-      EditRound
+      EditRound,
+      successSaveTeeData
     } = Dictionary;
 
 class ConfigRoundView extends Component {
@@ -560,7 +561,8 @@ class ConfigRoundView extends Component {
           holeNumber,
           switchAdv,
           language,
-          IDCourse
+          IDCourse,
+          courseName
         } = this.state;
 
         if (roundName === "") {
@@ -613,12 +615,19 @@ class ConfigRoundView extends Component {
               this.setState({
                 carga:false
               })
-                /*showMessage({
-                message: "Ronda creada correctamente",
+                showMessage({
+                message: successSaveTeeData[language],
                 type:'success',
-            });*/
+            });
+            AsyncStorage.setItem('nombreRonda', roundName.toString());
+            AsyncStorage.setItem('handicap', Ro_HandicapAdjustment.toString());
+            AsyncStorage.setItem('hole', holeNumber.toString());
+            AsyncStorage.setItem('adv', Ro_SwitchAdventage.toString());
+            AsyncStorage.setItem('fecha', pickerTextDate2.toString());
+            AsyncStorage.setItem('IDCourse', IDCourse.toString());
+            AsyncStorage.setItem('courseName', courseName.toString());
             //navigation.navigate('createDetalleTab', { screen: 'Detalle', params: { RmReqId: RmReqId, RmReqProveedorNombre: RmReqProveedorNombre } })
-            this.props.navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
+            this.props.navigation.goBack()//("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
             //this.props.navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:res.idround} })
             //AsyncStorage.setItem('IDRound', res.idround.toString());
             }

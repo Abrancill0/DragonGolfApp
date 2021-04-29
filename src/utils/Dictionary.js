@@ -476,6 +476,10 @@ export const Dictionary = {
         'en': 'Tee was updated successfully',
         'es': 'El Tee se actualizó correctamente'
     },
+    errorUpdateTee: {
+        'en': 'Tee\'s name already exists',
+        'es': 'El nombre de Tee ya existe'
+    },
     //============= Players 
     successSavePlayer: {
         'en': 'Player was saved successfully',

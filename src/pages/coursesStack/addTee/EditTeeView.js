@@ -25,7 +25,8 @@ const {
       teeColor: teeColorText,
       save,
       update,
-      required
+      required,
+      successUpdateTee
     } = Dictionary;
 
 class AddTeeView extends Component {
@@ -59,6 +60,13 @@ class AddTeeView extends Component {
       };
     //}
   }
+
+  componentDidMount = async () => {
+    let language = await AsyncStorage.getItem('language')
+    this.setState({
+        language:language
+    })
+    }
 
   static navigationOptions = ({ navigation }) => {
     const state = store.getState();
@@ -279,7 +287,7 @@ class AddTeeView extends Component {
           console.warn(res)
             if(res.estatus == 1){
                 showMessage({
-                message: "Tee editado correctamente",
+                message: successUpdateTee[language],
                 type:'success',
             });
             this.props.navigation.navigate("TeesView", {IDCourse:IDCourse})

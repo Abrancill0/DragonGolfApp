@@ -27,7 +27,9 @@ const {
       save,
       update,
       required,
-      createTee
+      createTee,
+      successSaveTee,
+      errorUpdateTee
     } = Dictionary;
 
 class AddTeeView extends Component {
@@ -311,14 +313,14 @@ class AddTeeView extends Component {
           console.warn(res)
             if(res.estatus != 0){
                 showMessage({
-                message: "Tee creado correctamente",
+                message: successSaveTee[language],
                 type:'success',
             });
             this.props.navigation.navigate("TeesView", {IDCourse:IDCourse})
             }
             else{
               showMessage({
-                message: "El nombre de Tee ya existe",
+                message: errorUpdateTee[language],
                 type:'danger',
               });
             }
