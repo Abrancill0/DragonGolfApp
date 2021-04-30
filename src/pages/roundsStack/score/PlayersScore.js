@@ -269,10 +269,13 @@ class PlayersScore extends Component {
     return (
       <View style={{ flex: 1 }}>
       <View style={{ flexDirection: 'row' }}>
-        <View style={{ flex:0.8, justifyContent: 'flex-start' }}>
+        <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
             <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> props.navigation.openDrawer()}>
               <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
+          </View>
+          <View style={{ flex:0.6, justifyContent: 'center' }}>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.hoyos[language]}</Text>
           </View>
         {/*<View style={{ flex:0.2, justifyContent: 'flex-end' }}>
           <TouchableOpacity style={{margin:20, marginTop:0}} onPress={()=> this.guardar(1)}>
@@ -281,7 +284,7 @@ class PlayersScore extends Component {
         </View>*/}
         </View>
         <FlatList
-          ListHeaderComponent={<HoleHeader hole={hole} clickHandlerI2={this.props.clickHandlerI} clickHandlerD2={this.props.clickHandlerD} />}
+          ListHeaderComponent={<HoleHeader hole={hole} clickHandlerI2={this.props.clickHandlerI} clickHandlerD2={this.props.clickHandlerD} clickHandler2={this.props.clickHandler} />}
           data={players}
           extraData={players}
           keyExtractor={item => item.id.toString()}

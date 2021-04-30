@@ -262,7 +262,7 @@ class ScoreView extends Component {
           >
             {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
-                <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} clickHandlerI={this.onChangePage} clickHandlerD={this.onChangePage2} />
+                <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} clickHandlerI={this.onChangePage} clickHandlerD={this.onChangePage2} clickHandler={this.onChangePage3} />
               </View>
             ))}
           </ViewPager>:null
@@ -287,6 +287,10 @@ class ScoreView extends Component {
     else{
       this.pager.setPage(0)
     }
+  }
+
+  onChangePage3 = (page) => {
+    this.pager.setPage(page)
   }
 
   changeTitleText = () => {

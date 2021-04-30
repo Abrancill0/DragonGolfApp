@@ -71,6 +71,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    holeView2: {
+        width: 21,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    holeNumberView2: {
+        width: 23,
+        height: 23,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1.8,
+        borderRadius: 12.5,
+        marginTop: 5,
+        borderColor: Colors.Secondary,
+    },
     holeTitle: {
         fontSize: 15,
         fontWeight: 'bold',

@@ -2107,7 +2107,7 @@ class SettingsView extends Component {
         try{
           if(res.estatus==1){
           showMessage({
-                message: "Settings guardados correctamente",
+                message: Dictionary.successSaveTeeData[language],
                 type: 'success',
             });
           AsyncStorage.setItem('actualizar', "false");

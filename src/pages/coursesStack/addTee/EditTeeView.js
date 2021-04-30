@@ -19,6 +19,7 @@ import moment from 'moment';
 import { ActualizarTees } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const {
       teeName,
@@ -63,6 +64,7 @@ class AddTeeView extends Component {
 
   componentDidMount = async () => {
     let language = await AsyncStorage.getItem('language')
+    console.warn(language)
     this.setState({
         language:language
     })
