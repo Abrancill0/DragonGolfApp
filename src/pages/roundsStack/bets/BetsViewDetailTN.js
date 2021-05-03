@@ -37,15 +37,15 @@ import moment from 'moment';
 import Collapsible from 'react-native-collapsible';
 import styles from './styles';
 
-export default function RoundsView(route) {
+export default function RoundsView(props) {
 
     const navigation = useNavigation();
-    const [IDRound, setIDRound] = useState(route.route.params.IDRound);
-    const [IDBet, setIDBet] = useState(route.route.params.IDBet);
-    const [rounds, setRounds] = useState([]);
+    const [IDRound, setIDRound] = useState(props.IDRound);
+    const [IDBet, setIDBet] = useState(props.IDBet);
+    const [rounds, setRounds] = useState(props.rounds2);
     const [arrayholder, setArrayholder] = useState([]);
-    let collapsedArray = [];
-    const [collapsed, setCollapsed] = useState([]);
+    let collapsedArray3 = props.collapsedArrayD;
+    const [collapsed3, setCollapsed3] = useState(props.collapsedD);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
     const [value3, setValue3] = useState('');
@@ -56,16 +56,16 @@ export default function RoundsView(route) {
     const [carga, setStatus] = useState(false);
     const [carry, setcarry] = useState(false);
     const ScreenWidth = Dimensions.get("window").width;
-        useEffect(() => {
+        /*useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
-        ListadoRondas(1);
+        ListadoRondas2(1);
           });
 
         return unsubscribe;
-      }, [rounds]);
+      }, [rounds]);*/
     
 
-  async function ListadoRondas(tipo, index) {
+  async function ListadoRondas2(tipo, index) {
     if(tipo!=3){
       setStatus(true)
     }
@@ -125,34 +125,34 @@ export default function RoundsView(route) {
                   console.warn(rounds[index].BetD_MontoCalculoF9)
                   for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
-                      collapsedArray[index]=(!collapsed[index])
+                      collapsedArray3[index]=(!collapsed3[index])
                     }
                     else{
-                      collapsedArray[i]=true
+                      collapsedArray3[i]=true
                     }
                   }
-                  setCollapsed(collapsedArray)
+                  setCollapsed3(collapsedArray3)
                   setStatus(false)
                 }
                 else if(tipo == 3){
+                  setRounds(list.reverse())
                   for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
-                      collapsedArray[index]=true
+                      collapsedArray3[index]=true
                     }
                     else{
-                      collapsedArray[i]=true
+                      collapsedArray3[i]=true
                     }
                   }
-                  setCollapsed(collapsedArray)
+                  setCollapsed3(collapsedArray3)
                   setStatus(false)
-                  setRounds(list.reverse())
                 }
                 else{
                   setRounds(list.reverse())
                   for (var i = 0; i<=list.length - 1; i++) {
-                    collapsedArray.push(true)
+                    collapsedArray3.push(true)
                   }
-                  setCollapsed(collapsedArray)
+                  setCollapsed3(collapsedArray3)
                   setArrayholder(list)
                   setStatus(false)
                 }
@@ -292,11 +292,11 @@ export default function RoundsView(route) {
     );
   };
 
-  async function muestraRonda(IDRound, IDBet, IDBetDetail, index){
+  async function muestraRonda2(IDRound, IDBet, IDBetDetail, index){
     CalcularApuesta(IDRound, IDBet, IDBetDetail)
         .then((res) => {
           console.warn(index)
-          ListadoRondas(2,index)
+          ListadoRondas2(2,index)
           /*console.warn(IDBet)
           console.warn(IDBetDetail)
           console.warn(res)*/
@@ -310,7 +310,7 @@ export default function RoundsView(route) {
   async function infoRonda(IDRound,IDBet,BetD_MontoF9,BetD_MontoB9,BetD_Medal,BetD_Carry,BetD_Match, BetD_AdvStrokers){
     navigation.navigate('SNBetViewInfo',{IDBet:IDBet, IDRound:IDRound, BetD_MontoF9:BetD_MontoF9, BetD_MontoB9:BetD_MontoB9, BetD_Medal:BetD_Medal, BetD_Carry:BetD_Carry, BetD_Match:BetD_Match, BetD_AdvStrokers:BetD_AdvStrokers})
     console.warn('hola')
-    //ListadoRondas()
+    //ListadoRondas2()
     //navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail, index:index})
   }
 
@@ -321,7 +321,7 @@ export default function RoundsView(route) {
       .then((res) => {
         console.warn(res)
         if(res.estatus == 1){
-          ListadoRondas(3, index)
+          ListadoRondas2(3, index)
         }
       })
   }
@@ -538,7 +538,7 @@ export default function RoundsView(route) {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  ListadoRondas(1)
+                  ListadoRondas2(1)
                   setValue1('')
                   setValue2('')
                   setValue3('')
@@ -548,12 +548,12 @@ export default function RoundsView(route) {
             }
             data={rounds}
             renderItem={({item, index}) =>
-                    <View style={{flex:.2,padding:5}}>
-                        <ScrollView
+                    <View style={{flex:.2,padding:5,paddingHorizontal:25}}
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
+                          <View>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
+                            <View style={{width: ScreenWidth, flexDirection:'row',height:50,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
@@ -571,8 +571,7 @@ export default function RoundsView(route) {
                             </View>*/}
                               </View>
                           </TouchableOpacity>
-                        <Collapsible collapsed={collapsed[index]}>
-                        <Ripple
+                        {!collapsed3[index]&&<Ripple
                           rippleColor={Colors.Secondary}
                           onPress={()=>showSheetView(item, index)}
                         >
@@ -648,10 +647,9 @@ export default function RoundsView(route) {
                             <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
                           </TouchableOpacity>
                           </View>*/}
-                      </Ripple>
-                        </Collapsible>
-                          </ScrollView>
-                    </View>
+                      </Ripple>}
+                      </View>
+                          </View>
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}

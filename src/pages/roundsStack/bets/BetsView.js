@@ -34,6 +34,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
 import Collapsible2 from 'react-native-collapsible';
 import BetsViewDetail from './BetsViewDetail';
+import BetsViewDetailTN from './BetsViewDetailTN';
 
 export default function betsView(route) {
 
@@ -500,8 +501,9 @@ export default function betsView(route) {
                             </View>*/}
                               </View>
                           </TouchableOpacity>
-                          {collapsed2[item.id-1]?
-                            <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />
+                          {collapsed2[item.id-1]? item.id == 1 ?
+                            <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />:
+                            <BetsViewDetailTN rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />
                           :null}
                           {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>

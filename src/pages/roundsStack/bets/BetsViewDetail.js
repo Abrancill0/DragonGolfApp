@@ -548,7 +548,7 @@ export default function RoundsView(props) {
             }
             data={rounds}
             renderItem={({item, index}) =>
-                        <View style={{flex:.2,padding:5,paddingHorizontal:25}}
+                    <View style={{flex:.2,padding:5,paddingHorizontal:25}}
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
                           <View>
