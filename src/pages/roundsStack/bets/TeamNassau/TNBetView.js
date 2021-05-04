@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Picker, Alert, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Alert, Platform, TouchableOpacity } from 'react-native';
 import styles from '../styles';
+import {Picker} from '@react-native-picker/picker';
 import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, CrearDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
+import { ListadoAmigosRonda, CrearDetalleApuesta, ListadoAmigosRondaDataIndividual } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -16,7 +17,7 @@ const {
   useFactor: useFactorText,
   error,
   successSaveTeeData,
-  samePlayer,
+  samePlayerTN,
   Manually,
   OverrideAdv,
   auto,
@@ -115,7 +116,7 @@ class TNBetView extends Component {
   static navigationOptions = ({ navigation }) => {
 
     return {
-      title: navigation.getParam('Title', 'Single Nassau'),
+      title: navigation.getParam('Title', 'Team Nassau'),
     }
   };
 
@@ -520,12 +521,48 @@ class TNBetView extends Component {
               })
             }
         })
+    ListadoAmigosRondaDataIndividual(idUsu, IDRound)
+        .then((res2) => {
+          console.warn(res2)
+          if(res2.estatus == 1){
+            let useFactor = false
+            if(res2.Result[0].set_snw_use_factor == 1 ){
+              useFactor = true
+            }
+              else{
+              useFactor = false
+              }
+              console.warn(useFactor)
+            this.setState({
+              useFactor : useFactor,
+              front9 : res2.Result[0].set_snw_front_9.toString(),
+              back9 : res2.Result[0].set_snw_back_9.toString(),
+              match : res2.Result[0].set_snw_match.toString(),
+              carry : res2.Result[0].set_snw_carry.toString(),
+              medal : res2.Result[0].set_snw_medal.toString(),
+              autoPress : res2.Result[0].set_snw_automatic_press.toString(),
+              advStrokes : res2.Result[0].set_golpesventaja.toString()
+            })
+          }
+          else{
+            this.setState({
+              useFactor : false,
+              front9 : 0,
+              back9 : 0,
+              match : 0,
+              carry : 0,
+              medal : 0,
+              autoPress : 0,
+              advStrokes : 0
+            })
+          }
+        })
   }
 
   onChangeSwitch = (player, type) => {
     if (type === 'A'){
        this.setState({ playerA: player });
-       ListadoAmigosRondaData(player,this.state.playerC, this.state.IDRound)
+       /*ListadoAmigosRondaData(player,this.state.playerC, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -560,11 +597,11 @@ class TNBetView extends Component {
               advStrokes : 0
             })
           }
-        })
+        })*/
     }
     if (type === 'B'){
       this.setState({ playerB: player });
-      ListadoAmigosRondaData(player, this.state.playerD, this.state.IDRound)
+      /*ListadoAmigosRondaData(player, this.state.playerD, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -599,11 +636,11 @@ class TNBetView extends Component {
               advStrokes : 0
             })
           }
-        })
+        })*/
       }
       if (type === 'C'){
       this.setState({ playerC: player });
-      ListadoAmigosRondaData(this.state.playerA,player, this.state.IDRound)
+      /*ListadoAmigosRondaData(this.state.playerA,player, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -638,11 +675,11 @@ class TNBetView extends Component {
               advStrokes : 0
             })
           }
-        })
+        })*/
       }
       if (type === 'D'){
       this.setState({ playerD: player });
-      ListadoAmigosRondaData(this.state.playerB,player, this.state.IDRound)
+      /*ListadoAmigosRondaData(this.state.playerB,player, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -677,7 +714,7 @@ class TNBetView extends Component {
               advStrokes : 0
             })
           }
-        })
+        })*/
       }
     //this.calculateAdvStrokes(player, type);
     //this.changeBetsValues(player, type);
@@ -876,7 +913,7 @@ class TNBetView extends Component {
     if (playerA === playerB) {
       Alert.alert(
         'Error',
-        Dictionary.samePlayer[language]
+        Dictionary.samePlayerTN[language]
       );
       return false;
     }
@@ -928,14 +965,14 @@ class TNBetView extends Component {
     console.warn(matchUF)
     console.warn(carryUF)
     console.warn(medalUF)
-    if(playerA == playerB || playerA == playerC || playerA == playerD || playerB == playerC || playerB == playerD || playerC == playerD){
+    if(playerA == playerC || playerA == playerD || playerB == playerC || playerB == playerD){
       showMessage({
-        message: samePlayer[this.state.language],
+        message: samePlayerTN[this.state.language],
         type: 'warning',
       });
     }
     else{
-      CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
+      /*CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -951,7 +988,7 @@ class TNBetView extends Component {
               type: 'danger',
             });
           }
-        })
+        })*/
     }
     /*if (this.fieldValidations()) {
       const {

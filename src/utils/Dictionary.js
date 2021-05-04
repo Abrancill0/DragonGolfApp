@@ -736,6 +736,10 @@ export const Dictionary = {
         'en': 'You cannot select the same player',
         'es': 'No puedes seleccionar el mismo jugador'
     },
+    samePlayerTN: {
+        'en': 'You cannot select the same player on different teams',
+        'es': 'No puedes seleccionar el mismo jugador en diferentes equipos'
+    },
     seeResults: {
         'en': 'See results',
         'es': 'Ver resultados'
