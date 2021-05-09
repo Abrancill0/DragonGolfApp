@@ -26,7 +26,7 @@ export default function HoleHeader(props) {
 
   function renderHole(){
     return (
-      <View style={{flex:1,flexDirection:'row'}}>
+      <ScrollView style={{flex:1,flexDirection:'row'}}>
       <TouchableOpacity onPress={() => change(0)}>
           <View style={styles.holeView2}>
             {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
@@ -171,7 +171,7 @@ export default function HoleHeader(props) {
             </View>
           </View>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     )
 
     /*let array = []
