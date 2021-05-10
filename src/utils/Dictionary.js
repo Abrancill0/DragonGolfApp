@@ -796,6 +796,10 @@ export const Dictionary = {
         'en': 'Earnings Summary',
         'es': 'Resumen de Ganancias'
     },
+    closeRound: {
+        'en': 'Close Round',
+        'es': 'Cerrar Ronda'
+    },
     parRangeError: {
         'en': 'The sum of the pairs must be between 70 and 74',
         'es': 'La suma de los pares debe estar entre 70 y 74'

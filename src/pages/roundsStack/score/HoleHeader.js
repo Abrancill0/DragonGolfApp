@@ -3,10 +3,18 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import { Dictionary } from '../../../utils/Dictionary';
 import AsyncStorage from '@react-native-community/async-storage';
+import Colors from '../../../utils/Colors';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 export default function HoleHeader(props) {
   const [language, setLanguage] = useState('');
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(true);
+  const [visible3, setVisible3] = useState(false);
+  const [visible4, setVisible4] = useState(false);
+  const [visible5, setVisible5] = useState(false);
+  const [visible6, setVisible6] = useState(false);
+  const [visible7, setVisible7] = useState(false);
 
   useEffect(() => {
          changeLanguage()
@@ -22,172 +30,6 @@ export default function HoleHeader(props) {
       props.clickHandler2(i)
       setVisible(false)
     }
-
-
-  function renderHole(){
-    return (
-      <ScrollView style={{flex:1,flexDirection:'row'}}>
-      <TouchableOpacity onPress={() => change(0)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{1}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(1)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{2}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(2)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{3}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(3)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{4}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(4)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{5}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(5)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{6}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(6)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{7}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(7)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{8}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(8)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{9}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(9)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{10}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(10)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{11}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(11)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{12}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(12)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{13}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(13)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{14}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(14)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{15}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(15)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{16}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(16)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{17}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => change(17)}>
-          <View style={styles.holeView2}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>*/}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{18}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </ScrollView>
-    )
-
-    /*let array = []
-
-    for (var i = 0; i < 18; i++) {
-      array.push(<TouchableOpacity onPress={() => change(i)}>
-          <View style={[styles.holeView, {left:i, width:20}]}>
-            {/*<Text style={styles.holeTitle}>{Dictionary.hole[language]}</Text>}
-            <View style={styles.holeNumberView2}>
-              <Text style={styles.holeNumber}>{i+1}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>)
-    }
-    return (<View style={{flex:1,flexDirection:'row'}}>{array}</View>)*/
-  }
 
     const {
       hole,
@@ -231,16 +73,17 @@ export default function HoleHeader(props) {
       </View>
       {visible &&<View
           style={{
+            flex:1,
+            flexDirection:'row',
             backgroundColor:'white',
             borderRadius:10,
             paddingHorizontal:5,
             paddingTop:5,
-            alignSelf: "flex-end",
             position: "absolute",
             left: 0,
             right: 0,
             bottom: 0,
-            marginHorizontal:10,
+            marginHorizontal:2,
             shadowColor: "#000",
             shadowOffset: {
               width: 0,
@@ -251,11 +94,185 @@ export default function HoleHeader(props) {
 
             elevation: 17,
           }}>
-          {renderHole()}
-        <View>
-          {/*<Text style={styles.courseName}>{course.name}</Text>
-          <Text style={styles.cityName}>{course.city}</Text>*/}
-        </View>
+      <View style={{flex:1}}>
+      {visible2 &&<View style={{flex:1,flexDirection:'row',alignSelf:'center'}}>
+      <TouchableOpacity style={{alignSelf:'center'}} onPress={() => {setVisible7(true);setVisible2(false)}}>
+          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+      <TouchableOpacity onPress={() => change(0)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{1}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(1)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{2}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(2)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{3}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible3(true);setVisible2(false)}}>
+          <MaterialIcon name={'arrow-forward'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        </View>}
+        {visible3 &&<View style={{flex:1,flexDirection:'row',alignSelf:'center'}}>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible2(true);setVisible3(false)}}>
+          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(3)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{4}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(4)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{5}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(5)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{6}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible4(true);setVisible3(false)}}>
+          <MaterialIcon name={'arrow-forward'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        </View>}
+        {visible4 &&<View style={{flex:1,flexDirection:'row',alignSelf:'center'}}>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible3(true);setVisible4(false)}}>
+          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(6)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{7}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(7)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{8}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(8)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{9}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible5(true);setVisible4(false)}}>
+          <MaterialIcon name={'arrow-forward'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        </View>}
+        {visible5 &&<View style={{flex:1,flexDirection:'row',alignSelf:'center'}}>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible4(true);setVisible5(false)}}>
+          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(9)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{10}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(10)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{11}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(11)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{12}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible6(true);setVisible5(false)}}>
+          <MaterialIcon name={'arrow-forward'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        </View>}
+        {visible6 &&<View style={{flex:1,flexDirection:'row',alignSelf:'center'}}>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible5(true);setVisible6(false)}}>
+          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(12)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{13}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(13)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{14}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(14)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{15}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible7(true);setVisible6(false)}}>
+          <MaterialIcon name={'arrow-forward'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        </View>}
+        {visible7 &&<View style={{flex:1,flexDirection:'row',alignSelf:'center'}}>
+        <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible6(true);setVisible7(false)}}>
+          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(15)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{16}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(16)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{17}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => change(17)}>
+          <View style={styles.holeView2}>
+            <View style={styles.holeNumberView2}>
+              <Text style={styles.holeNumber}>{18}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      <TouchableOpacity style={{alignSelf:'center'}}  onPress={() => {setVisible2(true);setVisible7(false)}}>
+          <MaterialIcon name={'arrow-forward'} size={25} color={Colors.Primary} />
+        </TouchableOpacity>
+        </View>}
+      </View>
+          <TouchableOpacity style={{paddingTop:15}} onPress={() => setVisible(false)}>
+          <Text style={{color:Colors.Primary,fontWeight: 'bold',paddingBottom: 1,paddingRight: 15}}>X</Text>
+        </TouchableOpacity>
       </View>}
       </View>
     );

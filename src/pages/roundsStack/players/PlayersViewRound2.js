@@ -476,7 +476,7 @@ export default function RoundsView(route) {
                         {/*<TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
                           <MaterialIcon name={'info-outline'} size={27} color={Colors.Primary} />
                         </TouchableOpacity>*/ }
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',  margin:20, marginTop:10, alignSelf:'flex-start'}}>{'Strokes: '+item.handicapAuto}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',marginTop:10, alignSelf:'flex-start'}}>{'Strokes: '+item.handicapAuto}</Text>
                         {/*<Image
                           source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
                           style={{

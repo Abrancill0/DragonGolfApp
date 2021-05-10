@@ -28,7 +28,8 @@ class MoreView extends Component {
     const { language } = this.state;
     const {
       earningDetails,
-      more
+      more,
+      closeRound
     } = Dictionary;
 
     return (
@@ -53,6 +54,12 @@ class MoreView extends Component {
           title={earningDetails[language]}
           onPress={() => this.props.navigation.navigate('SummaryView')}
           iconName='ios-cash'
+          iconFamily='Ionicons'
+        />
+        <MoreOptionComponent 
+          title={closeRound[language]} 
+          onPress={() => this.props.navigation.navigate('RoundsStack')} 
+          iconName='ios-close-circle-outline'
           iconFamily='Ionicons'
         />
       </View>
