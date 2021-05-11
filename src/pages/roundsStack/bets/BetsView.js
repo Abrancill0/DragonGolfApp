@@ -160,12 +160,12 @@ export default function betsView(route) {
                   setCollapsedArray(collapsedArray)
                   setCollapsed(collapsedArray)
                   setArrayholder(list)
-                  if(IDBet == 1){
+                  //if(IDBet == 1){
                     collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
                     //collapsedArray2[2]=(true)
                     setCollapsed2(collapsedArray2)
                     //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
-                  }
+                  //}
                   setStatus(false)
             }
             else{

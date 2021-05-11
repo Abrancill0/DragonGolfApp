@@ -86,9 +86,11 @@ class ScoreView extends Component {
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
     let IDRound = await AsyncStorage.getItem('IDRound')
+    let hole = await AsyncStorage.getItem('hole');
     this.setState({
         carga:true,
-        language:language
+        language:language,
+        initHole:parseInt(hole)
     })
     //console.warn(idUsu)
     //console.warn(IDRound)

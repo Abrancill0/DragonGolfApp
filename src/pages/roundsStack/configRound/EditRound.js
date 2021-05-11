@@ -71,6 +71,7 @@ class ConfigRoundView extends Component {
       pickerTextDate,
       pickerTextDate2,
       editDate: false,
+      IDRound: 0
     };
   }
 
@@ -83,6 +84,7 @@ class ConfigRoundView extends Component {
     let fecha = await AsyncStorage.getItem('fecha');
     let IDCourse = await AsyncStorage.getItem('IDCourse');
     let nombre = await AsyncStorage.getItem('nombre');
+    let IDRound = await AsyncStorage.getItem('IDRound');
     let selectedButton = 0
     switch(handicap){
           case '100': selectedButton = 0
@@ -111,7 +113,8 @@ class ConfigRoundView extends Component {
         courseName: nombre,
         selectedButton: selectedButton,
         pickerTextDate: fecha,
-        pickerTextDate2: fecha.split('/').reverse().join('/')
+        pickerTextDate2: fecha.split('/').reverse().join('/'),
+        IDRound: IDRound
     })
     this.refs.nombre.setValue(nombreRonda)//this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
     if(Platform.OS === 'android'){
@@ -562,7 +565,8 @@ class ConfigRoundView extends Component {
           switchAdv,
           language,
           IDCourse,
-          courseName
+          courseName,
+          IDRound
         } = this.state;
 
         if (roundName === "") {
@@ -608,7 +612,7 @@ class ConfigRoundView extends Component {
         console.warn(Ro_HandicapAdjustment)
         console.warn(pickerTextDate2)
 
-        ActualizarRonda(IDCourse, roundName, Ro_HandicapAdjustment, holeNumber, Ro_SwitchAdventage, token, pickerTextDate2)
+        ActualizarRonda(IDCourse, roundName, Ro_HandicapAdjustment, holeNumber, Ro_SwitchAdventage, token, IDRound, pickerTextDate2)
         .then((res) => {
           console.warn(res)
             if(res.estatus > 0){

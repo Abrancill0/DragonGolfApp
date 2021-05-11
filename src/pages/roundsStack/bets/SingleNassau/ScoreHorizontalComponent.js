@@ -603,6 +603,7 @@ export default class ScoreHorizontalComponent extends Component {
         } = Dictionary;
 
         return (
+            b9H.length!=0 &&
             <View style={{ flex: 1 }}>
                 {teesf9.map((item,index) =>
                 <View style={styles.holeHeader}>

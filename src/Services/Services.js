@@ -964,7 +964,7 @@ export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_Starting
                 });
 };
 
-export const ActualizarRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario, Ro_Date) => {
+export const ActualizarRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario, IDRound, Ro_Date) => {
     const URL = RutaBaseAB + "/ActualizarRonda";
     return fetch(URL, {
                 method: "POST",
@@ -979,6 +979,7 @@ export const ActualizarRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_Sta
                     Ro_StartingHole: Ro_StartingHole,
                     Ro_SwitchAdventage: Ro_SwitchAdventage,
                     IDUsuario: IDUsuario,
+                    IDRound: IDRound,
                     Ro_Date: Ro_Date
                 }),
             })
