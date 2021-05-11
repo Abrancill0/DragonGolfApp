@@ -84,6 +84,8 @@ export default function RoundsView(props) {
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
                       Player1: item.Player1,
                       Player2: item.Player2,
+                      BetD_Player1: item.BetD_Player1,
+                      BetD_Player2: item.BetD_Player2,
                       BetD_AdvStrokers: item.BetD_AdvStrokers,
                       BetD_AutoPress: item.BetD_AutoPress,
                       BetD_MontoF9: item.BetD_MontoF9,
@@ -343,8 +345,8 @@ export default function RoundsView(props) {
                     options: [
                         seeResults[language],
                         removeBet[language],
-                        /*editBet[language],
-                        addPress[language],
+                        editBet[language],
+                        /*addPress[language],
                         removePress[language],
                         removeBet[language],*/
                         cancel[language],
@@ -367,9 +369,9 @@ export default function RoundsView(props) {
                 title: `${item.Player1} vs ${item.Player2}`,
                 items: [
                     { title: seeResults[language], icon: resultsIcon },
-                    { title: removeBet[language], icon: removeBetIcon }
-                    /*{ title: editBet[language], icon: editIcon },
-                    { title: addPress[language], icon: addPressIcon },
+                    { title: removeBet[language], icon: removeBetIcon },
+                    { title: editBet[language], icon: editIcon },
+                    /*{ title: addPress[language], icon: addPressIcon },
                     { title: removePress[language], icon: removePressIcon },
                     { title: removeBet[language], icon: removeBetIcon },*/
                 ],
@@ -395,6 +397,9 @@ export default function RoundsView(props) {
                         { text: Dictionary.delete[language], onPress: _ => Elimina(item.id,index), style: 'destructive' }
                     ]
                 )
+                break;
+            case 2:
+                navigation.navigate('SNBetViewEdit',{IDBet:IDBet, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, BetD_AutoPress:item.BetD_AutoPress})
                 break;
             /*case 2:
                 item.manual_press = manualPress + 1;

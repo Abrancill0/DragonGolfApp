@@ -800,6 +800,10 @@ export const Dictionary = {
         'en': 'Close Round',
         'es': 'Cerrar Ronda'
     },
+    closeRoundSuccess: {
+        'en': 'Round closed successfully',
+        'es': 'Ronda cerrada con éxito'
+    },
     parRangeError: {
         'en': 'The sum of the pairs must be between 70 and 74',
         'es': 'La suma de los pares debe estar entre 70 y 74'

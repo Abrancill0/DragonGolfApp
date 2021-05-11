@@ -440,9 +440,9 @@ export default function RoundsView(props) {
             color={Colors.Primary} />
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+            {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>TEAM NASSAU{/*bets[language]*/}</Text>

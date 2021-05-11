@@ -102,6 +102,7 @@ export default function betsView(route) {
   async function ListadoRondas(IDBet) {
     let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
+    setRounds2([])
     console.warn(IDUsuario)
     console.warn('IDUsuario')
     setLanguage(language)
@@ -169,12 +170,12 @@ export default function betsView(route) {
                   setStatus(false)
             }
             else{
-              if(IDBet == 1){
+              //if(IDBet == 1){
                 collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
                 //collapsedArray2[2]=(true)
                 setCollapsed2(collapsedArray2)
                 //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
-              }
+              //}
               setCollapsed2(collapsedArray2)
               setRounds2([])
               setStatus(false)

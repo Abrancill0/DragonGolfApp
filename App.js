@@ -36,6 +36,7 @@ import SNBetListComponent from './src/pages/roundsStack/bets/SingleNassau/SNBetL
 import SNBetView from './src/pages/roundsStack/bets/SingleNassau/SNBetView'
 import TNBetView from './src/pages/roundsStack/bets/TeamNassau/TNBetView'
 import SNBetViewInfo from './src/pages/roundsStack/bets/SingleNassau/SNBetViewInfo'
+import SNBetViewEdit from './src/pages/roundsStack/bets/SingleNassau/SNBetViewEdit'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeesViewRound from './src/pages/roundsStack/players/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
@@ -1076,6 +1077,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='SNBetViewInfo' component={SNBetViewInfo}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='SNBetViewEdit' component={SNBetViewEdit}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

@@ -7,26 +7,6 @@ import Colors from '../../../../utils/Colors';
 import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import AsyncStorage from '@react-native-community/async-storage';
 
-let f9H = []
-let f9HA = []
-let b9H = []
-let b9HA = []
-let teesf9 = []
-let teesb9 = []
-let ScoreIn = []
-let ScoreOut = []
-let ScoreInGP = []
-let ScoreOutGP = []
-let f9GV = []
-let b9GV = []
-let TeeColor = []
-let TeeNumberF = []
-let TeeNumberB = []
-let teeParf9 = []
-let teeParb9 = []
-let Presionf9 = []
-let Presionb9 = []
-
 export default class ScoreHorizontalComponent extends Component {
     constructor(props) {
         super(props);
@@ -41,25 +21,25 @@ export default class ScoreHorizontalComponent extends Component {
 
         this.state = {
             language: 'es',
-            f9H,
-            f9HA,
-            b9H,
-            b9HA,
-            f9GV,
-            b9GV,
-            teesf9,
-            teesb9,
-            Presionf9,
-            Presionb9,
-            teeParf9,
-            teeParb9,
-            ScoreIn,
-            ScoreOut,
-            ScoreInGP,
-            ScoreOutGP,
-            TeeColor,
-            TeeNumberF,
-            TeeNumberB
+            f9H:[],
+            f9HA:[],
+            b9H:[],
+            b9HA:[],
+            f9GV:[],
+            b9GV:[],
+            teesf9:[],
+            teesb9:[],
+            Presionf9:[],
+            Presionb9:[],
+            teeParf9:[],
+            teeParb9:[],
+            ScoreIn:[],
+            ScoreOut:[],
+            ScoreInGP:[],
+            ScoreOutGP:[],
+            TeeColor:[],
+            TeeNumberF:[],
+            TeeNumberB:[]
         };
 
         /*
@@ -72,8 +52,33 @@ export default class ScoreHorizontalComponent extends Component {
 
     componentDidMount = async () => {
 
+        let f9H = []
+        let f9HA = []
+        let b9H = []
+        let b9HA = []
+        let teesf9 = []
+        let teesb9 = []
+        let ScoreIn = []
+        let ScoreOut = []
+        let ScoreInGP = []
+        let ScoreOutGP = []
+        let f9GV = []
+        let b9GV = []
+        let TeeColor = []
+        let TeeNumberF = []
+        let TeeNumberB = []
+        let teeParf9 = []
+        let teeParb9 = []
+        let Presionf9 = []
+        let Presionb9 = []
+
         let hole = await AsyncStorage.getItem('hole');
         let language = await AsyncStorage.getItem('language')
+
+        for (var j = 0 ; j <= this.props.holeInfo.length - 1; j++) {
+            Presionf9.push([this.props.holeInfo[j]['Hoyo1Presion'], this.props.holeInfo[j]['Hoyo2Presion'], this.props.holeInfo[j]['Hoyo3Presion'], this.props.holeInfo[j]['Hoyo4Presion'], this.props.holeInfo[j]['Hoyo5Presion'], this.props.holeInfo[j]['Hoyo6Presion'], this.props.holeInfo[j]['Hoyo7Presion'], this.props.holeInfo[j]['Hoyo8Presion'], this.props.holeInfo[j]['Hoyo9Presion']])
+            Presionb9.push([this.props.holeInfo[j]['Hoyo10Presion'], this.props.holeInfo[j]['Hoyo11Presion'], this.props.holeInfo[j]['Hoyo12Presion'], this.props.holeInfo[j]['Hoyo13Presion'], this.props.holeInfo[j]['Hoyo14Presion'], this.props.holeInfo[j]['Hoyo15Presion'], this.props.holeInfo[j]['Hoyo16Presion'], this.props.holeInfo[j]['Hoyo17Presion'], this.props.holeInfo[j]['Hoyo18Presion']]   )
+        }
 
         switch(parseInt(hole)){
             case 1:
@@ -90,8 +95,6 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion']]   )
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -116,8 +119,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -142,8 +145,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -168,8 +171,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -194,8 +197,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -220,8 +223,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -246,8 +249,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'],this.props.holeInfo[i]['GolpesVentaja6_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'],this.props.holeInfo[i]['ho_par15']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'],this.props.holeInfo[i]['ho_par6']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'],this.props.holeInfo[i]['Hoyo15Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'],this.props.holeInfo[i]['Hoyo6Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'],this.props.holeInfo[i]['Hoyo15Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'],this.props.holeInfo[i]['Hoyo6Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -272,8 +275,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'],this.props.holeInfo[i]['GolpesVentaja6_tee'],this.props.holeInfo[i]['GolpesVentaja7_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'],this.props.holeInfo[i]['ho_par15'],this.props.holeInfo[i]['ho_par16']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'],this.props.holeInfo[i]['ho_par6'],this.props.holeInfo[i]['ho_par7']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'],this.props.holeInfo[i]['Hoyo15Presion'],this.props.holeInfo[i]['Hoyo16Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'],this.props.holeInfo[i]['Hoyo6Presion'],this.props.holeInfo[i]['Hoyo7Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'],this.props.holeInfo[i]['Hoyo15Presion'],this.props.holeInfo[i]['Hoyo16Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'],this.props.holeInfo[i]['Hoyo6Presion'],this.props.holeInfo[i]['Hoyo7Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -298,8 +301,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'],this.props.holeInfo[i]['GolpesVentaja6_tee'],this.props.holeInfo[i]['GolpesVentaja7_tee'],this.props.holeInfo[i]['GolpesVentaja8_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'],this.props.holeInfo[i]['ho_par15'],this.props.holeInfo[i]['ho_par16'],this.props.holeInfo[i]['ho_par17']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'],this.props.holeInfo[i]['ho_par6'],this.props.holeInfo[i]['ho_par7'],this.props.holeInfo[i]['ho_par8']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'],this.props.holeInfo[i]['Hoyo15Presion'],this.props.holeInfo[i]['Hoyo16Presion'],this.props.holeInfo[i]['Hoyo17Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'],this.props.holeInfo[i]['Hoyo6Presion'],this.props.holeInfo[i]['Hoyo7Presion'],this.props.holeInfo[i]['Hoyo8Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'],this.props.holeInfo[i]['Hoyo15Presion'],this.props.holeInfo[i]['Hoyo16Presion'],this.props.holeInfo[i]['Hoyo17Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'],this.props.holeInfo[i]['Hoyo6Presion'],this.props.holeInfo[i]['Hoyo7Presion'],this.props.holeInfo[i]['Hoyo8Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -324,8 +327,8 @@ export default class ScoreHorizontalComponent extends Component {
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee']]   )
                     teeParb9.push([this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9']])
                     teeParf9.push([this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18']]   )
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion']])
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion']]   )
+                    /*Presionb9.push([this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion']])
+                    Presionf9.push([this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -350,8 +353,8 @@ export default class ScoreHorizontalComponent extends Component {
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee']]   )
                     teeParb9.push([this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10']])
                     teeParf9.push([this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1']]   )
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion']])
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion']]   )
+                    /*Presionb9.push([this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion']])
+                    Presionf9.push([this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -376,8 +379,8 @@ export default class ScoreHorizontalComponent extends Component {
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee']]   )
                     teeParb9.push([this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11']])
                     teeParf9.push([this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2']]   )
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion']])
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion']]   )
+                    /*Presionb9.push([this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion']])
+                    Presionf9.push([this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -402,8 +405,8 @@ export default class ScoreHorizontalComponent extends Component {
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee']]   )
                     teeParb9.push([this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12']])
                     teeParf9.push([this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3']]   )
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion']])
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion']]   )
+                    /*Presionb9.push([this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion']])
+                    Presionf9.push([this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -428,8 +431,8 @@ export default class ScoreHorizontalComponent extends Component {
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee']]   )
                     teeParb9.push([this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13']])
                     teeParf9.push([this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4']]   )
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion']])
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion']]   )
+                    /*Presionb9.push([this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion']])
+                    Presionf9.push([this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -454,8 +457,8 @@ export default class ScoreHorizontalComponent extends Component {
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee']]   )
                     teeParb9.push([this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14']])
                     teeParf9.push([this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5']]   )
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion']])
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion']]   )
+                    /*Presionb9.push([this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion']])
+                    Presionf9.push([this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -480,8 +483,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -506,8 +509,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par17'], this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par8'], this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo17Presion'], this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo8Presion'], this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -532,8 +535,8 @@ export default class ScoreHorizontalComponent extends Component {
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'], this.props.holeInfo[i]['GolpesVentaja15_tee'], this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee']]   )
                     teeParf9.push([this.props.holeInfo[i]['ho_par18'], this.props.holeInfo[i]['ho_par1'], this.props.holeInfo[i]['ho_par2'], this.props.holeInfo[i]['ho_par3'], this.props.holeInfo[i]['ho_par4'], this.props.holeInfo[i]['ho_par5'], this.props.holeInfo[i]['ho_par6'], this.props.holeInfo[i]['ho_par7'], this.props.holeInfo[i]['ho_par8']])
                     teeParb9.push([this.props.holeInfo[i]['ho_par9'], this.props.holeInfo[i]['ho_par10'], this.props.holeInfo[i]['ho_par11'], this.props.holeInfo[i]['ho_par12'], this.props.holeInfo[i]['ho_par13'], this.props.holeInfo[i]['ho_par14'], this.props.holeInfo[i]['ho_par15'], this.props.holeInfo[i]['ho_par16'], this.props.holeInfo[i]['ho_par17']]   )
-                    Presionf9.push([this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion']])
-                    Presionb9.push([this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo7Presion']]   )
+                    /*Presionf9.push([this.props.holeInfo[i]['Hoyo18Presion'], this.props.holeInfo[i]['Hoyo1Presion'], this.props.holeInfo[i]['Hoyo2Presion'], this.props.holeInfo[i]['Hoyo3Presion'], this.props.holeInfo[i]['Hoyo4Presion'], this.props.holeInfo[i]['Hoyo5Presion'], this.props.holeInfo[i]['Hoyo6Presion'], this.props.holeInfo[i]['Hoyo7Presion'], this.props.holeInfo[i]['Hoyo8Presion']])
+                    Presionb9.push([this.props.holeInfo[i]['Hoyo9Presion'], this.props.holeInfo[i]['Hoyo10Presion'], this.props.holeInfo[i]['Hoyo11Presion'], this.props.holeInfo[i]['Hoyo12Presion'], this.props.holeInfo[i]['Hoyo13Presion'], this.props.holeInfo[i]['Hoyo14Presion'], this.props.holeInfo[i]['Hoyo15Presion'], this.props.holeInfo[i]['Hoyo16Presion'], this.props.holeInfo[i]['Hoyo7Presion']]   )*/
                 }
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
@@ -563,7 +566,9 @@ export default class ScoreHorizontalComponent extends Component {
             ScoreOut,
             ScoreInGP,
             ScoreOutGP,
-            TeeColor
+            TeeColor,
+            TeeNumberF,
+            TeeNumberB
         })
     }
 
@@ -587,7 +592,9 @@ export default class ScoreHorizontalComponent extends Component {
             ScoreOutGP,
             b9H,
             b9HA,
-            TeeColor
+            TeeColor,
+            TeeNumberF,
+            TeeNumberB
         } = this.state;
 
         const {

@@ -655,6 +655,24 @@ export const ListarRonda = (IDUsuario) => {
                 });
 };
 
+export const CerrarRonda = (IDRound) => {
+    const URL = RutaBaseAB + "/CerrarRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: IDRound
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaApuesta = () => {
     const URL = RutaBaseAB + "/ListaApuesta";
     return fetch(URL, {
@@ -733,6 +751,50 @@ export const CrearDetalleApuesta = (IDBet,IDRonda,BetD_Player1,BetD_Player2,BetD
                 },
                 body: JSON.stringify({
                     IDBet: IDBet,
+                    IDRonda: IDRonda,
+                    BetD_Player1: BetD_Player1,
+                    BetD_Player2: BetD_Player2,
+                    BetD_MontoF9: BetD_MontoF9,
+                    BetD_MontoB9: BetD_MontoB9,
+                    BetD_Match: BetD_Match,
+                    BetD_Carry: BetD_Carry,
+                    BetD_Medal: BetD_Medal,
+                    BetD_AutoPress: BetD_AutoPress,
+                    BetD_ManuallyOverrideAdv: BetD_ManuallyOverrideAdv,
+                    BetD_AdvStrokers: BetD_AdvStrokers
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const ActualizarDetalleApuesta = (IDBet,IDBetDetail,IDRonda,BetD_Player1,BetD_Player2,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers) => {
+    const URL = RutaBaseAB + "/ActualizarDetalleApuesta";
+    console.warn('---------------SER-------------------')
+    console.warn(IDBet)
+    console.warn(IDRonda)
+    console.warn(BetD_Player1)
+    console.warn(BetD_Player2)
+    console.warn(BetD_MontoF9)
+    console.warn(BetD_MontoB9)
+    console.warn(BetD_Match)
+    console.warn(BetD_Carry)
+    console.warn(BetD_Medal)
+    console.warn(BetD_AutoPress)
+    console.warn(BetD_ManuallyOverrideAdv)
+    console.warn(BetD_AdvStrokers)
+    console.warn('----------------------------------')
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDBet: IDBet,
+                    IDBetDetail: IDBetDetail,
                     IDRonda: IDRonda,
                     BetD_Player1: BetD_Player1,
                     BetD_Player2: BetD_Player2,

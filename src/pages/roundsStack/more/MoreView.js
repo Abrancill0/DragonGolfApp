@@ -6,6 +6,8 @@ import styles from './styles';
 import MoreOptionComponent from './MoreOptionComponent';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
+import { CerrarRonda } from '../../../Services/Services'
+import { showMessage } from "react-native-flash-message";
 
 class MoreView extends Component {
   constructor(props) {
@@ -22,6 +24,27 @@ class MoreView extends Component {
         language:language
     })
     }
+
+  cierraRonda = async () => {
+    let IDRound = await AsyncStorage.getItem('IDRound')
+    CerrarRonda(IDRound)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+              showMessage({
+                message: Dictionary.closeRoundSuccess[this.state.language],
+                type: 'success',
+              });
+              this.props.navigation.navigate('RoundsStack')
+            }
+            else{
+              showMessage({
+                message: Dictionary.error[this.state.language],
+                type: 'danger',
+              });
+            }
+        })
+  }
 
   render() {
 
@@ -58,7 +81,7 @@ class MoreView extends Component {
         />
         <MoreOptionComponent 
           title={closeRound[language]} 
-          onPress={() => this.props.navigation.navigate('RoundsStack')} 
+          onPress={() => this.cierraRonda()}
           iconName='ios-close-circle-outline'
           iconFamily='Ionicons'
         />
