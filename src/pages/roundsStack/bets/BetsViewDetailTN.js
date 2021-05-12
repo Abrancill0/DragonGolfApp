@@ -26,7 +26,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoDetalleApuesta, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuestaTeam, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -74,7 +74,7 @@ export default function RoundsView(props) {
     console.warn(IDUsuario)
     console.warn('IDUsuario')
     setLanguage(language)
-    ListadoDetalleApuesta(IDRound,IDBet, IDUsuario)
+    ListadoDetalleApuestaTeam(IDRound,IDBet, IDUsuario)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){

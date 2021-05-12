@@ -708,6 +708,26 @@ export const ListadoDetalleApuesta = (IDRonda,IDBet, IDUsuario) => {
                 });
 };
 
+export const ListadoDetalleApuestaTeam = (IDRonda,IDBet, IDUsuario) => {
+    const URL = RutaBaseAB + "/ListadoDetalleApuestaTeam";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRonda: IDRonda,
+                    IDBet: IDBet,
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListadoDetalleApuestaIndividual = (IDBetDetail, IDUsuario) => {
     const URL = RutaBaseAB + "/ListadoDetalleApuestaIndividual";
     return fetch(URL, {
