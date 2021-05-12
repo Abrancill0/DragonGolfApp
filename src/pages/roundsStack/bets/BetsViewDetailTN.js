@@ -84,6 +84,12 @@ export default function RoundsView(props) {
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
                       Player1: item.Player1,
                       Player2: item.Player2,
+                      Player3: item.Player3,
+                      Player4: item.Player4,
+                      BetD_Player1: item.BetD_Player1,
+                      BetD_Player2: item.BetD_Player2,
+                      BetD_Player3: item.BetD_Player3,
+                      BetD_Player4: item.BetD_Player4,
                       BetD_AdvStrokers: item.BetD_AdvStrokers,
                       BetD_AutoPress: item.BetD_AutoPress,
                       BetD_MontoF9: item.BetD_MontoF9,
@@ -343,8 +349,8 @@ export default function RoundsView(props) {
                     options: [
                         seeResults[language],
                         removeBet[language],
-                        /*editBet[language],
-                        addPress[language],
+                        editBet[language],
+                        /*addPress[language],
                         removePress[language],
                         removeBet[language],*/
                         cancel[language],
@@ -353,7 +359,7 @@ export default function RoundsView(props) {
                     cancelButtonIndex: 5,
                 },
                 (index2) => {
-                    if (index2 !== 5) doAction(index,index2, item);
+                    if (index2 !== 3) doAction(index,index2, item);
                 },
             );
         } else {
@@ -364,12 +370,12 @@ export default function RoundsView(props) {
             const removeBetIcon = <Icon name='md-trash' color={Colors.Primary} size={40} family={"Ionicons"} />;
 
             RNBottomActionSheet.SheetView.Show({
-                title: `${item.Player1} vs ${item.Player2}`,
+                title: `${item.Player1} ${item.Player3} vs ${item.Player2} ${item.Player4}`,
                 items: [
                     { title: seeResults[language], icon: resultsIcon },
-                    { title: removeBet[language], icon: removeBetIcon }
-                    /*{ title: editBet[language], icon: editIcon },
-                    { title: addPress[language], icon: addPressIcon },
+                    { title: removeBet[language], icon: removeBetIcon },
+                    { title: editBet[language], icon: editIcon },
+                    /*{ title: addPress[language], icon: addPressIcon },
                     { title: removePress[language], icon: removePressIcon },
                     { title: removeBet[language], icon: removeBetIcon },*/
                 ],
@@ -384,7 +390,7 @@ export default function RoundsView(props) {
       console.warn(item)
         switch (index2) {
             case 0:
-                navigation.navigate('SNScoreCardView',{Item:item});
+                navigation.navigate('TNScoreCardView',{Item:item});
                 break;
             case 1:
                 Alert.alert(
@@ -395,6 +401,9 @@ export default function RoundsView(props) {
                         { text: Dictionary.delete[language], onPress: _ => Elimina(item.id,index), style: 'destructive' }
                     ]
                 )
+                break;
+            case 2:
+                navigation.navigate('TNBetViewEdit',{IDBet:IDBet, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, BetD_AutoPress:item.BetD_AutoPress})
                 break;
             /*case 2:
                 item.manual_press = manualPress + 1;
@@ -558,7 +567,7 @@ export default function RoundsView(props) {
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>*/}
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' ' + item.Player3 + ' VS '+ item.Player2 + ' ' + item.Player4}</Text>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>*/}
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
@@ -579,7 +588,7 @@ export default function RoundsView(props) {
                             <View style={styles.betGeneralInfoView}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={[styles.advInfo, { color: rounds[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds[index].BetD_AdvStrokers}] </Text>
-                                    <Text style={styles.vsInfo}> {rounds[index].Player1} vs {rounds[index].Player2}</Text>
+                                    <Text style={styles.vsInfo}> {rounds[index].Player1} {rounds[index].Player3} vs {rounds[index].Player2} {rounds[index].Player4}</Text>
                                 </View>
                                 <Text style={[styles.profitText, { color: rounds[index].BetD_MontoPerdidoGanado < 0 ? Colors.Primary : rounds[index].BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${rounds[index].BetD_MontoPerdidoGanado}</Text>
                             </View>

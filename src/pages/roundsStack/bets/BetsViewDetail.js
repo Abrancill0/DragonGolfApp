@@ -355,7 +355,7 @@ export default function RoundsView(props) {
                     cancelButtonIndex: 5,
                 },
                 (index2) => {
-                    if (index2 !== 2) doAction(index,index2, item);
+                    if (index2 !== 3) doAction(index,index2, item);
                 },
             );
         } else {
@@ -628,7 +628,7 @@ export default function RoundsView(props) {
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={{ textDecorationLine: rounds[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none', color: rounds[index].BetD_MachMonto < 0 ? 'red' : Colors.Black   }}>${rounds[index].BetD_MachMonto} <Text
+                                    <Text style={{ fontSize: 14, textDecorationLine: rounds[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none', color: rounds[index].BetD_MachMonto < 0 ? 'red' : Colors.Black   }}>${rounds[index].BetD_MachMonto} <Text
                                         style={{
                                             textDecorationLine: rounds[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none',
                                             fontWeight: 'bold',
@@ -637,7 +637,7 @@ export default function RoundsView(props) {
                                         Match = {rounds[index].BetD_CarryCalculado !=0 ? 0 : rounds[index].BetD_Match}
                                     </Text></Text>
                                     {rounds[index].BetD_CarryCalculado !=0 && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
-                                    <Text style={{ fontWeight: 'bold', color: rounds[index].BetD_MontoApuestaMedal < 0 ? Colors.Primary : Colors.Black }}>${rounds[index].BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: rounds[index].BetD_Medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {rounds[index].BetD_Medal}</Text></Text>
+                                    <Text style={{ fontSize: 14, fontWeight: 'bold', color: rounds[index].BetD_MontoApuestaMedal < 0 ? Colors.Primary : Colors.Black }}>${rounds[index].BetD_MontoApuestaMedal} <Text style={{ fontSize: 14, fontWeight: 'bold', color: rounds[index].BetD_Medal < 0 ? Colors.Primary : Colors.Black }}>Medal = {rounds[index].BetD_Medal}</Text></Text>
                                 </View>
                             </View>
                             {/*<View style={[styles.bottomButtom,{flex:0.1, margin:10}]}>

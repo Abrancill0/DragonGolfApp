@@ -29,6 +29,7 @@ import BetsView from './src/pages/roundsStack/bets/BetsView'
 import More from './src/pages/roundsStack/more/MoreView'
 import ScoreCardView from './src/pages/roundsStack/more/ScoreCardView'
 import SNScoreCardView from './src/pages/roundsStack/bets/SingleNassau/ScoreCardView'
+import TNScoreCardView from './src/pages/roundsStack/bets/TeamNassau/ScoreCardView'
 import SummaryView from './src/pages/roundsStack/bets/SummaryView'
 import BetsViewDetail from './src/pages/roundsStack/bets/BetsViewDetail'
 import BetsViewDetailTN from './src/pages/roundsStack/bets/BetsViewDetailTN'
@@ -37,6 +38,8 @@ import SNBetView from './src/pages/roundsStack/bets/SingleNassau/SNBetView'
 import TNBetView from './src/pages/roundsStack/bets/TeamNassau/TNBetView'
 import SNBetViewInfo from './src/pages/roundsStack/bets/SingleNassau/SNBetViewInfo'
 import SNBetViewEdit from './src/pages/roundsStack/bets/SingleNassau/SNBetViewEdit'
+import TNBetViewInfo from './src/pages/roundsStack/bets/TeamNassau/TNBetViewInfo'
+import TNBetViewEdit from './src/pages/roundsStack/bets/TeamNassau/TNBetViewEdit'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeesViewRound from './src/pages/roundsStack/players/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
@@ -1100,6 +1103,30 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+          <Stack.Screen name='TNBetViewInfo' component={TNBetViewInfo}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='TNBetViewEdit' component={TNBetViewEdit}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
           <Stack.Screen name='SNBetListComponent' component={SNBetListComponent}
           options={({ route }) => ({
             headerBackTitle: '',
@@ -1113,6 +1140,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='SNScoreCardView' component={SNScoreCardView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='TNScoreCardView' component={TNScoreCardView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

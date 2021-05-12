@@ -6,7 +6,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, CrearDetalleApuesta, ListadoAmigosRondaDataIndividual } from '../../../../Services/Services'
+import { ListadoAmigosRonda, CrearDetalleApuestaTeam, InfoUsuarioAB } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -521,12 +521,12 @@ class TNBetView extends Component {
               })
             }
         })
-    ListadoAmigosRondaDataIndividual(idUsu, IDRound)
+    InfoUsuarioAB(idUsu)
         .then((res2) => {
           console.warn(res2)
           if(res2.estatus == 1){
             let useFactor = false
-            if(res2.Result[0].set_snw_use_factor == 1 ){
+            if(res2.Result[0].set_tmw_use_factor == 1 ){
               useFactor = true
             }
               else{
@@ -535,13 +535,13 @@ class TNBetView extends Component {
               console.warn(useFactor)
             this.setState({
               useFactor : useFactor,
-              front9 : res2.Result[0].set_snw_front_9.toString(),
-              back9 : res2.Result[0].set_snw_back_9.toString(),
-              match : res2.Result[0].set_snw_match.toString(),
-              carry : res2.Result[0].set_snw_carry.toString(),
-              medal : res2.Result[0].set_snw_medal.toString(),
-              autoPress : res2.Result[0].set_snw_automatic_press.toString(),
-              advStrokes : res2.Result[0].set_golpesventaja.toString()
+              front9 : res2.Result[0].set_tmw_front_9.toString(),
+              back9 : res2.Result[0].set_tmw_back_9.toString(),
+              match : res2.Result[0].set_tmw_match.toString(),
+              carry : res2.Result[0].set_tmw_carry.toString(),
+              medal : res2.Result[0].set_tmw_medal.toString(),
+              autoPress : res2.Result[0].set_tmw_automatic_press.toString(),
+              //advStrokes : res2.Result[0].set_tmw_adv_strokes.toString()
             })
           }
           else{
@@ -972,7 +972,7 @@ class TNBetView extends Component {
       });
     }
     else{
-      /*CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
+      CrearDetalleApuestaTeam(IDBet,IDRound,playerA,playerC,playerB,playerD,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -988,7 +988,7 @@ class TNBetView extends Component {
               type: 'danger',
             });
           }
-        })*/
+        })
     }
     /*if (this.fieldValidations()) {
       const {
