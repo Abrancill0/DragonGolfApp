@@ -732,7 +732,7 @@ class SNBetView extends Component {
     console.warn(matchUF)
     console.warn(carryUF)
     console.warn(medalUF)
-    if(playerA == playerB){
+    /*if(playerA == playerB){
       showMessage({
         message: samePlayer[this.state.language],
         type: 'warning',
@@ -756,7 +756,7 @@ class SNBetView extends Component {
             });
           }
         })
-    }
+    }*/
     /*if (this.fieldValidations()) {
       const {
         useFactor,
