@@ -952,6 +952,8 @@ class TNBetView extends Component {
     console.warn(override)
     console.warn(advStrokes)
     console.warn(whoGetsAdv)
+    let whoGetsString =  whoGetsAdv === 0 ? 'hihcp' : whoGetsAdv === 1 ? 'lowhcp' : whoGetsAdv === 3 ? 'slidhi' : whoGetsAdv === 4 ? 'slidlow' : whoGetsAdv === 5 ? 'automatic' : 'each'
+    console.warn(whoGetsString)
     console.warn(playerA)
     console.warn(playerB)
     console.warn(playerC)
@@ -972,7 +974,7 @@ class TNBetView extends Component {
       });
     }
     else{
-      CrearDetalleApuestaTeam(IDBet,IDRound,playerA,playerC,playerB,playerD,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
+      CrearDetalleApuestaTeam(IDBet,IDRound,playerA,playerC,playerB,playerD,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes,whoGetsString)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
