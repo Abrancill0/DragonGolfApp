@@ -7,26 +7,6 @@ import Colors from '../../../utils/Colors';
 import ChangeStartingHole from '../../../utils/ChangeStartingHole';
 import AsyncStorage from '@react-native-community/async-storage';
 
-let f9H = []
-let f9HA = []
-let b9H = []
-let b9HA = []
-let teesf9 = []
-let teesb9 = []
-let ScoreIn = []
-let ScoreOut = []
-let ScoreInGP = []
-let ScoreOutGP = []
-let f9GV = []
-let b9GV = []
-let TeeColor = []
-let TeeNumberF = []
-let TeeNumberB = []
-let teeParf9 = []
-let teeParb9 = []
-let Presionf9 = []
-let Presionb9 = []
-
 export default class ScoreVerticalComponent extends Component {
     constructor(props) {
         super(props);
@@ -43,25 +23,25 @@ export default class ScoreVerticalComponent extends Component {
 
         this.state = {
             language: 'es',
-            f9H,
-            f9HA,
-            b9H,
-            b9HA,
-            f9GV,
-            b9GV,
-            teesf9,
-            teesb9,
-            Presionf9,
-            Presionb9,
-            teeParf9,
-            teeParb9,
-            ScoreIn,
-            ScoreOut,
-            ScoreInGP,
-            ScoreOutGP,
-            TeeColor,
-            TeeNumberF,
-            TeeNumberB
+            f9H:[],
+            f9HA:[],
+            b9H:[],
+            b9HA:[],
+            f9GV:[],
+            b9GV:[],
+            teesf9:[],
+            teesb9:[],
+            Presionf9:[],
+            Presionb9:[],
+            teeParf9:[],
+            teeParb9:[],
+            ScoreIn:[],
+            ScoreOut:[],
+            ScoreInGP:[],
+            ScoreOutGP:[],
+            TeeColor:[],
+            TeeNumberF:[],
+            TeeNumberB:[]
         };
 
         /*for (var i = 0 ; i <= this.props.holeInfo.length - 1; i++) {
@@ -97,6 +77,26 @@ export default class ScoreVerticalComponent extends Component {
     }
 
     componentDidMount = async () => {
+
+        let f9H = []
+        let f9HA = []
+        let b9H = []
+        let b9HA = []
+        let teesf9 = []
+        let teesb9 = []
+        let ScoreIn = []
+        let ScoreOut = []
+        let ScoreInGP = []
+        let ScoreOutGP = []
+        let f9GV = []
+        let b9GV = []
+        let TeeColor = []
+        let TeeNumberF = []
+        let TeeNumberB = []
+        let teeParf9 = []
+        let teeParb9 = []
+        let Presionf9 = []
+        let Presionb9 = []
 
         let hole = await AsyncStorage.getItem('hole');
         let language = await AsyncStorage.getItem('language')
@@ -589,7 +589,9 @@ export default class ScoreVerticalComponent extends Component {
             ScoreOut,
             ScoreInGP,
             ScoreOutGP,
-            TeeColor
+            TeeColor,
+            TeeNumberF,
+            TeeNumberB
         })
     }
 
@@ -611,7 +613,9 @@ export default class ScoreVerticalComponent extends Component {
             b9H,
             b9HA,
             teeParf9,
-            teeParb9
+            teeParb9,
+            TeeNumberF,
+            TeeNumberB
         } = this.state;
 
         const {

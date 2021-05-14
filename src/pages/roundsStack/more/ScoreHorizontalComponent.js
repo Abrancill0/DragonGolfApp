@@ -7,26 +7,6 @@ import Colors from '../../../utils/Colors';
 import ChangeStartingHole from '../../../utils/ChangeStartingHole';
 import AsyncStorage from '@react-native-community/async-storage';
 
-let f9H = []
-let f9HA = []
-let b9H = []
-let b9HA = []
-let teesf9 = []
-let teesb9 = []
-let ScoreIn = []
-let ScoreOut = []
-let ScoreInGP = []
-let ScoreOutGP = []
-let f9GV = []
-let b9GV = []
-let TeeColor = []
-let TeeNumberF = []
-let TeeNumberB = []
-let teeParf9 = []
-let teeParb9 = []
-let Presionf9 = []
-let Presionb9 = []
-
 export default class ScoreHorizontalComponent extends Component {
     constructor(props) {
         super(props);
@@ -47,29 +27,49 @@ export default class ScoreHorizontalComponent extends Component {
         let teesb9 = [this.props.holeInfo[0]['ho_par10'], this.props.holeInfo[0]['ho_par11'], this.props.holeInfo[0]['ho_par12'], this.props.holeInfo[0]['ho_par13'], this.props.holeInfo[0]['ho_par14'], this.props.holeInfo[0]['ho_par15'], this.props.holeInfo[0]['ho_par16'], this.props.holeInfo[0]['ho_par17'], this.props.holeInfo[0]['ho_par18']]*/
         this.state = {
             language: 'es',
-            f9H,
-            f9HA,
-            b9H,
-            b9HA,
-            f9GV,
-            b9GV,
-            teesf9,
-            teesb9,
-            Presionf9,
-            Presionb9,
-            teeParf9,
-            teeParb9,
-            ScoreIn,
-            ScoreOut,
-            ScoreInGP,
-            ScoreOutGP,
-            TeeColor,
-            TeeNumberF,
-            TeeNumberB
+            f9H: [],
+            f9HA: [],
+            b9H: [],
+            b9HA: [],
+            f9GV: [],
+            b9GV: [],
+            teesf9: [],
+            teesb9: [],
+            Presionf9: [],
+            Presionb9: [],
+            teeParf9: [],
+            teeParb9: [],
+            ScoreIn: [],
+            ScoreOut: [],
+            ScoreInGP: [],
+            ScoreOutGP: [],
+            TeeColor: [],
+            TeeNumberF: [],
+            TeeNumberB: []
         };
     }
 
     componentDidMount = async () => {
+
+        let f9H = []
+        let f9HA = []
+        let b9H = []
+        let b9HA = []
+        let teesf9 = []
+        let teesb9 = []
+        let ScoreIn = []
+        let ScoreOut = []
+        let ScoreInGP = []
+        let ScoreOutGP = []
+        let f9GV = []
+        let b9GV = []
+        let TeeColor = []
+        let TeeNumberF = []
+        let TeeNumberB = []
+        let teeParf9 = []
+        let teeParb9 = [] 
+        let Presionf9 = []
+        let Presionb9 = []
 
         let hole = await AsyncStorage.getItem('hole');
         let language = await AsyncStorage.getItem('language')
@@ -562,7 +562,9 @@ export default class ScoreHorizontalComponent extends Component {
             ScoreOut,
             ScoreInGP,
             ScoreOutGP,
-            TeeColor
+            TeeColor,
+            TeeNumberF,
+            TeeNumberB
         })
     }
 
@@ -584,7 +586,9 @@ export default class ScoreHorizontalComponent extends Component {
             ScoreOutGP,
             b9H,
             b9HA,
-            TeeColor
+            TeeColor,
+            TeeNumberF,
+            TeeNumberB
         } = this.state;
 
         const {
@@ -633,7 +637,7 @@ export default class ScoreHorizontalComponent extends Component {
                         }
                         {item.map((item3,index3) =>
                             <View key={index3} style={styles.holeInfoView}>
-                                <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.holeNumber,{fontSize: 13}]}>{TeeNumberF[index3]}</Text>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.holeNumber,{fontSize: 13}]}>{TeeNumberB[index3]}</Text>
                                 <Text
                                         key={index3}
                                         style={styles.parNumber}

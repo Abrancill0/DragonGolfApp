@@ -26,7 +26,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoDetalleApuesta, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuestaTeam, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -74,7 +74,7 @@ export default function RoundsView(props) {
     console.warn(IDUsuario)
     console.warn('IDUsuario')
     setLanguage(language)
-    ListadoDetalleApuesta(IDRound,IDBet, IDUsuario)
+    ListadoDetalleApuestaTeam(IDRound,IDBet, IDUsuario)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -129,16 +129,16 @@ export default function RoundsView(props) {
                     if(index==i){
                       collapsedArray3[index]=(!collapsed3[index])
                     }
-                    else{
+                    /*else{
                       collapsedArray3[i]=true
-                    }
+                    }*/
                   }
                   setCollapsed3(collapsedArray3)
                   setStatus(false)
                 }
                 else if(tipo == 3){
                   setRounds(list.reverse())
-                  for (var i = 0; i<=list.length - 1; i++) {
+                  /*for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
                       collapsedArray3[index]=true
                     }
@@ -146,7 +146,7 @@ export default function RoundsView(props) {
                       collapsedArray3[i]=true
                     }
                   }
-                  setCollapsed3(collapsedArray3)
+                  setCollapsed3(collapsedArray3)*/
                   setStatus(false)
                 }
                 else{

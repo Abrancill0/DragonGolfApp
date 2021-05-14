@@ -24,7 +24,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaApuesta, ListadoDetalleApuesta } from '../../../Services/Services'
+import { ListaApuesta, ListadoDetalleApuesta, ListadoDetalleApuestaTeam } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -85,9 +85,9 @@ export default function betsView(route) {
                     }
                 ))
                 setbets2(list.reverse())
-                for (var i = 0; i<=list.length - 1; i++) {
+                /*for (var i = 0; i<=list.length - 1; i++) {
                     collapsedArray2.push(false)
-                  }
+                  }*/
                   setCollapsed2(collapsedArray2)
                 setArrayholder(list)
                 setStatus(false)
@@ -103,9 +103,10 @@ export default function betsView(route) {
     let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
     setRounds2([])
-    console.warn(IDUsuario)
+    console.warn(IDBet)
     console.warn('IDUsuario')
     setLanguage(language)
+    if(IDBet == 1){
     ListadoDetalleApuesta(IDRound,IDBet, IDUsuario)
         .then((res) => {
           console.warn(res)
@@ -154,6 +155,7 @@ export default function betsView(route) {
                 ))
                   setRounds2(list.reverse())
                   setCollapsed([])
+                  setCollapsedArray([])
                   for (var i = 0; i<=list.length - 1; i++) {
                     collapsedArray.push(true)
                   }
@@ -180,7 +182,86 @@ export default function betsView(route) {
               setRounds2([])
               setStatus(false)
             }
-        })
+          })
+        }
+        else{
+          ListadoDetalleApuestaTeam(IDRound,IDBet, IDUsuario)
+          .then((res) => {
+            console.warn(res)
+              if(res.estatus == 1){
+                  const list = res.Result.map(item => (
+                      {
+                        id: item.IDBetDetail,
+                        fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
+                        Player1: item.Player1,
+                        Player2: item.Player2,
+                        BetD_AdvStrokers: item.BetD_AdvStrokers,
+                        BetD_AutoPress: item.BetD_AutoPress,
+                        BetD_MontoF9: item.BetD_MontoF9,
+                        BetD_MontoB9: item.BetD_MontoB9,
+                        BetD_MontoCalculoF9: item.BetD_MontoCalculoF9,
+                        BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
+                        BetD_Medal: item.BetD_Medal,
+                        BetD_Carry: item.BetD_Carry,
+                        BetD_CarryCalculado: item.BetD_CarryCalculado,
+                        BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
+                        BetD_Match: item.BetD_Match,
+                        BetD_MachMonto: item.BetD_MachMonto,
+                        BetD_MontoPerdidoGanado: item.BetD_MontoPerdidoGanado,
+                        BetD_F9_1: item.BetD_F9_1,
+                        BetD_F9_2: item.BetD_F9_2,
+                        BetD_F9_3: item.BetD_F9_3,
+                        BetD_F9_4: item.BetD_F9_4,
+                        BetD_F9_5: item.BetD_F9_5,
+                        BetD_F9_6: item.BetD_F9_6,
+                        BetD_F9_7: item.BetD_F9_7,
+                        BetD_F9_8: item.BetD_F9_8,
+                        BetD_F9_9: item.BetD_F9_9,
+                        BetD_B9_1: item.BetD_B9_1,
+                        BetD_B9_2: item.BetD_B9_2,
+                        BetD_B9_3: item.BetD_B9_3,
+                        BetD_B9_4: item.BetD_B9_4,
+                        BetD_B9_5: item.BetD_B9_5,
+                        BetD_B9_6: item.BetD_B9_6,
+                        BetD_B9_7: item.BetD_B9_7,
+                        BetD_B9_8: item.BetD_B9_8,
+                        BetD_B9_9: item.BetD_B9_9,
+                        f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
+                        b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
+                        BetD_AdvStrokers: item.BetD_AdvStrokers
+                      }
+                  ))
+                    setRounds2(list.reverse())
+                    setCollapsed([])
+                    setCollapsedArray([])
+                    for (var i = 0; i<=list.length - 1; i++) {
+                      collapsedArray.push(true)
+                    }
+                    console.warn(collapsedArray.length)
+                    setCollapsedArray(collapsedArray)
+                    setCollapsed(collapsedArray)
+                    setArrayholder(list)
+                    //if(IDBet == 1){
+                      collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
+                      //collapsedArray2[2]=(true)
+                      setCollapsed2(collapsedArray2)
+                      //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+                    //}
+                    setStatus(false)
+              }
+              else{
+                //if(IDBet == 1){
+                  collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
+                  //collapsedArray2[2]=(true)
+                  setCollapsed2(collapsedArray2)
+                  //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+                //}
+                setCollapsed2(collapsedArray2)
+                setRounds2([])
+                setStatus(false)
+              }
+            })
+          }
   }
 
   function searchFilterFunction(text,busqueda){

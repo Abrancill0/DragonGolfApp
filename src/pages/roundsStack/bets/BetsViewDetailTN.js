@@ -133,16 +133,16 @@ export default function RoundsView(props) {
                     if(index==i){
                       collapsedArray3[index]=(!collapsed3[index])
                     }
-                    else{
+                    /*else{
                       collapsedArray3[i]=true
-                    }
+                    }*/
                   }
                   setCollapsed3(collapsedArray3)
                   setStatus(false)
                 }
                 else if(tipo == 3){
                   setRounds(list.reverse())
-                  for (var i = 0; i<=list.length - 1; i++) {
+                  /*for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
                       collapsedArray3[index]=true
                     }
@@ -150,7 +150,7 @@ export default function RoundsView(props) {
                       collapsedArray3[i]=true
                     }
                   }
-                  setCollapsed3(collapsedArray3)
+                  setCollapsed3(collapsedArray3)*/
                   setStatus(false)
                 }
                 else{
