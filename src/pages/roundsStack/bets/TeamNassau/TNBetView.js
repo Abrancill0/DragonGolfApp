@@ -55,8 +55,8 @@ class TNBetView extends Component {
       carry = 0//tipoCalculo ? (cantidad * parseFloat(snwData.carry)).toString() : snwData.carry;
       match = 0//tipoCalculo ? (cantidad * parseFloat(snwData.match)).toString() : snwData.match;
       medal = 0//tipoCalculo ? (cantidad * parseFloat(snwData.medal)).toString() : snwData.medal;
-      const whoGetsString = 'hihcp';//Data.who_gets_the_adv_strokes;
-      whoGetsAdv = whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
+      //const whoGetsString = 'hihcp';//Data.who_gets_the_adv_strokes;
+      whoGetsAdv = 0//whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
       playerA = 0//props.players[0].id;
       playerB = 0//props.players[0].id;
       playerC = 0//props.players[0].id;
@@ -541,7 +541,8 @@ class TNBetView extends Component {
               carry : res2.Result[0].set_tmw_carry.toString(),
               medal : res2.Result[0].set_tmw_medal.toString(),
               autoPress : res2.Result[0].set_tmw_automatic_press.toString(),
-              //advStrokes : res2.Result[0].set_tmw_adv_strokes.toString()
+              //advStrokes : res2.Result[0].usu_handicapindex,
+              whoGetsAdv : res2.Result[0].set_tmw_adv_strokes.toString() === 'Hi Handicap' ? 0 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Low Handicap' ? 1 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Each' ? 2 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Slid Hi' ? 3 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Slid Low' ? 4 : 5
             })
           }
           else{
@@ -553,7 +554,8 @@ class TNBetView extends Component {
               carry : 0,
               medal : 0,
               autoPress : 0,
-              advStrokes : 0
+              advStrokes : 0,
+              whoGetsAdv: 0
             })
           }
         })
@@ -952,7 +954,7 @@ class TNBetView extends Component {
     console.warn(override)
     console.warn(advStrokes)
     console.warn(whoGetsAdv)
-    let whoGetsString =  whoGetsAdv === 0 ? 'hihcp' : whoGetsAdv === 1 ? 'lowhcp' : whoGetsAdv === 3 ? 'slidhi' : whoGetsAdv === 4 ? 'slidlow' : whoGetsAdv === 5 ? 'automatic' : 'each'
+    let whoGetsString =  whoGetsAdv === 0 ? 'Hi Handicap' : whoGetsAdv === 1 ? 'Low Handicap' : whoGetsAdv === 2 ? 'Each' : whoGetsAdv === 3 ? 'Slid Hi' : whoGetsAdv === 4 ? 'Slid Low' : 'Automatic'
     console.warn(whoGetsString)
     console.warn(playerA)
     console.warn(playerB)

@@ -91,6 +91,7 @@ export default function RoundsView(props) {
                       BetD_Player3: item.BetD_Player3,
                       BetD_Player4: item.BetD_Player4,
                       BetD_AdvStrokers: item.BetD_AdvStrokers,
+                      set_tmw_adv_strokes: item.set_tmw_adv_strokes,
                       BetD_AutoPress: item.BetD_AutoPress,
                       BetD_MontoF9: item.BetD_MontoF9,
                       BetD_MontoB9: item.BetD_MontoB9,
@@ -122,8 +123,7 @@ export default function RoundsView(props) {
                       BetD_B9_8: item.BetD_B9_8,
                       BetD_B9_9: item.BetD_B9_9,
                       f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
-                      b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
-                      BetD_AdvStrokers: item.BetD_AdvStrokers
+                      b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9]
                     }
                 ))
                 if(tipo==2){
@@ -403,7 +403,7 @@ export default function RoundsView(props) {
                 )
                 break;
             case 2:
-                navigation.navigate('TNBetViewEdit',{IDBet:IDBet, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, BetD_AutoPress:item.BetD_AutoPress})
+                navigation.navigate('TNBetViewEdit',{IDBet:IDBet, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, BetD_AutoPress:item.BetD_AutoPress, set_tmw_adv_strokes:item.set_tmw_adv_strokes})
                 break;
             /*case 2:
                 item.manual_press = manualPress + 1;

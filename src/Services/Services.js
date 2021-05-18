@@ -880,6 +880,53 @@ export const ActualizarDetalleApuesta = (IDBet,IDBetDetail,IDRonda,BetD_Player1,
                 });
 };
 
+export const ActualizarDetalleApuestaTeam = (IDBet,IDBetDetail,IDRonda,BetD_Player1,BetD_Player2,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers,TypeHandicap) => {
+    const URL = RutaBaseAB + "/ActualizarDetalleApuestaTeam";
+    console.warn('---------------SER-------------------')
+    console.warn(IDBet)
+    console.warn(IDRonda)
+    console.warn(BetD_Player1)
+    console.warn(BetD_Player2)
+    console.warn(BetD_MontoF9)
+    console.warn(BetD_MontoB9)
+    console.warn(BetD_Match)
+    console.warn(BetD_Carry)
+    console.warn(BetD_Medal)
+    console.warn(BetD_AutoPress)
+    console.warn(BetD_ManuallyOverrideAdv)
+    console.warn(BetD_AdvStrokers)
+    console.warn('----------------------------------')
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDBet: IDBet,
+                    IDBetDetail: IDBetDetail,
+                    IDRonda: IDRonda,
+                    BetD_Player1: BetD_Player1,
+                    BetD_Player2: BetD_Player2,
+                    BetD_Player3: BetD_Player3,
+                    BetD_Player4: BetD_Player4,
+                    BetD_MontoF9: BetD_MontoF9,
+                    BetD_MontoB9: BetD_MontoB9,
+                    BetD_Match: BetD_Match,
+                    BetD_Carry: BetD_Carry,
+                    BetD_Medal: BetD_Medal,
+                    BetD_AutoPress: BetD_AutoPress,
+                    BetD_ManuallyOverrideAdv: BetD_ManuallyOverrideAdv,
+                    BetD_AdvStrokers: BetD_AdvStrokers,
+                    TypeHandicap: TypeHandicap
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListadoInvitacion = (IDUsuario) => {
     const URL = RutaBaseAB + "/ListadoInvitacion";
     return fetch(URL, {
