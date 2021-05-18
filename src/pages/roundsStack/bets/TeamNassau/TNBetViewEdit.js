@@ -103,7 +103,7 @@ class SNBetView extends Component {
       players: [],
       IDBet:this.props.route.params.IDBet,
       IDRound:this.props.route.params.IDRound,
-      //whoGetsAdv : this.props.route.params.set_tmw_adv_strokes.toString() === 'Hi Handicap' ? 0 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Low Handicap' ? 1 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Each' ? 2 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Slid Hi' ? 3 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Slid Low' ? 4 : 5
+      whoGetsAdv : this.props.route.params.set_tmw_adv_strokes.toString() === 'Hi Handicap' ? 0 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Low Handicap' ? 1 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Each' ? 2 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Slid Hi' ? 3 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Slid Low' ? 4 : 5
     };
 
     this.playerSettings = [];

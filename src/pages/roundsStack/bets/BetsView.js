@@ -195,6 +195,8 @@ export default function betsView(route) {
                         fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
                         Player1: item.Player1,
                         Player2: item.Player2,
+                        Player3: item.Player3,
+                        Player4: item.Player4,
                         BetD_AdvStrokers: item.BetD_AdvStrokers,
                         BetD_AutoPress: item.BetD_AutoPress,
                         BetD_MontoF9: item.BetD_MontoF9,

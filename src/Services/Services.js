@@ -880,7 +880,7 @@ export const ActualizarDetalleApuesta = (IDBet,IDBetDetail,IDRonda,BetD_Player1,
                 });
 };
 
-export const ActualizarDetalleApuestaTeam = (IDBet,IDBetDetail,IDRonda,BetD_Player1,BetD_Player2,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers,TypeHandicap) => {
+export const ActualizarDetalleApuestaTeam = (IDBet,IDBetDetail,IDRonda,BetD_Player1,BetD_Player2,BetD_Player3,BetD_Player4,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers,TypeHandicap) => {
     const URL = RutaBaseAB + "/ActualizarDetalleApuestaTeam";
     console.warn('---------------SER-------------------')
     console.warn(IDBet)

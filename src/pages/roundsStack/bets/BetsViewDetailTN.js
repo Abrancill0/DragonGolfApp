@@ -403,7 +403,7 @@ export default function RoundsView(props) {
                 )
                 break;
             case 2:
-                navigation.navigate('TNBetViewEdit',{IDBet:IDBet, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, BetD_AutoPress:item.BetD_AutoPress, set_tmw_adv_strokes:item.set_tmw_adv_strokes})
+                navigation.navigate('TNBetViewEdit',{IDBet:IDBet, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, Player3:item.BetD_Player3, Player4:item.BetD_Player4, BetD_AutoPress:item.BetD_AutoPress, set_tmw_adv_strokes:item.set_tmw_adv_strokes})
                 break;
             /*case 2:
                 item.manual_press = manualPress + 1;
