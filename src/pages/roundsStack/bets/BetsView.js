@@ -567,7 +567,7 @@ export default function betsView(route) {
                     <View style={{flex:.2,padding:5}}>
                         <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:50,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
+                            <View style={{width: ScreenWidth, flexDirection:'row',height:25,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.65}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>

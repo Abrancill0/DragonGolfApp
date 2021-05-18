@@ -369,7 +369,24 @@ export default function RoundsView(props) {
             const removePressIcon = <Icon name='md-remove-circle-outline' color={Colors.Primary} size={40} family={"Ionicons"} />;
             const removeBetIcon = <Icon name='md-trash' color={Colors.Primary} size={40} family={"Ionicons"} />;
 
-            RNBottomActionSheet.SheetView.Show({
+            if(item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4){
+              RNBottomActionSheet.SheetView.Show({
+                title: `${item.Player1} vs ${item.Player2} ${item.Player4}`,
+                items: [
+                    { title: seeResults[language], icon: resultsIcon },
+                    { title: removeBet[language], icon: removeBetIcon },
+                    { title: editBet[language], icon: editIcon },
+                    /*{ title: addPress[language], icon: addPressIcon },
+                    { title: removePress[language], icon: removePressIcon },
+                    { title: removeBet[language], icon: removeBetIcon },*/
+                ],
+                onSelection: (index2) => {
+                    doAction(index,index2, item);
+                },
+            });
+          }
+          if(item.BetD_Player1!=item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4){
+              RNBottomActionSheet.SheetView.Show({
                 title: `${item.Player1} ${item.Player3} vs ${item.Player2} ${item.Player4}`,
                 items: [
                     { title: seeResults[language], icon: resultsIcon },
@@ -383,6 +400,39 @@ export default function RoundsView(props) {
                     doAction(index,index2, item);
                 },
             });
+          }
+          if(item.BetD_Player2==item.BetD_Player4 && item.BetD_Player1!=item.BetD_Player3){
+              RNBottomActionSheet.SheetView.Show({
+                title: `${item.Player1} ${item.Player3} vs ${item.Player2}`,
+                items: [
+                    { title: seeResults[language], icon: resultsIcon },
+                    { title: removeBet[language], icon: removeBetIcon },
+                    { title: editBet[language], icon: editIcon },
+                    /*{ title: addPress[language], icon: addPressIcon },
+                    { title: removePress[language], icon: removePressIcon },
+                    { title: removeBet[language], icon: removeBetIcon },*/
+                ],
+                onSelection: (index2) => {
+                    doAction(index,index2, item);
+                },
+            });
+          }
+          if(item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2==item.BetD_Player4){
+              RNBottomActionSheet.SheetView.Show({
+                title: `${item.Player1} vs ${item.Player2}`,
+                items: [
+                    { title: seeResults[language], icon: resultsIcon },
+                    { title: removeBet[language], icon: removeBetIcon },
+                    { title: editBet[language], icon: editIcon },
+                    /*{ title: addPress[language], icon: addPressIcon },
+                    { title: removePress[language], icon: removePressIcon },
+                    { title: removeBet[language], icon: removeBetIcon },*/
+                ],
+                onSelection: (index2) => {
+                    doAction(index,index2, item);
+                },
+            });
+          }
         }
     }
 
@@ -454,10 +504,10 @@ export default function RoundsView(props) {
             </TouchableOpacity>*/}
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>TEAM NASSAU{/*bets[language]*/}</Text>
+          <Text style={{ margin:20, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>TEAM NASSAU{/*bets[language]*/}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('TNBetView',{IDBet:IDBet, IDRound:IDRound})}>
+            <TouchableOpacity style={{margin:20, marginTop:0, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('TNBetView',{IDBet:IDBet, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -562,12 +612,15 @@ export default function RoundsView(props) {
                           showsHorizontalScrollIndicator={false}>
                           <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:50,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
+                            <View style={{width: ScreenWidth, flexDirection:'row',height:25,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>*/}
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' ' + item.Player3 + ' VS '+ item.Player2 + ' ' + item.Player4}</Text>
+                                    {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2 + ' ' + item.Player4}</Text>}
+                                    {item.BetD_Player1!=item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' ' + item.Player3 + ' VS '+ item.Player2 + ' ' + item.Player4}</Text>}
+                                    {item.BetD_Player2==item.BetD_Player4 && item.BetD_Player1!=item.BetD_Player3 && <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' ' + item.Player3 + ' VS '+ item.Player2}</Text>}
+                                    {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2==item.BetD_Player4 && <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2}</Text>}
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>*/}
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
@@ -588,7 +641,10 @@ export default function RoundsView(props) {
                             <View style={styles.betGeneralInfoView}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={[styles.advInfo, { color: rounds[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds[index].BetD_AdvStrokers}] </Text>
-                                    <Text style={styles.vsInfo}> {rounds[index].Player1} {rounds[index].Player3} vs {rounds[index].Player2} {rounds[index].Player4}</Text>
+                                    {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds[index].Player1} vs {rounds[index].Player2} {rounds[index].Player4}</Text>}
+                                    {item.BetD_Player1!=item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds[index].Player1} {rounds[index].Player3} vs {rounds[index].Player2} {rounds[index].Player4}</Text>}
+                                    {item.BetD_Player2==item.BetD_Player4 && item.BetD_Player1!=item.BetD_Player3 && <Text style={styles.vsInfo}> {rounds[index].Player1} {rounds[index].Player1} vs {rounds[index].Player2}</Text>}
+                                    {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2==item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds[index].Player1} vs {rounds[index].Player2}</Text>}
                                 </View>
                                 <Text style={[styles.profitText, { color: rounds[index].BetD_MontoPerdidoGanado < 0 ? Colors.Primary : rounds[index].BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${rounds[index].BetD_MontoPerdidoGanado}</Text>
                             </View>

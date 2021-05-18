@@ -686,7 +686,7 @@ export default class ScoreHorizontalComponent extends Component {
                                         ]}
                                     >
                                         {holeIndex!=0 &&<Text style={styles.holeNumber}>{holeIndex}</Text>}
-                                        {f9GV[index][i] != 0 && item.ventaja==item.id &&<Text style={styles.advStrokes}>{f9GV[index][i]}</Text>}
+                                        {f9GV[index][i] != 0 &&<Text style={styles.advStrokes}>{f9GV[index][i]}</Text>}
                                     </View>
                                 </View>
                             )}

@@ -26,7 +26,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoDetalleApuestaTeam, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuesta, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -74,7 +74,7 @@ export default function RoundsView(props) {
     console.warn(IDUsuario)
     console.warn('IDUsuario')
     setLanguage(language)
-    ListadoDetalleApuestaTeam(IDRound,IDBet, IDUsuario)
+    ListadoDetalleApuesta(IDRound,IDBet, IDUsuario)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -450,10 +450,10 @@ export default function RoundsView(props) {
             </TouchableOpacity>*/}
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
+          <Text style={{ margin:20, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView',{IDBet:IDBet, IDRound:IDRound})}>
+            <TouchableOpacity style={{margin:20, marginTop:0, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView',{IDBet:IDBet, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
@@ -558,7 +558,7 @@ export default function RoundsView(props) {
                           showsHorizontalScrollIndicator={false}>
                           <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:50,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
+                            <View style={{width: ScreenWidth, flexDirection:'row',height:25,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.65}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
