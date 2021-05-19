@@ -643,7 +643,7 @@ export default function RoundsView(props) {
                                     <Text style={[styles.advInfo, { color: rounds[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds[index].BetD_AdvStrokers}] </Text>
                                     {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds[index].Player1} vs {rounds[index].Player2} {rounds[index].Player4}</Text>}
                                     {item.BetD_Player1!=item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds[index].Player1} {rounds[index].Player3} vs {rounds[index].Player2} {rounds[index].Player4}</Text>}
-                                    {item.BetD_Player2==item.BetD_Player4 && item.BetD_Player1!=item.BetD_Player3 && <Text style={styles.vsInfo}> {rounds[index].Player1} {rounds[index].Player1} vs {rounds[index].Player2}</Text>}
+                                    {item.BetD_Player2==item.BetD_Player4 && item.BetD_Player1!=item.BetD_Player3 && <Text style={styles.vsInfo}> {rounds[index].Player1} {rounds[index].Player3} vs {rounds[index].Player2}</Text>}
                                     {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2==item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds[index].Player1} vs {rounds[index].Player2}</Text>}
                                 </View>
                                 <Text style={[styles.profitText, { color: rounds[index].BetD_MontoPerdidoGanado < 0 ? Colors.Primary : rounds[index].BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${rounds[index].BetD_MontoPerdidoGanado}</Text>
