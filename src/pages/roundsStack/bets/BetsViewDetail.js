@@ -50,7 +50,7 @@ export default function RoundsView(props) {
     const [value2, setValue2] = useState('');
     const [value3, setValue3] = useState('');
     const [value4, setValue4] = useState('');
-    const [language, setLanguage] = useState('');
+    const [language, setLanguage] = useState(props.language);
     const [search, setSearch] = useState(false);
     const [visible, setVisible] = useState(true);
     const [carga, setStatus] = useState(false);
@@ -66,14 +66,12 @@ export default function RoundsView(props) {
     
 
   async function ListadoRondas2(tipo, index) {
-    if(tipo!=3){
+    if(tipo==1){
       setStatus(true)
     }
-    let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
     console.warn(IDUsuario)
     console.warn('IDUsuario')
-    setLanguage(language)
     ListadoDetalleApuesta(IDRound,IDBet, IDUsuario)
         .then((res) => {
           console.warn(res)
@@ -329,6 +327,7 @@ export default function RoundsView(props) {
   }
 
   function showSheetView(item,index){
+    muestraRonda2(IDRound,IDBet, item.id, index)
     console.warn(item.id)
         const {
             seeResults,
@@ -450,16 +449,16 @@ export default function RoundsView(props) {
             </TouchableOpacity>*/}
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
+          <Text style={{ margin:0, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:0, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView',{IDBet:IDBet, IDRound:IDRound})}>
+            <TouchableOpacity style={{margin:0, marginTop:0, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView',{IDBet:IDBet, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
         </View>
         { visible &&
-          <ScrollView contentContainerStyle={{paddingBottom:100}}>
+          <ScrollView contentContainerStyle={{paddingBottom:0}}>
 
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
@@ -553,34 +552,34 @@ export default function RoundsView(props) {
             }
             data={rounds}
             renderItem={({item, index}) =>
-                    <View style={{flex:.2,padding:5,paddingHorizontal:25}}
+                    <View style={{flex:.2,padding:0,paddingHorizontal:25}}
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
                           <View>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
+                          {/*<TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:25,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.65}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>*/}
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2}</Text>
+                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2}</Text>
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>*/}
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
-                                  </View>
+                                  {/*</View>
                                 </View>
                               {/*<View style={{flex:.2,padding:5}}>
                               <View style={{flex:.5}}>
                                     <Fontisto name={item.tipo=='Copia'?'cloud-down':'cloud-up'} size={30} color={Colors.Primary} />
                               </View>
                             </View>*/}
-                              </View>
-                          </TouchableOpacity>
-                        {!collapsed3[index]&&<Ripple
+                              {/*</View>
+                          </TouchableOpacity>*/}
+                        {/*!collapsed3[index]&&*/<Ripple
                           rippleColor={Colors.Secondary}
                           onPress={()=>showSheetView(item, index)}
                         >
-                          <View style={{ flex: 1, margin:10 }}>
+                          <View style={{ flex: 1, margin:0 }}>
                             <View style={styles.betGeneralInfoView}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={[styles.advInfo, { color: rounds[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds[index].BetD_AdvStrokers}] </Text>

@@ -197,6 +197,10 @@ export default function betsView(route) {
                         Player2: item.Player2,
                         Player3: item.Player3,
                         Player4: item.Player4,
+                        BetD_Player1: item.BetD_Player1,
+                        BetD_Player2: item.BetD_Player2,
+                        BetD_Player3: item.BetD_Player3,
+                        BetD_Player4: item.BetD_Player4,
                         BetD_AdvStrokers: item.BetD_AdvStrokers,
                         BetD_AutoPress: item.BetD_AutoPress,
                         BetD_MontoF9: item.BetD_MontoF9,
@@ -586,8 +590,8 @@ export default function betsView(route) {
                               </View>
                           </TouchableOpacity>
                           {collapsed2[item.id-1]? item.id == 1 ?
-                            <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />:
-                            <BetsViewDetailTN rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} />
+                            <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />:
+                            <BetsViewDetailTN rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />
                           :null}
                           {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>

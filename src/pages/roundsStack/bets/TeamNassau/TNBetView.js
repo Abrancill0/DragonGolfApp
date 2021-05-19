@@ -511,7 +511,11 @@ class TNBetView extends Component {
 
                 this.setState({
                   players:list,
-                  carga:false
+                  carga:false,
+                  playerA:list[0].id,
+                  playerB:list[0].id,
+                  playerC:list[0].id,
+                  playerD:list[0].id
                 })
             }
             else{
