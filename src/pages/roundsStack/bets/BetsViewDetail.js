@@ -458,7 +458,7 @@ export default function RoundsView(props) {
           </View>
         </View>
         { visible &&
-          <ScrollView contentContainerStyle={{paddingBottom:0}}>
+          <ScrollView contentContainerStyle={{paddingBottom:100}}>
 
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
@@ -555,7 +555,6 @@ export default function RoundsView(props) {
                     <View style={{flex:.2,padding:0,paddingHorizontal:25}}
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
-                          <View>
                           {/*<TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:25,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
@@ -652,7 +651,6 @@ export default function RoundsView(props) {
                           </TouchableOpacity>
                           </View>*/}
                       </Ripple>}
-                      </View>
                           </View>
               }
               keyExtractor={item=>item.id}
