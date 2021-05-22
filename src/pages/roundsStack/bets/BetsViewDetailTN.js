@@ -26,7 +26,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoDetalleApuestaTeam, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuestaTeam, CalcularApuestaTeamNassau, EliminarApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -299,7 +299,7 @@ export default function RoundsView(props) {
   };
 
   async function muestraRonda2(IDRound, IDBet, IDBetDetail, index){
-    CalcularApuesta(IDRound, IDBet, IDBetDetail)
+    CalcularApuestaTeamNassau(IDRound, IDBet, IDBetDetail)
         .then((res) => {
           console.warn(index)
           ListadoRondas2(2,index)
@@ -717,13 +717,13 @@ export default function RoundsView(props) {
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}
-              ListEmptyComponent={
+              /*ListEmptyComponent={
               <ListEmptyComponent
                 text={Dictionary.emptyBets[language]}
                 iconName="money-bill-alt"
                 iconFamily='font-awesome'
               />
-            }
+            }*/
             stopLeftSwipe={Dimensions.get('window').width * .5}
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}

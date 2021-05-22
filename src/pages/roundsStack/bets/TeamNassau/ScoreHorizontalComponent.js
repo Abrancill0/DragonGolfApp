@@ -33,9 +33,9 @@ export default class ScoreHorizontalComponent extends Component {
             Presionb9:[],
             teeParf9:[],
             teeParb9:[],
-            ScoreIn:[],
+            TotalScore:[],
             ScoreOut:[],
-            ScoreInGP:[],
+            TotalScoreGP:[],
             ScoreOutGP:[],
             TeeColor:[],
             TeeNumberF:[],
@@ -58,9 +58,9 @@ export default class ScoreHorizontalComponent extends Component {
         let b9HA = []
         let teesf9 = []
         let teesb9 = []
-        let ScoreIn = []
+        let TotalScore = []
         let ScoreOut = []
-        let ScoreInGP = []
+        let TotalScoreGP = []
         let ScoreOutGP = []
         let f9GV = []
         let b9GV = []
@@ -86,9 +86,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9']])
                     b9H.push([this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee']])
@@ -110,9 +110,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10']])
                     b9H.push([this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee']])
@@ -136,9 +136,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11']])
                     b9H.push([this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee']])
@@ -162,9 +162,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12']])
                     b9H.push([this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee']])
@@ -188,9 +188,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13']])
                     b9H.push([this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee']])
@@ -214,9 +214,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14']])
                     b9H.push([this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee']])
@@ -240,9 +240,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14],this.props.holeInfo[i][15]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'],this.props.holeInfo[i]['Ho_Advantage15']])
                     b9H.push([this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5],this.props.holeInfo[i][6]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'],this.props.holeInfo[i]['Ho_Advantage6']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'],this.props.holeInfo[i]['GolpesVentaja15_tee']])
@@ -266,9 +266,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14],this.props.holeInfo[i][15],this.props.holeInfo[i][16]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'],this.props.holeInfo[i]['Ho_Advantage15'],this.props.holeInfo[i]['Ho_Advantage16']])
                     b9H.push([this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5],this.props.holeInfo[i][6],this.props.holeInfo[i][7]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'],this.props.holeInfo[i]['Ho_Advantage6'],this.props.holeInfo[i]['Ho_Advantage7']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'],this.props.holeInfo[i]['GolpesVentaja15_tee'],this.props.holeInfo[i]['GolpesVentaja16_tee']])
@@ -292,9 +292,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14],this.props.holeInfo[i][15],this.props.holeInfo[i][16],this.props.holeInfo[i][17]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'],this.props.holeInfo[i]['Ho_Advantage15'],this.props.holeInfo[i]['Ho_Advantage16'],this.props.holeInfo[i]['Ho_Advantage17']])
                     b9H.push([this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5],this.props.holeInfo[i][6],this.props.holeInfo[i][7],this.props.holeInfo[i][8]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'],this.props.holeInfo[i]['Ho_Advantage6'],this.props.holeInfo[i]['Ho_Advantage7'],this.props.holeInfo[i]['Ho_Advantage8']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee'],this.props.holeInfo[i]['GolpesVentaja15_tee'],this.props.holeInfo[i]['GolpesVentaja16_tee'],this.props.holeInfo[i]['GolpesVentaja17_tee']])
@@ -318,9 +318,9 @@ export default class ScoreHorizontalComponent extends Component {
                     b9H.push([this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9]])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9']])
                     f9H.push([this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18']])
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee']])
@@ -344,9 +344,9 @@ export default class ScoreHorizontalComponent extends Component {
                     b9H.push([this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10]])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10']])
                     f9H.push([this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1']])
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee']])
@@ -370,9 +370,9 @@ export default class ScoreHorizontalComponent extends Component {
                     b9H.push([this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11']])
                     f9H.push([this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2']])
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee']])
@@ -396,9 +396,9 @@ export default class ScoreHorizontalComponent extends Component {
                     b9H.push([this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12]])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12']])
                     f9H.push([this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3']])
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee']])
@@ -422,9 +422,9 @@ export default class ScoreHorizontalComponent extends Component {
                     b9H.push([this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13]])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13']])
                     f9H.push([this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4']])
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee']])
@@ -448,9 +448,9 @@ export default class ScoreHorizontalComponent extends Component {
                     b9H.push([this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14]])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14']])
                     f9H.push([this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5']])
                     b9GV.push([this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee'], this.props.holeInfo[i]['GolpesVentaja9_tee'], this.props.holeInfo[i]['GolpesVentaja10_tee'], this.props.holeInfo[i]['GolpesVentaja11_tee'], this.props.holeInfo[i]['GolpesVentaja12_tee'], this.props.holeInfo[i]['GolpesVentaja13_tee'], this.props.holeInfo[i]['GolpesVentaja14_tee']])
@@ -474,9 +474,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][16], this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6']])
                     b9H.push([this.props.holeInfo[i][7], this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage1']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja16_tee'], this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee']])
@@ -500,9 +500,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][17], this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage17'], this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7']])
                     b9H.push([this.props.holeInfo[i][8], this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage8'], this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja17_tee'], this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee']])
@@ -526,9 +526,9 @@ export default class ScoreHorizontalComponent extends Component {
                     f9H.push([this.props.holeInfo[i][18], this.props.holeInfo[i][1], this.props.holeInfo[i][2], this.props.holeInfo[i][3], this.props.holeInfo[i][4], this.props.holeInfo[i][5], this.props.holeInfo[i][6], this.props.holeInfo[i][7], this.props.holeInfo[i][8]])
                     f9HA.push([this.props.holeInfo[i]['Ho_Advantage18'], this.props.holeInfo[i]['Ho_Advantage1'], this.props.holeInfo[i]['Ho_Advantage2'], this.props.holeInfo[i]['Ho_Advantage3'], this.props.holeInfo[i]['Ho_Advantage4'], this.props.holeInfo[i]['Ho_Advantage5'], this.props.holeInfo[i]['Ho_Advantage6'], this.props.holeInfo[i]['Ho_Advantage7'], this.props.holeInfo[i]['Ho_Advantage8']])
                     b9H.push([this.props.holeInfo[i][9], this.props.holeInfo[i][10], this.props.holeInfo[i][11], this.props.holeInfo[i][12], this.props.holeInfo[i][13], this.props.holeInfo[i][14], this.props.holeInfo[i][15], this.props.holeInfo[i][16], this.props.holeInfo[i][17]]   )
-                    ScoreIn.push(this.props.holeInfo[i]['ScoreIn'])
+                    TotalScore.push(this.props.holeInfo[i]['TotalScore'])
                     ScoreOut.push(this.props.holeInfo[i]['ScoreOut'])
-                    ScoreInGP.push(this.props.holeInfo[i]['ScoreInGP'])
+                    TotalScoreGP.push(this.props.holeInfo[i]['TotalScoreGP'])
                     ScoreOutGP.push(this.props.holeInfo[i]['ScoreOutGP'])
                     b9HA.push([this.props.holeInfo[i]['Ho_Advantage9'], this.props.holeInfo[i]['Ho_Advantage10'], this.props.holeInfo[i]['Ho_Advantage11'], this.props.holeInfo[i]['Ho_Advantage12'], this.props.holeInfo[i]['Ho_Advantage13'], this.props.holeInfo[i]['Ho_Advantage14'], this.props.holeInfo[i]['Ho_Advantage15'], this.props.holeInfo[i]['Ho_Advantage16'], this.props.holeInfo[i]['Ho_Advantage17']])
                     f9GV.push([this.props.holeInfo[i]['GolpesVentaja18_tee'], this.props.holeInfo[i]['GolpesVentaja1_tee'], this.props.holeInfo[i]['GolpesVentaja2_tee'], this.props.holeInfo[i]['GolpesVentaja3_tee'], this.props.holeInfo[i]['GolpesVentaja4_tee'], this.props.holeInfo[i]['GolpesVentaja5_tee'], this.props.holeInfo[i]['GolpesVentaja6_tee'], this.props.holeInfo[i]['GolpesVentaja7_tee'], this.props.holeInfo[i]['GolpesVentaja8_tee']])
@@ -562,9 +562,9 @@ export default class ScoreHorizontalComponent extends Component {
             Presionb9,
             teeParf9,
             teeParb9,
-            ScoreIn,
+            TotalScore,
             ScoreOut,
-            ScoreInGP,
+            TotalScoreGP,
             ScoreOutGP,
             TeeColor,
             TeeNumberF,

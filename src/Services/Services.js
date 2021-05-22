@@ -1490,6 +1490,26 @@ export const CalcularApuesta = (IDRonda, IDBet, IDBetDetail) => {
                 });
 };
 
+export const CalcularApuestaTeamNassau = (IDRonda, IDBet, IDBetDetail) => {
+    const URL = RutaBaseAB + "/CalcularApuestaTeamNassau";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRonda: IDRonda,
+                    IDBet: IDBet,
+                    IDBetDetail: IDBetDetail
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const EliminarApuesta = (IDBetDetail) => {
     const URL = RutaBaseAB + "/EliminaApuesta";
     return fetch(URL, {
