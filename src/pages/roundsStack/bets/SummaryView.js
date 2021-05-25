@@ -39,7 +39,9 @@ class SummaryView extends Component {
                     {
                       idUsu: item.IDUsuario,
                       nickname: item.usu_nickname,
-                      MontoPerdidoGanado: item.MontoPerdidoGanado
+                      MontoPerdidoGanado: item.MontoPerdidoGanadoSingle + item.MontoPerdidoGanadoTeam,
+                      MontoPerdidoGanadoSingle: item.MontoPerdidoGanadoSingle,
+                      MontoPerdidoGanadoTeam: item.MontoPerdidoGanadoTeam
                     }
                 ))
 
