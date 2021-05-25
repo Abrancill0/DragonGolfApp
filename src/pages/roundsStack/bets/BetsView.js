@@ -88,7 +88,7 @@ export default function betsView(route) {
                 /*for (var i = 0; i<=list.length - 1; i++) {
                     collapsedArray2.push(false)
                   }*/
-                  setCollapsed2(collapsedArray2)
+                  //setCollapsed2(collapsedArray2)
                 setArrayholder(list)
                 setStatus(false)
             }
@@ -167,6 +167,7 @@ export default function betsView(route) {
                   setArrayholder(list)
                   //if(IDBet == 1){
                     collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
+                    collapsedArray2[IDBet]=(collapsed2[IDBet])
                     //collapsedArray2[2]=(true)
                     setCollapsed2(collapsedArray2)
                     //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -176,6 +177,7 @@ export default function betsView(route) {
             else{
               //if(IDBet == 1){
                 collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
+                    collapsedArray2[IDBet]=(collapsed2[IDBet])
                 //collapsedArray2[2]=(true)
                 setCollapsed2(collapsedArray2)
                 //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -253,6 +255,7 @@ export default function betsView(route) {
                     setArrayholder(list)
                     //if(IDBet == 1){
                       collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
+                      collapsedArray2[0]=(collapsed2[0])
                       //collapsedArray2[2]=(true)
                       setCollapsed2(collapsedArray2)
                       //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -262,6 +265,7 @@ export default function betsView(route) {
               else{
                 //if(IDBet == 1){
                   collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
+                  collapsedArray2[0]=(collapsed2[0])
                   //collapsedArray2[2]=(true)
                   setCollapsed2(collapsedArray2)
                   //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -575,23 +579,37 @@ export default function betsView(route) {
                     <View style={{flex:.2,padding:5}}>
                         <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:25,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
-                              <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                                <View style={{flex:.65}}>
-                                  <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
-                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>*/}
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{tipe[language]+': '+ item.nombre}</Text>
-                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>*/}
-                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
-                                  </View>
-                                </View>
-                              {/*<View style={{flex:.2,padding:5}}>
-                              <View style={{flex:.5}}>
-                                    <Fontisto name={item.tipo=='Copia'?'cloud-down':'cloud-up'} size={30} color={Colors.Primary} />
+                            {item.id == 1 ?
+                            <View style={{ flexDirection: 'row' }}>
+                              <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+                                {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+                                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                                </TouchableOpacity>*/}
                               </View>
-                            </View>*/}
+                              <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+                              <Text style={{ margin:0, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
                               </View>
+                              <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+                                <TouchableOpacity style={{margin:0, marginTop:0, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView',{IDBet:item.id, IDRound:IDRound})}>
+                                  <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+                                </TouchableOpacity>
+                              </View>
+                            </View>:
+                            <View style={{ flexDirection: 'row' }}>
+                              <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+                                {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+                                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+                                </TouchableOpacity>*/}
+                              </View>
+                              <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+                              <Text style={{ margin:0, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>TEAM NASSAU{/*bets[language]*/}</Text>
+                              </View>
+                              <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+                                <TouchableOpacity style={{margin:0, marginTop:0, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('TNBetView',{IDBet:item.id, IDRound:IDRound})}>
+                                  <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+                                </TouchableOpacity>
+                              </View>
+                            </View>}
                           </TouchableOpacity>
                           {collapsed2[item.id-1]? item.id == 1 ?
                             <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />:

@@ -6,22 +6,25 @@ import styles from './styles';
 import MoreOptionComponent from './MoreOptionComponent';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
-import { CerrarRonda } from '../../../Services/Services'
+import { CerrarRonda, AbrirRonda } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 
 class MoreView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language: 'es'
+      language: 'es',
+      status: 1
     };
   }
 
   componentDidMount = async () => {
     let language = await AsyncStorage.getItem('language')
+    let status = await AsyncStorage.getItem('status')
 
     this.setState({
-        language:language
+        language:language,
+        status:status
     })
     }
 
@@ -45,6 +48,26 @@ class MoreView extends Component {
             }
         })
   }
+  abreRonda = async () => {
+    let IDRound = await AsyncStorage.getItem('IDRound')
+    AbrirRonda(IDRound)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+              showMessage({
+                message: Dictionary.OpenRoundSuccess[this.state.language],
+                type: 'success',
+              });
+              this.props.navigation.navigate('RoundsStack')
+            }
+            else{
+              showMessage({
+                message: Dictionary.error[this.state.language],
+                type: 'danger',
+              });
+            }
+        })
+  }
 
   render() {
 
@@ -52,7 +75,8 @@ class MoreView extends Component {
     const {
       earningDetails,
       more,
-      closeRound
+      closeRound,
+      OpenRound
     } = Dictionary;
 
     return (
@@ -79,12 +103,18 @@ class MoreView extends Component {
           iconName='ios-cash'
           iconFamily='Ionicons'
         />
-        <MoreOptionComponent 
+        {this.state.status==1?<MoreOptionComponent 
           title={closeRound[language]} 
           onPress={() => this.cierraRonda()}
-          iconName='ios-close-circle-outline'
+          iconName='ios-lock-closed-outline'
+          iconFamily='Ionicons'
+        />:<MoreOptionComponent 
+          title={OpenRound[language]} 
+          onPress={() => this.abreRonda()}
+          iconName='ios-lock-open-outline'
           iconFamily='Ionicons'
         />
+      }
       </View>
     );
   }

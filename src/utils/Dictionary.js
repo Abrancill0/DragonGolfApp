@@ -266,6 +266,14 @@ export const Dictionary = {
         'en': 'Rounds',
         'es': 'Rondas'
     },
+    open: {
+        'en': 'Open',
+        'es': 'Abierta'
+    },
+    close: {
+        'en': 'Closed',
+        'es': 'Cerrada'
+    },
     players: {
         'en': 'Players',
         'es': 'Jugadores'
@@ -803,6 +811,14 @@ export const Dictionary = {
     closeRoundSuccess: {
         'en': 'Round closed successfully',
         'es': 'Ronda cerrada con éxito'
+    },
+    OpenRound: {
+        'en': 'Open Round',
+        'es': 'Abrir Ronda'
+    },
+    OpenRoundSuccess: {
+        'en': 'Successful Open Round',
+        'es': 'Ronda abierta con éxito'
     },
     parRangeError: {
         'en': 'The sum of the pairs must be between 70 and 74',

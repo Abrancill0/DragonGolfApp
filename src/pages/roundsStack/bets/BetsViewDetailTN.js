@@ -500,23 +500,9 @@ export default function RoundsView(props) {
         <Spinner
             visible={carga}
             color={Colors.Primary} />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
-              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>*/}
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>TEAM NASSAU{/*bets[language]*/}</Text>
-          </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:0, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('TNBetView',{IDBet:IDBet, IDRound:IDRound})}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        
         { visible &&
-          <ScrollView contentContainerStyle={{paddingBottom:100}}>
+          <ScrollView contentContainerStyle={{paddingBottom:0}}>
 
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>

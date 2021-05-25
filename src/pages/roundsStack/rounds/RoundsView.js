@@ -74,6 +74,7 @@ export default function RoundsView(route) {
                       handicap: item.Ro_HandicapAdjustment,
                       hole: item.Ro_StartingHole,
                       adv: item.Ro_SwitchAdventage,
+                      status: item.Ro_Status,
                       fecha: moment(item.Ro_Date).format('DD/MM/YYYY').toString()
                     }
                 ))
@@ -216,7 +217,7 @@ export default function RoundsView(route) {
     );
   };
 
-  async function muestraRonda(IDCourse, IDRound, nombreRonda, handicap, hole, adv, fecha, nombre){
+  async function muestraRonda(IDCourse, IDRound, nombreRonda, handicap, hole, adv, fecha, nombre, status){
     navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());
     AsyncStorage.setItem('nombreRonda', nombreRonda.toString());
@@ -226,6 +227,7 @@ export default function RoundsView(route) {
     AsyncStorage.setItem('fecha', fecha.toString());
     AsyncStorage.setItem('IDCourse', IDCourse.toString());
     AsyncStorage.setItem('nombre', nombre.toString());
+    AsyncStorage.setItem('status', status.toString());
   }
 
 
@@ -263,7 +265,9 @@ export default function RoundsView(route) {
       round,
       date,
       course,
-      rondas
+      rondas,
+      open,
+      close
     } = Dictionary;
 
     return (
@@ -385,7 +389,7 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre)}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
@@ -393,8 +397,9 @@ export default function RoundsView(route) {
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{course[language]+': '+ item.nombre}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>
-                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
+                                    {item.status == 1?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{open[language]}</Text>:
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{close[language]}</Text>}
+                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
                                   </View>
                                 </View>
                               {/*<View style={{flex:.2,padding:5}}>

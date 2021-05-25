@@ -444,21 +444,7 @@ export default function RoundsView(props) {
         <Spinner
             visible={carga}
             color={Colors.Primary} />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
-              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>*/}
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:0, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
-          </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:0, marginTop:0, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView',{IDBet:IDBet, IDRound:IDRound})}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        
         { visible &&
           <ScrollView contentContainerStyle={{paddingBottom:100}}>
 
@@ -632,7 +618,7 @@ export default function RoundsView(props) {
                                         style={{
                                             textDecorationLine: rounds[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none',
                                             fontWeight: 'bold',
-                                            color: rounds[index].BetD_MachInt && rounds[index].BetD_CarryCalculado !=0 ? Colors.Primary : Colors.Black
+                                            color: rounds[index].BetD_MachInt <0 || rounds[index].BetD_CarryCalculado !=0 ? Colors.Primary : Colors.Black
                                         }}>
                                         Match = {rounds[index].BetD_CarryCalculado !=0 ? 0 : rounds[index].BetD_MachInt}
                                     </Text></Text>

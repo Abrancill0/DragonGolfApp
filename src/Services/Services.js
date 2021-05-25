@@ -673,6 +673,24 @@ export const CerrarRonda = (IDRound) => {
                 });
 };
 
+export const AbrirRonda = (IDRound) => {
+    const URL = RutaBaseAB + "/AbrirRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: IDRound
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaApuesta = () => {
     const URL = RutaBaseAB + "/ListaApuesta";
     return fetch(URL, {
