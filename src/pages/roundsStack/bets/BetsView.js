@@ -206,6 +206,7 @@ export default function betsView(route) {
                         BetD_Player3: item.BetD_Player3,
                         BetD_Player4: item.BetD_Player4,
                         BetD_AdvStrokers: item.BetD_AdvStrokers,
+                        set_tmw_adv_strokes: item.set_tmw_adv_strokes,
                         BetD_AutoPress: item.BetD_AutoPress,
                         BetD_MontoF9: item.BetD_MontoF9,
                         BetD_MontoB9: item.BetD_MontoB9,
@@ -482,7 +483,7 @@ export default function betsView(route) {
           </View>*/}
         </View>
         { visible &&
-          <View>
+          <ScrollView contentContainerStyle={{paddingBottom:20}}>
 
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
@@ -640,7 +641,7 @@ export default function betsView(route) {
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         
-      </View>}
+      </ScrollView>}
 
       </View>
     );

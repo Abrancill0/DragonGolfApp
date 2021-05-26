@@ -1021,6 +1021,28 @@ export const ListadoAmigosRondaData = (Player1, Player2, IDRound) => {
                 });
 };
 
+export const CalcularGolpesVentajaTeam = (PlayerId1, PlayerId2, PlayerId3, PlayerId4, IDRound) => {
+    const URL = RutaBaseAB + "/CalcularGolpesVentajaTeam";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    PlayerId1: PlayerId1,
+                    PlayerId2: PlayerId2,
+                    PlayerId3: PlayerId3,
+                    PlayerId4: PlayerId4,
+                    IDRound: IDRound
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListadoAmigosRondaTodos = (IDUsuario, IDRounds) => {
     const URL = RutaBaseAB + "/ListadoAmigosRondaTodos";
     return fetch(URL, {

@@ -393,7 +393,7 @@ export default function RoundsView(route) {
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
-                                  <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
+                                  <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{course[language]+': '+ item.nombre}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>

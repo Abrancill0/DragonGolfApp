@@ -502,7 +502,7 @@ export default function RoundsView(props) {
             color={Colors.Primary} />
         
         { visible &&
-          <ScrollView contentContainerStyle={{paddingBottom:0}}>
+          <ScrollView contentContainerStyle={{paddingBottom:10}}>
 
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>

@@ -65,13 +65,13 @@ export default class SummaryComponent extends Component {
                                 color: tnProfit < 0 ? Colors.Primary : tnProfit > 0 ? 'green' : 'black'
                             }}>${tnProfit}</Text>
                         </View>
-                        <View style={[styles.betValueView, { marginBottom: 0 }]}>
+                        {/*<View style={[styles.betValueView, { marginBottom: 0 }]}>
                             <Text style={{ fontSize: 14 }}>Medal: </Text>
                             <Text style={{
                                 fontWeight: 'bold',
                                 color: medalProfit < 0 ? Colors.Primary : medalProfit > 0 ? 'green' : 'black'
                             }}>${medalProfit}</Text>
-                        </View>
+                        </View>*/}
                     </View>
                 </Collapsible>
             </View>
