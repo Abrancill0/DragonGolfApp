@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         color: Colors.Black
     },
     vsInfo: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         color: Colors.Black
     },
