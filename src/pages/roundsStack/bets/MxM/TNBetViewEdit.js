@@ -5,10 +5,11 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, ActualizarDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
+import { ListadoAmigosRonda, ActualizarDetalleApuestaTeam, ListadoAmigosRondaData } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { ButtonGroup } from 'react-native-elements';
 
 const {
   update,
@@ -32,8 +33,11 @@ class SNBetView extends Component {
     let autoPress = 0;
     let override = false;
     let advStrokes = 0;
+    let whoGetsAdv = 0;
     let playerA = 0//props.players.length > 0 ? props.players[0].id : 0;
     let playerB = 0//props.players.length > 0 ? props.players[0].id : 0;
+    let playerC = 0//props.players.length > 0 ? props.players[0].id : 0;
+    let playerD = 0//props.players.length > 0 ? props.players[0].id : 0;
     this.manualPress = 0;
 
     try {
@@ -48,6 +52,10 @@ class SNBetView extends Component {
       medal = 0//tipoCalculo ? (cantidad * parseFloat(snwData.medal)).toString() : snwData.medal;
       playerA = 0//props.players[0].id;
       playerB = 0//props.players[0].id;
+      playerC = 0//props.players[0].id;
+      playerD = 0//props.players[0].id;
+      //const whoGetsString = 'hihcp';//Data.who_gets_the_adv_strokes;
+      whoGetsAdv = 0//whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
     } catch (error) {
       console.log('====================================');
       console.log(error + ' file: SNBetView, line: 74');
@@ -74,7 +82,7 @@ class SNBetView extends Component {
       props.navigation.setParams({ Title: `${item.member_a} vs ${item.member_b}` });
     }*/
 
-    console.warn(this.props)
+    console.warn(this.props.route.params.set_tmw_adv_strokes.toString())
 
     this.state = {
       useFactor,
@@ -89,10 +97,13 @@ class SNBetView extends Component {
       advStrokes: this.props.route.params.BetD_AdvStrokers.toString(),
       playerA:this.props.route.params.Player1,
       playerB:this.props.route.params.Player2,
+      playerC:this.props.route.params.Player3,
+      playerD:this.props.route.params.Player4,
       language: '',
       players: [],
       IDBet:this.props.route.params.IDBet,
-      IDRound:this.props.route.params.IDRound
+      IDRound:this.props.route.params.IDRound,
+      whoGetsAdv : this.props.route.params.set_tmw_adv_strokes.toString() === 'Hi Handicap' ? 0 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Low Handicap' ? 1 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Each' ? 2 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Slid Hi' ? 3 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Slid Low' ? 4 : 5
     };
 
     this.playerSettings = [];
@@ -109,6 +120,10 @@ class SNBetView extends Component {
     this.ListadoTodos()
   }
 
+  onChangeButton = (index) => {
+    this.setState({ whoGetsAdv: index });
+  }
+
   render() {
 
     const {
@@ -122,7 +137,10 @@ class SNBetView extends Component {
       override,
       advStrokes,
       playerA,
-      playerB
+      playerB,
+      playerC,
+      playerD,
+      whoGetsAdv
     } = this.state;
 
     const {
@@ -145,7 +163,7 @@ class SNBetView extends Component {
           </View>
         </View>
 
-          <View style={styles.betField}>
+          {/*<View style={styles.betField}>
             <View style={styles.useFactorView}>
               <Text style={styles.dollarSym}>{useFactorText[language]}</Text>
               <Switch
@@ -155,7 +173,7 @@ class SNBetView extends Component {
                 value={useFactor}
               />
             </View>
-          </View>
+          </View>*/}
 
           <View style={styles.betField}>
             <View style={styles.betRow}>
@@ -311,7 +329,19 @@ class SNBetView extends Component {
             </View>
           </View>
 
-          <View style={{ height: 20 }} />
+          <View style={{ width: '100%', paddingVertical: 20, paddingHorizontal: 25 }}>
+            <Text>{Dictionary.whoGetsAdv[language]}</Text>
+              <ButtonGroup
+                onPress={this.onChangeButton}
+                selectedIndex={whoGetsAdv}
+              buttons={['Hi Hcp', 'Low Hcp', 'Each', 'Slid Hi', 'Slid Low', 'Auto']}
+                containerStyle={{ height: 30, margin: 0, marginLeft: 0, marginRight: 0 }}
+                textStyle={{ fontSize: 12 }}
+                selectedButtonStyle={{ backgroundColor: Colors.Primary }}
+              />
+          </View>
+
+          {/*<View style={{ height: 20 }} />
           <View style={styles.pickerView}>
             <View style={{ flex: 1 }}>
               <Picker
@@ -342,7 +372,7 @@ class SNBetView extends Component {
             <View style={{ position: 'absolute' }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}>VS</Text>
             </View>
-          </View>
+          </View>*/}
 
         </ScrollView>
 
@@ -385,7 +415,7 @@ class SNBetView extends Component {
     console.warn(IDRound)
     ListadoAmigosRonda(idUsu, IDRound)
         .then((res) => {
-          console.warn(res)
+          //console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -705,9 +735,12 @@ class SNBetView extends Component {
         advStrokes,
         playerA,
         playerB,
+        playerC,
+        playerD,
         IDRound,
         IDBetDetail,
-        IDBet
+        IDBet,
+        whoGetsAdv
       } = this.state;
     console.warn('----------------------------------')
     console.warn(IDBet)
@@ -723,6 +756,9 @@ class SNBetView extends Component {
     console.warn(advStrokes)
     console.warn(playerA)
     console.warn(playerB)
+    console.warn(whoGetsAdv)
+    let whoGetsString =  whoGetsAdv === 0 ? 'Hi Handicap' : whoGetsAdv === 1 ? 'Low Handicap' : whoGetsAdv === 2 ? 'Each' : whoGetsAdv === 3 ? 'Slid Hi' : whoGetsAdv === 4 ? 'Slid Low' : 'Automatic'
+    console.warn(whoGetsString)
     console.warn('----------------------------------')
     let back9UF = useFactor ? (front9 * back9).toString() : back9.toString()
     let matchUF = useFactor ? (front9 * match).toString() : match.toString()
@@ -732,31 +768,23 @@ class SNBetView extends Component {
     console.warn(matchUF)
     console.warn(carryUF)
     console.warn(medalUF)
-    if(playerA == playerB){
-      showMessage({
-        message: samePlayer[this.state.language],
-        type: 'warning',
-      });
-    }
-    else{
-      ActualizarDetalleApuesta(IDBet,IDBetDetail,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
-        .then((res) => {
-          console.warn(res)
-          if(res.estatus == 1){
-            showMessage({
-              message: successSaveTeeData[this.state.language],
-              type: 'success',
-            });
-            this.props.navigation.goBack()
-          }
-          else{
-            showMessage({
-              message: error[this.state.language],
-              type: 'danger',
-            });
-          }
-        })
-    }
+    ActualizarDetalleApuestaTeam(IDBet,IDBetDetail,IDRound,playerA,playerB,playerC,playerD,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes,whoGetsString)
+      .then((res) => {
+        console.warn(res)
+        if(res.estatus == 1){
+          showMessage({
+            message: successSaveTeeData[this.state.language],
+            type: 'success',
+          });
+          this.props.navigation.goBack()
+        }
+        else{
+          showMessage({
+            message: error[this.state.language],
+            type: 'danger',
+          });
+        }
+      })
     /*if (this.fieldValidations()) {
       const {
         useFactor,

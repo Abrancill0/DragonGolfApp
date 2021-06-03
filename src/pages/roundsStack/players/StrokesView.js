@@ -446,13 +446,13 @@ export default function RoundsView(route) {
                           <View style={{flex:1, paddingLeft:0}}>
                             <TextInput
                               ref={ref => item.id = ref}
-                              editable={false}
+                              //editable={false}
                               style={styles3.costInput}
                               selectionColor={Colors.Secondary}
                               placeholder="0"
                               keyboardType="numeric"
                               returnKeyType='done'
-                              //onChange={()=>refInput.current.setValue(item.strokes.toString())}
+                              onChange={(change) => {console.warn(change.nativeEvent.text);item.strokes=change.nativeEvent.text;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
                               defaultValue={item.strokes.toString()}
                               value={item.strokes.toString()}
                               selectTextOnFocus={true}

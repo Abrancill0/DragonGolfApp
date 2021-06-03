@@ -1,68 +1,61 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Picker, Alert, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Picker, Alert, Platform } from 'react-native';
+import { connect } from 'react-redux';
 import styles from '../styles';
 import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
+import * as Validations from '../../../../utils/Validations';
 import DragonButton from '../../../global/DragonButton';
+import Database from '../../../../database/database';
+import { actionSaveTNBet } from '../../../../store/actions';
 import moment from 'moment';
-import { ListadoAmigosRonda, ActualizarDetalleApuestaTeam, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
-import AsyncStorage from '@react-native-community/async-storage';
-import { showMessage } from "react-native-flash-message";
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { ButtonGroup } from 'react-native-elements';
 
-const {
-  update,
-  useFactor: useFactorText,
-  error,
-  successSaveTeeData,
-  samePlayer
-} = Dictionary;
+const database = new Database();
 
-
-class SNBetView extends Component {
+class TNBetView extends Component {
   constructor(props) {
     super(props);
 
     let useFactor = false;
-    let front9 = 0;
-    let back9 = 0;
-    let match = 0;
-    let carry = 0;
-    let medal = 0;
-    let autoPress = 0;
+    let front9 = '';
+    let back9 = '';
+    let match = '';
+    let carry = '';
+    let medal = '';
+    let autoPress = '2';
     let override = false;
-    let advStrokes = 0;
+    let advStrokes = '';
     let whoGetsAdv = 0;
-    let playerA = 0//props.players.length > 0 ? props.players[0].id : 0;
-    let playerB = 0//props.players.length > 0 ? props.players[0].id : 0;
-    let playerC = 0//props.players.length > 0 ? props.players[0].id : 0;
-    let playerD = 0//props.players.length > 0 ? props.players[0].id : 0;
+    let playerA = props.players.length > 0 ? props.players[0].id : '';
+    let playerB = props.players.length > 0 ? props.players[0].id : '';
+    let playerC = props.players.length > 0 ? props.players[0].id : '';
+    let playerD = props.players.length > 0 ? props.players[0].id : '';
     this.manualPress = 0;
 
     try {
-      //const { preferences: { snwData } } = this.props;
-      //const cantidad = parseFloat(snwData.cantidad);
-      const tipoCalculo = snwData.tipo_calculo === 'factor';
-      autoPress = 0//snwData.automatic_presses_every;
-      front9 = 0//tipoCalculo ? (cantidad * parseFloat(snwData.front_9)).toString() : snwData.front_9;
-      back9 = 0//tipoCalculo ? (cantidad * parseFloat(snwData.back_9)).toString() : snwData.back_9;
-      carry = 0//tipoCalculo ? (cantidad * parseFloat(snwData.carry)).toString() : snwData.carry;
-      match = 0//tipoCalculo ? (cantidad * parseFloat(snwData.match)).toString() : snwData.match;
-      medal = 0//tipoCalculo ? (cantidad * parseFloat(snwData.medal)).toString() : snwData.medal;
-      playerA = 0//props.players[0].id;
-      playerB = 0//props.players[0].id;
-      playerC = 0//props.players[0].id;
-      playerD = 0//props.players[0].id;
-      //const whoGetsString = 'hihcp';//Data.who_gets_the_adv_strokes;
-      whoGetsAdv = 0//whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
+      const { preferences: { tnwData } } = this.props;
+      const cantidad = parseFloat(tnwData.cantidad);
+      const tipoCalculo = tnwData.tipo_calculo === 'factor';
+      autoPress = tnwData.automatic_presses_every;
+      front9 = tipoCalculo ? (cantidad * parseFloat(tnwData.front_9)).toString() : tnwData.front_9;
+      back9 = tipoCalculo ? (cantidad * parseFloat(tnwData.back_9)).toString() : tnwData.back_9;
+      carry = tipoCalculo ? (cantidad * parseFloat(tnwData.carry)).toString() : tnwData.carry;
+      match = tipoCalculo ? (cantidad * parseFloat(tnwData.match)).toString() : tnwData.match;
+      medal = tipoCalculo ? (cantidad * parseFloat(tnwData.medal)).toString() : tnwData.medal;
+      const whoGetsString = tnwData.who_gets_the_adv_strokes;
+      whoGetsAdv = whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
+      playerA = props.players[0].id;
+      playerB = props.players[0].id;
+      playerC = props.players[0].id;
+      playerD = props.players[0].id;
     } catch (error) {
       console.log('====================================');
-      console.log(error + ' file: SNBetView, line: 74');
+      console.log(error + ' file: TNBetView, line: 74');
       console.log('====================================');
     }
 
-    /*const item = props.navigation.getParam('item');
+    const item = props.navigation.getParam('item');
 
     this.betId = 0;
     if (item) {
@@ -78,51 +71,44 @@ class SNBetView extends Component {
       advStrokes = item.adv_strokes.toString();
       playerA = item.member_a_id;
       playerB = item.member_b_id;
+      playerC = item.member_c_id;
+      playerD = item.member_d_id;
+      const whoGetsString = item.who_gets_the_adv_strokes;
+      whoGetsAdv = whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
       this.manualPress = item.manual_press;
-      props.navigation.setParams({ Title: `${item.member_a} vs ${item.member_b}` });
-    }*/
-
-    console.warn(this.props.route.params.set_tmw_adv_strokes.toString())
+      props.navigation.setParams({ Title: `${item.member_a} ${item.member_b} vs ${item.member_c} ${item.member_d}` });
+    }
 
     this.state = {
       useFactor,
-      IDBetDetail:this.props.route.params.IDBetDetail.toString(),
-      front9:this.props.route.params.BetD_MontoF9.toString(),
-      back9: this.props.route.params.BetD_MontoB9.toString(),
-      match: this.props.route.params.BetD_Match.toString(),
-      carry: this.props.route.params.BetD_Carry.toString(),
-      medal: this.props.route.params.BetD_Medal.toString(),
-      autoPress: this.props.route.params.BetD_AutoPress.toString(),
+      front9,
+      back9,
+      match,
+      carry,
+      medal,
+      autoPress,
       override,
-      advStrokes: this.props.route.params.BetD_AdvStrokers.toString(),
-      playerA:this.props.route.params.Player1,
-      playerB:this.props.route.params.Player2,
-      playerC:this.props.route.params.Player3,
-      playerD:this.props.route.params.Player4,
-      language: '',
-      players: [],
-      IDBet:this.props.route.params.IDBet,
-      IDRound:this.props.route.params.IDRound,
-      whoGetsAdv : this.props.route.params.set_tmw_adv_strokes.toString() === 'Hi Handicap' ? 0 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Low Handicap' ? 1 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Each' ? 2 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Slid Hi' ? 3 : this.props.route.params.set_tmw_adv_strokes.toString() === 'Slid Low' ? 4 : 5
+      advStrokes,
+      playerA,
+      playerB,
+      playerC,
+      playerD,
+      whoGetsAdv
     };
 
     this.playerSettings = [];
+    this.loadPlayerSettings();
   }
 
   static navigationOptions = ({ navigation }) => {
 
     return {
-      title: navigation.getParam('Title', 'Single Nassau'),
+      title: navigation.getParam('Title', 'Team Nassau'),
+      headerTitleStyle: {
+        fontSize: navigation.getParam('Title', 'Team Nassau') === 'Team Nassau' ? 20 : 14
+      }
     }
   };
-
-  componentDidMount() {
-    this.ListadoTodos()
-  }
-
-  onChangeButton = (index) => {
-    this.setState({ whoGetsAdv: index });
-  }
 
   render() {
 
@@ -146,22 +132,16 @@ class SNBetView extends Component {
     const {
       language,
       players
-    } = this.state;
+    } = this.props;
+
+    const {
+      save,
+      useFactor: useFactorText
+    } = Dictionary;
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
         <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled" >
-
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
-              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-            <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.InfoBet[language]}</Text>
-          </View>
-        </View>
 
           <View style={styles.betField}>
             <View style={styles.useFactorView}>
@@ -191,7 +171,6 @@ class SNBetView extends Component {
                 value={front9}
                 onSubmitEditing={_ => this.back9In.focus()}
                 blurOnSubmit={false}
-                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -210,7 +189,6 @@ class SNBetView extends Component {
                 value={match}
                 onSubmitEditing={_ => this.carryIn.focus()}
                 blurOnSubmit={false}
-                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -232,7 +210,6 @@ class SNBetView extends Component {
                 value={back9}
                 onSubmitEditing={_ => this.autoIn.focus()}
                 blurOnSubmit={false}
-                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -251,7 +228,6 @@ class SNBetView extends Component {
                 value={carry}
                 onSubmitEditing={_ => this.medalIn.focus()}
                 blurOnSubmit={false}
-                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -273,7 +249,6 @@ class SNBetView extends Component {
                 value={autoPress}
                 onSubmitEditing={_ => this.matchIn.focus()}
                 blurOnSubmit={false}
-                selectTextOnFocus={true}
               />
             </View>
             <View style={styles.betRow}>
@@ -290,7 +265,6 @@ class SNBetView extends Component {
                 maxLength={5}
                 onChangeText={(medal) => this.setState({ medal })}
                 value={medal}
-                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -324,7 +298,6 @@ class SNBetView extends Component {
                 onChangeText={(advStrokes) => this.setState({ advStrokes })}
                 value={advStrokes}
                 editable={override}
-                selectTextOnFocus={true}
               />
             </View>
           </View>
@@ -352,7 +325,7 @@ class SNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                     )
                   }
                 </Picker>
@@ -360,12 +333,12 @@ class SNBetView extends Component {
               <View style={{ flex: 1, paddingRight: 10 }}>
                 <Picker
                   mode="dropdown"
-                  selectedValue={playerC}
-                  onValueChange={(playerC) => this.onChangeSwitch(playerC, 'C')}
+                  selectedValue={playerB}
+                  onValueChange={(playerB) => this.onChangeSwitch(playerB, 'B')}
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                     )
                   }
                 </Picker>
@@ -373,12 +346,12 @@ class SNBetView extends Component {
               <View style={{ flex: 1, paddingLeft: 10 }}>
                 <Picker
                   mode="dropdown"
-                  selectedValue={playerB}
-                  onValueChange={(playerB) => this.onChangeSwitch(playerB, 'B')}
+                  selectedValue={playerC}
+                  onValueChange={(playerC) => this.onChangeSwitch(playerC, 'C')}
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                     )
                   }
                 </Picker>
@@ -391,7 +364,7 @@ class SNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                     )
                   }
                 </Picker>
@@ -409,23 +382,10 @@ class SNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                     )
                   }
                 </Picker>
-                <Picker
-                  mode="dropdown"
-                  selectedValue={playerC}
-                  onValueChange={(playerC) => this.onChangeSwitch(playerC, 'C')}
-                >
-                  {
-                    players.map(player =>
-                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
-                    )
-                  }
-                </Picker>
-              </View>
-              <View style={{ flex: 1, marginLeft: 20, paddingLeft: 20 }}>
                 <Picker
                   mode="dropdown"
                   selectedValue={playerB}
@@ -433,7 +393,20 @@ class SNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
+                    )
+                  }
+                </Picker>
+              </View>
+              <View style={{ flex: 1, marginLeft: 20, paddingLeft: 20 }}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerC}
+                  onValueChange={(playerC) => this.onChangeSwitch(playerC, 'C')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                     )
                   }
                 </Picker>
@@ -444,7 +417,7 @@ class SNBetView extends Component {
                 >
                   {
                     players.map(player =>
-                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                      <Picker.Item key={player.id} label={player.nick_name} value={player.id} />
                     )
                   }
                 </Picker>
@@ -458,7 +431,7 @@ class SNBetView extends Component {
         </ScrollView>
 
         <View style={styles.bottomButtom}>
-          <DragonButton title={update[language]} onPress={this.submit} />
+          <DragonButton title={save[language]} onPress={this.submit} />
         </View>
 
       </KeyboardAvoidingView>
@@ -485,206 +458,161 @@ class SNBetView extends Component {
     this.setState(state);
   }
 
-  ListadoTodos = async () => {
-    let idUsu = await AsyncStorage.getItem('usu_id')
-    let language = await AsyncStorage.getItem('language')
-    let IDRound = await AsyncStorage.getItem('IDRound')
-    this.setState({
-        language:language
-    })
-    console.warn(idUsu)
-    console.warn(IDRound)
-    ListadoAmigosRonda(idUsu, IDRound)
-        .then((res) => {
-          //console.warn(res)
-            if(res.estatus == 1){
-                const list = res.Result.map(item => (
-                    {
-                      id: item.PlayerId,
-                      nickname: item.usu_nickname
-                    }
-                ))
-
-                this.setState({
-                  players:list,
-                  carga:false
-                })
-            }
-            else{
-              this.setState({
-                players:[],
-                carga:false
-              })
-            }
-        })
+  loadPlayerSettings = () => {
+    this.props.players.forEach(async player => {
+      const tnwData = await database.teamSettingsByPlayerId(player.player_id);
+      if (tnwData) this.playerSettings.push(tnwData);
+    });
   }
 
   onChangeSwitch = (player, type) => {
-    console.warn(this.state.playerA)
-    console.warn(this.state.playerB)
-    console.warn(this.state.playerC)
-    console.warn(this.state.playerD)
-    if (type === 'A'){
-       this.setState({ playerA: player });
-       CalcularGolpesVentajaTeam(player, this.state.playerC, this.state.playerB, this.state.playerD, this.state.IDRound)
-        .then((res) => {
-          console.warn(res)
-          if(res.estatus == 1){
-            this.setState({
-              advStrokes : res.golpesventaja.toString()
-            })
-          }
-          else{
-            this.setState({
-              advStrokes : 0
-            })
-          }
-        })
+    if (type === 'A') this.setState({ playerA: player });
+    if (type === 'B') this.setState({ playerB: player });
+    if (type === 'C') this.setState({ playerC: player });
+    if (type === 'D') this.setState({ playerD: player });
+    try {
+      this.calculateAdvStrokes(player, type);
+      this.changeBetsValues(player, type);
+    } catch (error) {
+      console.log('====================================');
+      console.log(error + ' file: TNBetView, line: 436');
+      console.log('====================================');
     }
-    if (type === 'B'){
-      this.setState({ playerB: player });
-      CalcularGolpesVentajaTeam(this.state.playerA, this.state.playerC, player, this.state.playerD, this.state.IDRound)
-        .then((res) => {
-          console.warn(res)
-          if(res.estatus == 1){
-            this.setState({
-              advStrokes : res.golpesventaja.toString()
-            })
-          }
-          else{
-            this.setState({
-              advStrokes : 0
-            })
-          }
-        })
-      }
-      if (type === 'C'){
-      this.setState({ playerC: player });
-      CalcularGolpesVentajaTeam(this.state.playerA, player, this.state.playerB, this.state.playerD, this.state.IDRound)
-        .then((res) => {
-          console.warn(res)
-          if(res.estatus == 1){
-            this.setState({
-              advStrokes : res.golpesventaja.toString()
-            })
-          }
-          else{
-            this.setState({
-              advStrokes : 0
-            })
-          }
-        })
-      }
-      if (type === 'D'){
-      this.setState({ playerD: player });
-      CalcularGolpesVentajaTeam(this.state.playerA, this.state.playerC, this.state.playerB, player, this.state.IDRound)
-        .then((res) => {
-          console.warn(res)
-          if(res.estatus == 1){
-            this.setState({
-              advStrokes : res.golpesventaja.toString()
-            })
-          }
-          else{
-            this.setState({
-              advStrokes : 0
-            })
-          }
-        })
-      }
-    //this.calculateAdvStrokes(player, type);
-    //this.changeBetsValues(player, type);
+  }
+
+  onChangeButton = (index) => {
+    this.setState({ whoGetsAdv: index });
   }
 
   calculateAdvStrokes = async (player, type) => {
-    const { players, playerA, playerB, override } = this.state;
-    //const { players, hcpAdj, playersWithStrokes } = this.props;
+    const { override } = this.state;
+    let playerA = this.state.playerA;
+    let playerB = this.state.playerB;
+    let playerC = this.state.playerC;
+    let playerD = this.state.playerD;
+    const { players, hcpAdj, playersWithStrokes } = this.props;
+    let indexA = -1;
+    let indexB = -1;
+    let indexC = -1;
+    let indexD = -1;
     let advStrokes = 0;
-    if (type === 'A') {
-      if (player && playerB) {
-        const strokes = 0//await database.listPlayersConfrontations(player);
-        const idx = strokes.findIndex(item => item.member_b_id === playerB);
-        if (idx >= 0) {
-          advStrokes = strokes[idx].adv_strokes;
-        } else {
-          const indexA = players.findIndex(item => item.id === player);
-          const indexB = players.findIndex(item => item.id === playerB);
-          const strokesA = ((players[indexA].handicap * players[indexA].tee.slope / 113) * hcpAdj).toFixed(0);
-          const strokesB = ((players[indexB].handicap * players[indexB].tee.slope / 113) * hcpAdj).toFixed(0);
 
-          if (players[indexA].player_id === 1) {
-            const playerId = players[indexB].player_id;
-            const playerIndex = playersWithStrokes.findIndex(item => item.id === playerId);
-            if (playerIndex >= 0) {
-              advStrokes = playersWithStrokes[playerIndex].strokes;
-            } else {
-              advStrokes = strokesA - strokesB;
-            }
-          } else if (players[indexB].player_id === 1) {
-            const playerId = players[indexA].player_id;
-            const playerIndex = playersWithStrokes.findIndex(item => item.id === playerId);
-            if (playerIndex >= 0) {
-              advStrokes = -playersWithStrokes[playerIndex].strokes;
-            } else {
-              advStrokes = strokesA - strokesB;
-            }
-          } else {
-            advStrokes = strokesA - strokesB;
-          }
-        }
-      }
+    switch (type) {
+      case 'A':
+        playerA = player;
+        break;
+      case 'B':
+        playerB = player;
+        break;
+      case 'C':
+        playerC = player;
+        break;
+      case 'D':
+        playerD = player;
+        break;
     }
 
-    if (type === 'B') {
-      if (player && playerA) {
-        const strokes = 0//await database.listPlayersConfrontations(playerA);
-        const idx = strokes.findIndex(item => item.member_b_id === player);
-        if (idx >= 0) {
-          advStrokes = strokes[idx].adv_strokes;
-        } else {
-          const indexA = players.findIndex(item => item.id === playerA);
-          const indexB = players.findIndex(item => item.id === player);
-          if (indexA >= 0 && indexB >= 0) {
-            const strokesA = ((players[indexA].handicap * players[indexA].tee.slope / 113) * hcpAdj).toFixed(0);
-            const strokesB = ((players[indexB].handicap * players[indexB].tee.slope / 113) * hcpAdj).toFixed(0);
+    if (playerA && playerB && playerC && playerD) {
+      indexA = players.findIndex(item => item.id === playerA);
+      indexB = players.findIndex(item => item.id === playerB);
+      indexC = players.findIndex(item => item.id === playerC);
+      indexD = players.findIndex(item => item.id === playerD);
+    }
 
-            if (players[indexA].player_id === 1) {
-              const playerId = players[indexB].player_id;
-              const playerIndex = playersWithStrokes.findIndex(item => item.id === playerId);
-              if (playerIndex >= 0) {
-                advStrokes = playersWithStrokes[playerIndex].strokes;
-              } else {
-                advStrokes = strokesA - strokesB;
-              }
-            } else if (players[indexB].player_id === 1) {
-              const playerId = players[indexA].player_id;
-              const playerIndex = playersWithStrokes.findIndex(item => item.id === playerId);
-              if (playerIndex >= 0) {
-                advStrokes = -playersWithStrokes[playerIndex].strokes;
-              } else {
-                advStrokes = strokesA - strokesB;
-              }
-            } else {
-              advStrokes = strokesA - strokesB;
-            }
-          }
+    let advStrokesC = 0;
+    let advStrokesD = 0;
+
+    if (indexA >= 0 && indexB >= 0 && indexC >= 0 && indexD >= 0) {
+      const strokesA = ((players[indexA].handicap * players[indexA].tee.slope / 113) * hcpAdj).toFixed(0);
+      const strokesB = ((players[indexB].handicap * players[indexB].tee.slope / 113) * hcpAdj).toFixed(0);
+      const strokesC = ((players[indexC].handicap * players[indexC].tee.slope / 113) * hcpAdj).toFixed(0);
+      const strokesD = ((players[indexD].handicap * players[indexD].tee.slope / 113) * hcpAdj).toFixed(0);
+
+      let strokes = await database.listPlayersConfrontations(playerA);
+      let strokesCId = strokes.findIndex(item => item.member_a_id === playerA && item.member_b_id === playerC);
+      let strokesDId = strokes.findIndex(item => item.member_a_id === playerA && item.member_b_id === playerD);
+
+      if (players[indexA].player_id === 1) {
+        const playerCId = players[indexC].player_id;
+        const playerCIndex = playersWithStrokes.findIndex(item => item.id === playerCId);
+        const playerDId = players[indexD].player_id;
+        const playerDIndex = playersWithStrokes.findIndex(item => item.id === playerDId);
+
+        if (strokesCId >= 0) {
+          advStrokesC = strokes[strokesCId].adv_strokes;
+        } else if (playerCIndex >= 0) {
+          advStrokesC = playersWithStrokes[playerCIndex].strokes;
+        } else {
+          advStrokesC = strokesA - strokesC;
         }
+
+        if (strokesDId >= 0) {
+          advStrokesD = strokes[strokesDId].adv_strokes;
+        } else if (playerDIndex >= 0) {
+          advStrokesD = playersWithStrokes[playerDIndex].strokes;
+        } else {
+          advStrokesD = strokesA - strokesD;
+        }
+      } else {
+        if (strokesCId >= 0) advStrokesC = strokes[strokesCId].adv_strokes;
+        else advStrokesC = strokesA - strokesC;
+        if (strokesDId >= 0) advStrokesD = strokes[strokesDId].adv_strokes;
+        else advStrokesD = strokesA - strokesD;
       }
+
+      advStrokes = parseFloat(advStrokesC + advStrokesD);
+
+      strokes = await database.listPlayersConfrontations(playerB);
+      strokesCId = strokes.findIndex(item => item.member_a_id === playerB && item.member_b_id === playerC);
+      strokesDId = strokes.findIndex(item => item.member_a_id === playerB && item.member_b_id === playerD);
+
+      if (players[indexB].player_id === 1) {
+        const playerCId = players[indexC].player_id;
+        const playerCIndex = playersWithStrokes.findIndex(item => item.id === playerCId);
+        const playerDId = players[indexD].player_id;
+        const playerDIndex = playersWithStrokes.findIndex(item => item.id === playerDId);
+
+        if (strokesCId >= 0) {
+          advStrokesC = strokes[strokesCId].adv_strokes;
+        } else if (playerCIndex >= 0) {
+          advStrokesC = playersWithStrokes[playerCIndex].strokes;
+        } else {
+          advStrokesC = strokesB - strokesC;
+        }
+
+        if (strokesDId >= 0) {
+          advStrokesD = strokes[strokesDId].adv_strokes;
+        } else if (playerDIndex >= 0) {
+          advStrokesD = playersWithStrokes[playerDIndex].strokes;
+        } else {
+          advStrokesD = strokesB - strokesD;
+        }
+      } else {
+        if (strokesCId >= 0) advStrokesC = strokes[strokesCId].adv_strokes;
+        else advStrokesC = strokesB - strokesC;
+        if (strokesDId >= 0) advStrokesD = strokes[strokesDId].adv_strokes;
+        else advStrokesD = strokesB - strokesD;
+      }
+
+      advStrokes += parseFloat(advStrokesC + advStrokesD);
+      advStrokes /= 2;
     }
 
     if (!override) {
-      this.setState({ advStrokes: advStrokes.toString() });
+      this.setState({ advStrokes: advStrokes ? parseFloat(advStrokes.toFixed(1)).toString() : '0' });
     }
   }
 
   changeBetsValues = (player, type) => {
     const { players } = this.props;
-    if (type === 'B') {
+    if (type === 'C' || type === 'D') {
       const index = players.findIndex(item => item.id === player);
       if (this.playerSettings[index]) {
         const settings = this.playerSettings[index];
         const useFactor = settings.use_factor === 'factor';
         const value = settings.cantidad;
+        const whoGetsString = settings.who_gets_the_adv_strokes;
+        const whoGetsAdv = whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
         this.setState({
           autoPress: settings.automatic_presses_every.toString(),
           front9: useFactor ? (value * settings.front_9).toString() : settings.front_9.toString(),
@@ -692,6 +620,7 @@ class SNBetView extends Component {
           match: useFactor ? (value * settings.match).toString() : settings.match.toString(),
           carry: useFactor ? (value * settings.carry).toString() : settings.carry.toString(),
           medal: useFactor ? (value * settings.medal).toString() : settings.medal.toString(),
+          whoGetsAdv
         });
       }
     }
@@ -708,12 +637,14 @@ class SNBetView extends Component {
       medal,
       advStrokes,
       playerA,
-      playerB
+      playerB,
+      playerC,
+      playerD
     } = this.state;
 
     const {
       language
-    } = this.state;
+    } = this.props;
 
     const { ok: front9Ok } = Validations.floatNumberValidation(front9 ? front9 : 1);
     if (!front9Ok) {
@@ -786,7 +717,7 @@ class SNBetView extends Component {
       return false;
     }
 
-    if (playerA === playerB) {
+    if (playerA === playerC || playerA === playerD || playerB === playerC || playerB === playerD) {
       Alert.alert(
         'Error',
         Dictionary.samePlayer[language]
@@ -798,7 +729,8 @@ class SNBetView extends Component {
   }
 
   submit = () => {
-    const {
+    if (this.fieldValidations()) {
+      const {
         useFactor,
         front9,
         back9,
@@ -812,79 +744,25 @@ class SNBetView extends Component {
         playerB,
         playerC,
         playerD,
-        IDRound,
-        IDBetDetail,
-        IDBet,
         whoGetsAdv
-      } = this.state;
-    console.warn('----------------------------------')
-    console.warn(IDBet)
-    console.warn(IDBetDetail)
-    console.warn(IDRound)
-    console.warn(front9)
-    console.warn(back9)
-    console.warn(match)
-    console.warn(carry)
-    console.warn(medal)
-    console.warn(autoPress)
-    console.warn(override)
-    console.warn(advStrokes)
-    console.warn(playerA)
-    console.warn(playerB)
-    console.warn(whoGetsAdv)
-    let whoGetsString =  whoGetsAdv === 0 ? 'Hi Handicap' : whoGetsAdv === 1 ? 'Low Handicap' : whoGetsAdv === 2 ? 'Each' : whoGetsAdv === 3 ? 'Slid Hi' : whoGetsAdv === 4 ? 'Slid Low' : 'Automatic'
-    console.warn(whoGetsString)
-    console.warn('----------------------------------')
-    let back9UF = useFactor ? (front9 * back9).toString() : back9.toString()
-    let matchUF = useFactor ? (front9 * match).toString() : match.toString()
-    let carryUF = useFactor ? (front9 * carry).toString() : carry.toString()
-    let medalUF = useFactor ? (front9 * medal).toString() : medal.toString()
-    console.warn(back9UF)
-    console.warn(matchUF)
-    console.warn(carryUF)
-    console.warn(medalUF)
-    ActualizarDetalleApuestaTeam(IDBet,IDBetDetail,IDRound,playerA,playerB,playerC,playerD,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes,whoGetsString)
-      .then((res) => {
-        console.warn(res)
-        if(res.estatus == 1){
-          showMessage({
-            message: successSaveTeeData[this.state.language],
-            type: 'success',
-          });
-          this.props.navigation.goBack()
-        }
-        else{
-          showMessage({
-            message: error[this.state.language],
-            type: 'danger',
-          });
-        }
-      })
-    /*if (this.fieldValidations()) {
-      const {
-        useFactor,
-        front9,
-        back9,
-        match,
-        carry,
-        medal,
-        autoPress,
-        override,
-        advStrokes,
-        playerA,
-        playerB
       } = this.state;
 
       const indexA = this.props.players.findIndex(item => item.id === playerA);
       const indexB = this.props.players.findIndex(item => item.id === playerB);
+      const indexC = this.props.players.findIndex(item => item.id === playerC);
+      const indexD = this.props.players.findIndex(item => item.id === playerD);
 
-      const SNBet = {
+      const TNBet = {
         id: this.betId,
         round_id: this.props.roundId,
         member_a_id: playerA,
         member_b_id: playerB,
         member_a: this.props.players[indexA].nick_name,
         member_b: this.props.players[indexB].nick_name,
+        member_c_id: playerC,
+        member_d_id: playerD,
+        member_c: this.props.players[indexC].nick_name,
+        member_d: this.props.players[indexD].nick_name,
         automatic_press_every: autoPress ? autoPress : '0',
         use_factor: useFactor ? 1 : 0,
         front_9: front9 ? front9 : '0',
@@ -892,6 +770,7 @@ class SNBetView extends Component {
         match: match ? useFactor ? match * front9 : match : '0',
         carry: carry ? useFactor ? carry * front9 : carry : '0',
         medal: medal ? useFactor ? medal * front9 : medal : '0',
+        who_gets_the_adv_strokes: whoGetsAdv === 0 ? 'hihcp' : whoGetsAdv === 1 ? 'lowhcp' : whoGetsAdv === 3 ? 'slidhi' : whoGetsAdv === 4 ? 'slidlow' : whoGetsAdv === 5 ? 'automatic' : 'hihcp',
         adv_strokes: advStrokes ? advStrokes : '0',
         manually_override_adv: override ? 1 : 0,
         manually_adv_strokes: advStrokes ? advStrokes : '0',
@@ -900,9 +779,24 @@ class SNBetView extends Component {
         ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
       }
 
-      this.props.saveSNBet(SNBet);
-    }*/
+      this.props.saveTNBet(TNBet);
+    }
   }
 }
 
-export default SNBetView;
+const mapStateToProps = state => ({
+  language: state.reducerLanguage,
+  preferences: state.reducerPreferences,
+  players: state.reducerRoundPlayers,
+  hcpAdj: state.reducerHcpAdj,
+  playersWithStrokes: state.reducerPlayers,
+  roundId: state.reducerRoundId,
+});
+
+const mapDispatchToProps = dispatch => ({
+  saveTNBet: (values) => {
+    dispatch(actionSaveTNBet(values));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TNBetView);

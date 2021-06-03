@@ -78,6 +78,7 @@ export default function RoundsView(props) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
+                      ConsecutivosApuesta: item.ConsecutivosApuesta,
                       id: item.IDBetDetail,
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
                       Player1: item.Player1,
@@ -123,7 +124,7 @@ export default function RoundsView(props) {
                     }
                 ))
                 if(tipo==2){
-                  setRounds(list.reverse())
+                  setRounds(list)
                   console.warn(rounds[index].BetD_MontoCalculoF9)
                   for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
@@ -137,7 +138,7 @@ export default function RoundsView(props) {
                   setStatus(false)
                 }
                 else if(tipo == 3){
-                  setRounds(list.reverse())
+                  setRounds(list)
                   /*for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
                       collapsedArray3[index]=true
@@ -150,7 +151,7 @@ export default function RoundsView(props) {
                   setStatus(false)
                 }
                 else{
-                  setRounds(list.reverse())
+                  setRounds(list)
                   for (var i = 0; i<=list.length - 1; i++) {
                     collapsedArray3.push(true)
                   }
@@ -566,6 +567,9 @@ export default function RoundsView(props) {
                           rippleColor={Colors.Secondary}
                           onPress={()=>showSheetView(item, index)}
                         >
+                        <View style={styles.betIndexView}>
+                          <Text style={styles.betIndexText}>{rounds[index].ConsecutivosApuesta}</Text>
+                      </View>
                           <View style={{ flex: 1, margin:0 }}>
                             <View style={styles.betGeneralInfoView}>
                                 <View style={{ flexDirection: 'row' }}>
@@ -643,13 +647,13 @@ export default function RoundsView(props) {
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}
-              ListEmptyComponent={
+              /*ListEmptyComponent={
               <ListEmptyComponent
                 text={Dictionary.emptyBets[language]}
                 iconName="money-bill-alt"
                 iconFamily='font-awesome'
               />
-            }
+            }*/
             stopLeftSwipe={Dimensions.get('window').width * .5}
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}

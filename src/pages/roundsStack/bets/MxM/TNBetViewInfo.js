@@ -5,13 +5,13 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, ActualizarDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
+import { ListadoAmigosRonda, CrearDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const {
-  update,
+  save,
   useFactor: useFactorText,
   error,
   successSaveTeeData,
@@ -78,17 +78,16 @@ class SNBetView extends Component {
 
     this.state = {
       useFactor,
-      IDBetDetail:this.props.route.params.IDBetDetail.toString(),
       front9:this.props.route.params.BetD_MontoF9.toString(),
       back9: this.props.route.params.BetD_MontoB9.toString(),
       match: this.props.route.params.BetD_Match.toString(),
       carry: this.props.route.params.BetD_Carry.toString(),
       medal: this.props.route.params.BetD_Medal.toString(),
-      autoPress: this.props.route.params.BetD_AutoPress.toString(),
+      autoPress,
       override,
       advStrokes: this.props.route.params.BetD_AdvStrokers.toString(),
-      playerA:this.props.route.params.Player1,
-      playerB:this.props.route.params.Player2,
+      playerA,
+      playerB,
       language: '',
       players: [],
       IDBet:this.props.route.params.IDBet,
@@ -145,7 +144,7 @@ class SNBetView extends Component {
           </View>
         </View>
 
-          <View style={styles.betField}>
+          {/*<View style={styles.betField}>
             <View style={styles.useFactorView}>
               <Text style={styles.dollarSym}>{useFactorText[language]}</Text>
               <Switch
@@ -155,7 +154,7 @@ class SNBetView extends Component {
                 value={useFactor}
               />
             </View>
-          </View>
+          </View>*/}
 
           <View style={styles.betField}>
             <View style={styles.betRow}>
@@ -174,6 +173,7 @@ class SNBetView extends Component {
                 onSubmitEditing={_ => this.back9In.focus()}
                 blurOnSubmit={false}
                 selectTextOnFocus={true}
+                editable={false}
               />
             </View>
             <View style={styles.betRow}>
@@ -193,6 +193,7 @@ class SNBetView extends Component {
                 onSubmitEditing={_ => this.carryIn.focus()}
                 blurOnSubmit={false}
                 selectTextOnFocus={true}
+                editable={false}
               />
             </View>
           </View>
@@ -215,6 +216,7 @@ class SNBetView extends Component {
                 onSubmitEditing={_ => this.autoIn.focus()}
                 blurOnSubmit={false}
                 selectTextOnFocus={true}
+                editable={false}
               />
             </View>
             <View style={styles.betRow}>
@@ -234,12 +236,13 @@ class SNBetView extends Component {
                 onSubmitEditing={_ => this.medalIn.focus()}
                 blurOnSubmit={false}
                 selectTextOnFocus={true}
+                editable={false}
               />
             </View>
           </View>
 
           <View style={styles.betField}>
-            <View style={styles.betRow}>
+            {/*<View style={styles.betRow}>
               <Text numberOfLines={2} adjustsFontSizeToFit={true}>Auto Press{'\n'}Every: </Text>
               <View style={{ width: 10 }} />
               <Text style={styles.dollarSym}></Text>
@@ -256,8 +259,9 @@ class SNBetView extends Component {
                 onSubmitEditing={_ => this.matchIn.focus()}
                 blurOnSubmit={false}
                 selectTextOnFocus={true}
+                editable={false}
               />
-            </View>
+            </View>*/}
             <View style={styles.betRow}>
               <Text style={styles.betText}>Medal </Text>
               <View style={{ width: 10 }} />
@@ -273,12 +277,31 @@ class SNBetView extends Component {
                 onChangeText={(medal) => this.setState({ medal })}
                 value={medal}
                 selectTextOnFocus={true}
+                editable={false}
+              />
+            </View>
+            <View style={styles.betRow}>
+              <Text style={[styles.betText, { fontSize: null }]} numberOfLines={2} adjustsFontSizeToFit={true}>Adv. Strokes: </Text>
+              <View style={{ width: 10 }} />
+              <Text style={styles.dollarSym}></Text>
+              <TextInput
+                style={styles.betInput}
+                selectionColor={Colors.Primary}
+                placeholder="0"
+                placeholderTextColor={Colors.Black}
+                keyboardType={Platform.OS === 'ios' ? 'numbers-and-punctuation' : 'numeric'}
+                returnKeyType='done'
+                maxLength={6}
+                onChangeText={(advStrokes) => this.setState({ advStrokes })}
+                value={advStrokes}
+                editable={override}
+                selectTextOnFocus={true}
               />
             </View>
           </View>
 
           <View style={styles.betField}>
-            <View style={styles.betRow}>
+            {/*<View style={styles.betRow}>
               <Text style={[styles.betText, { fontSize: 9, width: 60 }]} numberOfLines={2} adjustsFontSizeToFit={true}>Manually{'\n'}Override Adv. </Text>
               <View style={{ width: 10 }} />
               <Text style={styles.dollarSym}></Text>
@@ -307,11 +330,12 @@ class SNBetView extends Component {
                 value={advStrokes}
                 editable={override}
                 selectTextOnFocus={true}
+                editable={false}
               />
-            </View>
+            </View>*/}
           </View>
 
-          <View style={{ height: 20 }} />
+          {/*<View style={{ height: 20 }} />
           <View style={styles.pickerView}>
             <View style={{ flex: 1 }}>
               <Picker
@@ -342,13 +366,13 @@ class SNBetView extends Component {
             <View style={{ position: 'absolute' }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}>VS</Text>
             </View>
-          </View>
+          </View>*/}
 
         </ScrollView>
 
-        <View style={styles.bottomButtom}>
-          <DragonButton title={update[language]} onPress={this.submit} />
-        </View>
+        {/*<View style={styles.bottomButtom}>
+          <DragonButton title={save[language]} onPress={this.submit} />
+        </View>*/}
 
       </KeyboardAvoidingView>
     );
@@ -706,12 +730,10 @@ class SNBetView extends Component {
         playerA,
         playerB,
         IDRound,
-        IDBetDetail,
         IDBet
       } = this.state;
     console.warn('----------------------------------')
     console.warn(IDBet)
-    console.warn(IDBetDetail)
     console.warn(IDRound)
     console.warn(front9)
     console.warn(back9)
@@ -739,7 +761,7 @@ class SNBetView extends Component {
       });
     }
     else{
-      ActualizarDetalleApuesta(IDBet,IDBetDetail,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
+      CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.Gray,
     },
     betIndexView: {
-        width: 15,
+        width: 20,
         height: 20,
         backgroundColor: Colors.Primary,
         borderRadius: 2,

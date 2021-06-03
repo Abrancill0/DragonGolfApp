@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Picker, Alert, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Alert, Platform, TouchableOpacity } from 'react-native';
 import styles from '../styles';
+import {Picker} from '@react-native-picker/picker';
 import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, ActualizarDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
+import { ListadoAmigosRonda, CrearDetalleApuestaTeam, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { ButtonGroup } from 'react-native-elements';
 
 const {
-  update,
+  save,
   useFactor: useFactorText,
   error,
   successSaveTeeData,
-  samePlayer
+  samePlayerTN,
+  Manually,
+  OverrideAdv,
+  auto,
+  Press
 } = Dictionary;
 
 
-class SNBetView extends Component {
+class TNBetView extends Component {
   constructor(props) {
     super(props);
 
@@ -32,8 +38,11 @@ class SNBetView extends Component {
     let autoPress = 0;
     let override = false;
     let advStrokes = 0;
+    let whoGetsAdv = 0;
     let playerA = 0//props.players.length > 0 ? props.players[0].id : 0;
     let playerB = 0//props.players.length > 0 ? props.players[0].id : 0;
+    let playerC = 0//props.players.length > 0 ? props.players[0].id : 0;
+    let playerD = 0//props.players.length > 0 ? props.players[0].id : 0;
     this.manualPress = 0;
 
     try {
@@ -46,11 +55,15 @@ class SNBetView extends Component {
       carry = 0//tipoCalculo ? (cantidad * parseFloat(snwData.carry)).toString() : snwData.carry;
       match = 0//tipoCalculo ? (cantidad * parseFloat(snwData.match)).toString() : snwData.match;
       medal = 0//tipoCalculo ? (cantidad * parseFloat(snwData.medal)).toString() : snwData.medal;
+      //const whoGetsString = 'hihcp';//Data.who_gets_the_adv_strokes;
+      whoGetsAdv = 0//whoGetsString === 'hihcp' ? 0 : whoGetsString === 'lowhcp' ? 1 : whoGetsString === 'each' ? 2 : whoGetsString === 'slidhi' ? 3 : whoGetsString === 'slidlow' ? 4 : whoGetsString === 'automatic' ? 5 : 0;
       playerA = 0//props.players[0].id;
       playerB = 0//props.players[0].id;
+      playerC = 0//props.players[0].id;
+      playerD = 0//props.players[0].id;
     } catch (error) {
       console.log('====================================');
-      console.log(error + ' file: SNBetView, line: 74');
+      console.log(error + ' file: TNBetView, line: 74');
       console.log('====================================');
     }
 
@@ -78,17 +91,19 @@ class SNBetView extends Component {
 
     this.state = {
       useFactor,
-      IDBetDetail:this.props.route.params.IDBetDetail.toString(),
-      front9:this.props.route.params.BetD_MontoF9.toString(),
-      back9: this.props.route.params.BetD_MontoB9.toString(),
-      match: this.props.route.params.BetD_Match.toString(),
-      carry: this.props.route.params.BetD_Carry.toString(),
-      medal: this.props.route.params.BetD_Medal.toString(),
-      autoPress: this.props.route.params.BetD_AutoPress.toString(),
+      front9,
+      back9,
+      match,
+      carry,
+      medal,
+      autoPress,
       override,
-      advStrokes: this.props.route.params.BetD_AdvStrokers.toString(),
-      playerA:this.props.route.params.Player1,
-      playerB:this.props.route.params.Player2,
+      advStrokes,
+      playerA,
+      playerB,
+      playerC,
+      playerD,
+      whoGetsAdv,
       language: '',
       players: [],
       IDBet:this.props.route.params.IDBet,
@@ -101,7 +116,7 @@ class SNBetView extends Component {
   static navigationOptions = ({ navigation }) => {
 
     return {
-      title: navigation.getParam('Title', 'Single Nassau'),
+      title: navigation.getParam('Title', 'Team Nassau'),
     }
   };
 
@@ -122,7 +137,10 @@ class SNBetView extends Component {
       override,
       advStrokes,
       playerA,
-      playerB
+      playerB,
+      playerC,
+      playerD,
+      whoGetsAdv
     } = this.state;
 
     const {
@@ -141,7 +159,7 @@ class SNBetView extends Component {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-            <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.InfoBet[language]}</Text>
+            <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.CreateBet[language]}</Text>
           </View>
         </View>
 
@@ -311,47 +329,144 @@ class SNBetView extends Component {
             </View>
           </View>
 
-          <View style={{ height: 20 }} />
-          <View style={styles.pickerView}>
-            <View style={{ flex: 1 }}>
-              <Picker
-                mode="dropdown"
-                selectedValue={playerA}
-                onValueChange={(playerA) => this.onChangeSwitch(playerA, 'A')}
-              >
-                {
-                  players.map(player =>
-                    <Picker.Item key={player.id} label={player.nickname} value={player.id} />
-                  )
-                }
-              </Picker>
-            </View>
-            <View style={{ flex: 1, marginLeft: Platform.OS === 'android' && 30 }}>
-              <Picker
-                mode="dropdown"
-                selectedValue={playerB}
-                onValueChange={(playerB) => this.onChangeSwitch(playerB, 'B')}
-              >
-                {
-                  players.map(player =>
-                    <Picker.Item key={player.id} label={player.nickname} value={player.id} />
-                  )
-                }
-              </Picker>
-            </View>
-            <View style={{ position: 'absolute' }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>VS</Text>
-            </View>
+          <View style={{ width: '100%', paddingVertical: 20, paddingHorizontal: 25 }}>
+            <Text>{Dictionary.whoGetsAdv[language]}</Text>
+              <ButtonGroup
+                onPress={this.onChangeButton}
+                selectedIndex={whoGetsAdv}
+              buttons={['Hi Hcp', 'Low Hcp', 'Each', 'Slid Hi', 'Slid Low', 'Auto']}
+                containerStyle={{ height: 30, margin: 0, marginLeft: 0, marginRight: 0 }}
+                textStyle={{ fontSize: 12 }}
+                selectedButtonStyle={{ backgroundColor: Colors.Primary }}
+              />
           </View>
+
+          <View style={{ height: 20 }} />
+          {Platform.OS === 'ios' ?
+            <View style={styles.pickerView}>
+              <View style={{ flex: 1 }}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerA}
+                  onValueChange={(playerA) => this.onChangeSwitch(playerA, 'A')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                    )
+                  }
+                </Picker>
+              </View>
+              <View style={{ flex: 1, paddingRight: 10 }}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerB}
+                  onValueChange={(playerB) => this.onChangeSwitch(playerB, 'B')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                    )
+                  }
+                </Picker>
+              </View>
+              <View style={{ flex: 1, paddingLeft: 10 }}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerC}
+                  onValueChange={(playerC) => this.onChangeSwitch(playerC, 'C')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                    )
+                  }
+                </Picker>
+              </View>
+              <View style={{ flex: 1, marginLeft: Platform.OS === 'android' && 30 }}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerD}
+                  onValueChange={(playerD) => this.onChangeSwitch(playerD, 'D')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                    )
+                  }
+                </Picker>
+              </View>
+              <View style={{ position: 'absolute' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>VS</Text>
+              </View>
+            </View> :
+            <View style={styles.pickerView}>
+              <View style={{ flex: 1, marginRight: 5 }}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerA}
+                  onValueChange={(playerA) => this.onChangeSwitch(playerA, 'A')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                    )
+                  }
+                </Picker>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerB}
+                  onValueChange={(playerB) => this.onChangeSwitch(playerB, 'B')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                    )
+                  }
+                </Picker>
+              </View>
+              <View style={{ flex: 1, marginLeft: 20, paddingLeft: 20 }}>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerC}
+                  onValueChange={(playerC) => this.onChangeSwitch(playerC, 'C')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                    )
+                  }
+                </Picker>
+                <Picker
+                  mode="dropdown"
+                  selectedValue={playerD}
+                  onValueChange={(playerD) => this.onChangeSwitch(playerD, 'D')}
+                >
+                  {
+                    players.map(player =>
+                      <Picker.Item key={player.id} label={player.nickname} value={player.id} />
+                    )
+                  }
+                </Picker>
+              </View>
+              <View style={{ position: 'absolute' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>VS</Text>
+              </View>
+            </View>
+          }
 
         </ScrollView>
 
         <View style={styles.bottomButtom}>
-          <DragonButton title={update[language]} onPress={this.submit} />
+          <DragonButton title={save[language]} onPress={this.submit} />
         </View>
 
       </KeyboardAvoidingView>
     );
+  }
+
+  onChangeButton = (index) => {
+    this.setState({ whoGetsAdv: index });
   }
 
   changeUseFactor = (useFactor) => {
@@ -396,7 +511,11 @@ class SNBetView extends Component {
 
                 this.setState({
                   players:list,
-                  carga:false
+                  carga:false,
+                  playerA:list[0].id,
+                  playerB:list[0].id,
+                  playerC:list[0].id,
+                  playerD:list[0].id
                 })
             }
             else{
@@ -406,17 +525,12 @@ class SNBetView extends Component {
               })
             }
         })
-  }
-
-  onChangeSwitch = (player, type) => {
-    if (type === 'A'){
-       this.setState({ playerA: player });
-       ListadoAmigosRondaData(player,this.state.playerB)
-        .then((res) => {
-          console.warn(res)
-          if(res.estatus == 1){
+    InfoUsuarioAB(idUsu)
+        .then((res2) => {
+          console.warn(res2)
+          if(res2.estatus == 1){
             let useFactor = false
-            if(res.Result[0].set_snw_use_factor == 1 ){
+            if(res2.Result[0].set_tmw_use_factor == 1 ){
               useFactor = true
             }
               else{
@@ -425,13 +539,14 @@ class SNBetView extends Component {
               console.warn(useFactor)
             this.setState({
               useFactor : useFactor,
-              front9 : res.Result[0].set_snw_front_9.toString(),
-              back9 : res.Result[0].set_snw_back_9.toString(),
-              match : res.Result[0].set_snw_match.toString(),
-              carry : res.Result[0].set_snw_carry.toString(),
-              medal : res.Result[0].set_snw_medal.toString(),
-              autoPress : res.Result[0].set_snw_automatic_press,
-              advStrokes : res.Result[0].set_golpesventaja.toString()
+              front9 : res2.Result[0].set_tmw_front_9.toString(),
+              back9 : res2.Result[0].set_tmw_back_9.toString(),
+              match : res2.Result[0].set_tmw_match.toString(),
+              carry : res2.Result[0].set_tmw_carry.toString(),
+              medal : res2.Result[0].set_tmw_medal.toString(),
+              autoPress : res2.Result[0].set_tmw_automatic_press.toString(),
+              //advStrokes : res2.Result[0].usu_handicapindex,
+              whoGetsAdv : res2.Result[0].set_tmw_adv_strokes.toString() === 'Hi Handicap' ? 0 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Low Handicap' ? 1 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Each' ? 2 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Slid Hi' ? 3 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Slid Low' ? 4 : 5
             })
           }
           else{
@@ -443,6 +558,30 @@ class SNBetView extends Component {
               carry : 0,
               medal : 0,
               autoPress : 0,
+              advStrokes : 0,
+              whoGetsAdv: 0
+            })
+          }
+        })
+  }
+
+  onChangeSwitch = (player, type) => {
+    console.warn(this.state.playerA)
+    console.warn(this.state.playerB)
+    console.warn(this.state.playerC)
+    console.warn(this.state.playerD)
+    if (type === 'A'){
+       this.setState({ playerA: player });
+       CalcularGolpesVentajaTeam(player, this.state.playerC, this.state.playerB, this.state.playerD, this.state.IDRound)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+            this.setState({
+              advStrokes : res.golpesventaja.toString()
+            })
+          }
+          else{
+            this.setState({
               advStrokes : 0
             })
           }
@@ -450,38 +589,50 @@ class SNBetView extends Component {
     }
     if (type === 'B'){
       this.setState({ playerB: player });
-      ListadoAmigosRondaData(this.state.playerA,player)
+      CalcularGolpesVentajaTeam(this.state.playerA, this.state.playerC, player, this.state.playerD, this.state.IDRound)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
-            let useFactor = false
-            if(res.Result[0].set_snw_use_factor == 1 ){
-              useFactor = true
-            }
-              else{
-              useFactor = false
-              }
-              console.warn(useFactor)
             this.setState({
-              useFactor : useFactor,
-              front9 : res.Result[0].set_snw_front_9.toString(),
-              back9 : res.Result[0].set_snw_back_9.toString(),
-              match : res.Result[0].set_snw_match.toString(),
-              carry : res.Result[0].set_snw_carry.toString(),
-              medal : res.Result[0].set_snw_medal.toString(),
-              autoPress : res.Result[0].set_snw_automatic_press,
-              advStrokes : res.Result[0].set_golpesventaja.toString()
+              advStrokes : res.golpesventaja.toString()
             })
           }
           else{
             this.setState({
-              useFactor : false,
-              front9 : 0,
-              back9 : 0,
-              match : 0,
-              carry : 0,
-              medal : 0,
-              autoPress : 0,
+              advStrokes : 0
+            })
+          }
+        })
+      }
+      if (type === 'C'){
+      this.setState({ playerC: player });
+      CalcularGolpesVentajaTeam(this.state.playerA, player, this.state.playerB, this.state.playerD, this.state.IDRound)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+            this.setState({
+              advStrokes : res.golpesventaja.toString()
+            })
+          }
+          else{
+            this.setState({
+              advStrokes : 0
+            })
+          }
+        })
+      }
+      if (type === 'D'){
+      this.setState({ playerD: player });
+      CalcularGolpesVentajaTeam(this.state.playerA, this.state.playerC, this.state.playerB, player, this.state.IDRound)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+            this.setState({
+              advStrokes : res.golpesventaja.toString()
+            })
+          }
+          else{
+            this.setState({
               advStrokes : 0
             })
           }
@@ -684,7 +835,7 @@ class SNBetView extends Component {
     if (playerA === playerB) {
       Alert.alert(
         'Error',
-        Dictionary.samePlayer[language]
+        Dictionary.samePlayerTN[language]
       );
       return false;
     }
@@ -703,15 +854,16 @@ class SNBetView extends Component {
         autoPress,
         override,
         advStrokes,
+        whoGetsAdv,
         playerA,
         playerB,
+        playerC,
+        playerD,
         IDRound,
-        IDBetDetail,
         IDBet
       } = this.state;
     console.warn('----------------------------------')
     console.warn(IDBet)
-    console.warn(IDBetDetail)
     console.warn(IDRound)
     console.warn(front9)
     console.warn(back9)
@@ -721,8 +873,13 @@ class SNBetView extends Component {
     console.warn(autoPress)
     console.warn(override)
     console.warn(advStrokes)
+    console.warn(whoGetsAdv)
+    let whoGetsString =  whoGetsAdv === 0 ? 'Hi Handicap' : whoGetsAdv === 1 ? 'Low Handicap' : whoGetsAdv === 2 ? 'Each' : whoGetsAdv === 3 ? 'Slid Hi' : whoGetsAdv === 4 ? 'Slid Low' : 'Automatic'
+    console.warn(whoGetsString)
     console.warn(playerA)
     console.warn(playerB)
+    console.warn(playerC)
+    console.warn(playerD)
     console.warn('----------------------------------')
     let back9UF = useFactor ? (front9 * back9).toString() : back9.toString()
     let matchUF = useFactor ? (front9 * match).toString() : match.toString()
@@ -732,14 +889,14 @@ class SNBetView extends Component {
     console.warn(matchUF)
     console.warn(carryUF)
     console.warn(medalUF)
-    if(playerA == playerB){
+    if(playerA == playerC || playerA == playerD || playerB == playerC || playerB == playerD){
       showMessage({
-        message: samePlayer[this.state.language],
+        message: samePlayerTN[this.state.language],
         type: 'warning',
       });
     }
     else{
-      ActualizarDetalleApuesta(IDBet,IDBetDetail,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
+      CrearDetalleApuestaTeam(IDBet,IDRound,playerA,playerC,playerB,playerD,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes,whoGetsString)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -802,4 +959,4 @@ class SNBetView extends Component {
   }
 }
 
-export default SNBetView;
+export default TNBetView;

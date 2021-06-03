@@ -113,10 +113,13 @@ export default function betsView(route) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
+                      ConsecutivosApuesta: item.ConsecutivosApuesta,
                       id: item.IDBetDetail,
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
                       Player1: item.Player1,
                       Player2: item.Player2,
+                      BetD_Player1: item.BetD_Player1,
+                      BetD_Player2: item.BetD_Player2,
                       BetD_AdvStrokers: item.BetD_AdvStrokers,
                       BetD_AutoPress: item.BetD_AutoPress,
                       BetD_MontoF9: item.BetD_MontoF9,
@@ -155,7 +158,7 @@ export default function betsView(route) {
                       BetD_AdvStrokers: item.BetD_AdvStrokers
                     }
                 ))
-                  setRounds2(list.reverse())
+                  setRounds2(list)
                   setCollapsed([])
                   setCollapsedArray([])
                   for (var i = 0; i<=list.length - 1; i++) {
@@ -195,6 +198,7 @@ export default function betsView(route) {
               if(res.estatus == 1){
                   const list = res.Result.map(item => (
                       {
+                        ConsecutivosApuesta: item.ConsecutivosApuesta,
                         id: item.IDBetDetail,
                         fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
                         Player1: item.Player1,
@@ -244,7 +248,7 @@ export default function betsView(route) {
                         BetD_AdvStrokers: item.BetD_AdvStrokers
                       }
                   ))
-                    setRounds2(list.reverse())
+                    setRounds2(list)
                     setCollapsed([])
                     setCollapsedArray([])
                     for (var i = 0; i<=list.length - 1; i++) {
