@@ -125,6 +125,7 @@ export default function RoundsView(props) {
                 ))
                 if(tipo==2){
                   setRounds(list)
+                  setArrayholder(list)
                   console.warn(rounds[index].BetD_MontoCalculoF9)
                   for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
@@ -139,6 +140,7 @@ export default function RoundsView(props) {
                 }
                 else if(tipo == 3){
                   setRounds(list)
+                  setArrayholder(list)
                   /*for (var i = 0; i<=list.length - 1; i++) {
                     if(index==i){
                       collapsedArray3[index]=true
@@ -174,7 +176,7 @@ export default function RoundsView(props) {
     switch(busqueda){
       case 1:
         setValue1(text) 
-        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+        itemData = `${item.Player1} ${item.Player1.toUpperCase()}`;
         break;
       case 2:
         setValue2(text) 
@@ -449,7 +451,7 @@ export default function RoundsView(props) {
         { visible &&
           <ScrollView contentContainerStyle={{paddingBottom:10}}>
 
-      {/*<View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
           </View>
@@ -458,7 +460,7 @@ export default function RoundsView(props) {
               <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-        </View>*/}
+        </View>
 
       {search && <View>
       <SearchBar
@@ -476,7 +478,7 @@ export default function RoundsView(props) {
         borderTopWidth:0,
         borderBottomWidth:0.5}}
       />
-      <SearchBar
+      {/*<SearchBar
         placeholder="Nombre Corto"
         onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
@@ -524,7 +526,7 @@ export default function RoundsView(props) {
         justifyContent: 'space-around',
         borderTopWidth:1,
         borderBottomWidth:2}}
-      />
+      />*/}
       </View>}
           <SwipeListView
             refreshControl={

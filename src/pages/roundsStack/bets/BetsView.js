@@ -40,11 +40,12 @@ export default function betsView(route) {
 
     const navigation = useNavigation();
     const [rounds2, setRounds2] = useState([]);
+    const [rounds3, setRounds3] = useState([]);
     const [bets2, setbets2] = useState([]);
     const [collapsedArray, setCollapsedArray] = useState([]);
     const [collapsed, setCollapsed] = useState([]);
     let collapsedArray2 = [];
-    const [collapsed2, setCollapsed2] = useState([]);
+    const [collapsed2, setCollapsed2] = useState([false,false]);
     const [arrayholder, setArrayholder] = useState([]);
     const [IDRound, setIDRound] = useState(0);
     const [value1, setValue1] = useState('');
@@ -71,6 +72,8 @@ export default function betsView(route) {
                 setStatus(true)
     let language = await AsyncStorage.getItem('language')
     let IDRound = await AsyncStorage.getItem('IDRound')
+    muestraRonda(1,IDRound)
+    muestraRonda(2,IDRound)
     setLanguage(language)
     setIDRound(IDRound)
     ListaApuesta()
@@ -99,14 +102,14 @@ export default function betsView(route) {
         })
   }
 
-  async function ListadoRondas(IDBet) {
+  async function ListadoRondas(IDBet,IDRound) {
     let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
-    setRounds2([])
     console.warn(IDBet)
     console.warn('IDUsuario')
     setLanguage(language)
     if(IDBet == 1){
+    setRounds2([])
     ListadoDetalleApuesta(IDRound,IDBet, IDUsuario)
         .then((res) => {
           console.warn(res)
@@ -192,6 +195,7 @@ export default function betsView(route) {
           })
         }
         else{
+          setRounds3([])
           ListadoDetalleApuestaTeam(IDRound,IDBet, IDUsuario)
           .then((res) => {
             console.warn(res)
@@ -248,7 +252,7 @@ export default function betsView(route) {
                         BetD_AdvStrokers: item.BetD_AdvStrokers
                       }
                   ))
-                    setRounds2(list)
+                    setRounds3(list)
                     setCollapsed([])
                     setCollapsedArray([])
                     for (var i = 0; i<=list.length - 1; i++) {
@@ -276,7 +280,7 @@ export default function betsView(route) {
                   //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
                 //}
                 setCollapsed2(collapsedArray2)
-                setRounds2([])
+                setRounds3([])
                 setStatus(false)
               }
             })
@@ -411,8 +415,8 @@ export default function betsView(route) {
     );
   };
 
-  async function muestraRonda(IDBet){
-    ListadoRondas(IDBet);
+  async function muestraRonda(IDBet,IDRound){
+    ListadoRondas(IDBet,IDRound);
     /*console.warn(IDBet)
     //let IDRound = await AsyncStorage.getItem('IDRound')
     if(IDBet == 1){
@@ -583,14 +587,12 @@ export default function betsView(route) {
             renderItem={({item}) =>
                     <View style={{flex:.2,padding:5}}>
                         <View>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id)}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id,IDRound)}>
                             {item.id == 1 ?
                             <View style={{ flexDirection: 'row' }}>
-                              <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-                                {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
-                                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-                                </TouchableOpacity>*/}
-                              </View>
+                              <TouchableOpacity style={{ flex:0.2, justifyContent: 'flex-start', marginLeft:15 }} onPress={()=> muestraRonda(item.id,IDRound)}>
+                                <Entypo name={collapsed2[item.id-1]?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+                              </TouchableOpacity>
                               <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
                               <Text style={{ margin:0, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
                               </View>
@@ -601,10 +603,10 @@ export default function betsView(route) {
                               </View>
                             </View>:
                             <View style={{ flexDirection: 'row' }}>
-                              <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-                                {/*<TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
-                                  <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-                                </TouchableOpacity>*/}
+                              <View style={{ flex:0.2, justifyContent: 'flex-start', marginLeft:15 }}>
+                                <TouchableOpacity style={{ flex:0.2, justifyContent: 'flex-start' }} onPress={()=> muestraRonda(item.id,IDRound)}>
+                                  <Entypo name={collapsed2[item.id-1]?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+                                </TouchableOpacity>
                               </View>
                               <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
                               <Text style={{ margin:0, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>TEAM NASSAU{/*bets[language]*/}</Text>
@@ -618,7 +620,7 @@ export default function betsView(route) {
                           </TouchableOpacity>
                           {collapsed2[item.id-1]? item.id == 1 ?
                             <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />:
-                            <BetsViewDetailTN rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />
+                            <BetsViewDetailTN rounds2={rounds3} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />
                           :null}
                           {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
