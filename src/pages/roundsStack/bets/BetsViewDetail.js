@@ -451,7 +451,7 @@ export default function RoundsView(props) {
         { visible &&
           <ScrollView contentContainerStyle={{paddingBottom:10}}>
 
-      <View style={{ flexDirection: 'row' }}>
+      {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
           </View>
@@ -460,7 +460,7 @@ export default function RoundsView(props) {
               <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-        </View>
+        </View>*/}
 
       {search && <View>
       <SearchBar
