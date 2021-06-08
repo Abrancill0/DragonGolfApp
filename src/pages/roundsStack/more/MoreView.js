@@ -14,7 +14,7 @@ class MoreView extends Component {
     super(props);
     this.state = {
       language: 'es',
-      status: 1
+      status: '1'
     };
   }
 
@@ -103,7 +103,7 @@ class MoreView extends Component {
           iconName='ios-cash'
           iconFamily='Ionicons'
         />
-        {this.state.status==1?<MoreOptionComponent 
+        {this.state.status=='1'?<MoreOptionComponent 
           title={closeRound[language]} 
           onPress={() => this.cierraRonda()}
           iconName='ios-lock-closed-outline'

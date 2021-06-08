@@ -47,6 +47,7 @@ export default function betsView(route) {
     let collapsedArray2 = [false,false];
     const [collapsed2, setCollapsed2] = useState([false,false]);
     const [arrayholder, setArrayholder] = useState([]);
+    const [arrayholder2, setArrayholder2] = useState([]);
     const [IDRound, setIDRound] = useState(0);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
@@ -58,27 +59,36 @@ export default function betsView(route) {
     const [carga, setStatus] = useState(false);
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
+          ListadoBets(1);
          const unsubscribe = navigation.addListener("focus", () => {
-          ListadoBets();
+          ListadoBets(2);
           });
 
         return unsubscribe;
-      }, [bets2]);
+      }, []);
     
 
-  async function ListadoBets() {
-    collapsedArray2[0]=false
-    collapsedArray2[1]=false
-    setCollapsed2(collapsedArray2)
+  async function ListadoBets(tipo) {
     setCollapsed([])
     setCollapsedArray([])
-                setStatus(true)
     let language = await AsyncStorage.getItem('language')
     let IDRound = await AsyncStorage.getItem('IDRound')
-    muestraRonda(1,IDRound)
-    muestraRonda(2,IDRound)
-    setLanguage(language)
+    let sn = await AsyncStorage.getItem('sn')
+    let tn = await AsyncStorage.getItem('tn')
+    sn=sn=='true'?true:false
+    tn=tn=='true'?true:false
+    collapsedArray2[0]=sn
+    collapsedArray2[1]=tn
+    setCollapsed2(collapsedArray2)
     setIDRound(IDRound)
+    if(tipo==1){
+      muestraRonda(1,IDRound)
+      muestraRonda(2,IDRound)
+    }
+    setLanguage(language)
+    if(tipo!=1){
+      if(tipo==2)
+        setStatus(true)
     ListaApuesta()
         .then((res) => {
           console.warn(res)
@@ -95,7 +105,7 @@ export default function betsView(route) {
                     collapsedArray2.push(false)
                   }*/
                   //setCollapsed2(collapsedArray2)
-                setArrayholder(list)
+                //setArrayholder(list)
                 setStatus(false)
             }
             else{
@@ -103,6 +113,7 @@ export default function betsView(route) {
               setStatus(false)
             }
         })
+    }
   }
 
   async function ListadoRondas(IDBet,IDRound) {
@@ -264,7 +275,7 @@ export default function betsView(route) {
                     console.warn(collapsedArray.length)
                     setCollapsedArray(collapsedArray)
                     setCollapsed(collapsedArray)
-                    setArrayholder(list)
+                    setArrayholder2(list)
                     //if(IDBet == 1){
                       collapsedArray2[1]=(!collapsed2[1])
                       collapsedArray2[0]=(collapsed2[0])
@@ -282,7 +293,6 @@ export default function betsView(route) {
                   setCollapsed2(collapsedArray2)
                   //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
                 //}
-                setCollapsed2(collapsedArray2)
                 setRounds3([])
                 setStatus(false)
               }
@@ -297,7 +307,7 @@ export default function betsView(route) {
     switch(busqueda){
       case 1:
         setValue1(text) 
-        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
+        itemData = `${item.Player1} ${item.Player1.toUpperCase()}`;
         break;
       case 2:
         setValue2(text) 
@@ -316,7 +326,34 @@ export default function betsView(route) {
     return itemData.indexOf(textData) > -1;
 
     });
-    setbets2(newData)
+    setRounds2(newData)
+
+    const newData2 = arrayholder2.filter(item => {
+    let itemData = ""
+    switch(busqueda){
+      case 1:
+        setValue1(text) 
+        itemData = `${item.Player1} ${item.Player1.toUpperCase()}`;
+        break;
+      case 2:
+        setValue2(text) 
+        itemData = `${item.nombreCorto} ${item.nombreCorto.toUpperCase()}`;
+        break;
+      case 3:
+        setValue3(text) 
+        itemData = `${item.ciudad} ${item.ciudad.toUpperCase()}`;
+        break;
+      case 4:
+        setValue4(text) 
+        itemData = `${item.pais} ${item.pais.toUpperCase()}`;
+        break;
+    }
+    const textData = text.toUpperCase();
+    return itemData.indexOf(textData) > -1;
+
+    });
+    setRounds3(newData2)
+    ListadoBets(3)
   };
 
    function renderSeparator(){  
@@ -455,7 +492,7 @@ export default function betsView(route) {
               .then((res) => {
                 console.warn(res)
                   if(res.estatus == 1){
-                    ListadoBets()
+                    ListadoBets(2)
                   }
               })
           },
@@ -496,16 +533,16 @@ export default function betsView(route) {
         { visible &&
           <ScrollView contentContainerStyle={{paddingBottom:20}}>
 
-      {/*<View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
-              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={20} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-        </View>*/}
+        </View>
 
       {search && <View>
       <SearchBar
@@ -523,7 +560,7 @@ export default function betsView(route) {
         borderTopWidth:0,
         borderBottomWidth:0.5}}
       />
-      <SearchBar
+      {/*<SearchBar
         placeholder="Nombre Corto"
         onChangeText={(text) => searchFilterFunction(text,2)}
         autoCorrect={false}
@@ -571,14 +608,14 @@ export default function betsView(route) {
         justifyContent: 'space-around',
         borderTopWidth:1,
         borderBottomWidth:2}}
-      />
+      />*/}
       </View>}
           <SwipeListView
             refreshControl={
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  ListadoBets()
+                  ListadoBets(2)
                   setValue1('')
                   setValue2('')
                   setValue3('')
@@ -594,7 +631,7 @@ export default function betsView(route) {
                             {item.id == 1 ?
                             <View style={{ flexDirection: 'row' }}>
                               <TouchableOpacity style={{ flex:0.2, justifyContent: 'flex-start', marginLeft:15 }} onPress={()=> muestraRonda(1,IDRound)}>
-                                <Entypo name={collapsed2[0]?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+                                <Entypo name={collapsed2[0]?'chevron-thin-up':'chevron-thin-down'} size={20} color={Colors.Primary} />
                               </TouchableOpacity>
                               <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
                               <Text style={{ margin:0, marginTop:0, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>SINGLE NASSAU{/*bets[language]*/}</Text>
@@ -608,7 +645,7 @@ export default function betsView(route) {
                             <View style={{ flexDirection: 'row' }}>
                               <View style={{ flex:0.2, justifyContent: 'flex-start', marginLeft:15 }}>
                                 <TouchableOpacity style={{ flex:0.2, justifyContent: 'flex-start' }} onPress={()=> muestraRonda(2,IDRound)}>
-                                  <Entypo name={collapsed2[1]?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
+                                  <Entypo name={collapsed2[1]?'chevron-thin-up':'chevron-thin-down'} size={20} color={Colors.Primary} />
                                 </TouchableOpacity>
                               </View>
                               <View style={{ flex:0.6, justifyContent: 'flex-start' }}>

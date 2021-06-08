@@ -66,7 +66,7 @@ class ScoreCardView extends Component {
                       Te_TeeColor: item.Te_TeeColor,
                       ghinnumber: item.usu_ghinnumber,
                       photo: item.usu_imagen,
-                      handicap: -1*(item.SumaGolpesVentaja),
+                      handicap: item.SumaGolpesVentaja,
                       strokes: item.usu_golpesventaja,
                       ScoreIn: item.ScoreIn,
                       ScoreOut: item.ScoreOut,

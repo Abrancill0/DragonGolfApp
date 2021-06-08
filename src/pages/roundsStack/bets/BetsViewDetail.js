@@ -528,7 +528,7 @@ export default function RoundsView(props) {
         borderBottomWidth:2}}
       />*/}
       </View>}
-          <SwipeListView
+          <FlatList
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -543,7 +543,11 @@ export default function RoundsView(props) {
             }
             data={rounds}
             renderItem={({item, index}) =>
-                    <View style={{flex:.2,padding:0,paddingHorizontal:25}}
+              <View style={{flexDirection:'row'}}>
+                <View style={styles.betIndexView}>
+                  <Text style={styles.betIndexText}>{rounds[index].ConsecutivosApuesta}</Text>
+                </View>
+                    <View style={{flex:0.95,padding:0,paddingHorizontal:0}}
                           horizontal={false}
                           showsHorizontalScrollIndicator={false}>
                           {/*<TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
@@ -569,9 +573,6 @@ export default function RoundsView(props) {
                           rippleColor={Colors.Secondary}
                           onPress={()=>showSheetView(item, index)}
                         >
-                        <View style={styles.betIndexView}>
-                          <Text style={styles.betIndexText}>{rounds[index].ConsecutivosApuesta}</Text>
-                      </View>
                           <View style={{ flex: 1, margin:0 }}>
                             <View style={styles.betGeneralInfoView}>
                                 <View style={{ flexDirection: 'row' }}>
@@ -646,6 +647,7 @@ export default function RoundsView(props) {
                           </View>*/}
                       </Ripple>}
                           </View>
+                    </View>
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}

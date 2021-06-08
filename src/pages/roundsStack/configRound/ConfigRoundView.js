@@ -595,6 +595,9 @@ class ConfigRoundView extends Component {
               AsyncStorage.setItem('fecha', pickerTextDate2.toString());
               AsyncStorage.setItem('IDCourse', IDCourse.toString());
               AsyncStorage.setItem('courseName', courseName.toString());
+              AsyncStorage.setItem('status', '1');
+              AsyncStorage.setItem('sn', 'true');
+              AsyncStorage.setItem('tn', 'true');
             }
             else{
               this.setState({

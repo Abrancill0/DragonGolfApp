@@ -228,6 +228,8 @@ export default function RoundsView(route) {
     AsyncStorage.setItem('IDCourse', IDCourse.toString());
     AsyncStorage.setItem('nombre', nombre.toString());
     AsyncStorage.setItem('status', status.toString());
+    AsyncStorage.setItem('sn', 'true');
+    AsyncStorage.setItem('tn', 'true');
   }
 
 

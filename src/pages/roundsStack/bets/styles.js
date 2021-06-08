@@ -34,7 +34,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.Primary,
         borderRadius: 2,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginLeft:10
     },
     betIndexText: {
         fontSize: 15,

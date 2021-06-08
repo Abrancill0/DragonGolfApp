@@ -57,13 +57,14 @@ export default function RoundsView(route) {
     const BlankProfile = require('../../../../assets/globals/blank-profile.png');
     const [selectedIndex, setSelectedIndex] = useState(0)
         useEffect(() => {
+          ListadoTodos();
          const unsubscribe = navigation.addListener("focus", () => {
             ListadoTodos();
             setSelectedIndex(0)
           });
 
         return unsubscribe;
-      }, [navigation]);
+      }, []);
 
   async function ListadoTodos() {
     let idUsu = await AsyncStorage.getItem('usu_id')
