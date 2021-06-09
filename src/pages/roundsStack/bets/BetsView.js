@@ -59,9 +59,9 @@ export default function betsView(route) {
     const [carga, setStatus] = useState(false);
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
-          ListadoBets(1);
-         const unsubscribe = navigation.addListener("focus", () => {
           ListadoBets(2);
+         const unsubscribe = navigation.addListener("focus", () => {
+          ListadoBets(1);
           });
 
         return unsubscribe;
@@ -77,21 +77,23 @@ export default function betsView(route) {
     let tn = await AsyncStorage.getItem('tn')
     sn=sn=='true'?true:false
     tn=tn=='true'?true:false
+    console.warn(sn)
+    console.warn(tn)
     collapsedArray2[0]=sn
     collapsedArray2[1]=tn
     setCollapsed2(collapsedArray2)
     setIDRound(IDRound)
     if(tipo==1){
-      muestraRonda(1,IDRound)
-      muestraRonda(2,IDRound)
+      ListadoRondas2(IDRound)
     }
     setLanguage(language)
     if(tipo!=1){
+      setbets2([])
       if(tipo==2)
         setStatus(true)
     ListaApuesta()
         .then((res) => {
-          console.warn(res)
+          //console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -116,17 +118,15 @@ export default function betsView(route) {
     }
   }
 
-  async function ListadoRondas(IDBet,IDRound) {
+  async function ListadoRondas2(IDRound) {
     let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
-    console.warn(IDBet)
-    console.warn('IDUsuario')
+    //console.warn('IDUsuario')
     setLanguage(language)
-    if(IDBet == 1){
     setRounds2([])
     ListadoDetalleApuesta(IDRound,1, IDUsuario)
         .then((res) => {
-          console.warn(res)
+          //console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -181,13 +181,15 @@ export default function betsView(route) {
                   for (var i = 0; i<=list.length - 1; i++) {
                     collapsedArray.push(true)
                   }
-                  console.warn(collapsedArray.length)
+                  //console.warn(collapsedArray.length)
                   setCollapsedArray(collapsedArray)
                   setCollapsed(collapsedArray)
                   setArrayholder(list)
                   //if(IDBet == 1){
-                    collapsedArray2[0]=(!collapsed2[0])
+                    collapsedArray2[0]=(collapsed2[0])
                     collapsedArray2[1]=(collapsed2[1])
+                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
                     //collapsedArray2[2]=(true)
                     setCollapsed2(collapsedArray2)
                     //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -196,8 +198,10 @@ export default function betsView(route) {
             }
             else{
               //if(IDBet == 1){
-                collapsedArray2[0]=(!collapsed2[0])
+                collapsedArray2[0]=(collapsed2[0])
                     collapsedArray2[1]=(collapsed2[1])
+                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
                 //collapsedArray2[2]=(true)
                 setCollapsed2(collapsedArray2)
                 //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -207,12 +211,10 @@ export default function betsView(route) {
               setStatus(false)
             }
           })
-        }
-        else{
           setRounds3([])
           ListadoDetalleApuestaTeam(IDRound,2, IDUsuario)
           .then((res) => {
-            console.warn(res)
+            //console.warn(res)
               if(res.estatus == 1){
                   const list = res.Result.map(item => (
                       {
@@ -272,13 +274,207 @@ export default function betsView(route) {
                     for (var i = 0; i<=list.length - 1; i++) {
                       collapsedArray.push(true)
                     }
-                    console.warn(collapsedArray.length)
+                    //console.warn(collapsedArray.length)
+                    setCollapsedArray(collapsedArray)
+                    setCollapsed(collapsedArray)
+                    setArrayholder2(list)
+                    //if(IDBet == 1){
+                      collapsedArray2[1]=(collapsed2[1])
+                      collapsedArray2[0]=(collapsed2[0])
+                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                      //collapsedArray2[2]=(true)
+                      setCollapsed2(collapsedArray2)
+                      //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+                    //}
+                    setStatus(false)
+              }
+              else{
+                //if(IDBet == 1){
+                  collapsedArray2[1]=(collapsed2[1])
+                  collapsedArray2[0]=(collapsed2[0])
+                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                  //collapsedArray2[2]=(true)
+                  setCollapsed2(collapsedArray2)
+                  //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+                //}
+                setRounds3([])
+                setStatus(false)
+              }
+            })
+      ListadoBets(2)
+  }
+
+  async function ListadoRondas(IDBet,IDRound) {
+    let language = await AsyncStorage.getItem('language')
+    let IDUsuario = await AsyncStorage.getItem('usu_id')
+    //console.warn(IDBet)
+    //console.warn('IDUsuario')
+    setLanguage(language)
+    if(IDBet == 1){
+    setRounds2([])
+    ListadoDetalleApuesta(IDRound,1, IDUsuario)
+        .then((res) => {
+          //console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      ConsecutivosApuesta: item.ConsecutivosApuesta,
+                      id: item.IDBetDetail,
+                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
+                      Player1: item.Player1,
+                      Player2: item.Player2,
+                      BetD_Player1: item.BetD_Player1,
+                      BetD_Player2: item.BetD_Player2,
+                      BetD_AdvStrokers: item.BetD_AdvStrokers,
+                      BetD_AutoPress: item.BetD_AutoPress,
+                      BetD_MontoF9: item.BetD_MontoF9,
+                      BetD_MontoB9: item.BetD_MontoB9,
+                      BetD_MontoCalculoF9: item.BetD_MontoCalculoF9,
+                      BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
+                      BetD_Medal: item.BetD_Medal,
+                      BetD_MedalInt: item.BetD_MedalInt,
+                      BetD_MachInt: item.BetD_MachInt,
+                      BetD_Carry: item.BetD_Carry,
+                      BetD_CarryCalculado: item.BetD_CarryCalculado,
+                      BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
+                      BetD_Match: item.BetD_Match,
+                      BetD_MachMonto: item.BetD_MachMonto,
+                      BetD_MontoPerdidoGanado: item.BetD_MontoPerdidoGanado,
+                      BetD_F9_1: item.BetD_F9_1,
+                      BetD_F9_2: item.BetD_F9_2,
+                      BetD_F9_3: item.BetD_F9_3,
+                      BetD_F9_4: item.BetD_F9_4,
+                      BetD_F9_5: item.BetD_F9_5,
+                      BetD_F9_6: item.BetD_F9_6,
+                      BetD_F9_7: item.BetD_F9_7,
+                      BetD_F9_8: item.BetD_F9_8,
+                      BetD_F9_9: item.BetD_F9_9,
+                      BetD_B9_1: item.BetD_B9_1,
+                      BetD_B9_2: item.BetD_B9_2,
+                      BetD_B9_3: item.BetD_B9_3,
+                      BetD_B9_4: item.BetD_B9_4,
+                      BetD_B9_5: item.BetD_B9_5,
+                      BetD_B9_6: item.BetD_B9_6,
+                      BetD_B9_7: item.BetD_B9_7,
+                      BetD_B9_8: item.BetD_B9_8,
+                      BetD_B9_9: item.BetD_B9_9,
+                      f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
+                      b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
+                      BetD_AdvStrokers: item.BetD_AdvStrokers
+                    }
+                ))
+                  setRounds2(list)
+                  setCollapsed([])
+                  setCollapsedArray([])
+                  for (var i = 0; i<=list.length - 1; i++) {
+                    collapsedArray.push(true)
+                  }
+                  //console.warn(collapsedArray.length)
+                  setCollapsedArray(collapsedArray)
+                  setCollapsed(collapsedArray)
+                  setArrayholder(list)
+                  //if(IDBet == 1){
+                    collapsedArray2[0]=(!collapsed2[0])
+                    collapsedArray2[1]=(collapsed2[1])
+                    AsyncStorage.setItem('sn', (!collapsed2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                    //collapsedArray2[2]=(true)
+                    setCollapsed2(collapsedArray2)
+                    //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+                  //}
+                  setStatus(false)
+            }
+            else{
+              //if(IDBet == 1){
+                collapsedArray2[0]=(!collapsed2[0])
+                    collapsedArray2[1]=(collapsed2[1])
+                    AsyncStorage.setItem('sn', (!collapsed2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                //collapsedArray2[2]=(true)
+                setCollapsed2(collapsedArray2)
+                //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+              //}
+              setCollapsed2(collapsedArray2)
+              setRounds2([])
+              setStatus(false)
+            }
+          })
+        }
+        else{
+          setRounds3([])
+          ListadoDetalleApuestaTeam(IDRound,2, IDUsuario)
+          .then((res) => {
+            //console.warn(res)
+              if(res.estatus == 1){
+                  const list = res.Result.map(item => (
+                      {
+                        ConsecutivosApuesta: item.ConsecutivosApuesta,
+                        id: item.IDBetDetail,
+                        fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
+                        Player1: item.Player1,
+                        Player2: item.Player2,
+                        Player3: item.Player3,
+                        Player4: item.Player4,
+                        BetD_Player1: item.BetD_Player1,
+                        BetD_Player2: item.BetD_Player2,
+                        BetD_Player3: item.BetD_Player3,
+                        BetD_Player4: item.BetD_Player4,
+                        BetD_AdvStrokers: item.BetD_AdvStrokers,
+                        set_tmw_adv_strokes: item.set_tmw_adv_strokes,
+                        BetD_AutoPress: item.BetD_AutoPress,
+                        BetD_MontoF9: item.BetD_MontoF9,
+                        BetD_MontoB9: item.BetD_MontoB9,
+                        BetD_MontoCalculoF9: item.BetD_MontoCalculoF9,
+                        BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
+                        BetD_Medal: item.BetD_Medal,
+                        BetD_MedalInt: item.BetD_MedalInt,
+                        BetD_MachInt: item.BetD_MachInt,
+                        BetD_Carry: item.BetD_Carry,
+                        BetD_CarryCalculado: item.BetD_CarryCalculado,
+                        BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
+                        BetD_Match: item.BetD_Match,
+                        BetD_MachMonto: item.BetD_MachMonto,
+                        BetD_MontoPerdidoGanado: item.BetD_MontoPerdidoGanado,
+                        BetD_F9_1: item.BetD_F9_1,
+                        BetD_F9_2: item.BetD_F9_2,
+                        BetD_F9_3: item.BetD_F9_3,
+                        BetD_F9_4: item.BetD_F9_4,
+                        BetD_F9_5: item.BetD_F9_5,
+                        BetD_F9_6: item.BetD_F9_6,
+                        BetD_F9_7: item.BetD_F9_7,
+                        BetD_F9_8: item.BetD_F9_8,
+                        BetD_F9_9: item.BetD_F9_9,
+                        BetD_B9_1: item.BetD_B9_1,
+                        BetD_B9_2: item.BetD_B9_2,
+                        BetD_B9_3: item.BetD_B9_3,
+                        BetD_B9_4: item.BetD_B9_4,
+                        BetD_B9_5: item.BetD_B9_5,
+                        BetD_B9_6: item.BetD_B9_6,
+                        BetD_B9_7: item.BetD_B9_7,
+                        BetD_B9_8: item.BetD_B9_8,
+                        BetD_B9_9: item.BetD_B9_9,
+                        f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
+                        b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
+                        BetD_AdvStrokers: item.BetD_AdvStrokers
+                      }
+                  ))
+                    setRounds3(list)
+                    setCollapsed([])
+                    setCollapsedArray([])
+                    for (var i = 0; i<=list.length - 1; i++) {
+                      collapsedArray.push(true)
+                    }
+                    //console.warn(collapsedArray.length)
                     setCollapsedArray(collapsedArray)
                     setCollapsed(collapsedArray)
                     setArrayholder2(list)
                     //if(IDBet == 1){
                       collapsedArray2[1]=(!collapsed2[1])
                       collapsedArray2[0]=(collapsed2[0])
+                    AsyncStorage.setItem('tn', (!collapsed2[1]).toString());
+                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
                       //collapsedArray2[2]=(true)
                       setCollapsed2(collapsedArray2)
                       //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -289,6 +485,8 @@ export default function betsView(route) {
                 //if(IDBet == 1){
                   collapsedArray2[1]=(!collapsed2[1])
                   collapsedArray2[0]=(collapsed2[0])
+                    AsyncStorage.setItem('tn', (!collapsed2[1]).toString());
+                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
                   //collapsedArray2[2]=(true)
                   setCollapsed2(collapsedArray2)
                   //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -395,6 +593,7 @@ export default function betsView(route) {
         leftIconContainerStyle={{backgroundColor: 'white'}}
         inputStyle={{backgroundColor: 'white'}}
         containerStyle={{
+        height:50,
         marginHorizontal: 50,
         backgroundColor: '#FFFFFF',
         justifyContent: 'space-around',
@@ -457,7 +656,7 @@ export default function betsView(route) {
 
   async function muestraRonda(IDBet,IDRound){
     ListadoRondas(IDBet,IDRound);
-    /*console.warn(IDBet)
+    /*//console.warn(IDBet)
     //let IDRound = await AsyncStorage.getItem('IDRound')
     if(IDBet == 1){
       collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
@@ -475,7 +674,7 @@ export default function betsView(route) {
 
 
   async function Elimina(id, tipo){
-    console.warn(tipo)
+    //console.warn(tipo)
     let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
@@ -490,7 +689,7 @@ export default function betsView(route) {
           onPress: () => {
             EliminarCampo(id, tipo, idUsu)
               .then((res) => {
-                console.warn(res)
+                //console.warn(res)
                   if(res.estatus == 1){
                     ListadoBets(2)
                   }
@@ -507,7 +706,9 @@ export default function betsView(route) {
       round,
       date,
       tipe,
-      bets
+      bets,
+      Search,
+      nickname
     } = Dictionary;
 
     return (
@@ -535,7 +736,7 @@ export default function betsView(route) {
 
       <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
+            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
           </View>
           <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
@@ -546,7 +747,7 @@ export default function betsView(route) {
 
       {search && <View>
       <SearchBar
-        placeholder="Nombre"
+        placeholder={nickname[language]}
         onChangeText={(text) => searchFilterFunction(text,1)}
         autoCorrect={false}
         value={value1}
@@ -554,6 +755,7 @@ export default function betsView(route) {
         leftIconContainerStyle={{backgroundColor: 'white'}}
         inputStyle={{backgroundColor: 'white'}}
         containerStyle={{
+        height:50,
         marginHorizontal: 50,
         backgroundColor: '#FFFFFF',
         justifyContent: 'space-around',
