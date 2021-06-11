@@ -44,8 +44,8 @@ export default function betsView(route) {
     const [bets2, setbets2] = useState([]);
     const [collapsedArray, setCollapsedArray] = useState([]);
     const [collapsed, setCollapsed] = useState([]);
-    let collapsedArray2 = [false,false];
-    const [collapsed2, setCollapsed2] = useState([false,false]);
+    let collapsedArray2 = [];
+    const [collapsed2, setCollapsed2] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [arrayholder2, setArrayholder2] = useState([]);
     const [IDRound, setIDRound] = useState(0);
@@ -122,6 +122,7 @@ export default function betsView(route) {
   }
 
   async function ListadoRondas2(IDRound) {
+    //ListadoBets(2)
     let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
     //console.warn('IDUsuario')
@@ -189,10 +190,10 @@ export default function betsView(route) {
                   setCollapsed(collapsedArray)
                   setArrayholder(list)
                   //if(IDBet == 1){
-                    collapsedArray2[0]=(collapsed2[0])
-                    collapsedArray2[1]=(collapsed2[1])
-                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
-                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                    collapsedArray2[0]=(collapsedArray2[0])
+                    collapsedArray2[1]=(collapsedArray2[1])
+                    AsyncStorage.setItem('sn', (collapsedArray2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsedArray2[1]).toString());
                     //collapsedArray2[2]=(true)
                     setCollapsed2(collapsedArray2)
                     //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -201,10 +202,10 @@ export default function betsView(route) {
             }
             else{
               //if(IDBet == 1){
-                collapsedArray2[0]=(collapsed2[0])
-                    collapsedArray2[1]=(collapsed2[1])
-                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
-                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                collapsedArray2[0]=(collapsedArray2[0])
+                    collapsedArray2[1]=(collapsedArray2[1])
+                    AsyncStorage.setItem('sn', (collapsedArray2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsedArray2[1]).toString());
                 //collapsedArray2[2]=(true)
                 setCollapsed2(collapsedArray2)
                 //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -282,10 +283,10 @@ export default function betsView(route) {
                     setCollapsed(collapsedArray)
                     setArrayholder2(list)
                     //if(IDBet == 1){
-                      collapsedArray2[1]=(collapsed2[1])
-                      collapsedArray2[0]=(collapsed2[0])
-                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
-                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                      collapsedArray2[1]=(collapsedArray2[1])
+                      collapsedArray2[0]=(collapsedArray2[0])
+                    AsyncStorage.setItem('sn', (collapsedArray2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsedArray2[1]).toString());
                       //collapsedArray2[2]=(true)
                       setCollapsed2(collapsedArray2)
                       //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
@@ -294,10 +295,10 @@ export default function betsView(route) {
               }
               else{
                 //if(IDBet == 1){
-                  collapsedArray2[1]=(collapsed2[1])
-                  collapsedArray2[0]=(collapsed2[0])
-                    AsyncStorage.setItem('sn', (collapsed2[0]).toString());
-                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                  collapsedArray2[1]=(collapsedArray2[1])
+                  collapsedArray2[0]=(collapsedArray2[0])
+                    AsyncStorage.setItem('sn', (collapsedArray2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsedArray2[1]).toString());
                   //collapsedArray2[2]=(true)
                   setCollapsed2(collapsedArray2)
                   //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
