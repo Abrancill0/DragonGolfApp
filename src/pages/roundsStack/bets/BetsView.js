@@ -59,9 +59,9 @@ export default function betsView(route) {
     const [carga, setStatus] = useState(false);
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
-          ListadoBets(2);
-         const unsubscribe = navigation.addListener("focus", () => {
           ListadoBets(1);
+         const unsubscribe = navigation.addListener("focus", () => {
+          ListadoBets(2);
           });
 
         return unsubscribe;
@@ -69,6 +69,8 @@ export default function betsView(route) {
     
 
   async function ListadoBets(tipo) {
+    console.warn('tipo')
+    console.warn(tipo)
     setCollapsed([])
     setCollapsedArray([])
     let language = await AsyncStorage.getItem('language')
@@ -89,8 +91,9 @@ export default function betsView(route) {
     setLanguage(language)
     if(tipo!=1){
       setbets2([])
-      if(tipo==2)
+      if(tipo==2){
         setStatus(true)
+      }
     ListaApuesta()
         .then((res) => {
           //console.warn(res)
