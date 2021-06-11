@@ -55,6 +55,7 @@ export default function RoundsView(props) {
     const [visible, setVisible] = useState(true);
     const [carga, setStatus] = useState(false);
     const [carry, setcarry] = useState(false);
+    const [dataInState, setDataInState] = useState([]);
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
          const unsubscribe = navigation.addListener("focus", () => {
@@ -386,6 +387,31 @@ export default function RoundsView(props) {
         }
     }
 
+    function sube(index){
+      console.warn(rounds)
+      let aux;
+      if(index!=0){
+        aux = rounds[index]
+        rounds[index]=rounds[index-1]
+        rounds[index-1]=aux
+        setDataInState([...dataInState, rounds])
+      }
+      console.warn(rounds)
+      console.warn(index)
+    }
+    function baja(index){
+      console.warn(rounds)
+      let aux;
+      if(index!=rounds.length-1){
+        aux = rounds[index]
+        rounds[index]=rounds[index+1]
+        rounds[index+1]=aux
+        setDataInState([...dataInState, rounds])
+      }
+      console.warn(rounds)
+      console.warn(index)
+    }
+
     function doAction(index, index2, item){
       console.warn(item)
         switch (index2) {
@@ -544,6 +570,14 @@ export default function RoundsView(props) {
             data={rounds}
             renderItem={({item, index}) =>
               <View style={{flexDirection:'row'}}>
+              <View style={{ flexDirection: 'column', justifyContent: "center"}}>
+                <TouchableOpacity style={{padding:0}} onPress={()=> sube(index)}>
+                    <Entypo name={'chevron-small-up'} size={25} color={Colors.Primary} />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{padding:0}} onPress={()=> baja(index)}>
+                    <Entypo name={'chevron-small-down'} size={25} color={Colors.Primary} />
+                  </TouchableOpacity>
+              </View>
                 <View style={styles.betIndexView}>
                   <Text style={styles.betIndexText}>{rounds[index].ConsecutivosApuesta}</Text>
                 </View>
