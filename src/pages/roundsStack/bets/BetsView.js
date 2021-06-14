@@ -54,7 +54,7 @@ export default function betsView(route) {
     const [value3, setValue3] = useState('');
     const [value4, setValue4] = useState('');
     const [language, setLanguage] = useState('');
-    const [search, setSearch] = useState(false);
+    const [search, setSearch] = useState(true);
     const [visible, setVisible] = useState(true);
     const [carga, setStatus] = useState(false);
     const ScreenWidth = Dimensions.get("window").width;
@@ -720,25 +720,7 @@ export default function betsView(route) {
         <Spinner
             visible={carga}
             color={Colors.Primary} />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
-          </View>
-          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>*/}
-        </View>
-        { visible &&
-          <ScrollView contentContainerStyle={{paddingBottom:20}}>
-
-      <View style={{ flexDirection: 'row' }}>
+        {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
           </View>
@@ -747,10 +729,11 @@ export default function betsView(route) {
               <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={20} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-        </View>
+        </View>*/}
 
-      {search && <View>
+      {search && <View style={{marginTop:5}}>
       <SearchBar
+        icon={() => <Entypo name={'magnifying-glass'} size={20} color={Colors.Primary} />}
         placeholder={nickname[language]}
         onChangeText={(text) => searchFilterFunction(text,1)}
         autoCorrect={false}
@@ -816,6 +799,23 @@ export default function betsView(route) {
         borderBottomWidth:2}}
       />*/}
       </View>}
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:5}} onPress={()=> navigation.openDrawer()}>
+              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+          <Text style={{ margin:20, marginTop:5, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
+          </View>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
+              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>*/}
+        </View>
+        { visible &&
+          <ScrollView contentContainerStyle={{paddingBottom:20}}>
           <SwipeListView
             refreshControl={
               <RefreshControl

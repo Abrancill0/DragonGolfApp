@@ -692,6 +692,7 @@ export default function RoundsView(props) {
                                             })
                                         }
                                     </View>
+                                    <Text style={{ marginRight: 0, color: rounds[index].BetD_MontoF9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoF9}</Text>
                                     <View style={{ width: 30 }} />
                                 </View>
                                 <View style={{ flexDirection: 'row', marginBottom: 5 }}>
@@ -710,6 +711,7 @@ export default function RoundsView(props) {
                                             })
                                         }
                                     </View>
+                                    <Text style={{ marginRight: 0, color: rounds[index].BetD_MontoB9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoB9}</Text>
                                     <View style={{ width: 30, alignItems: 'flex-end' }}>
                                         <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{/*rounds[index].BetD_AutoPress ? `${rounds[index].BetD_AutoPress}P` : ''*/}</Text>
                                     </View>
