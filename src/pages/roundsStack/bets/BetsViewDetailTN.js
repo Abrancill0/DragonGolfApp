@@ -677,7 +677,7 @@ export default function RoundsView(props) {
                             </View>
                             <View style={styles.betInfoView}>
                                 <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                    <Text style={{ marginRight: 10, color: rounds[index].BetD_MontoCalculoF9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoCalculoF9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>F9:</Text></Text>
+                                    <Text style={{ marginRight: 10, color: rounds[index].BetD_MontoF9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoF9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>F9:</Text></Text>
                                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                         {
                                             rounds[index].f9Presses.map((item, index) => {
@@ -692,11 +692,11 @@ export default function RoundsView(props) {
                                             })
                                         }
                                     </View>
-                                    <Text style={{ marginRight: 0, color: rounds[index].BetD_MontoF9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoF9}</Text>
+                                    <Text style={{ marginRight: 0, color: rounds[index].BetD_MontoCalculoF9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoCalculoF9}</Text>
                                     <View style={{ width: 30 }} />
                                 </View>
                                 <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                    <Text style={{ marginRight: 10, color: rounds[index].BetD_MontoCalculoB9 < 0 ? 'red' : Colors.Black  }}>${rounds[index].BetD_MontoCalculoB9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>B9:</Text></Text>
+                                    <Text style={{ marginRight: 10, color: rounds[index].BetD_MontoB9 < 0 ? 'red' : Colors.Black  }}>${rounds[index].BetD_MontoB9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>B9:</Text></Text>
                                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                         {
                                             rounds[index].b9Presses.map((item, index) => {
@@ -711,7 +711,7 @@ export default function RoundsView(props) {
                                             })
                                         }
                                     </View>
-                                    <Text style={{ marginRight: 0, color: rounds[index].BetD_MontoB9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoB9}</Text>
+                                    <Text style={{ marginRight: 0, color: rounds[index].BetD_MontoCalculoB9 < 0 ? 'red' : Colors.Black }}>${rounds[index].BetD_MontoCalculoB9}</Text>
                                     <View style={{ width: 30, alignItems: 'flex-end' }}>
                                         <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{/*rounds[index].BetD_AutoPress ? `${rounds[index].BetD_AutoPress}P` : ''*/}</Text>
                                     </View>

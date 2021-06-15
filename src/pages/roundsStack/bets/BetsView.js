@@ -720,6 +720,21 @@ export default function betsView(route) {
         <Spinner
             visible={carga}
             color={Colors.Primary} />
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
+              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
+          </View>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
+              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+            </TouchableOpacity>
+          </View>*/}
+        </View>
         {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
@@ -731,7 +746,7 @@ export default function betsView(route) {
           </View>
         </View>*/}
 
-      {search && <View style={{marginTop:5}}>
+      {search && <View style={{margin:5}}>
       <SearchBar
         icon={() => <Entypo name={'magnifying-glass'} size={20} color={Colors.Primary} />}
         placeholder={nickname[language]}
@@ -799,21 +814,6 @@ export default function betsView(route) {
         borderBottomWidth:2}}
       />*/}
       </View>}
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:5}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:5, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
-          </View>
-          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>*/}
-        </View>
         { visible &&
           <ScrollView contentContainerStyle={{paddingBottom:20}}>
           <SwipeListView
