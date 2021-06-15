@@ -252,6 +252,83 @@ export default function RoundsView(route) {
     );*/
   }
 
+  async function Elimina2(RoundId, Player1Id, Player2Id, strokes){
+    const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
+    if (strokes === "" || re.test(strokes)) {
+      console.warn('R: '+RoundId)
+      console.warn('P1: '+Player1Id)
+      console.warn('P2: '+Player2Id)
+      console.warn('S: '+strokes)
+      ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, strokes)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+              /*showMessage({
+                message: successSaveTeeData[language],
+                type:'success',
+              });
+              ListadoTodos()*/
+            }
+            else{
+              showMessage({
+                message: error[language],
+                type:'danger',
+              });
+            }
+        })
+    }
+    else{
+      console.warn('Incorrecto')
+    }
+    /*Alert.alert(
+      "DragonGolf",
+      "¿Desea eliminar este jugador de su lista de amigos?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {
+          },
+        },
+        {
+          text: "Eliminar",
+          onPress: () => {
+            ActualizaStrokerPvPRonda(IDUsuarioFav,idUsu)
+                .then((res) => {
+                  console.warn(res)
+                    if(res.estatus == 1){
+                      showMessage({
+                        message: "Jugador eliminado correctamente",
+                        type:'success',
+                      });
+                      ListadoJugadores()
+                    }
+                })
+          },
+        }
+      ],
+      { cancelable: false }
+    );*/
+  }
+
+  function checaEntero(text){
+    if(text.length == 1 && text == '-'){ return '-'}
+      else{
+        let strokes = parseInt(text)
+        const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
+        if (strokes === "" || re.test(strokes)) {
+          return strokes 
+        }
+        return 0 
+      }
+  }
+
+  function chechaStrokes(text){
+    if(text.length == 1 && text == '-'){ return 0}
+      else{
+        return text
+      }
+  }
+
   function searchFilterFunction(text,busqueda){
 
     const newData = arrayholder.filter(item => {
@@ -439,7 +516,7 @@ export default function RoundsView(route) {
                           <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
                             <Button
                               title={signoMenos?'+':'-'}
-                              onPress={() => {item.strokes=item.strokes-0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              onPress={() => {item.strokes=chechaStrokes(item.strokes)-0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
                               color={Colors.Primary}
                             />
                           </View>
@@ -450,9 +527,9 @@ export default function RoundsView(route) {
                               style={styles3.costInput}
                               selectionColor={Colors.Secondary}
                               placeholder="0"
-                              keyboardType="numeric"
+                              keyboardType="default"
                               returnKeyType='done'
-                              onChange={(change) => {console.warn(change.nativeEvent.text);item.strokes=change.nativeEvent.text;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              onChange={(change) => {console.warn(change.nativeEvent.text);item.strokes=checaEntero(change.nativeEvent.text);setDataInState([...dataInState, players]);Elimina2(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
                               defaultValue={item.strokes.toString()}
                               value={item.strokes.toString()}
                               selectTextOnFocus={true}
@@ -461,7 +538,7 @@ export default function RoundsView(route) {
                             <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
                             <Button
                               title={signoMas?'+':'-'}
-                              onPress={() => {item.strokes=item.strokes+0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              onPress={() => {item.strokes=chechaStrokes(item.strokes)+0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
                               color={Colors.Primary}
                             />
                           </View>
