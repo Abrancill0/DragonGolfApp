@@ -311,18 +311,32 @@ export default function RoundsView(route) {
   }
 
   function checaEntero(text){
+    console.warn('Entró')
     if(text.length == 1 && text == '-'){ return '-'}
       else{
         let strokes = parseFloat(text)
         const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
+        let filteredData = text.split(".")
+        console.warn(filteredData)
+        if(filteredData[1]=='')
+        {
+          return text
+        }
         if (strokes === "" || re.test(strokes)) {
           return strokes 
         }
+        
         return '' 
       }
   }
 
   function chechaStrokes(text){
+    let filteredData = text.toString().split(".")
+        console.warn(filteredData)
+        if(filteredData[1]=='')
+        {
+          return 0
+        }
     if(text.length == 1 && text == '-' || text == ''){ return 0}
       else{
         return text
