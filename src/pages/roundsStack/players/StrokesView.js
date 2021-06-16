@@ -313,17 +313,17 @@ export default function RoundsView(route) {
   function checaEntero(text){
     if(text.length == 1 && text == '-'){ return '-'}
       else{
-        let strokes = parseInt(text)
+        let strokes = parseFloat(text)
         const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
         if (strokes === "" || re.test(strokes)) {
           return strokes 
         }
-        return 0 
+        return '' 
       }
   }
 
   function chechaStrokes(text){
-    if(text.length == 1 && text == '-'){ return 0}
+    if(text.length == 1 && text == '-' || text == ''){ return 0}
       else{
         return text
       }
