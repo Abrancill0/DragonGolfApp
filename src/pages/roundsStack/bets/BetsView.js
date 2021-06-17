@@ -61,7 +61,7 @@ export default function betsView(route) {
         useEffect(() => {
           ListadoBets(1);
          const unsubscribe = navigation.addListener("focus", () => {
-          ListadoBets(2);
+          ListadoBets(1);
           });
 
         return unsubscribe;
