@@ -53,6 +53,7 @@ export default function RoundsView(props) {
     const [language, setLanguage] = useState(props.language);
     const [search, setSearch] = useState(false);
     const [visible, setVisible] = useState(true);
+    const [subebaja, setSubebaja] = useState(true);
     const [carga, setStatus] = useState(false);
     const [carry, setcarry] = useState(false);
     const [dataInState, setDataInState] = useState([]);
@@ -524,6 +525,9 @@ export default function RoundsView(props) {
 
     return (
       <View style={{ flex: 1 }}>
+        <TouchableOpacity style={{marginLeft:20, marginTop:5}} onPress={()=> setSubebaja(!subebaja)}>
+          <FontAwesome name={subebaja?'toggle-on':'toggle-off'} size={20} color={Colors.Primary} />
+        </TouchableOpacity>
         <Spinner
             visible={carga}
             color={Colors.Primary} />
@@ -624,14 +628,14 @@ export default function RoundsView(props) {
             data={rounds}
             renderItem={({item, index}) =>
               <View style={{flexDirection:'row'}}>
-                <View style={{ flexDirection: 'column', justifyContent: "center"}}>
+                {subebaja && <View style={{ flexDirection: 'column', justifyContent: "center"}}>
                 <TouchableOpacity style={{padding:0}} onPress={()=> sube(index)}>
                     <Entypo name={'chevron-small-up'} size={25} color={Colors.Primary} />
                   </TouchableOpacity>
                   <TouchableOpacity style={{padding:0}} onPress={()=> baja(index)}>
                     <Entypo name={'chevron-small-down'} size={25} color={Colors.Primary} />
                   </TouchableOpacity>
-              </View>
+              </View>}
                 <View style={styles.betIndexView}>
                   <Text style={styles.betIndexText}>{rounds[index].ConsecutivosApuesta}</Text>
                 </View>

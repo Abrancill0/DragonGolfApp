@@ -6,6 +6,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../../utils/Colors';
 import HistoryComponent from './HistoryComponent';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Historia } from '../../../Services/Services'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class HistoryScreen extends Component {
     constructor(props) {
@@ -16,7 +18,8 @@ class HistoryScreen extends Component {
             topToBottomDate: true,
             topToBottomPlayer: null,
             topToBottomCourse: null,
-            language: 'es'
+            language: 'es',
+            history:[]
         };
 
         let playerId = props.route.params.playerId
@@ -31,9 +34,40 @@ class HistoryScreen extends Component {
     }
 
     componentDidMount() {
+        this.obtenHistorial()
         Dimensions.addEventListener('change', ({ window: { height, width } }) => {
             this.setState({ landscape: width > height });
         });
+    }
+
+    obtenHistorial = async () => {
+        const token = await AsyncStorage.getItem('usu_id')
+        Historia(token,this.props.route.params.playerId)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDBet,
+                      nombre: item.Bet_Nombre,
+                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
+                    }
+                ))
+                this.setState({
+                    history: list
+                })
+                /*for (var i = 0; i<=list.length - 1; i++) {
+                    collapsedArray2.push(false)
+                  }*/
+                  //setCollapsed2(collapsedArray2)
+                //setArrayholder(list)
+            }
+            else{
+              this.setState({
+                    history: [{course_name:'1'}]
+                })
+            }
+        })
     }
 
     render() {
@@ -113,21 +147,21 @@ class HistoryScreen extends Component {
                         </View>
                     </View>}
                 </View>
-                {/*<FlatList
+                <FlatList
                     data={history}
                     style={{ flex: 1, marginTop: 2 }}
                     extraData={history}
                     keyExtractor={(_, index) => index.toString()}
                     renderItem={({ item }) =>
                         <HistoryComponent
-                            item={item}
+                            item={history}
                             landscape={landscape}
                             navigation={navigation}
-                            playerId={this.playerId}
+                            playerId={props.route.params.playerId}
                             calculateTotal={this.calculateTotal}
                         />
                     }
-                />*/}
+                />
             </View>
         )
     }

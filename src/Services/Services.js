@@ -563,6 +563,25 @@ export const ListaAmigos = (IDUsuario) => {
                 });
 };
 
+export const Historia = (IDUsuario1,IDUsuario2) => {
+    const URL = RutaBaseAB + "/Historia";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario1: IDUsuario1,
+                    IDUsuario2: IDUsuario2
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaAmigosAgregar = (IDUsuario, IDRonda) => {
     const URL = RutaBaseAB + "/ListaAmigosAgregar";
     return fetch(URL, {

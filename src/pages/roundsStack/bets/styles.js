@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
         color: Colors.White
     },
     betGeneralInfoView: {
-        width: '100%',
+        width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
         paddingVertical: 5
     },
     advInfo: {
@@ -57,12 +57,13 @@ const styles = StyleSheet.create({
         color: Colors.Black
     },
     vsInfo: {
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: 'bold',
-        color: Colors.Black
+        color: Colors.Black,
+        alignSelf:'center'
     },
     profitText: {
-        fontSize: 18,
+        fontSize: 13,
         fontWeight: 'bold',
     },
     betInfoView: {
