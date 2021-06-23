@@ -8,6 +8,7 @@ import HistoryComponent from './HistoryComponent';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Historia } from '../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
 
 class HistoryScreen extends Component {
     constructor(props) {
@@ -42,15 +43,22 @@ class HistoryScreen extends Component {
 
     obtenHistorial = async () => {
         const token = await AsyncStorage.getItem('usu_id')
+        const language = await AsyncStorage.getItem('language')
+        this.setState({
+          language:language
+        })
         Historia(token,this.props.route.params.playerId)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDBet,
-                      nombre: item.Bet_Nombre,
-                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
+                      //id: item.IDBet,
+                      course_name: item.Campo,
+                      money: item.GanadoPerdido,
+                      played_hp: item.Stroke,
+                      next_hp: item.StrokeSiguiente,
+                      date: moment(item.Fecha).format('DD/MM/YYYY').toString()
                     }
                 ))
                 this.setState({
@@ -64,7 +72,7 @@ class HistoryScreen extends Component {
             }
             else{
               this.setState({
-                    history: [{course_name:'1'}]
+                    history: []
                 })
             }
         })
@@ -148,17 +156,15 @@ class HistoryScreen extends Component {
                     </View>}
                 </View>
                 <FlatList
-                    data={history}
+                    data={this.state.history}
                     style={{ flex: 1, marginTop: 2 }}
-                    extraData={history}
+                    extraData={this.state.history}
                     keyExtractor={(_, index) => index.toString()}
                     renderItem={({ item }) =>
                         <HistoryComponent
-                            item={history}
+                            item={item}
                             landscape={landscape}
-                            navigation={navigation}
-                            playerId={props.route.params.playerId}
-                            calculateTotal={this.calculateTotal}
+                            language={language}
                         />
                     }
                 />

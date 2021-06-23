@@ -5,13 +5,29 @@ import Colors from '../../../utils/Colors';
 
 export default class HistoryComponent extends Component {
     constructor(props) {
+        console.warn(props.language)
         super(props);
-        this.state = {
-        };
-
-        if (props.item.player_id === props.playerId) {
-            props.calculateTotal(props.item.money);
+        if(props.item.money>0 && props.language=='en'){
+            this.state = {
+                resultado: 'W'
+            };
         }
+        else if(props.item.money<0 && props.language=='en'){
+            this.state = {
+                resultado: 'L'
+            };
+        }
+        else if(props.item.money>0 && props.language=='es'){
+            this.state = {
+                resultado: 'G'
+            };
+        }
+        else{
+            this.state = {
+                resultado: 'P'
+            };
+        }
+        
     }
 
 
@@ -26,9 +42,7 @@ export default class HistoryComponent extends Component {
 
         return (
             <View>
-                {
-                    playerId ? item.player_id === playerId ?
-                        <View style={styles.rowView}>
+                <View style={styles.rowView}>
                             <View style={styles.headers}>
                                 <Text style={styles.rowText}>{item.date}</Text>
                             </View>
@@ -42,7 +56,7 @@ export default class HistoryComponent extends Component {
                                 <Text style={[styles.rowText, item.is_manual && { fontWeight: 'bold' }]}>{item.played_hp}</Text>
                             </View>
                             <View style={styles.headers}>
-                                <Text style={styles.rowText}>{item.result}</Text>
+                                <Text style={styles.rowText}>{this.state.resultado}</Text>
                             </View>
                             <View style={styles.headers}>
                                 <Text style={styles.rowText}>{item.next_hp}</Text>
@@ -59,39 +73,6 @@ export default class HistoryComponent extends Component {
                                 </TouchableOpacity>
                             </View>}
                         </View>
-                        : <View></View> :
-                        <View style={styles.rowView}>
-                            <View style={styles.headers}>
-                                <Text style={styles.rowText}>{item.date}</Text>
-                            </View>
-                            <View style={styles.headers}>
-                                <Text style={styles.rowText}>{item.course_name}</Text>
-                            </View>
-                            {/* <TouchableOpacity style={styles.headers} onPress={_ => navigation.push('HistoryScreen', { playerId: item.player_id, roundId: item.round_id })}>
-                                <Text style={styles.rowText}>{item.nick_name}</Text>
-                            </TouchableOpacity> */}
-                            <View style={styles.headers}>
-                                <Text style={styles.rowText}>{item.played_hp}</Text>
-                            </View>
-                            <View style={styles.headers}>
-                                <Text style={styles.rowText}>{item.result}</Text>
-                            </View>
-                            <View style={styles.headers}>
-                                <Text style={styles.rowText}>{item.next_hp}</Text>
-                            </View>
-                            <View style={styles.headers}>
-                                <Text style={styles.rowText}>{item.money}</Text>
-                            </View>
-                            {landscape && <View>
-                                <TouchableOpacity style={styles.headers} onPress={_ => navigation.navigate('DebtComponent', { playerId: item.player_id, bible: item })}>
-                                    <Text numberOfLines={2} ellipsizeMode='tail' style={styles.rowText}>{item.debts}</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.headers} onPress={_ => navigation.navigate('NoteComponent', { playerId: item.player_id, bible: item })}>
-                                    <Text numberOfLines={2} ellipsizeMode='tail' style={styles.rowText}>{item.notes}</Text>
-                                </TouchableOpacity>
-                            </View>}
-                        </View>
-                }
             </View>
         );
     }

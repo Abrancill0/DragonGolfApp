@@ -338,7 +338,7 @@ export default function RoundsView(props) {
   }
 
   function showSheetView(item,index){
-    muestraRonda2(IDRound,IDBet, item.id, index)
+    //muestraRonda2(IDRound,IDBet, item.id, index)
     console.warn(item.id)
         const {
             seeResults,
