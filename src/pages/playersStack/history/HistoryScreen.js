@@ -51,6 +51,11 @@ class HistoryScreen extends Component {
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
+                var suma = res.Result.reduce((obj, data) => {
+                  obj += parseFloat(data.GanadoPerdido);
+                  return obj;
+                }, 0);
+                console.warn(suma)
                 const list = res.Result.map(item => (
                     {
                       //id: item.IDBet,
@@ -61,6 +66,7 @@ class HistoryScreen extends Component {
                       date: moment(item.Fecha).format('DD/MM/YYYY').toString()
                     }
                 ))
+                this.total = suma
                 this.setState({
                     history: list
                 })
@@ -71,6 +77,7 @@ class HistoryScreen extends Component {
                 //setArrayholder(list)
             }
             else{
+              this.total = 0
               this.setState({
                     history: []
                 })
@@ -112,7 +119,7 @@ class HistoryScreen extends Component {
                   <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{history[language]}</Text>
                   </View>
                   <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-                    <Text style={{ padding:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color: this.total < 0 ? Colors.Primary : this.total === 0 ? Colors.Black: Colors.Secondary ,fontWeight:'bold'}}>${this.total}</Text>
+                    <Text style={{ padding:10, fontSize: 14, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color: this.total < 0 ? Colors.Primary : this.total === 0 ? Colors.Black: Colors.Secondary ,fontWeight:'bold'}}>${this.total}</Text>
                   </View>
                 </View>
                 <View style={styles.headersView}>

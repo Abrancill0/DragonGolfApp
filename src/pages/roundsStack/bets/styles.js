@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         marginLeft: 0
     },
     betTitle: {
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios'?14:16,
         fontWeight: 'bold',
         color: Colors.Black,
         textTransform: 'uppercase'
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         marginLeft:10
     },
     betIndexText: {
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios'?13:15,
         fontWeight: 'bold',
         color: Colors.White
     },
@@ -52,18 +52,18 @@ const styles = StyleSheet.create({
         paddingVertical: 5
     },
     advInfo: {
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios'?14:16,
         fontWeight: 'bold',
         color: Colors.Black
     },
     vsInfo: {
-        fontSize: 13,
+        fontSize: Platform.OS === 'ios'?11:13,
         fontWeight: 'bold',
         color: Colors.Black,
         alignSelf:'center'
     },
     profitText: {
-        fontSize: 13,
+        fontSize: Platform.OS === 'ios'?11:13,
         fontWeight: 'bold',
     },
     betInfoView: {
@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
         width: 60,
     },
     dollarSym: {
-        fontSize: 18,
+        fontSize: Platform.OS === 'ios'?16:18,
         fontWeight: 'bold',
         minWidth: 16
     },
     betInput: {
         minWidth: 50,
-        fontSize: 14,
+        fontSize: Platform.OS === 'ios'?12:14,
         color: Colors.Black,
         marginVertical: 0,
         paddingVertical: 0,
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     profitNameText: {
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios'?14:16,
         fontWeight: 'bold',
         color: Colors.Black
     },
@@ -179,12 +179,12 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     nameText: {
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios'?14:16,
         fontWeight: 'bold',
         color: Colors.Black
     },
     lastnameText: {
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios'?13:15,
         color: Colors.Black
     },
     infoView: {
@@ -201,17 +201,17 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     shortName: {
-        fontSize: 17,
+        fontSize: Platform.OS === 'ios'?15:17,
         color: Colors.Primary
     },
     handicapText: {
-        fontSize: 13,
+        fontSize: Platform.OS === 'ios'?11:13,
         color: Colors.Black,
         fontWeight: 'bold',
         textAlign: 'center'
     },
     handicapNumber: {
-        fontSize: 18,
+        fontSize: Platform.OS === 'ios'?16:18,
         fontWeight: 'bold',
         color: Colors.Black
     },
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         marginVertical:8,
         paddingHorizontal: 10,
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios'?14:16,
         borderRadius: 10,
         backgroundColor: Colors.White,
         textTransform: 'uppercase'
