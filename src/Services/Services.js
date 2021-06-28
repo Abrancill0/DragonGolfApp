@@ -725,6 +725,26 @@ export const ListaApuesta = () => {
                 });
 };
 
+export const ActualizarOrdenApuesta = (IDBetDetail1,IDBetDetail2, IDUsuario) => {
+    const URL = RutaBaseAB + "/ActualizarOrdenApuesta";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDBetDetail1: IDBetDetail1,
+                    IDBetDetail2: IDBetDetail2,
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListadoDetalleApuesta = (IDRonda,IDBet, IDUsuario) => {
     const URL = RutaBaseAB + "/ListadoDetalleApuesta";
     return fetch(URL, {

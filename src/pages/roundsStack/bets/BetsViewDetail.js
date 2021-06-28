@@ -26,7 +26,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoDetalleApuesta, CalcularApuesta, EliminarApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuesta, CalcularApuesta, EliminarApuesta, ActualizarOrdenApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -388,7 +388,10 @@ export default function RoundsView(props) {
         }
     }
 
-    function sube(index){
+    async function sube(index) {
+      let IDUsuario = await AsyncStorage.getItem('usu_id')
+      ActualizarOrdenApuesta(rounds[index].id,rounds[index-1].id,IDUsuario)
+        .then((res) => {console.warn(res)})
       console.warn(rounds)
       let aux;
       if(index!=0){
