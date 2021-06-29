@@ -389,31 +389,39 @@ export default function RoundsView(props) {
     }
 
     async function sube(index) {
-      let IDUsuario = await AsyncStorage.getItem('usu_id')
-      ActualizarOrdenApuesta(rounds[index].id,rounds[index-1].id,IDUsuario)
-        .then((res) => {console.warn(res)})
-      console.warn(rounds)
+      //console.warn(rounds)
       let aux;
       if(index!=0){
+        console.warn(rounds[index-1].id)
+        console.warn(rounds[index].id)
+        let IDUsuario = await AsyncStorage.getItem('usu_id')
+        console.warn(IDUsuario)
+        ActualizarOrdenApuesta(rounds[index-1].id,rounds[index].id,IDUsuario)
+          .then((res) => {console.warn(res)})
         aux = rounds[index]
         rounds[index]=rounds[index-1]
         rounds[index-1]=aux
         setDataInState([...dataInState, rounds])
       }
-      console.warn(rounds)
-      console.warn(index)
+      //console.warn(rounds)
+      //console.warn(index)
     }
-    function baja(index){
-      console.warn(rounds)
+    async function baja(index){
       let aux;
       if(index!=rounds.length-1){
+        console.warn(rounds[index+1].id)
+        console.warn(rounds[index].id)
+        let IDUsuario = await AsyncStorage.getItem('usu_id')
+        console.warn(IDUsuario)
+        ActualizarOrdenApuesta(rounds[index+1].id,rounds[index].id,IDUsuario)
+          .then((res) => {console.warn(res)})
         aux = rounds[index]
         rounds[index]=rounds[index+1]
         rounds[index+1]=aux
         setDataInState([...dataInState, rounds])
       }
-      console.warn(rounds)
-      console.warn(index)
+      //console.warn(rounds)
+      //console.warn(index)
     }
 
     function doAction(index, index2, item){

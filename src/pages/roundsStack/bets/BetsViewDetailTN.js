@@ -26,7 +26,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListadoDetalleApuestaTeam, CalcularApuestaTeamNassau, EliminarApuesta } from '../../../Services/Services'
+import { ListadoDetalleApuestaTeam, CalcularApuestaTeamNassau, EliminarApuesta, ActualizarOrdenApuesta } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -442,10 +442,16 @@ export default function RoundsView(props) {
         }
     }
 
-    function sube(index){
+    async function sube(index){
       console.warn(rounds)
       let aux;
       if(index!=0){
+        console.warn(rounds[index-1].id)
+        console.warn(rounds[index].id)
+        let IDUsuario = await AsyncStorage.getItem('usu_id')
+        console.warn(IDUsuario)
+        ActualizarOrdenApuesta(rounds[index-1].id,rounds[index].id,IDUsuario)
+          .then((res) => {console.warn(res)})
         aux = rounds[index]
         rounds[index]=rounds[index-1]
         rounds[index-1]=aux
@@ -454,10 +460,16 @@ export default function RoundsView(props) {
       console.warn(rounds)
       console.warn(index)
     }
-    function baja(index){
+    async function baja(index){
       console.warn(rounds)
       let aux;
       if(index!=rounds.length-1){
+        console.warn(rounds[index+1].id)
+        console.warn(rounds[index].id)
+        let IDUsuario = await AsyncStorage.getItem('usu_id')
+        console.warn(IDUsuario)
+        ActualizarOrdenApuesta(rounds[index+1].id,rounds[index].id,IDUsuario)
+          .then((res) => {console.warn(res)})
         aux = rounds[index]
         rounds[index]=rounds[index+1]
         rounds[index+1]=aux
