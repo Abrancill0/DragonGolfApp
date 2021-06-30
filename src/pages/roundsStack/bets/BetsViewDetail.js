@@ -68,6 +68,12 @@ export default function RoundsView(props) {
     
 
   async function ListadoRondas2(tipo, index) {
+    if(tipo!=2 && tipo!=1){
+      AsyncStorage.setItem('arreglo', 'false');
+    }
+    let arreglo = await AsyncStorage.getItem('arreglo')
+    arreglo=arreglo=='true'?true:false
+    if(!arreglo){
     if(tipo==1){
       setStatus(true)
     }
@@ -167,8 +173,10 @@ export default function RoundsView(props) {
             else{
               setRounds([])
               setStatus(false)
-            }
+            } 
+          AsyncStorage.setItem('arreglo', 'true');
         })
+    }
   }
 
   function searchFilterFunction(text,busqueda){

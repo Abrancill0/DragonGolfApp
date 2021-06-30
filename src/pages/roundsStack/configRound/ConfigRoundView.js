@@ -598,6 +598,7 @@ class ConfigRoundView extends Component {
               AsyncStorage.setItem('status', '1');
               AsyncStorage.setItem('sn', 'true');
               AsyncStorage.setItem('tn', 'true');
+              AsyncStorage.setItem('arreglo', 'false');
             }
             else{
               this.setState({

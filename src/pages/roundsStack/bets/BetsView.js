@@ -69,32 +69,41 @@ export default function betsView(route) {
     
 
   async function ListadoBets(tipo) {
-    console.warn('tipo')
-    console.warn(tipo)
-    setCollapsed([])
-    setCollapsedArray([])
-    let language = await AsyncStorage.getItem('language')
-    let IDRound = await AsyncStorage.getItem('IDRound')
-    let sn = await AsyncStorage.getItem('sn')
-    let tn = await AsyncStorage.getItem('tn')
-    sn=sn=='true'?true:false
-    tn=tn=='true'?true:false
-    console.warn(sn)
-    console.warn(tn)
-    collapsedArray2[0]=sn
-    collapsedArray2[1]=tn
-    setCollapsed2(collapsedArray2)
-    setIDRound(IDRound)
-    if(tipo==1){
-      ListadoRondas2(IDRound)
+    if(tipo!=2 && tipo!=1){
+      AsyncStorage.setItem('arreglo', 'false');
     }
-    setLanguage(language)
-    if(tipo!=1){
-      setbets2([])
-      if(tipo==2){
-        setStatus(true)
+    let arreglo = await AsyncStorage.getItem('arreglo')
+    arreglo=arreglo=='true'?true:false
+    console.warn('arreglo')
+    console.warn(arreglo)
+    console.warn('arreglo')
+    if(!arreglo){
+      console.warn('tipo')
+      console.warn(tipo)
+      setCollapsed([])
+      setCollapsedArray([])
+      let language = await AsyncStorage.getItem('language')
+      let IDRound = await AsyncStorage.getItem('IDRound')
+      let sn = await AsyncStorage.getItem('sn')
+      let tn = await AsyncStorage.getItem('tn')
+      sn=sn=='true'?true:false
+      tn=tn=='true'?true:false
+      console.warn(sn)
+      console.warn(tn)
+      collapsedArray2[0]=sn
+      collapsedArray2[1]=tn
+      setCollapsed2(collapsedArray2)
+      setIDRound(IDRound)
+      if(tipo==1){
+        ListadoRondas2(IDRound)
       }
-    ListaApuesta()
+      setLanguage(language)
+      if(tipo!=1){
+        setbets2([])
+        if(tipo==2 || tipo==4){
+          setStatus(true)
+        }
+      ListaApuesta()
         .then((res) => {
           //console.warn(res)
             if(res.estatus == 1){
@@ -117,7 +126,10 @@ export default function betsView(route) {
               setbets2([])
               setStatus(false)
             }
+          console.warn('Si entré')
+          AsyncStorage.setItem('arreglo', 'true');
         })
+      }
     }
   }
 
@@ -695,7 +707,7 @@ export default function betsView(route) {
               .then((res) => {
                 //console.warn(res)
                   if(res.estatus == 1){
-                    ListadoBets(2)
+                    ListadoBets(4)
                   }
               })
           },
@@ -821,7 +833,7 @@ export default function betsView(route) {
               <RefreshControl
                 refreshing={false}
                 onRefresh={()=>{
-                  ListadoBets(2)
+                  ListadoBets(4)
                   setValue1('')
                   setValue2('')
                   setValue3('')
