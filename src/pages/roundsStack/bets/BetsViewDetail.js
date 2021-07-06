@@ -58,15 +58,7 @@ export default function RoundsView(props) {
     const [carry, setcarry] = useState(false);
     const [dataInState, setDataInState] = useState([]);
     const ScreenWidth = Dimensions.get("window").width;
-        useEffect(() => {
-         const unsubscribe = navigation.addListener("focus", () => {
-        ListadoRondas2(1);
-          });
-
-        return unsubscribe;
-      }, [rounds]);
     
-
   async function ListadoRondas2(tipo, index) {
     if(tipo!=2 && tipo!=1){
       AsyncStorage.setItem('arreglo', 'false');

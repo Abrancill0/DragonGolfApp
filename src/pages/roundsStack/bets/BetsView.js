@@ -60,11 +60,11 @@ export default function betsView(route) {
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
           ListadoBets(1);
-         const unsubscribe = navigation.addListener("focus", () => {
+         /*const unsubscribe = navigation.addListener("focus", () => {
           ListadoBets(1);
           });
 
-        return unsubscribe;
+        return unsubscribe;*/
       }, []);
     
 
@@ -77,7 +77,7 @@ export default function betsView(route) {
     console.warn('arreglo')
     console.warn(arreglo)
     console.warn('arreglo')
-    if(!arreglo){
+    if(!arreglo && tipo!=2){
       console.warn('tipo')
       console.warn(tipo)
       setCollapsed([])
@@ -131,6 +131,40 @@ export default function betsView(route) {
         })
       }
     }
+    else{
+      if(tipo==2){
+        setbets2([])
+        if(tipo==2 || tipo==4){
+          setStatus(true)
+        }
+      ListaApuesta()
+        .then((res) => {
+          //console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      id: item.IDBet,
+                      nombre: item.Bet_Nombre,
+                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
+                    }
+                ))
+                setbets2(list.reverse())
+                /*for (var i = 0; i<=list.length - 1; i++) {
+                    collapsedArray2.push(false)
+                  }*/
+                  //setCollapsed2(collapsedArray2)
+                //setArrayholder(list)
+                setStatus(false)
+            }
+            else{
+              setbets2([])
+              setStatus(false)
+            }
+          console.warn('Si entré')
+          AsyncStorage.setItem('arreglo', 'true');
+        })
+      }
+    }
   }
 
   async function ListadoRondas2(IDRound) {
@@ -151,6 +185,7 @@ export default function betsView(route) {
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
                       Player1: item.Player1,
                       Player2: item.Player2,
+                      todos: item.Player1 + item.Player2,
                       BetD_Player1: item.BetD_Player1,
                       BetD_Player2: item.BetD_Player2,
                       BetD_AdvStrokers: item.BetD_AdvStrokers,
@@ -230,7 +265,8 @@ export default function betsView(route) {
           setRounds3([])
           ListadoDetalleApuestaTeam(IDRound,2, IDUsuario)
           .then((res) => {
-            //console.warn(res)
+            console.warn('Hola')
+            console.warn(res)
               if(res.estatus == 1){
                   const list = res.Result.map(item => (
                       {
@@ -241,6 +277,7 @@ export default function betsView(route) {
                         Player2: item.Player2,
                         Player3: item.Player3,
                         Player4: item.Player4,
+                        todos: item.Player1 + item.Player2 + item.Player3 + item.Player4,
                         BetD_Player1: item.BetD_Player1,
                         BetD_Player2: item.BetD_Player2,
                         BetD_Player3: item.BetD_Player3,
@@ -341,6 +378,7 @@ export default function betsView(route) {
                       fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
                       Player1: item.Player1,
                       Player2: item.Player2,
+                      todos: item.Player1 + item.Player2,
                       BetD_Player1: item.BetD_Player1,
                       BetD_Player2: item.BetD_Player2,
                       BetD_AdvStrokers: item.BetD_AdvStrokers,
@@ -433,6 +471,7 @@ export default function betsView(route) {
                         Player2: item.Player2,
                         Player3: item.Player3,
                         Player4: item.Player4,
+                        todos: item.Player1 + item.Player2 + item.Player3 + item.Player4,
                         BetD_Player1: item.BetD_Player1,
                         BetD_Player2: item.BetD_Player2,
                         BetD_Player3: item.BetD_Player3,
@@ -521,7 +560,7 @@ export default function betsView(route) {
     switch(busqueda){
       case 1:
         setValue1(text) 
-        itemData = `${item.Player1} ${item.Player1.toUpperCase()}`;
+        itemData = `${item.Player1} ${item.todos.toUpperCase()}`;
         break;
       case 2:
         setValue2(text) 
@@ -547,7 +586,7 @@ export default function betsView(route) {
     switch(busqueda){
       case 1:
         setValue1(text) 
-        itemData = `${item.Player1} ${item.Player1.toUpperCase()}`;
+        itemData = `${item.Player1} ${item.todos.toUpperCase()}`;
         break;
       case 2:
         setValue2(text) 
