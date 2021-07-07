@@ -232,6 +232,7 @@ class PlayersScore extends Component {
         if(arreglo!= ''){
         ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
         .then((res) => {
+          AsyncStorage.setItem('arreglo', 'false');
           console.warn(res)
           if(tipo==1){
             if(res.estatus == 1){

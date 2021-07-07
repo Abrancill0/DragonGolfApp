@@ -97,6 +97,7 @@ class HorizontalScoreView extends Component {
         ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
         .then((res) => {
           console.warn(res)
+          AsyncStorage.setItem('arreglo', 'false');
           if(tipo==1){
             if(res.estatus == 1){
               showMessage({

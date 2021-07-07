@@ -60,11 +60,11 @@ export default function betsView(route) {
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
           ListadoBets(1);
-         /*const unsubscribe = navigation.addListener("focus", () => {
+         const unsubscribe = navigation.addListener("focus", () => {
           ListadoBets(1);
           });
 
-        return unsubscribe;*/
+        return unsubscribe;
       }, []);
     
 
@@ -99,7 +99,7 @@ export default function betsView(route) {
       }
       setLanguage(language)
       if(tipo!=1){
-        setbets2([])
+        //setbets2([])
         if(tipo==2 || tipo==4){
           setStatus(true)
         }
@@ -123,7 +123,7 @@ export default function betsView(route) {
                 setStatus(false)
             }
             else{
-              setbets2([])
+              //setbets2([])
               setStatus(false)
             }
           console.warn('Si entré')
@@ -133,7 +133,7 @@ export default function betsView(route) {
     }
     else{
       if(tipo==2){
-        setbets2([])
+        //setbets2([])
         if(tipo==2 || tipo==4){
           setStatus(true)
         }
@@ -157,7 +157,7 @@ export default function betsView(route) {
                 setStatus(false)
             }
             else{
-              setbets2([])
+              //setbets2([])
               setStatus(false)
             }
           console.warn('Si entré')
@@ -560,7 +560,7 @@ export default function betsView(route) {
     switch(busqueda){
       case 1:
         setValue1(text) 
-        itemData = `${item.Player1} ${item.todos.toUpperCase()}`;
+        itemData = `${item.todos} ${item.todos.toUpperCase()}`;
         break;
       case 2:
         setValue2(text) 
@@ -586,7 +586,7 @@ export default function betsView(route) {
     switch(busqueda){
       case 1:
         setValue1(text) 
-        itemData = `${item.Player1} ${item.todos.toUpperCase()}`;
+        itemData = `${item.todos} ${item.todos.toUpperCase()}`;
         break;
       case 2:
         setValue2(text) 

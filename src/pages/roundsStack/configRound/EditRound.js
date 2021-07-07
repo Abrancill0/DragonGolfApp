@@ -630,6 +630,7 @@ class ConfigRoundView extends Component {
             AsyncStorage.setItem('fecha', pickerTextDate2.toString());
             AsyncStorage.setItem('IDCourse', IDCourse.toString());
             AsyncStorage.setItem('courseName', courseName.toString());
+            AsyncStorage.setItem('arreglo', 'false');
             //navigation.navigate('createDetalleTab', { screen: 'Detalle', params: { RmReqId: RmReqId, RmReqProveedorNombre: RmReqProveedorNombre } })
             this.props.navigation.goBack()//("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
             //this.props.navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:res.idround} })
