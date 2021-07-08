@@ -46,7 +46,7 @@ class SettingsView extends Component {
       status: false,
       una:0,
       userData: [],
-      language:'en',
+      language:'',
       asHowAdvMove : 'Match',
       asHowManyStrokes : '0.5',
       asAdvMoves : false,

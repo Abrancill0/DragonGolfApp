@@ -63,9 +63,15 @@ export default function betsView(route) {
          const unsubscribe = navigation.addListener("focus", () => {
           ListadoBets(1);
           });
-
         return unsubscribe;
+         Dimensions.addEventListener('change', (dimensions) => {
+          cambia()
+        });
       }, []);
+
+  async function cambia() {
+      AsyncStorage.setItem('arreglo', 'false');
+  }
     
 
   async function ListadoBets(tipo) {
@@ -74,12 +80,12 @@ export default function betsView(route) {
     }
     let arreglo = await AsyncStorage.getItem('arreglo')
     arreglo=arreglo=='true'?true:false
-    console.warn('arreglo')
-    console.warn(arreglo)
-    console.warn('arreglo')
+    //console.warn('arreglo')
+    //console.warn(arreglo)
+    //console.warn('arreglo')
     if(!arreglo && tipo!=2){
-      console.warn('tipo')
-      console.warn(tipo)
+      //console.warn('tipo')
+      //console.warn(tipo)
       setCollapsed([])
       setCollapsedArray([])
       let language = await AsyncStorage.getItem('language')
@@ -88,8 +94,8 @@ export default function betsView(route) {
       let tn = await AsyncStorage.getItem('tn')
       sn=sn=='true'?true:false
       tn=tn=='true'?true:false
-      console.warn(sn)
-      console.warn(tn)
+      //console.warn(sn)
+      //console.warn(tn)
       collapsedArray2[0]=sn
       collapsedArray2[1]=tn
       setCollapsed2(collapsedArray2)
@@ -99,13 +105,13 @@ export default function betsView(route) {
       }
       setLanguage(language)
       if(tipo!=1){
-        //setbets2([])
+        setbets2([])
         if(tipo==2 || tipo==4){
           setStatus(true)
         }
       ListaApuesta()
         .then((res) => {
-          //console.warn(res)
+          ////console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -123,23 +129,23 @@ export default function betsView(route) {
                 setStatus(false)
             }
             else{
-              //setbets2([])
+              setbets2([])
               setStatus(false)
             }
-          console.warn('Si entré')
+          //console.warn('Si entré')
           AsyncStorage.setItem('arreglo', 'true');
         })
       }
     }
     else{
       if(tipo==2){
-        //setbets2([])
+        setbets2([])
         if(tipo==2 || tipo==4){
           setStatus(true)
         }
       ListaApuesta()
         .then((res) => {
-          //console.warn(res)
+          ////console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -157,10 +163,10 @@ export default function betsView(route) {
                 setStatus(false)
             }
             else{
-              //setbets2([])
+              setbets2([])
               setStatus(false)
             }
-          console.warn('Si entré')
+          //console.warn('Si entré')
           AsyncStorage.setItem('arreglo', 'true');
         })
       }
@@ -171,12 +177,12 @@ export default function betsView(route) {
     //ListadoBets(2)
     let language = await AsyncStorage.getItem('language')
     let IDUsuario = await AsyncStorage.getItem('usu_id')
-    //console.warn('IDUsuario')
+    ////console.warn('IDUsuario')
     setLanguage(language)
     setRounds2([])
     ListadoDetalleApuesta(IDRound,1, IDUsuario)
         .then((res) => {
-          //console.warn(res)
+          ////console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -232,7 +238,7 @@ export default function betsView(route) {
                   for (var i = 0; i<=list.length - 1; i++) {
                     collapsedArray.push(true)
                   }
-                  //console.warn(collapsedArray.length)
+                  ////console.warn(collapsedArray.length)
                   setCollapsedArray(collapsedArray)
                   setCollapsed(collapsedArray)
                   setArrayholder(list)
@@ -265,201 +271,7 @@ export default function betsView(route) {
           setRounds3([])
           ListadoDetalleApuestaTeam(IDRound,2, IDUsuario)
           .then((res) => {
-            console.warn('Hola')
-            console.warn(res)
-              if(res.estatus == 1){
-                  const list = res.Result.map(item => (
-                      {
-                        ConsecutivosApuesta: item.ConsecutivosApuesta,
-                        id: item.IDBetDetail,
-                        fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
-                        Player1: item.Player1,
-                        Player2: item.Player2,
-                        Player3: item.Player3,
-                        Player4: item.Player4,
-                        todos: item.Player1 + item.Player2 + item.Player3 + item.Player4,
-                        BetD_Player1: item.BetD_Player1,
-                        BetD_Player2: item.BetD_Player2,
-                        BetD_Player3: item.BetD_Player3,
-                        BetD_Player4: item.BetD_Player4,
-                        BetD_AdvStrokers: item.BetD_AdvStrokers,
-                        set_tmw_adv_strokes: item.set_tmw_adv_strokes,
-                        BetD_AutoPress: item.BetD_AutoPress,
-                        BetD_MontoF9: item.BetD_MontoF9,
-                        BetD_MontoB9: item.BetD_MontoB9,
-                        BetD_MontoCalculoF9: item.BetD_MontoCalculoF9,
-                        BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
-                        BetD_Medal: item.BetD_Medal,
-                        BetD_MedalInt: item.BetD_MedalInt,
-                        BetD_MachInt: item.BetD_MachInt,
-                        BetD_Carry: item.BetD_Carry,
-                        BetD_CarryCalculado: item.BetD_CarryCalculado,
-                        BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
-                        BetD_Match: item.BetD_Match,
-                        BetD_MachMonto: item.BetD_MachMonto,
-                        BetD_MontoPerdidoGanado: item.BetD_MontoPerdidoGanado,
-                        BetD_F9_1: item.BetD_F9_1,
-                        BetD_F9_2: item.BetD_F9_2,
-                        BetD_F9_3: item.BetD_F9_3,
-                        BetD_F9_4: item.BetD_F9_4,
-                        BetD_F9_5: item.BetD_F9_5,
-                        BetD_F9_6: item.BetD_F9_6,
-                        BetD_F9_7: item.BetD_F9_7,
-                        BetD_F9_8: item.BetD_F9_8,
-                        BetD_F9_9: item.BetD_F9_9,
-                        BetD_B9_1: item.BetD_B9_1,
-                        BetD_B9_2: item.BetD_B9_2,
-                        BetD_B9_3: item.BetD_B9_3,
-                        BetD_B9_4: item.BetD_B9_4,
-                        BetD_B9_5: item.BetD_B9_5,
-                        BetD_B9_6: item.BetD_B9_6,
-                        BetD_B9_7: item.BetD_B9_7,
-                        BetD_B9_8: item.BetD_B9_8,
-                        BetD_B9_9: item.BetD_B9_9,
-                        f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
-                        b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
-                        BetD_AdvStrokers: item.BetD_AdvStrokers
-                      }
-                  ))
-                    setRounds3(list)
-                    setCollapsed([])
-                    setCollapsedArray([])
-                    for (var i = 0; i<=list.length - 1; i++) {
-                      collapsedArray.push(true)
-                    }
-                    //console.warn(collapsedArray.length)
-                    setCollapsedArray(collapsedArray)
-                    setCollapsed(collapsedArray)
-                    setArrayholder2(list)
-                    //if(IDBet == 1){
-                      collapsedArray2[1]=(collapsedArray2[1])
-                      collapsedArray2[0]=(collapsedArray2[0])
-                    AsyncStorage.setItem('sn', (collapsedArray2[0]).toString());
-                    AsyncStorage.setItem('tn', (collapsedArray2[1]).toString());
-                      //collapsedArray2[2]=(true)
-                      setCollapsed2(collapsedArray2)
-                      //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
-                    //}
-                    setStatus(false)
-              }
-              else{
-                //if(IDBet == 1){
-                  collapsedArray2[1]=(collapsedArray2[1])
-                  collapsedArray2[0]=(collapsedArray2[0])
-                    AsyncStorage.setItem('sn', (collapsedArray2[0]).toString());
-                    AsyncStorage.setItem('tn', (collapsedArray2[1]).toString());
-                  //collapsedArray2[2]=(true)
-                  setCollapsed2(collapsedArray2)
-                  //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
-                //}
-                setRounds3([])
-                setStatus(false)
-              }
-            })
-      ListadoBets(2)
-  }
-
-  async function ListadoRondas(IDBet,IDRound) {
-    let language = await AsyncStorage.getItem('language')
-    let IDUsuario = await AsyncStorage.getItem('usu_id')
-    //console.warn(IDBet)
-    //console.warn('IDUsuario')
-    setLanguage(language)
-    if(IDBet == 1){
-    setRounds2([])
-    ListadoDetalleApuesta(IDRound,1, IDUsuario)
-        .then((res) => {
-          //console.warn(res)
-            if(res.estatus == 1){
-                const list = res.Result.map(item => (
-                    {
-                      ConsecutivosApuesta: item.ConsecutivosApuesta,
-                      id: item.IDBetDetail,
-                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
-                      Player1: item.Player1,
-                      Player2: item.Player2,
-                      todos: item.Player1 + item.Player2,
-                      BetD_Player1: item.BetD_Player1,
-                      BetD_Player2: item.BetD_Player2,
-                      BetD_AdvStrokers: item.BetD_AdvStrokers,
-                      BetD_AutoPress: item.BetD_AutoPress,
-                      BetD_MontoF9: item.BetD_MontoF9,
-                      BetD_MontoB9: item.BetD_MontoB9,
-                      BetD_MontoCalculoF9: item.BetD_MontoCalculoF9,
-                      BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
-                      BetD_Medal: item.BetD_Medal,
-                      BetD_MedalInt: item.BetD_MedalInt,
-                      BetD_MachInt: item.BetD_MachInt,
-                      BetD_Carry: item.BetD_Carry,
-                      BetD_CarryCalculado: item.BetD_CarryCalculado,
-                      BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
-                      BetD_Match: item.BetD_Match,
-                      BetD_MachMonto: item.BetD_MachMonto,
-                      BetD_MontoPerdidoGanado: item.BetD_MontoPerdidoGanado,
-                      BetD_F9_1: item.BetD_F9_1,
-                      BetD_F9_2: item.BetD_F9_2,
-                      BetD_F9_3: item.BetD_F9_3,
-                      BetD_F9_4: item.BetD_F9_4,
-                      BetD_F9_5: item.BetD_F9_5,
-                      BetD_F9_6: item.BetD_F9_6,
-                      BetD_F9_7: item.BetD_F9_7,
-                      BetD_F9_8: item.BetD_F9_8,
-                      BetD_F9_9: item.BetD_F9_9,
-                      BetD_B9_1: item.BetD_B9_1,
-                      BetD_B9_2: item.BetD_B9_2,
-                      BetD_B9_3: item.BetD_B9_3,
-                      BetD_B9_4: item.BetD_B9_4,
-                      BetD_B9_5: item.BetD_B9_5,
-                      BetD_B9_6: item.BetD_B9_6,
-                      BetD_B9_7: item.BetD_B9_7,
-                      BetD_B9_8: item.BetD_B9_8,
-                      BetD_B9_9: item.BetD_B9_9,
-                      f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
-                      b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
-                      BetD_AdvStrokers: item.BetD_AdvStrokers
-                    }
-                ))
-                  setRounds2(list)
-                  setCollapsed([])
-                  setCollapsedArray([])
-                  for (var i = 0; i<=list.length - 1; i++) {
-                    collapsedArray.push(true)
-                  }
-                  //console.warn(collapsedArray.length)
-                  setCollapsedArray(collapsedArray)
-                  setCollapsed(collapsedArray)
-                  setArrayholder(list)
-                  //if(IDBet == 1){
-                    collapsedArray2[0]=(!collapsed2[0])
-                    collapsedArray2[1]=(collapsed2[1])
-                    AsyncStorage.setItem('sn', (!collapsed2[0]).toString());
-                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
-                    //collapsedArray2[2]=(true)
-                    setCollapsed2(collapsedArray2)
-                    //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
-                  //}
-                  setStatus(false)
-            }
-            else{
-              //if(IDBet == 1){
-                collapsedArray2[0]=(!collapsed2[0])
-                    collapsedArray2[1]=(collapsed2[1])
-                    AsyncStorage.setItem('sn', (!collapsed2[0]).toString());
-                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
-                //collapsedArray2[2]=(true)
-                setCollapsed2(collapsedArray2)
-                //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
-              //}
-              setCollapsed2(collapsedArray2)
-              setRounds2([])
-              setStatus(false)
-            }
-          })
-        }
-        else{
-          setRounds3([])
-          ListadoDetalleApuestaTeam(IDRound,2, IDUsuario)
-          .then((res) => {
+            //console.warn('Hola')
             //console.warn(res)
               if(res.estatus == 1){
                   const list = res.Result.map(item => (
@@ -521,7 +333,201 @@ export default function betsView(route) {
                     for (var i = 0; i<=list.length - 1; i++) {
                       collapsedArray.push(true)
                     }
-                    //console.warn(collapsedArray.length)
+                    ////console.warn(collapsedArray.length)
+                    setCollapsedArray(collapsedArray)
+                    setCollapsed(collapsedArray)
+                    setArrayholder2(list)
+                    //if(IDBet == 1){
+                      collapsedArray2[1]=(collapsedArray2[1])
+                      collapsedArray2[0]=(collapsedArray2[0])
+                    AsyncStorage.setItem('sn', (collapsedArray2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsedArray2[1]).toString());
+                      //collapsedArray2[2]=(true)
+                      setCollapsed2(collapsedArray2)
+                      //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+                    //}
+                    setStatus(false)
+              }
+              else{
+                //if(IDBet == 1){
+                  collapsedArray2[1]=(collapsedArray2[1])
+                  collapsedArray2[0]=(collapsedArray2[0])
+                    AsyncStorage.setItem('sn', (collapsedArray2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsedArray2[1]).toString());
+                  //collapsedArray2[2]=(true)
+                  setCollapsed2(collapsedArray2)
+                  //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+                //}
+                setRounds3([])
+                setStatus(false)
+              }
+            })
+      ListadoBets(2)
+  }
+
+  async function ListadoRondas(IDBet,IDRound) {
+    let language = await AsyncStorage.getItem('language')
+    let IDUsuario = await AsyncStorage.getItem('usu_id')
+    ////console.warn(IDBet)
+    ////console.warn('IDUsuario')
+    setLanguage(language)
+    if(IDBet == 1){
+    setRounds2([])
+    ListadoDetalleApuesta(IDRound,1, IDUsuario)
+        .then((res) => {
+          ////console.warn(res)
+            if(res.estatus == 1){
+                const list = res.Result.map(item => (
+                    {
+                      ConsecutivosApuesta: item.ConsecutivosApuesta,
+                      id: item.IDBetDetail,
+                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
+                      Player1: item.Player1,
+                      Player2: item.Player2,
+                      todos: item.Player1 + item.Player2,
+                      BetD_Player1: item.BetD_Player1,
+                      BetD_Player2: item.BetD_Player2,
+                      BetD_AdvStrokers: item.BetD_AdvStrokers,
+                      BetD_AutoPress: item.BetD_AutoPress,
+                      BetD_MontoF9: item.BetD_MontoF9,
+                      BetD_MontoB9: item.BetD_MontoB9,
+                      BetD_MontoCalculoF9: item.BetD_MontoCalculoF9,
+                      BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
+                      BetD_Medal: item.BetD_Medal,
+                      BetD_MedalInt: item.BetD_MedalInt,
+                      BetD_MachInt: item.BetD_MachInt,
+                      BetD_Carry: item.BetD_Carry,
+                      BetD_CarryCalculado: item.BetD_CarryCalculado,
+                      BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
+                      BetD_Match: item.BetD_Match,
+                      BetD_MachMonto: item.BetD_MachMonto,
+                      BetD_MontoPerdidoGanado: item.BetD_MontoPerdidoGanado,
+                      BetD_F9_1: item.BetD_F9_1,
+                      BetD_F9_2: item.BetD_F9_2,
+                      BetD_F9_3: item.BetD_F9_3,
+                      BetD_F9_4: item.BetD_F9_4,
+                      BetD_F9_5: item.BetD_F9_5,
+                      BetD_F9_6: item.BetD_F9_6,
+                      BetD_F9_7: item.BetD_F9_7,
+                      BetD_F9_8: item.BetD_F9_8,
+                      BetD_F9_9: item.BetD_F9_9,
+                      BetD_B9_1: item.BetD_B9_1,
+                      BetD_B9_2: item.BetD_B9_2,
+                      BetD_B9_3: item.BetD_B9_3,
+                      BetD_B9_4: item.BetD_B9_4,
+                      BetD_B9_5: item.BetD_B9_5,
+                      BetD_B9_6: item.BetD_B9_6,
+                      BetD_B9_7: item.BetD_B9_7,
+                      BetD_B9_8: item.BetD_B9_8,
+                      BetD_B9_9: item.BetD_B9_9,
+                      f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
+                      b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
+                      BetD_AdvStrokers: item.BetD_AdvStrokers
+                    }
+                ))
+                  setRounds2(list)
+                  setCollapsed([])
+                  setCollapsedArray([])
+                  for (var i = 0; i<=list.length - 1; i++) {
+                    collapsedArray.push(true)
+                  }
+                  ////console.warn(collapsedArray.length)
+                  setCollapsedArray(collapsedArray)
+                  setCollapsed(collapsedArray)
+                  setArrayholder(list)
+                  //if(IDBet == 1){
+                    collapsedArray2[0]=(!collapsed2[0])
+                    collapsedArray2[1]=(collapsed2[1])
+                    AsyncStorage.setItem('sn', (!collapsed2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                    //collapsedArray2[2]=(true)
+                    setCollapsed2(collapsedArray2)
+                    //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+                  //}
+                  setStatus(false)
+            }
+            else{
+              //if(IDBet == 1){
+                collapsedArray2[0]=(!collapsed2[0])
+                    collapsedArray2[1]=(collapsed2[1])
+                    AsyncStorage.setItem('sn', (!collapsed2[0]).toString());
+                    AsyncStorage.setItem('tn', (collapsed2[1]).toString());
+                //collapsedArray2[2]=(true)
+                setCollapsed2(collapsedArray2)
+                //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
+              //}
+              setCollapsed2(collapsedArray2)
+              setRounds2([])
+              setStatus(false)
+            }
+          })
+        }
+        else{
+          setRounds3([])
+          ListadoDetalleApuestaTeam(IDRound,2, IDUsuario)
+          .then((res) => {
+            ////console.warn(res)
+              if(res.estatus == 1){
+                  const list = res.Result.map(item => (
+                      {
+                        ConsecutivosApuesta: item.ConsecutivosApuesta,
+                        id: item.IDBetDetail,
+                        fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString(),
+                        Player1: item.Player1,
+                        Player2: item.Player2,
+                        Player3: item.Player3,
+                        Player4: item.Player4,
+                        todos: item.Player1 + item.Player2 + item.Player3 + item.Player4,
+                        BetD_Player1: item.BetD_Player1,
+                        BetD_Player2: item.BetD_Player2,
+                        BetD_Player3: item.BetD_Player3,
+                        BetD_Player4: item.BetD_Player4,
+                        BetD_AdvStrokers: item.BetD_AdvStrokers,
+                        set_tmw_adv_strokes: item.set_tmw_adv_strokes,
+                        BetD_AutoPress: item.BetD_AutoPress,
+                        BetD_MontoF9: item.BetD_MontoF9,
+                        BetD_MontoB9: item.BetD_MontoB9,
+                        BetD_MontoCalculoF9: item.BetD_MontoCalculoF9,
+                        BetD_MontoCalculoB9: item.BetD_MontoCalculoB9,
+                        BetD_Medal: item.BetD_Medal,
+                        BetD_MedalInt: item.BetD_MedalInt,
+                        BetD_MachInt: item.BetD_MachInt,
+                        BetD_Carry: item.BetD_Carry,
+                        BetD_CarryCalculado: item.BetD_CarryCalculado,
+                        BetD_MontoApuestaMedal: item.BetD_MontoApuestaMedal,
+                        BetD_Match: item.BetD_Match,
+                        BetD_MachMonto: item.BetD_MachMonto,
+                        BetD_MontoPerdidoGanado: item.BetD_MontoPerdidoGanado,
+                        BetD_F9_1: item.BetD_F9_1,
+                        BetD_F9_2: item.BetD_F9_2,
+                        BetD_F9_3: item.BetD_F9_3,
+                        BetD_F9_4: item.BetD_F9_4,
+                        BetD_F9_5: item.BetD_F9_5,
+                        BetD_F9_6: item.BetD_F9_6,
+                        BetD_F9_7: item.BetD_F9_7,
+                        BetD_F9_8: item.BetD_F9_8,
+                        BetD_F9_9: item.BetD_F9_9,
+                        BetD_B9_1: item.BetD_B9_1,
+                        BetD_B9_2: item.BetD_B9_2,
+                        BetD_B9_3: item.BetD_B9_3,
+                        BetD_B9_4: item.BetD_B9_4,
+                        BetD_B9_5: item.BetD_B9_5,
+                        BetD_B9_6: item.BetD_B9_6,
+                        BetD_B9_7: item.BetD_B9_7,
+                        BetD_B9_8: item.BetD_B9_8,
+                        BetD_B9_9: item.BetD_B9_9,
+                        f9Presses: [item.BetD_F9_1, item.BetD_F9_2, item.BetD_F9_3, item.BetD_F9_4, item.BetD_F9_5, item.BetD_F9_6, item.BetD_F9_7, item.BetD_F9_8, item.BetD_F9_9],
+                        b9Presses: [item.BetD_B9_1, item.BetD_B9_2, item.BetD_B9_3, item.BetD_B9_4, item.BetD_B9_5, item.BetD_B9_6, item.BetD_B9_7, item.BetD_B9_8, item.BetD_B9_9],
+                        BetD_AdvStrokers: item.BetD_AdvStrokers
+                      }
+                  ))
+                    setRounds3(list)
+                    setCollapsed([])
+                    setCollapsedArray([])
+                    for (var i = 0; i<=list.length - 1; i++) {
+                      collapsedArray.push(true)
+                    }
+                    ////console.warn(collapsedArray.length)
                     setCollapsedArray(collapsedArray)
                     setCollapsed(collapsedArray)
                     setArrayholder2(list)
@@ -711,7 +717,8 @@ export default function betsView(route) {
 
   async function muestraRonda(IDBet,IDRound){
     ListadoRondas(IDBet,IDRound);
-    /*//console.warn(IDBet)
+    setValue1('')
+    /*////console.warn(IDBet)
     //let IDRound = await AsyncStorage.getItem('IDRound')
     if(IDBet == 1){
       collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
@@ -729,7 +736,7 @@ export default function betsView(route) {
 
 
   async function Elimina(id, tipo){
-    //console.warn(tipo)
+    ////console.warn(tipo)
     let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
@@ -744,7 +751,7 @@ export default function betsView(route) {
           onPress: () => {
             EliminarCampo(id, tipo, idUsu)
               .then((res) => {
-                //console.warn(res)
+                ////console.warn(res)
                   if(res.estatus == 1){
                     ListadoBets(4)
                   }
