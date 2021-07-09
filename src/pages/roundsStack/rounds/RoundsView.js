@@ -377,7 +377,7 @@ export default function RoundsView(route) {
         borderBottomWidth:2}}
       />
       </View>}
-          <SwipeListView
+          <FlatList
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -436,8 +436,6 @@ export default function RoundsView(route) {
                 iconFamily='font-awesome'
               />
             }
-            stopLeftSwipe={Dimensions.get('window').width * .5}
-            stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         

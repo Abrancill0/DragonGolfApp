@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   RefreshControl,
   Text,
-  ScrollView
+  ScrollView,
+  SafeAreaView
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -615,154 +616,10 @@ export default function betsView(route) {
     ListadoBets(3)
   };
 
-   function renderSeparator(){  
-        return (  
-            <View  
-                style={{  
-                    height: 1,  
-                    width: "100%",  
-                    backgroundColor: "#000",  
-                }}  
-            />  
-        );  
-    };
-
-    function renderHeader(){
-
-    return (
-
-      <View>
-
-      <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
-          </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
-              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-      {search && <View>
-      <SearchBar
-        placeholder="Nombre"
-        onChangeText={(text) => searchFilterFunction(text,1)}
-        autoCorrect={false}
-        value={value1}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        height:50,
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.5}}
-      />
-      <SearchBar
-        placeholder="Nombre Corto"
-        onChangeText={(text) => searchFilterFunction(text,2)}
-        autoCorrect={false}
-        value={value2}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.8}}
-      />
-      <SearchBar
-        placeholder="Ciudad"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,3)}
-        autoCorrect={false}
-        value={value3}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:1}}
-      />
-      <SearchBar
-        placeholder="Pais"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,4)}
-        autoCorrect={false}
-        value={value4}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:1,
-        borderBottomWidth:2}}
-      />
-      </View>}
-      </View>
-    );
-  };
-
   async function muestraRonda(IDBet,IDRound){
     ListadoRondas(IDBet,IDRound);
     setValue1('')
-    /*////console.warn(IDBet)
-    //let IDRound = await AsyncStorage.getItem('IDRound')
-    if(IDBet == 1){
-      collapsedArray2[IDBet-1]=(!collapsed2[IDBet-1])
-      //collapsedArray2[2]=(true)
-      setCollapsed2(collapsedArray2)
-      //navigation.navigate("BetsViewDetail",{IDBet:IDBet, IDRound:IDRound})
-    }*/
-    /*else{
-      navigation.navigate("BetsViewDetailTN",{IDBet:IDBet, IDRound:IDRound})
-    }*/
-    /*
-    navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
-    AsyncStorage.setItem('IDRound', IDRound.toString());*/
   }
-
-
-  async function Elimina(id, tipo){
-    ////console.warn(tipo)
-    let idUsu = await AsyncStorage.getItem('usu_id')
-    Alert.alert(
-      "DragonGolf",
-      "¿Está seguro de eliminar este campo?",
-      [
-        {
-          text: "Cancelar",
-          style: 'cancel',
-        },
-        {
-          text: "Continuar",
-          onPress: () => {
-            EliminarCampo(id, tipo, idUsu)
-              .then((res) => {
-                ////console.warn(res)
-                  if(res.estatus == 1){
-                    ListadoBets(4)
-                  }
-              })
-          },
-        },
-      ],
-      { cancelable: false }
-    );
-  }
-
 
     const {
       round,
@@ -787,22 +644,7 @@ export default function betsView(route) {
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
           </View>
-          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('SNBetView')}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>*/}
         </View>
-        {/*<View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
-          </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
-              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={20} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-        </View>*/}
 
       {search && <View style={{margin:5}}>
       <SearchBar
@@ -822,59 +664,9 @@ export default function betsView(route) {
         borderTopWidth:0,
         borderBottomWidth:0.5}}
       />
-      {/*<SearchBar
-        placeholder="Nombre Corto"
-        onChangeText={(text) => searchFilterFunction(text,2)}
-        autoCorrect={false}
-        value={value2}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.8}}
-      />
-      <SearchBar
-        placeholder="Ciudad"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,3)}
-        autoCorrect={false}
-        value={value3}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:1}}
-      />
-      <SearchBar
-        placeholder="Pais"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,4)}
-        autoCorrect={false}
-        value={value4}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:1,
-        borderBottomWidth:2}}
-      />*/}
       </View>}
-        { visible &&
-          <ScrollView contentContainerStyle={{paddingBottom:20}}>
-          <SwipeListView
+        <View style={{ flex:1}}>
+          <FlatList
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -889,7 +681,6 @@ export default function betsView(route) {
             }
             data={bets2}
             renderItem={({item}) =>
-                    <View style={{flex:.2,padding:5}}>
                         <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id,IDRound)}>
                             {item.id == 1 ?
@@ -926,19 +717,9 @@ export default function betsView(route) {
                             <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />:
                             <BetsViewDetailTN rounds2={rounds3} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />
                           :null}
-                          {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
-                          <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
-                            <FontAwesome name={'edit'} size={30} color={Colors.White} />
-                          </TouchableOpacity>
-                          <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id, item.tipo)}>
-                            <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
-                          </TouchableOpacity>
-                          </View>*/}
-                          </View>
                     </View>
               }
               keyExtractor={item=>item.id}
-              //ListHeaderComponent={renderHeader}
               ListEmptyComponent={
               <ListEmptyComponent
                 text={Dictionary.emptyBets[language]}
@@ -946,13 +727,9 @@ export default function betsView(route) {
                 iconFamily='font-awesome'
               />
             }
-            stopLeftSwipe={Dimensions.get('window').width * .5}
-            stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-        
-      </ScrollView>}
-
+        </View>
       </View>
     );
 }

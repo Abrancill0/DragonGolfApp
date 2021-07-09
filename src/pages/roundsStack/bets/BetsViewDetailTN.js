@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Text,
   ScrollView,
+  SafeAreaView,
   ActionSheetIOS
 } from 'react-native';
 import RNBottomActionSheet from 'react-native-bottom-action-sheet';
@@ -174,149 +175,6 @@ export default function RoundsView(props) {
           AsyncStorage.setItem('arreglo', 'true');
         })
     }
-  }
-
-  function searchFilterFunction(text,busqueda){
-
-    const newData = arrayholder.filter(item => {
-    let itemData = ""
-    switch(busqueda){
-      case 1:
-        setValue1(text) 
-        itemData = `${item.nombre} ${item.nombre.toUpperCase()}`;
-        break;
-      case 2:
-        setValue2(text) 
-        itemData = `${item.nombreCorto} ${item.nombreCorto.toUpperCase()}`;
-        break;
-      case 3:
-        setValue3(text) 
-        itemData = `${item.ciudad} ${item.ciudad.toUpperCase()}`;
-        break;
-      case 4:
-        setValue4(text) 
-        itemData = `${item.pais} ${item.pais.toUpperCase()}`;
-        break;
-    }
-    const textData = text.toUpperCase();
-    return itemData.indexOf(textData) > -1;
-
-    });
-    setRounds(newData)
-  };
-
-   function renderSeparator(){  
-        return (  
-            <View  
-                style={{  
-                    height: 1,  
-                    width: "100%",  
-                    backgroundColor: "#000",  
-                }}  
-            />  
-        );  
-    };
-
-    function renderHeader(){
-
-    return (
-
-      <View>
-
-      <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
-          </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
-              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-      {search && <View>
-      <SearchBar
-        placeholder="Nombre"
-        onChangeText={(text) => searchFilterFunction(text,1)}
-        autoCorrect={false}
-        value={value1}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.5}}
-      />
-      <SearchBar
-        placeholder="Nombre Corto"
-        onChangeText={(text) => searchFilterFunction(text,2)}
-        autoCorrect={false}
-        value={value2}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.8}}
-      />
-      <SearchBar
-        placeholder="Ciudad"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,3)}
-        autoCorrect={false}
-        value={value3}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:1}}
-      />
-      <SearchBar
-        placeholder="Pais"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,4)}
-        autoCorrect={false}
-        value={value4}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:1,
-        borderBottomWidth:2}}
-      />
-      </View>}
-      </View>
-    );
-  };
-
-  async function muestraRonda2(IDRound, IDBet, IDBetDetail, index){
-    CalcularApuestaTeamNassau(IDRound, IDBet, IDBetDetail)
-        .then((res) => {
-          console.warn(index)
-          ListadoRondas2(2,index)
-          /*console.warn(IDBet)
-          console.warn(IDBetDetail)
-          console.warn(res)*/
-        })
-        //navigation.navigate("SNBetListComponent",{IDBet:IDBet, IDRound:IDRound, bets:rounds, language:language, IDBetDetail:IDBetDetail, index:index})
-    /*
-    navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
-    AsyncStorage.setItem('IDRound', IDRound.toString());*/
   }
 
   async function infoRonda(IDRound,IDBet,BetD_MontoF9,BetD_MontoB9,BetD_Medal,BetD_Carry,BetD_Match, BetD_AdvStrokers){
@@ -544,87 +402,8 @@ export default function RoundsView(props) {
         <Spinner
             visible={carga}
             color={Colors.Primary} />
-        
-        { visible &&
-          <ScrollView contentContainerStyle={{paddingBottom:10}}>
 
-      {/*<View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
-          </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
-              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-        </View>*/}
-
-      {search && <View>
-      <SearchBar
-        placeholder="Nombre"
-        onChangeText={(text) => searchFilterFunction(text,1)}
-        autoCorrect={false}
-        value={value1}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.5}}
-      />
-      <SearchBar
-        placeholder="Nombre Corto"
-        onChangeText={(text) => searchFilterFunction(text,2)}
-        autoCorrect={false}
-        value={value2}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.8}}
-      />
-      <SearchBar
-        placeholder="Ciudad"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,3)}
-        autoCorrect={false}
-        value={value3}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:1}}
-      />
-      <SearchBar
-        placeholder="Pais"
-        lightTheme
-        round
-        onChangeText={(text) => searchFilterFunction(text,4)}
-        autoCorrect={false}
-        value={value4}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:1,
-        borderBottomWidth:2}}
-      />
-      </View>}
+        <View style={{ flex:0.5}}>
           <FlatList
             refreshControl={
               <RefreshControl
@@ -652,31 +431,7 @@ export default function RoundsView(props) {
                 <View style={styles.betIndexView}>
                   <Text style={styles.betIndexText}>{rounds[index].ConsecutivosApuesta}</Text>
                 </View>
-                    <View style={{flex:0.95,padding:0,paddingHorizontal:0}}
-                          horizontal={false}
-                          showsHorizontalScrollIndicator={false}>
-                          {/*<TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda2(IDRound,IDBet, item.id, index)} onLongPress={()=> infoRonda(IDRound,IDBet, item.BetD_MontoF9, item.BetD_MontoB9, item.BetD_Medal, item.BetD_Carry, item.BetD_Match, item.BetD_AdvStrokers)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:25,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
-                              <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                                <View style={{flex:.85}}>
-                                  <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
-                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>*/}
-                                    {/*item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2 + ' ' + item.Player4}</Text>}
-                                    {item.BetD_Player1!=item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' ' + item.Player3 + ' VS '+ item.Player2 + ' ' + item.Player4}</Text>}
-                                    {item.BetD_Player2==item.BetD_Player4 && item.BetD_Player1!=item.BetD_Player3 && <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' ' + item.Player3 + ' VS '+ item.Player2}</Text>}
-                                    {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2==item.BetD_Player4 && <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.Player1 + ' VS '+ item.Player2}</Text>}
-                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>*/}
-                                    {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Handicap Autoajustable: '+ item.handicap + '%'}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
-                                  {/*</View>
-                                </View>
-                              {/*<View style={{flex:.2,padding:5}}>
-                              <View style={{flex:.5}}>
-                                    <Fontisto name={item.tipo=='Copia'?'cloud-down':'cloud-up'} size={30} color={Colors.Primary} />
-                              </View>
-                            </View>*/}
-                              {/*</View>
-                          </TouchableOpacity>*/}
+                    <View style={{flex:0.95,padding:0,paddingHorizontal:0}}>
                         {/*!collapsed3[index]&&*/<Ripple
                           rippleColor={Colors.Secondary}
                           onPress={()=>showSheetView(item, index)}
@@ -746,38 +501,17 @@ export default function RoundsView(props) {
                                     <Text style={{ fontWeight: 'bold', color: rounds[index].BetD_MontoApuestaMedal < 0 ? Colors.Primary : Colors.Black }}>${rounds[index].BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: rounds[index].BetD_MedalInt < 0 ? Colors.Primary : Colors.Black }}>Medal = {rounds[index].BetD_MedalInt}</Text></Text>
                                 </View>
                             </View>
-                            {/*<View style={[styles.bottomButtom,{flex:0.1, margin:10}]}>
-                              <DragonButton title={Dictionary.update[language]} onPress={()=> this.finalizar()} />
-                            </View>*/}
                         </View>
-                          {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
-                          <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
-                            <FontAwesome name={'edit'} size={30} color={Colors.White} />
-                          </TouchableOpacity>
-                          <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id, item.tipo)}>
-                            <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
-                          </TouchableOpacity>
-                          </View>*/}
                       </Ripple>}
                           </View>
                     </View>
               }
               keyExtractor={item=>item.id}
-              //ListHeaderComponent={renderHeader}
-              /*ListEmptyComponent={
-              <ListEmptyComponent
-                text={Dictionary.emptyBets[language]}
-                iconName="money-bill-alt"
-                iconFamily='font-awesome'
-              />
-            }*/
-            stopLeftSwipe={Dimensions.get('window').width * .5}
-            stopRightSwipe={-(Dimensions.get('window').width * .5)}
-            //onSwipeValueChange={this.onSwipeValueChange}
+              stopLeftSwipe={Dimensions.get('window').width * .5}
+              stopRightSwipe={-(Dimensions.get('window').width * .5)}
+              //onSwipeValueChange={this.onSwipeValueChange}
           />
-        
-      </ScrollView>}
-
+        </View>
       </View>
     );
 }

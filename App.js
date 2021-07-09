@@ -117,7 +117,7 @@ export default class App extends Component {
 
     this.state={
       isLandscape,
-      language:'',
+      language:'es',
       logeado:false,
       isLoading:true,
       UsuNombre:'',
