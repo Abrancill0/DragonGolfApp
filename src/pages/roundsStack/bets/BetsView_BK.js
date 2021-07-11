@@ -36,12 +36,10 @@ import moment from 'moment';
 import Collapsible2 from 'react-native-collapsible';
 import BetsViewDetail from './BetsViewDetail';
 import BetsViewDetailTN from './BetsViewDetailTN';
-import styles from './styles';
 
 export default function betsView(route) {
 
     const navigation = useNavigation();
-    const [subebaja, setSubebaja] = useState(true);
     const [rounds2, setRounds2] = useState([]);
     const [rounds3, setRounds3] = useState([]);
     const [bets2, setbets2] = useState([]);
@@ -171,7 +169,7 @@ export default function betsView(route) {
               setStatus(false)
             }
           console.warn('Si entré')
-          //ListadoBets(4)
+          ListadoBets(4)
           AsyncStorage.setItem('arreglo', 'true');
         })
       }
@@ -686,7 +684,7 @@ export default function betsView(route) {
             }
             data={bets2}
             renderItem={({item}) =>
-                        <ScrollView>
+                        <View>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.id,IDRound)}>
                             {item.id == 1 ?
                             <View style={{ flexDirection: 'row' }}>
@@ -719,238 +717,10 @@ export default function betsView(route) {
                             </View>}
                           </TouchableOpacity>
                           {collapsed2[item.id-1]? item.id == 1 ?
-                            <View style={{ flex: 0.5 }}>
-        <TouchableOpacity style={{marginLeft:20, marginTop:5}} onPress={()=> setSubebaja(!subebaja)}>
-          <FontAwesome name={subebaja?'toggle-on':'toggle-off'} size={20} color={Colors.Primary} />
-        </TouchableOpacity>
-        <Spinner
-            visible={carga}
-            color={Colors.Primary} />
-          <View>
-          <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={false}
-                onRefresh={()=>{
-                  ListadoRondas2(1)
-                  setValue1('')
-                  setValue2('')
-                  setValue3('')
-                  setValue4('')
-                }}
-              />
-            }
-            data={rounds2}
-            renderItem={({item, index}) =>
-                            <View style={{flexDirection:'row'}}>
-              {subebaja && <View style={{ flexDirection: 'column', justifyContent: "center"}}>
-                <TouchableOpacity style={{padding:0}} onPress={()=> sube(index)}>
-                    <Entypo name={'chevron-small-up'} size={25} color={Colors.Primary} />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={{padding:0}} onPress={()=> baja(index)}>
-                    <Entypo name={'chevron-small-down'} size={25} color={Colors.Primary} />
-                  </TouchableOpacity>
-              </View>}
-                <View style={styles.betIndexView}>
-                  <Text style={styles.betIndexText}>{rounds2[index].ConsecutivosApuesta}</Text>
-                </View>
-                    <View style={{flex:0.95,padding:0,paddingHorizontal:0}}>
-                        {/*!collapsed3[index]&&*/<Ripple
-                          rippleColor={Colors.Secondary}
-                          onPress={()=>showSheetView(item, index)}
-                        >
-                          <View style={{ flex: 1, margin:0 }}>
-                            <View style={styles.betGeneralInfoView}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={[styles.advInfo, { color: rounds2[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds2[index].BetD_AdvStrokers}] </Text>
-                                    <Text style={styles.vsInfo}> {rounds2[index].Player1} vs {rounds2[index].Player2}</Text>
-                                </View>
-                                <Text style={[styles.profitText, { color: rounds2[index].BetD_MontoPerdidoGanado < 0 ? Colors.Primary : rounds2[index].BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${rounds2[index].BetD_MontoPerdidoGanado}</Text>
-                            </View>
-                            <View style={styles.betInfoView}>
-                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                    <Text style={{ marginRight: 10, color: rounds2[index].BetD_MontoF9 < 0 ? 'red' : Colors.Black }}>${rounds2[index].BetD_MontoF9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>F9:</Text></Text>
-                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
-                                        {
-                                            rounds2[index].f9Presses.map((item, index) => {
-                                                switch (item.replace(' ','')) {
-                                                    case '':
-                                                        return <Text key={'snf9' + index}>_</Text>;
-                                                    case '0':
-                                                        return <Text key={'snf9' + index}>=</Text>;
-                                                    default:
-                                                        return <Text key={'snf9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
-                                                }
-                                            })
-                                        }
-                                    </View>
-                                    <Text style={{ marginRight: 0, color: rounds2[index].BetD_MontoCalculoF9 < 0 ? 'red' : Colors.Black }}>${rounds2[index].BetD_MontoCalculoF9}</Text>
-                                    <View style={{ width: 30 }} />
-                                </View>
-                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                    <Text style={{ marginRight: 10, color: rounds2[index].BetD_MontoB9 < 0 ? 'red' : Colors.Black  }}>${rounds2[index].BetD_MontoB9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>B9:</Text></Text>
-                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
-                                        {
-                                            rounds2[index].b9Presses.map((item, index) => {
-                                                switch (item.replace(' ','')) {
-                                                    case '':
-                                                        return <Text key={'snb9' + index}>_</Text>;
-                                                    case '0':
-                                                        return <Text key={'snb9' + index}>=</Text>;
-                                                    default:
-                                                        return <Text key={'snb9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
-                                                }
-                                            })
-                                        }
-                                    </View>
-                                    <Text style={{ marginRight: 0, color: rounds2[index].BetD_MontoCalculoB9 < 0 ? 'red' : Colors.Black }}>${rounds2[index].BetD_MontoCalculoB9}</Text>
-                                    <View style={{ width: 30, alignItems: 'flex-end' }}>
-                                        <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{/*rounds2[index].BetD_AutoPress ? `${rounds2[index].BetD_AutoPress}P` : ''*/}</Text>
-                                    </View>
-                                </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontSize: 14, textDecorationLine: rounds2[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none', color: rounds2[index].BetD_MachMonto < 0 ? 'red' : Colors.Black   }}>${rounds2[index].BetD_MachMonto} <Text
-                                        style={{
-                                            textDecorationLine: rounds2[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none',
-                                            fontWeight: 'bold',
-                                            color: rounds2[index].BetD_MachInt <0 || rounds2[index].BetD_CarryCalculado !=0 ? Colors.Primary : Colors.Black
-                                        }}>
-                                        Match = {rounds2[index].BetD_CarryCalculado !=0 ? 0 : rounds2[index].BetD_MachInt}
-                                    </Text></Text>
-                                    {rounds2[index].BetD_CarryCalculado !=0 && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
-                                    <Text style={{ fontSize: 14, fontWeight: 'bold', color: rounds2[index].BetD_MontoApuestaMedal < 0 ? Colors.Primary : Colors.Black }}>${rounds2[index].BetD_MontoApuestaMedal} <Text style={{ fontSize: 14, fontWeight: 'bold', color: rounds2[index].BetD_MedalInt < 0 ? Colors.Primary : Colors.Black }}>Medal = {rounds2[index].BetD_MedalInt}</Text></Text>
-                                </View>
-                            </View>
-                        </View>
-                      </Ripple>}
-                          </View>
-                    </View>
-                    }
-              keyExtractor={item=>item.id.toString()}
-            //onSwipeValueChange={this.onSwipeValueChange}
-          />
-        </View>
-      </View>:
-      <View style={{ flex: 0.5 }}>
-        <TouchableOpacity style={{marginLeft:20, marginTop:5}} onPress={()=> setSubebaja(!subebaja)}>
-          <FontAwesome name={subebaja?'toggle-on':'toggle-off'} size={20} color={Colors.Primary} />
-        </TouchableOpacity>
-        <Spinner
-            visible={carga}
-            color={Colors.Primary} />
-
-        <View>
-          <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={false}
-                onRefresh={()=>{
-                  ListadoRondas2(1)
-                  setValue1('')
-                  setValue2('')
-                  setValue3('')
-                  setValue4('')
-                }}
-              />
-            }
-            data={rounds3}
-            renderItem={({item, index}) =>
-                            <View style={{flexDirection:'row'}}>
-                {subebaja && <View style={{ flexDirection: 'column', justifyContent: "center"}}>
-                <TouchableOpacity style={{padding:0}} onPress={()=> sube(index)}>
-                    <Entypo name={'chevron-small-up'} size={25} color={Colors.Primary} />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={{padding:0}} onPress={()=> baja(index)}>
-                    <Entypo name={'chevron-small-down'} size={25} color={Colors.Primary} />
-                  </TouchableOpacity>
-              </View>}
-                <View style={styles.betIndexView}>
-                  <Text style={styles.betIndexText}>{rounds3[index].ConsecutivosApuesta}</Text>
-                </View>
-                    <View style={{flex:0.95,padding:0,paddingHorizontal:0}}>
-                        {/*!collapsed3[index]&&*/<Ripple
-                          rippleColor={Colors.Secondary}
-                          onPress={()=>showSheetView(item, index)}
-                        >
-                          <View style={{ flex: 1, margin:0 }}>
-                            <View style={styles.betGeneralInfoView}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={[styles.advInfo, { color: rounds3[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds3[index].BetD_AdvStrokers}] </Text>
-                                    {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds3[index].Player1} {rounds3[index].Player3} vs {rounds3[index].Player2} {rounds3[index].Player4}</Text>}
-                                    {item.BetD_Player1!=item.BetD_Player3 && item.BetD_Player2!=item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds3[index].Player1} {rounds3[index].Player3} vs {rounds3[index].Player2} {rounds3[index].Player4}</Text>}
-                                    {item.BetD_Player2==item.BetD_Player4 && item.BetD_Player1!=item.BetD_Player3 && <Text style={styles.vsInfo}> {rounds3[index].Player1} {rounds3[index].Player3} vs {rounds3[index].Player2} {rounds3[index].Player4}</Text>}
-                                    {item.BetD_Player1==item.BetD_Player3 && item.BetD_Player2==item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds3[index].Player1} {rounds3[index].Player3} vs {rounds3[index].Player2} {rounds3[index].Player4}</Text>}
-                                </View>
-                                <Text style={[styles.profitText, { color: rounds3[index].BetD_MontoPerdidoGanado < 0 ? Colors.Primary : rounds3[index].BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${rounds3[index].BetD_MontoPerdidoGanado}</Text>
-                            </View>
-                            <View style={styles.betInfoView}>
-                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                    <Text style={{ marginRight: 10, color: rounds3[index].BetD_MontoF9 < 0 ? 'red' : Colors.Black }}>${rounds3[index].BetD_MontoF9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>F9:</Text></Text>
-                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
-                                        {
-                                            rounds3[index].f9Presses.map((item, index) => {
-                                                switch (item.replace(' ','')) {
-                                                    case '':
-                                                        return <Text key={'snf9' + index}>_</Text>;
-                                                    case '0':
-                                                        return <Text key={'snf9' + index}>=</Text>;
-                                                    default:
-                                                        return <Text key={'snf9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
-                                                }
-                                            })
-                                        }
-                                    </View>
-                                    <Text style={{ marginRight: 0, color: rounds3[index].BetD_MontoCalculoF9 < 0 ? 'red' : Colors.Black }}>${rounds3[index].BetD_MontoCalculoF9}</Text>
-                                    <View style={{ width: 30 }} />
-                                </View>
-                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                                    <Text style={{ marginRight: 10, color: rounds3[index].BetD_MontoB9 < 0 ? 'red' : Colors.Black  }}>${rounds3[index].BetD_MontoB9} <Text style={{ fontWeight: 'bold', color:Colors.Black }}>B9:</Text></Text>
-                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
-                                        {
-                                            rounds3[index].b9Presses.map((item, index) => {
-                                                switch (item.replace(' ','')) {
-                                                    case '':
-                                                        return <Text key={'snb9' + index}>_</Text>;
-                                                    case '0':
-                                                        return <Text key={'snb9' + index}>=</Text>;
-                                                    default:
-                                                        return <Text key={'snb9' + index} style={{ color: item < 0 ? Colors.Primary : Colors.Black }}>{item}</Text>;
-                                                }
-                                            })
-                                        }
-                                    </View>
-                                    <Text style={{ marginRight: 0, color: rounds3[index].BetD_MontoCalculoB9 < 0 ? 'red' : Colors.Black }}>${rounds3[index].BetD_MontoCalculoB9}</Text>
-                                    <View style={{ width: 30, alignItems: 'flex-end' }}>
-                                        <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{/*rounds3[index].BetD_AutoPress ? `${rounds3[index].BetD_AutoPress}P` : ''*/}</Text>
-                                    </View>
-                                </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={{ textDecorationLine: rounds3[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none', color: rounds3[index].BetD_MachMonto < 0 ? 'red' : Colors.Black   }}>${rounds3[index].BetD_MachMonto} <Text
-                                        style={{
-                                            textDecorationLine: rounds3[index].BetD_CarryCalculado !=0 ? 'line-through' : 'none',
-                                            fontWeight: 'bold',
-                                            color: rounds3[index].BetD_MachInt && rounds3[index].BetD_CarryCalculado !=0 ? Colors.Primary : Colors.Black
-                                        }}>
-                                        Match = {rounds3[index].BetD_CarryCalculado !=0 ? 0 : rounds3[index].BetD_MachInt}
-                                    </Text></Text>
-                                    {rounds3[index].BetD_CarryCalculado !=0 && <Text style={{ fontSize: 10, color: Colors.Primary, alignSelf: 'center' }}>Carry・ON</Text>}
-                                    <Text style={{ fontWeight: 'bold', color: rounds3[index].BetD_MontoApuestaMedal < 0 ? Colors.Primary : Colors.Black }}>${rounds3[index].BetD_MontoApuestaMedal} <Text style={{ fontWeight: 'bold', color: rounds3[index].BetD_MedalInt < 0 ? Colors.Primary : Colors.Black }}>Medal = {rounds3[index].BetD_MedalInt}</Text></Text>
-                                </View>
-                            </View>
-                        </View>
-                      </Ripple>}
-                          </View>
-                    </View>
-                    }
-              keyExtractor={item=>item.id.toString()}
-              stopLeftSwipe={Dimensions.get('window').width * .5}
-              stopRightSwipe={-(Dimensions.get('window').width * .5)}
-              //onSwipeValueChange={this.onSwipeValueChange}
-          />
-        </View>
-      </View>
+                            <BetsViewDetail rounds2={rounds2} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />:
+                            <BetsViewDetailTN rounds2={rounds3} collapsedD={collapsedArray} collapsedArrayD={collapsedArray} IDBet={item.id} IDRound={IDRound} language={language} />
                           :null}
-                    </ScrollView>
+                    </View>
               }
               keyExtractor={item=>item.id.toString()}
               ListEmptyComponent={

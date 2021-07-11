@@ -395,7 +395,7 @@ export default function RoundsView(props) {
     } = Dictionary;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 0.5 }}>
         <TouchableOpacity style={{marginLeft:20, marginTop:5}} onPress={()=> setSubebaja(!subebaja)}>
           <FontAwesome name={subebaja?'toggle-on':'toggle-off'} size={20} color={Colors.Primary} />
         </TouchableOpacity>
@@ -403,7 +403,7 @@ export default function RoundsView(props) {
             visible={carga}
             color={Colors.Primary} />
 
-        <View style={{ flex:0.5}}>
+        <View>
           <FlatList
             refreshControl={
               <RefreshControl
@@ -506,7 +506,7 @@ export default function RoundsView(props) {
                           </View>
                     </View>
               }
-              keyExtractor={item=>item.id}
+              keyExtractor={item=>item.id.toString()}
               stopLeftSwipe={Dimensions.get('window').width * .5}
               stopRightSwipe={-(Dimensions.get('window').width * .5)}
               //onSwipeValueChange={this.onSwipeValueChange}
