@@ -692,7 +692,7 @@ class SNBetView extends Component {
     return true;
   }
 
-  submit = () => {
+  submit = async () => {
     const {
         useFactor,
         front9,
@@ -747,6 +747,7 @@ class SNBetView extends Component {
               message: successSaveTeeData[this.state.language],
               type: 'success',
             });
+            AsyncStorage.setItem('arreglo', 'false');
             this.props.navigation.goBack()
           }
           else{

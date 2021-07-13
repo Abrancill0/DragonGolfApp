@@ -67,7 +67,23 @@ export default function betsView(route) {
     const ScreenWidth = Dimensions.get("window").width;
         useEffect(() => {
           ListadoBets();
+          const unsubscribe = navigation.addListener("focus", () => {
+            ListadoBets();
+          });
+
+        return unsubscribe;
+        Dimensions.addEventListener('change', (dimensions) => {
+          console.warn('Adios')
+          cambia()
+        });
       }, []);
+
+
+  async function cambia() {
+      console.warn('Hola')
+      AsyncStorage.setItem('arreglo', 'false');
+      //ListadoBets()
+  }
 
   async function ListadoBets() {
       setCollapsed([])
@@ -77,14 +93,17 @@ export default function betsView(route) {
       let IDUsuario = await AsyncStorage.getItem('usu_id')
       let sn = await AsyncStorage.getItem('sn')
       let tn = await AsyncStorage.getItem('tn')
+      let arreglo = await AsyncStorage.getItem('arreglo')
       sn=sn=='true'?true:false
       tn=tn=='true'?true:false
+      arreglo=arreglo=='true'?true:false
       collapsedArray2[0]=sn
       collapsedArray2[1]=tn
       setCollapsed2(collapsedArray2)
       setIDRound(IDRound)
       setLanguage(language)
-      setbets2([])
+      if(!arreglo){
+        setbets2([])
       setStatus(true)
       setRounds2([])
       ListadoDetalleApuesta(IDRound,1, IDUsuario)
@@ -215,24 +234,67 @@ export default function betsView(route) {
                                 ))
                                 setbets2(list.reverse())
                                 setStatus(false)
+                                AsyncStorage.setItem('arreglo', 'true');
                             }
                             else{
                               setbets2([])
                               setStatus(false)
+                              AsyncStorage.setItem('arreglo', 'true');
                             }
                         })
                 }
                 else{
                   setRounds3([])
-                  setStatus(false)
+                  ListaApuesta()
+                        .then((res) => {
+                          ////console.warn(res)
+                            if(res.estatus == 1){
+                                const list = res.Result.map(item => (
+                                    {
+                                      id: item.IDBet,
+                                      nombre: item.Bet_Nombre,
+                                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
+                                    }
+                                ))
+                                setbets2(list.reverse())
+                                setStatus(false)
+                                AsyncStorage.setItem('arreglo', 'true');
+                            }
+                            else{
+                              setbets2([])
+                              setStatus(false)
+                              AsyncStorage.setItem('arreglo', 'true');
+                            }
+                        })
                 }
               })
               }
               else{
                 setRounds2([])
-                setStatus(false)
+                ListaApuesta()
+                        .then((res) => {
+                          ////console.warn(res)
+                            if(res.estatus == 1){
+                                const list = res.Result.map(item => (
+                                    {
+                                      id: item.IDBet,
+                                      nombre: item.Bet_Nombre,
+                                      fecha: moment(item.Bet_FechaCreacion).format('DD/MM/YYYY').toString()
+                                    }
+                                ))
+                                setbets2(list.reverse())
+                                setStatus(false)
+                                AsyncStorage.setItem('arreglo', 'true');
+                            }
+                            else{
+                              setbets2([])
+                              setStatus(false)
+                              AsyncStorage.setItem('arreglo', 'true');
+                            }
+                        })
               }
-            })
+          })
+      }
   }
 
   function searchFilterFunction(text,busqueda){
@@ -386,7 +448,7 @@ export default function betsView(route) {
                 )
                 break;
             case 2:
-                navigation.navigate('SNBetViewEdit',{IDBet:IDBet, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, BetD_AutoPress:item.BetD_AutoPress})
+                navigation.navigate('SNBetViewEdit',{IDBet:1, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, BetD_AutoPress:item.BetD_AutoPress})
                 break;
             /*case 2:
                 item.manual_press = manualPress + 1;
@@ -571,7 +633,7 @@ export default function betsView(route) {
                 )
                 break;
             case 2:
-                navigation.navigate('TNBetViewEdit',{IDBet:IDBet, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, Player3:item.BetD_Player3, Player4:item.BetD_Player4, BetD_AutoPress:item.BetD_AutoPress, set_tmw_adv_strokes:item.set_tmw_adv_strokes})
+                navigation.navigate('TNBetViewEdit',{IDBet:2, IDRound:IDRound, IDBetDetail: item.id, BetD_MontoF9:item.BetD_MontoF9, BetD_MontoB9:item.BetD_MontoB9, BetD_Medal:item.BetD_Medal, BetD_Carry:item.BetD_Carry, BetD_Match:item.BetD_Match, BetD_AdvStrokers:item.BetD_AdvStrokers, Player1:item.BetD_Player1, Player2:item.BetD_Player2, Player3:item.BetD_Player3, Player4:item.BetD_Player4, BetD_AutoPress:item.BetD_AutoPress, set_tmw_adv_strokes:item.set_tmw_adv_strokes})
                 break;
             /*case 2:
                 item.manual_press = manualPress + 1;
@@ -645,6 +707,7 @@ export default function betsView(route) {
       .then((res) => {
         console.warn(res)
         if(res.estatus == 1){
+          AsyncStorage.setItem('arreglo', 'false');
           ListadoBets()
           //ListadoRondas2(3, index)
         }
