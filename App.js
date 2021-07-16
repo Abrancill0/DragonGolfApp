@@ -694,8 +694,8 @@ export default class App extends Component {
             activeOpacity={0.8}
             onPress={() => this.closeSesion(props)}
             style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
-              <View style={{flex:.1, color:'white'}}>
-                  <Text>8.3</Text>
+              <View style={{flex:.1}}>
+                  <Text style={{color:'white'}}>8.3</Text>
               </View>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>
