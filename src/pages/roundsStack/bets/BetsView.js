@@ -70,12 +70,11 @@ export default function betsView(route) {
           const unsubscribe = navigation.addListener("focus", () => {
             ListadoBets();
           });
-
+          Dimensions.addEventListener('change', (dimensions) => {
+            console.warn('Adios')
+            cambia()
+          });
         return unsubscribe;
-        Dimensions.addEventListener('change', (dimensions) => {
-          console.warn('Adios')
-          cambia()
-        });
       }, []);
 
 
@@ -108,7 +107,7 @@ export default function betsView(route) {
       setRounds2([])
       ListadoDetalleApuesta(IDRound,1, IDUsuario)
           .then((res) => {
-            ////console.warn(res)
+            console.warn(res)
               if(res.estatus == 1){
                   const list = res.Result.map(item => (
                       {
