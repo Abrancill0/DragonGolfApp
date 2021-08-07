@@ -6,13 +6,24 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../../utils/Colors';
 import HistoryComponent from './HistoryComponent';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Historia } from '../../../Services/Services'
+import { Historia, HistoriaFilter } from '../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
+import { TextField } from 'react-native-material-textfield';
+import Entypo from 'react-native-vector-icons/Entypo';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DragonButton from '../../global/DragonButton';
 
 class HistoryScreen extends Component {
     constructor(props) {
         super(props);
+
+
+        
+        let pickerDate = moment().toDate();
+        let pickerTextDateInicio = moment().format('DD/MM/YYYY');
+        let pickerTextDateFin = moment().format('DD/MM/YYYY');
+        let pickerTextDate2 = moment().format('YYYY-MM-DD');
 
         this.state = {
             landscape: Dimensions.get('window').width > Dimensions.get('window').height,
@@ -20,7 +31,16 @@ class HistoryScreen extends Component {
             topToBottomPlayer: null,
             topToBottomCourse: null,
             language: 'es',
-            history:[]
+            history:[],
+            editDate: false,
+            editDateInicio: false,
+            editDateFin: false,
+            pickerDate,
+            pickerTextDateInicio,
+            pickerTextDateFin,
+            pickerTextDate2,
+            showDatePickerInicio: false,
+            showDatePickerFin: false
         };
 
         let playerId = props.route.params.playerId
@@ -85,6 +105,227 @@ class HistoryScreen extends Component {
         })
     }
 
+    submit = async () => {
+        const token = await AsyncStorage.getItem('usu_id')
+        const language = await AsyncStorage.getItem('language')
+        this.setState({
+          language:language
+        })
+        HistoriaFilter(token,this.props.route.params.playerId,this.state.pickerTextDateInicio,this.state.pickerTextDateFin)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 1){
+                var suma = res.Result.reduce((obj, data) => {
+                  obj += parseFloat(data.GanadoPerdido);
+                  return obj;
+                }, 0);
+                console.warn(suma)
+                const list = res.Result.map(item => (
+                    {
+                      //id: item.IDBet,
+                      course_name: item.Campo,
+                      money: item.GanadoPerdido,
+                      played_hp: item.Stroke,
+                      next_hp: item.StrokeSiguiente,
+                      date: moment(item.Fecha).format('DD/MM/YYYY').toString()
+                    }
+                ))
+                this.total = suma
+                this.setState({
+                    history: list
+                })
+                /*for (var i = 0; i<=list.length - 1; i++) {
+                    collapsedArray2.push(false)
+                  }*/
+                  //setCollapsed2(collapsedArray2)
+                //setArrayholder(list)
+            }
+            else{
+              this.total = 0
+              this.setState({
+                    history: []
+                })
+            }
+        })
+    }
+
+    onChangeDateInicio = (date) => {
+    console.warn('Inicio')
+
+    const {
+      roundName,
+      selectedButton,
+      holeNumber,
+      switchAdv
+    } = this.state;
+
+    if (Platform.OS === 'android') {
+      if (date.type === 'set') {
+        const { timestamp } = date.nativeEvent;
+        this.setState({
+          pickerDate: moment.unix(timestamp / 1000).toDate(),
+          pickerTextDateInicio: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
+          pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+          date: this.formatDate(timestamp / 1000),
+          showDatePickerInicio: false,
+          editDateInicio: false,
+          roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000)
+
+        });
+
+        this.refs.fechaInicio.setValue(this.state.pickerTextDateInicio)
+
+        /*const roundData = {
+          id: this.props.roundId,
+          name: roundName,
+          course_id: this.props.course.id,
+          date: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+          hcp_adjustment: this.hcpAdjustment[selectedButton],
+          online_key: '',
+          starting_hole: holeNumber,
+          adv_b9_f9: switchAdv ? 1 : 0,
+          id_sync: '',
+          ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+        }
+
+        this.props.updateRound(roundData);*/
+      }
+      this.setState({ showDatePickerInicio: false, editDateInicio: false });
+    }
+
+    if (Platform.OS === 'ios') {
+      const { nativeEvent: { timestamp } } = date;
+
+      this.setState({
+        pickerTextDateInicio: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
+        pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+        pickerDate: moment.unix(timestamp / 1000).toDate(),
+        date: this.formatDate(timestamp / 1000),
+        roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000)
+        });
+
+      this.setState({ showDatePickerInicio: false, editDateInicio: false });
+      //this.refs.fecha.setValue(this.state.pickerTextDate)
+
+      /*const roundData = {
+        id: this.props.roundId,
+        name: roundName,
+        course_id: this.props.course.id,
+        date: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+        hcp_adjustment: this.hcpAdjustment[selectedButton],
+        online_key: '',
+        starting_hole: holeNumber,
+        adv_b9_f9: switchAdv ? 1 : 0,
+        id_sync: '',
+        ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+      }
+
+      this.props.updateRound(roundData);*/
+    }
+  }
+
+    onChangeDateFin = (date) => {
+    console.warn('Fin')
+
+    const {
+      roundName,
+      selectedButton,
+      holeNumber,
+      switchAdv
+    } = this.state;
+
+    if (Platform.OS === 'android') {
+      if (date.type === 'set') {
+        const { timestamp } = date.nativeEvent;
+        this.setState({
+          pickerDate: moment.unix(timestamp / 1000).toDate(),
+          pickerTextDateFin: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
+          pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+          date: this.formatDate(timestamp / 1000),
+          showDatePickerFin: false,
+          editDateFin: false,
+          roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000)
+
+        });
+
+        this.refs.fechaFin.setValue(this.state.pickerTextDateFin)
+
+        /*const roundData = {
+          id: this.props.roundId,
+          name: roundName,
+          course_id: this.props.course.id,
+          date: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+          hcp_adjustment: this.hcpAdjustment[selectedButton],
+          online_key: '',
+          starting_hole: holeNumber,
+          adv_b9_f9: switchAdv ? 1 : 0,
+          id_sync: '',
+          ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+        }
+
+        this.props.updateRound(roundData);*/
+      }
+      this.setState({ showDatePickerFin: false, editDateFin: false });
+    }
+
+    if (Platform.OS === 'ios') {
+      const { nativeEvent: { timestamp } } = date;
+
+      this.setState({
+        pickerTextDateFin: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
+        pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+        pickerDate: moment.unix(timestamp / 1000).toDate(),
+        date: this.formatDate(timestamp / 1000),
+        roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000)
+        });
+
+      this.setState({ showDatePickerFin: false, editDateFin: false });
+      //this.refs.fecha.setValue(this.state.pickerTextDate)
+
+      /*const roundData = {
+        id: this.props.roundId,
+        name: roundName,
+        course_id: this.props.course.id,
+        date: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+        hcp_adjustment: this.hcpAdjustment[selectedButton],
+        online_key: '',
+        starting_hole: holeNumber,
+        adv_b9_f9: switchAdv ? 1 : 0,
+        id_sync: '',
+        ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+      }
+
+      this.props.updateRound(roundData);*/
+    }
+  }
+
+  formatDate = (timestamp) => {
+    const { language } = this.state;
+    const numMonth = moment.unix(timestamp).format('M');
+    let month = '';
+
+    switch (numMonth) {
+      case '1':
+        month = Dictionary.january[language];
+        break;
+      case '4':
+        month = Dictionary.april[language];
+        break;
+      case '8':
+        month = Dictionary.august[language];
+        break;
+      case '12':
+        month = Dictionary.december[language];
+        break;
+      default:
+        month = moment.unix(timestamp).format('MMM');
+        break;
+    }
+    const day = moment.unix(timestamp).format('DD');
+
+    return `${month} ${day}`;
+  }
+
     render() {
 
         const {
@@ -92,7 +333,15 @@ class HistoryScreen extends Component {
             landscape,
             topToBottomDate,
             topToBottomPlayer,
-            topToBottomCourse
+            topToBottomCourse,
+            editDate,
+            editDateInicio,
+            editDateFin,
+            pickerDate,
+            pickerTextDateInicio,
+            pickerTextDateFin,
+            showDatePickerInicio,
+            showDatePickerFin
         } = this.state;
 
         const {
@@ -104,11 +353,15 @@ class HistoryScreen extends Component {
             debt,
             notes,
             player,
-            history
+            history,
+            dateStart: dateStartText,
+            dateEnd: dateEndText,
+            filter
         } = Dictionary;
 
         return (
             <View style={{ flex: 1 }}>
+            <View style={{ flex: 0.5 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
                     <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
@@ -129,11 +382,11 @@ class HistoryScreen extends Component {
                         </View>
                         <FontAwesome name={topToBottomDate === null ? 'minus' : topToBottomDate ? 'caret-down' : 'caret-up'} color={Colors.Black} size={15} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.headers} onPress={this.sortCourse}>
+                    <TouchableOpacity style={styles.headers} /*onPress={this.sortCourse}*/>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: 3 }}>
                             <Text style={styles.headerText}>{course[language]}</Text>
                         </View>
-                        <FontAwesome name={topToBottomCourse === null ? 'minus' : topToBottomCourse ? 'caret-down' : 'caret-up'} color={Colors.Black} size={15} />
+                        {/*<FontAwesome name={topToBottomCourse === null ? 'minus' : topToBottomCourse ? 'caret-down' : 'caret-up'} color={Colors.Black} size={15} />*/}
                     </TouchableOpacity>
                     {/* <TouchableOpacity style={styles.headers} onPress={this.sortPlayer}>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: 3 }}>
@@ -175,18 +428,108 @@ class HistoryScreen extends Component {
                         />
                     }
                 />
+                </View>
+                {editDate && <View style={{ flex: 0.5 }}>
+                {(!editDateInicio || Platform.OS === 'android') && <View style={{flex:0.5}}>
+              <View style={styles.inputContainer}>
+                <TouchableOpacity onPress={_ => this.setState({ editDateInicio: true, showDatePickerInicio: Platform.OS === 'android' })}>
+                  <TextField
+                    label={dateStartText[language]}
+                    editable={false}
+                    tintColor={Colors.Primary}
+                    autoCapitalize="words"
+                    value={pickerTextDateInicio}
+                    ref='fechaInicio'
+                  />
+                  <View style={styles.editView}>
+                    <Entypo name='edit' size={18} color={Colors.Primary} />
+                  </View>
+                </TouchableOpacity>
+                {showDatePickerInicio &&
+                  <DateTimePicker
+                    value={pickerDate}
+                    mode='date'
+                    display='default'
+                    onChange={this.onChangeDateInicio}
+                  />}
+              </View>
+            </View>}
+
+            {Platform.OS === 'ios' && editDateInicio && <View style={{flex:0.5}}>
+              <View style={[styles.inputContainer, { height: 250 }]}>
+                <TouchableOpacity style={styles.checkView} onPress={_ => this.setState({ editDateInicio: false })}>
+                  <Text style={[styles.titles, { marginBottom: 0 }]}>{dateStartText[language]}</Text>
+                  <Entypo name="check" size={20} color={Colors.Primary} />
+                </TouchableOpacity>
+                <DateTimePicker
+                  value={pickerDate}
+                  mode='date'
+                  display='default'
+                  onChange={this.onChangeDateInicio}
+                  locale={language}
+                />
+              </View>
+            </View>}
+            
+            {(!editDateFin || Platform.OS === 'android') && <View style={{flex:0.5}}>
+              <View style={styles.inputContainer}>
+                <TouchableOpacity onPress={_ => this.setState({ editDateFin: true, showDatePickerFin: Platform.OS === 'android' })}>
+                  <TextField
+                    label={dateEndText[language]}
+                    editable={false}
+                    tintColor={Colors.Primary}
+                    autoCapitalize="words"
+                    value={pickerTextDateFin}
+                    ref='fechaFin'
+                  />
+                  <View style={styles.editView}>
+                    <Entypo name='edit' size={18} color={Colors.Primary} />
+                  </View>
+                </TouchableOpacity>
+                {showDatePickerFin &&
+                  <DateTimePicker
+                    value={pickerDate}
+                    mode='date'
+                    display='default'
+                    onChange={this.onChangeDateFin}
+                  />}
+              </View>
+            </View>}
+
+            {Platform.OS === 'ios' && editDateFin && <View style={{flex:0.5}}>
+              <View style={[styles.inputContainer, { height: 250 }]}>
+                <TouchableOpacity style={styles.checkView} onPress={_ => this.setState({ editDateFin: false })}>
+                  <Text style={[styles.titles, { marginBottom: 0 }]}>{dateEndText[language]}</Text>
+                  <Entypo name="check" size={20} color={Colors.Primary} />
+                </TouchableOpacity>
+                <DateTimePicker
+                  value={pickerDate}
+                  mode='date'
+                  display='default'
+                  onChange={this.onChangeDateFin}
+                  locale={language}
+                />
+              </View>
+            </View>}
+            <View style={[styles.bottomButtom,{flex:0.1, margin:10}]}>
+                    <DragonButton title={filter[language]} onPress={this.submit} />
+                </View>
+            </View>}
             </View>
         )
     }
 
     sortDate = () => {
-        if (!this.state.topToBottomDate) {
-            this.props.history.sort((a, b) => (a.date < b.date) ? 1 : (a.date > b.date) ? -1 : 0);
-            this.setState({ topToBottomDate: true, topToBottomPlayer: null, topToBottomCourse: null });
-        } else {
-            this.props.history.sort((a, b) => (a.date > b.date) ? 1 : (a.date < b.date) ? -1 : 0);
+        this.setState({
+            editDate: true
+        })
+        /*if (this.state.topToBottomDate) {
+            this.state.history.sort((a, b) => (a.date < b.date) ? 1 : (a.date > b.date) ? -1 : 0);
             this.setState({ topToBottomDate: false, topToBottomPlayer: null, topToBottomCourse: null });
-        }
+        } else {
+            this.state.history.sort((a, b) => (a.date > b.date) ? 1 : (a.date < b.date) ? -1 : 0);
+            this.setState({ topToBottomDate: true, topToBottomPlayer: null, topToBottomCourse: null });
+        }*/
     }
 
     sortPlayer = () => {
@@ -201,10 +544,10 @@ class HistoryScreen extends Component {
 
     sortCourse = () => {
         if (!this.state.topToBottomCourse) {
-            this.props.history.sort((a, b) => (a.course_name > b.course_name) ? 1 : (a.course_name < b.course_name) ? -1 : 0);
+            this.state.history.sort((a, b) => (a.course_name > b.course_name) ? 1 : (a.course_name < b.course_name) ? -1 : 0);
             this.setState({ topToBottomDate: null, topToBottomPlayer: null, topToBottomCourse: true });
         } else {
-            this.props.history.sort((a, b) => (a.course_name < b.course_name) ? 1 : (a.course_name > b.course_name) ? -1 : 0);
+            this.state.history.sort((a, b) => (a.course_name < b.course_name) ? 1 : (a.course_name > b.course_name) ? -1 : 0);
             this.setState({ topToBottomDate: null, topToBottomPlayer: null, topToBottomCourse: false });
         }
     }

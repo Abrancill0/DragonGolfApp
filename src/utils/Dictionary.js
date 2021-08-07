@@ -143,6 +143,10 @@ export const Dictionary = {
         'en': 'Create',
         'es': 'Crear'
     },
+    submit: {
+        'en': 'Submit',
+        'es': 'Aceptar'
+    },
     createCourse: {
         'en': 'Create Course',
         'es': 'Crear Campo'
@@ -593,6 +597,10 @@ export const Dictionary = {
         'en': 'Save',
         'es': 'Guardar'
     },
+    Throwballs: {
+        'en': 'Throw Balls',
+        'es': 'Echar Bolas'
+    },
     //===========Save===============
     finish: {
         'en': 'Finish',
@@ -660,6 +668,18 @@ export const Dictionary = {
     roundDate: {
         'en': 'Date of Round',
         'es': 'Fecha de Ronda'
+    },
+    filter: {
+        'en': 'Filter',
+        'es': 'Filtrar'
+    },
+    dateStart: {
+        'en': 'Date Start',
+        'es': 'Fecha de Inicio'
+    },
+    dateEnd: {
+        'en': 'Date End',
+        'es': 'Fecha de Fin'
     },
     FriendsinRound:{
         'en': 'Friends in Round',
@@ -744,9 +764,17 @@ export const Dictionary = {
         'en': 'You cannot select the same player',
         'es': 'No puedes seleccionar el mismo jugador'
     },
+    fewPlayer: {
+        'en': 'Please select more than 1 player',
+        'es': 'Favor de seleccionar más de 1 jugador'
+    },
     samePlayerTN: {
         'en': 'You cannot select the same player on different teams',
         'es': 'No puedes seleccionar el mismo jugador en diferentes equipos'
+    },
+    fewPlayerTN: {
+        'en': 'Please select more than 2 players',
+        'es': 'Favor de seleccionar más de 2 jugadores'
     },
     seeResults: {
         'en': 'See results',

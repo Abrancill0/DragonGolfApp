@@ -284,6 +284,7 @@ class ScoreCardView extends Component {
                             advTotalStrokes={advTotalStrokes}
                             initHole={initHole}
                             switchAdv={switchAdv}
+                            props={this.props}
                         />
                         :
                         <ScoreVerticalComponent
@@ -296,6 +297,7 @@ class ScoreCardView extends Component {
                             advTotalStrokes={advTotalStrokes}
                             initHole={initHole}
                             switchAdv={switchAdv}
+                            props={this.props}
                         />
                     }
                 </ScrollView> : <ListEmptyComponent

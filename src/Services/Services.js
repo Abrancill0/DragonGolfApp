@@ -565,6 +565,8 @@ export const ListaAmigos = (IDUsuario) => {
 
 export const Historia = (IDUsuario1,IDUsuario2) => {
     const URL = RutaBaseAB + "/Historia";
+    const date = new Date();
+    console.warn(date)
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -573,7 +575,50 @@ export const Historia = (IDUsuario1,IDUsuario2) => {
                 },
                 body: JSON.stringify({
                     IDUsuario1: IDUsuario1,
-                    IDUsuario2: IDUsuario2
+                    IDUsuario2: IDUsuario2,
+                    FechaInicio: '01/01/2020',
+                    FechaFin: date
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const HistoriaFilter = (IDUsuario1,IDUsuario2,dateInicio,dateFin) => {
+    console.warn(dateInicio)
+    console.warn(dateFin)
+    const URL = RutaBaseAB + "/Historia";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario1: IDUsuario1,
+                    IDUsuario2: IDUsuario2,
+                    FechaInicio: dateInicio,
+                    FechaFin: dateFin
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const CambioVentaja = (idDBetDetail) => {
+    const URL = RutaBaseAB + "/CambioVentaja";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDBetDetail: idDBetDetail
                 }),
             })
             .then((response) => response.json())

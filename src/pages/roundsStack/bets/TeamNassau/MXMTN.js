@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, Switch, Alert, Platform, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import {Picker} from '@react-native-picker/picker';
+import MultiSelect from 'react-native-multiple-select';
 import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
@@ -17,7 +18,7 @@ const {
   useFactor: useFactorText,
   error,
   successSaveTeeData,
-  samePlayer,
+  fewPlayerTN,
   Manually,
   OverrideAdv,
   auto,
@@ -97,7 +98,8 @@ class SNBetView extends Component {
       language: '',
       players: [],
       IDBet:this.props.route.params.IDBet,
-      IDRound:this.props.route.params.IDRound
+      IDRound:this.props.route.params.IDRound,
+      selectedItems : []
     };
 
     this.playerSettings = [];
@@ -113,6 +115,10 @@ class SNBetView extends Component {
   componentDidMount() {
     this.ListadoTodos()
   }
+
+  onSelectedItemsChange = selectedItems => {
+    this.setState({ selectedItems });
+  };
 
   render() {
 
@@ -153,6 +159,8 @@ class SNBetView extends Component {
             <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.CreateBet[language]}</Text>
           </View>
         </View>
+
+        {/*
 
           <View style={styles.betField}>
             <View style={styles.useFactorView}>
@@ -320,22 +328,33 @@ class SNBetView extends Component {
             </View>
           </View>
 
+        */}
+
           <View style={{ height: 20 }} />
-          <View style={styles.pickerView}>
             <View style={{ flex: 1 }}>
-              <Picker
-                mode="dropdown"
-                selectedValue={playerA}
-                onValueChange={(playerA) => this.onChangeSwitch(playerA, 'A')}
-              >
-                {
-                  players.map(player =>
-                    <Picker.Item key={player.id} label={player.nickname} value={player.id} />
-                  )
-                }
-              </Picker>
+            <MultiSelect
+              hideTags
+              items={players}
+              uniqueKey="id"
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={this.state.selectedItems}
+              selectText="Pick Items"
+              searchInputPlaceholderText="Search Items..."
+              onChangeInput={ (text)=> console.log(text)}
+              altFontFamily="ProximaNova-Light"
+              tagRemoveIconColor="#CCC"
+              tagBorderColor="#CCC"
+              tagTextColor="#CCC"
+              selectedItemTextColor="#CCC"
+              selectedItemIconColor="#CCC"
+              itemTextColor="#000"
+              displayKey="name"
+              searchInputStyle={{ color: '#CCC' }}
+              submitButtonColor="#CCC"
+              submitButtonText="Submit"
+            />
             </View>
-            <View style={{ flex: 1, marginLeft: Platform.OS === 'android' && 30 }}>
+            {/*<View style={{ flex: 1, marginLeft: Platform.OS === 'android' && 30 }}>
               <Picker
                 mode="dropdown"
                 selectedValue={playerB}
@@ -350,8 +369,7 @@ class SNBetView extends Component {
             </View>
             <View style={{ position: 'absolute' }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}>VS</Text>
-            </View>
-          </View>
+            </View>*/}
 
         </ScrollView>
 
@@ -359,9 +377,9 @@ class SNBetView extends Component {
           <DragonButton title={save[language]} onPress={this.submit} />
         </View>
 
-        <View style={styles.bottomButtom}>
-          <DragonButton title={'M & M'} onPress={this.mxm} />
-        </View>
+        {/*<View style={styles.bottomButtom}>
+          <DragonButton title={'M & M'} onPress={this.submit} />
+        </View>*/}
 
       </KeyboardAvoidingView>
     );
@@ -403,7 +421,8 @@ class SNBetView extends Component {
                 const list = res.Result.map(item => (
                     {
                       id: item.PlayerId,
-                      nickname: item.usu_nickname
+                      nickname: item.usu_nickname,
+                      name: item.usu_nickname
                     }
                 ))
 
@@ -707,125 +726,77 @@ class SNBetView extends Component {
     return true;
   }
 
-  mxm = async () => {
-    this.props.navigation.navigate('MXM',{IDBet:this.state.IDBet, IDRound:this.state.IDRound});
-  }
-
   submit = async () => {
-    const {
-        useFactor,
-        front9,
-        back9,
-        match,
-        carry,
-        medal,
-        autoPress,
-        override,
-        advStrokes,
-        playerA,
-        playerB,
-        IDRound,
-        IDBet
-      } = this.state;
-    console.warn('----------------------------------')
-    console.warn(IDBet)
-    console.warn(IDRound)
-    console.warn(front9)
-    console.warn(back9)
-    console.warn(match)
-    console.warn(carry)
-    console.warn(medal)
-    console.warn(autoPress)
-    console.warn(override)
-    console.warn(advStrokes)
-    console.warn(playerA)
-    console.warn(playerB)
-    console.warn('----------------------------------')
-    let back9UF = useFactor ? (front9 * back9).toString() : back9.toString()
-    let matchUF = useFactor ? (front9 * match).toString() : match.toString()
-    let carryUF = useFactor ? (front9 * carry).toString() : carry.toString()
-    let medalUF = useFactor ? (front9 * medal).toString() : medal.toString()
-    console.warn(back9UF)
-    console.warn(matchUF)
-    console.warn(carryUF)
-    console.warn(medalUF)
-    if(playerA == playerB){
+
+    if(this.state.selectedItems.length<3){
       showMessage({
-        message: samePlayer[this.state.language],
+        message: fewPlayerTN[this.state.language],
         type: 'warning',
       });
     }
-    else{
-      this.setState({
-        carga:true
-      })
-      CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
-        .then((res) => {
-          console.warn(res)
-          if(res.estatus == 1){
-            showMessage({
-              message: successSaveTeeData[this.state.language],
-              type: 'success',
-            });
-            this.setState({
-              carga:false
-            })
-            AsyncStorage.setItem('arreglo', 'false');
-            this.props.navigation.goBack()
-          }
-          else{
-            this.setState({
-              carga:false
-            })
-            showMessage({
-              message: error[this.state.language],
-              type: 'danger',
-            });
-          }
-        })
-    }
-    /*if (this.fieldValidations()) {
-      const {
-        useFactor,
-        front9,
-        back9,
-        match,
-        carry,
-        medal,
-        autoPress,
-        override,
-        advStrokes,
-        playerA,
-        playerB
-      } = this.state;
+    else{/*
 
-      const indexA = this.props.players.findIndex(item => item.id === playerA);
-      const indexB = this.props.players.findIndex(item => item.id === playerB);
+      console.warn(this.state.selectedItems)
 
-      const SNBet = {
-        id: this.betId,
-        round_id: this.props.roundId,
-        member_a_id: playerA,
-        member_b_id: playerB,
-        member_a: this.props.players[indexA].nick_name,
-        member_b: this.props.players[indexB].nick_name,
-        automatic_press_every: autoPress ? autoPress : '0',
-        use_factor: useFactor ? 1 : 0,
-        front_9: front9 ? front9 : '0',
-        back_9: back9 ? useFactor ? back9 * front9 : back9 : '0',
-        match: match ? useFactor ? match * front9 : match : '0',
-        carry: carry ? useFactor ? carry * front9 : carry : '0',
-        medal: medal ? useFactor ? medal * front9 : medal : '0',
-        adv_strokes: advStrokes ? advStrokes : '0',
-        manually_override_adv: override ? 1 : 0,
-        manually_adv_strokes: advStrokes ? advStrokes : '0',
-        manual_press: this.manualPress,
-        id_sync: '',
-        ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+      var pairs = new Array(),
+
+      pos = 0;
+
+      for (var i = 0; i < this.state.selectedItems.length; i++) {
+
+          for (var j = 0; j < this.state.selectedItems.length; j++) {
+
+            if(i!=j){
+              console.warn(pairs)
+              var element = [this.state.selectedItems[i], this.state.selectedItems[j]];
+              var element2 = [this.state.selectedItems[j], this.state.selectedItems[i]];
+              console.warn(element)
+              console.warn(element2)
+              let pos2 = pairs.indexOf(element.toString())
+              let pos3 = pairs.indexOf(element2.toString())
+              console.warn(pos2)
+              console.warn(pos3)
+
+              if(pos2 == pos3){
+                pairs[pos++] = [this.state.selectedItems[i], this.state.selectedItems[j]].toString();
+                let playerA = this.state.selectedItems[i];
+                let playerB = this.state.selectedItems[j];
+                ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
+                .then((res) => {
+                  console.warn(res)
+                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
+                  .then((res) => {
+                    console.warn(res)
+                    if(res.estatus == 1){
+                      showMessage({
+                        message: successSaveTeeData[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:false
+                      })
+                      //AsyncStorage.setItem('arreglo', 'false');
+                      //this.props.navigation.goBack()
+                    }
+                    else{
+                      this.setState({
+                        carga:false
+                      })
+                      showMessage({
+                        message: error[this.state.language],
+                        type: 'danger',
+                      });
+                    }
+                  })
+                })
+              }
+            }
+          }
       }
 
-      this.props.saveSNBet(SNBet);
-    }*/
+      AsyncStorage.setItem('arreglo', 'false');
+      this.props.navigation.navigate('BetsView')
+    */}
   }
 }
 

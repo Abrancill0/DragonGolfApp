@@ -29,6 +29,8 @@ import BetsView from './src/pages/roundsStack/bets/BetsView'
 import More from './src/pages/roundsStack/more/MoreView'
 import ScoreCardView from './src/pages/roundsStack/more/ScoreCardView'
 import SNScoreCardView from './src/pages/roundsStack/bets/SingleNassau/ScoreCardView'
+import MXM from './src/pages/roundsStack/bets/SingleNassau/MXM'
+import MXMTN from './src/pages/roundsStack/bets/TeamNassau/MXMTN'
 import TNScoreCardView from './src/pages/roundsStack/bets/TeamNassau/ScoreCardView'
 import SummaryView from './src/pages/roundsStack/bets/SummaryView'
 import BetsViewDetail from './src/pages/roundsStack/bets/BetsViewDetail'
@@ -695,7 +697,7 @@ export default class App extends Component {
             onPress={() => this.closeSesion(props)}
             style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
               <View style={{flex:.1}}>
-                  <Text style={{color:'white'}}>8.3</Text>
+                  <Text style={{color:'white'}}>8.5</Text>
               </View>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>
@@ -1143,6 +1145,30 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='SNScoreCardView' component={SNScoreCardView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='MXM' component={MXM}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='MXMTN' component={MXMTN}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

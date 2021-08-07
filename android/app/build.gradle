@@ -132,8 +132,8 @@ android {
         applicationId "com.dragongolfapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 83
-        versionName "8.3"
+        versionCode 85
+        versionName "8.5"
         multiDexEnabled true
     }
     splits {

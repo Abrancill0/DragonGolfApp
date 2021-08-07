@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import styles from './styles2';
 import { Dictionary } from '../../../../utils/Dictionary';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../../../utils/Colors';
 import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import AsyncStorage from '@react-native-community/async-storage';
+import { CambioVentaja } from '../../../../Services/Services'
 
 export default class ScoreVerticalComponent extends Component {
     constructor(props) {
@@ -49,7 +50,8 @@ export default class ScoreVerticalComponent extends Component {
             ScoreOutGP:[],
             TeeColor:[],
             TeeNumberF:[],
-            TeeNumberB:[]
+            TeeNumberB:[],
+            switchAdv: false
         };
     }
 
@@ -575,6 +577,33 @@ export default class ScoreVerticalComponent extends Component {
         })
     }
 
+    onChangeSwitchAdv = (switchAdv) => {
+    this.setState({ switchAdv });
+
+    CambioVentaja(this.state.id)
+    .then((res) => {
+        console.warn(res)
+        AsyncStorage.setItem('arreglo', 'false');
+      this.props.props.navigation.navigate('BetsView')
+    })
+
+    /*const roundData = {
+      id: this.props.roundId,
+      name: roundName,
+      course_id: this.props.course.id,
+      date: moment.unix(pickerDate / 1000).format('YYYY-MM-DD'),
+      hcp_adjustment: this.hcpAdjustment[selectedButton],
+      online_key: '',
+      starting_hole: holeNumber,
+      adv_b9_f9: switchAdv ? 1 : 0,
+      id_sync: '',
+      ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+    }
+
+    this.props.updateRound(roundData);
+    //this.props.setSwitchAdv(switchAdv);*/
+  }
+
     render() {
 
         const {
@@ -597,7 +626,8 @@ export default class ScoreVerticalComponent extends Component {
             teeParf9,
             teeParb9,
             TeeNumberF,
-            TeeNumberB
+            TeeNumberB,
+            switchAdv
         } = this.state;
 
         const {
@@ -615,6 +645,24 @@ export default class ScoreVerticalComponent extends Component {
         return (
             b9H.length!=0 &&
             <View style={{ flex: 1 }}>
+            <View style={{ flex: 0.1 }}>
+              <View style={{ height: 5 }} />
+              <View style={styles.formContainer}>
+                <View style={styles.inputContainer}>
+                  <View style={styles.switchView}>
+                    <TouchableOpacity style={{width: '80%'}} /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.switchAdv })}*/>
+                      <Text style={styles.question} numberOfLines={2}>Switch Adv B9/F9 <Text style={{ color: Colors.Primary }}>?</Text></Text>
+                    </TouchableOpacity>
+                    <Switch
+                      value={switchAdv}
+                      thumbColor={switchAdv ? Colors.Primary : Colors.Primary}
+                      trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                      onValueChange={this.onChangeSwitchAdv}
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
                 {teesf9.map((item,index) =>
                     <View style={styles.holeHeader}>
                     <View style={styles.holeTextView}>

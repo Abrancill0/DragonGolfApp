@@ -13,6 +13,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { ButtonGroup } from 'react-native-elements';
 
 const {
+  Throwballs,
   save,
   useFactor: useFactorText,
   error,
@@ -122,6 +123,10 @@ class TNBetView extends Component {
 
   componentDidMount() {
     this.ListadoTodos()
+  }
+
+  mxmtn = async () => {
+    this.props.navigation.navigate('MXMTN',{IDBet:this.state.IDBet, IDRound:this.state.IDRound});
   }
 
   render() {
@@ -459,6 +464,10 @@ class TNBetView extends Component {
 
         <View style={styles.bottomButtom}>
           <DragonButton title={save[language]} onPress={this.submit} />
+        </View>
+
+        <View style={styles.bottomButtom}>
+          <DragonButton title={Throwballs[language]} onPress={this.mxmtn} />
         </View>
 
       </KeyboardAvoidingView>
