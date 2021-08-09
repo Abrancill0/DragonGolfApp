@@ -618,7 +618,7 @@ export const CambioVentaja = (idDBetDetail) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    IDBetDetail: idDBetDetail
+                    IDBet_Detail: idDBetDetail
                 }),
             })
             .then((response) => response.json())

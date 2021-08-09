@@ -243,7 +243,8 @@ class ScoreCardView extends Component {
             advStrokes,
             advTotalStrokes,
             holeInfo,
-            carga
+            carga,
+            id
         } = this.state;
 
         const {
@@ -285,6 +286,7 @@ class ScoreCardView extends Component {
                             initHole={initHole}
                             switchAdv={switchAdv}
                             props={this.props}
+                            id={id}
                         />
                         :
                         <ScoreVerticalComponent
@@ -298,6 +300,7 @@ class ScoreCardView extends Component {
                             initHole={initHole}
                             switchAdv={switchAdv}
                             props={this.props}
+                            id={id}
                         />
                     }
                 </ScrollView> : <ListEmptyComponent

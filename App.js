@@ -697,7 +697,7 @@ export default class App extends Component {
             onPress={() => this.closeSesion(props)}
             style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
               <View style={{flex:.1}}>
-                  <Text style={{color:'white'}}>8.5</Text>
+                  <Text style={{color:'white'}}>8.6</Text>
               </View>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>

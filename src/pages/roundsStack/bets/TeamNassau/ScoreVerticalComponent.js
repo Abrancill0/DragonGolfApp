@@ -578,9 +578,13 @@ export default class ScoreVerticalComponent extends Component {
     }
 
     onChangeSwitchAdv = (switchAdv) => {
+
+    console.warn('---------------------------------------')
+    console.warn(this.props.id)
+
     this.setState({ switchAdv });
 
-    CambioVentaja(this.state.id)
+    CambioVentaja(this.props.id)
     .then((res) => {
         console.warn(res)
         AsyncStorage.setItem('arreglo', 'false');
@@ -639,7 +643,8 @@ export default class ScoreVerticalComponent extends Component {
         } = this.props;
 
         const {
-            hole
+            hole,
+            changeAdvantage
         } = Dictionary;
 
         return (
@@ -651,7 +656,7 @@ export default class ScoreVerticalComponent extends Component {
                 <View style={styles.inputContainer}>
                   <View style={styles.switchView}>
                     <TouchableOpacity style={{width: '80%'}} /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.switchAdv })}*/>
-                      <Text style={styles.question} numberOfLines={2}>Switch Adv B9/F9 <Text style={{ color: Colors.Primary }}>?</Text></Text>
+                      <Text style={styles.question,{marginLeft:30}} numberOfLines={2}>{changeAdvantage[language]}<Text style={{ color: Colors.Primary }}>?</Text></Text>
                     </TouchableOpacity>
                     <Switch
                       value={switchAdv}

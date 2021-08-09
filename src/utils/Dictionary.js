@@ -463,6 +463,10 @@ export const Dictionary = {
         'en': 'Who Gets the Adv Strokes?',
         'es': '¿Quién recibe los golpes de ventaja?'
     },
+    changeAdvantage: {
+        'en': 'Change who gets the advantage',
+        'es': 'Cambiar quien recibe la ventaja'
+    },
     //===========AddTee===============
     addTee: {
         'en': 'Add Tee',

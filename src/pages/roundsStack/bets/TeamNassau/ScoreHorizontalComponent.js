@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import styles from './styles2';
 import { Dictionary } from '../../../../utils/Dictionary';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../../../utils/Colors';
 import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import AsyncStorage from '@react-native-community/async-storage';
+import { CambioVentaja } from '../../../../Services/Services'
 
 export default class ScoreHorizontalComponent extends Component {
     constructor(props) {
@@ -39,7 +40,8 @@ export default class ScoreHorizontalComponent extends Component {
             ScoreOutGP:[],
             TeeColor:[],
             TeeNumberF:[],
-            TeeNumberB:[]
+            TeeNumberB:[],
+            switchAdv: false
         };
 
         /*
@@ -49,6 +51,37 @@ export default class ScoreHorizontalComponent extends Component {
         let teesf9 = [this.props.holeInfo[0]['ho_par1'], this.props.holeInfo[0]['ho_par2'], this.props.holeInfo[0]['ho_par3'], this.props.holeInfo[0]['ho_par4'], this.props.holeInfo[0]['ho_par5'], this.props.holeInfo[0]['ho_par6'], this.props.holeInfo[0]['ho_par7'], this.props.holeInfo[0]['ho_par8'], this.props.holeInfo[0]['ho_par9']]
         let teesb9 = [this.props.holeInfo[0]['ho_par10'], this.props.holeInfo[0]['ho_par11'], this.props.holeInfo[0]['ho_par12'], this.props.holeInfo[0]['ho_par13'], this.props.holeInfo[0]['ho_par14'], this.props.holeInfo[0]['ho_par15'], this.props.holeInfo[0]['ho_par16'], this.props.holeInfo[0]['ho_par17'], this.props.holeInfo[0]['ho_par18']]*/
     }
+
+    onChangeSwitchAdv = (switchAdv) => {
+
+    console.warn('---------------------------------------')
+    console.warn(this.props.id)
+
+    this.setState({ switchAdv });
+
+    CambioVentaja(this.props.id)
+    .then((res) => {
+        console.warn(res)
+        AsyncStorage.setItem('arreglo', 'false');
+      this.props.props.navigation.navigate('BetsView')
+    })
+
+    /*const roundData = {
+      id: this.props.roundId,
+      name: roundName,
+      course_id: this.props.course.id,
+      date: moment.unix(pickerDate / 1000).format('YYYY-MM-DD'),
+      hcp_adjustment: this.hcpAdjustment[selectedButton],
+      online_key: '',
+      starting_hole: holeNumber,
+      adv_b9_f9: switchAdv ? 1 : 0,
+      id_sync: '',
+      ultimate_sync: moment().format('YYYY-MM-DD HH:mm:ss'),
+    }
+
+    this.props.updateRound(roundData);
+    //this.props.setSwitchAdv(switchAdv);*/
+  }
 
     componentDidMount = async () => {
 
@@ -594,7 +627,8 @@ export default class ScoreHorizontalComponent extends Component {
             b9HA,
             TeeColor,
             TeeNumberF,
-            TeeNumberB
+            TeeNumberB,
+            switchAdv
         } = this.state;
 
         const {
@@ -606,12 +640,31 @@ export default class ScoreHorizontalComponent extends Component {
         } = this.props;
 
         const {
-            hole
+            hole,
+            changeAdvantage
         } = Dictionary;
 
         return (
             b9H.length!=0 &&
             <View style={{ flex: 1 }}>
+            <View style={{ flex: 0.1 }}>
+              <View style={{ height: 5 }} />
+              <View style={styles.formContainer}>
+                <View style={styles.inputContainer}>
+                  <View style={styles.switchView}>
+                    <TouchableOpacity style={{width: '80%'}} /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.switchAdv })}*/>
+                      <Text style={styles.question,{marginLeft:30}} numberOfLines={2}>{changeAdvantage[language]}<Text style={{ color: Colors.Primary }}>?</Text></Text>
+                    </TouchableOpacity>
+                    <Switch
+                      value={switchAdv}
+                      thumbColor={switchAdv ? Colors.Primary : Colors.Primary}
+                      trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                      onValueChange={this.onChangeSwitchAdv}
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
                 {teesf9.map((item,index) =>
                 <View style={styles.holeHeader}>
                     <View style={styles.holeTextView}>

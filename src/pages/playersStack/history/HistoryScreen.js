@@ -23,7 +23,8 @@ class HistoryScreen extends Component {
         let pickerDate = moment().toDate();
         let pickerTextDateInicio = moment().format('DD/MM/YYYY');
         let pickerTextDateFin = moment().format('DD/MM/YYYY');
-        let pickerTextDate2 = moment().format('YYYY-MM-DD');
+        let pickerTextDateInicio2 = moment().format('YYYY-MM-DD');
+        let pickerTextDateFin2 = moment().format('YYYY-MM-DD');
 
         this.state = {
             landscape: Dimensions.get('window').width > Dimensions.get('window').height,
@@ -38,7 +39,8 @@ class HistoryScreen extends Component {
             pickerDate,
             pickerTextDateInicio,
             pickerTextDateFin,
-            pickerTextDate2,
+            pickerTextDateInicio2,
+            pickerTextDateFin2,
             showDatePickerInicio: false,
             showDatePickerFin: false
         };
@@ -111,7 +113,7 @@ class HistoryScreen extends Component {
         this.setState({
           language:language
         })
-        HistoriaFilter(token,this.props.route.params.playerId,this.state.pickerTextDateInicio,this.state.pickerTextDateFin)
+        HistoriaFilter(token,this.props.route.params.playerId,this.state.pickerTextDateInicio2,this.state.pickerTextDateFin2)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -165,7 +167,7 @@ class HistoryScreen extends Component {
         this.setState({
           pickerDate: moment.unix(timestamp / 1000).toDate(),
           pickerTextDateInicio: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
-          pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+          pickerTextDateInicio2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
           date: this.formatDate(timestamp / 1000),
           showDatePickerInicio: false,
           editDateInicio: false,
@@ -198,7 +200,7 @@ class HistoryScreen extends Component {
 
       this.setState({
         pickerTextDateInicio: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
-        pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+        pickerTextDateInicio2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
         pickerDate: moment.unix(timestamp / 1000).toDate(),
         date: this.formatDate(timestamp / 1000),
         roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000)
@@ -240,7 +242,7 @@ class HistoryScreen extends Component {
         this.setState({
           pickerDate: moment.unix(timestamp / 1000).toDate(),
           pickerTextDateFin: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
-          pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+          pickerTextDateFin2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
           date: this.formatDate(timestamp / 1000),
           showDatePickerFin: false,
           editDateFin: false,
@@ -273,7 +275,7 @@ class HistoryScreen extends Component {
 
       this.setState({
         pickerTextDateFin: moment.unix(timestamp / 1000).format('DD/MM/YYYY'),
-        pickerTextDate2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
+        pickerTextDateFin2: moment.unix(timestamp / 1000).format('YYYY-MM-DD'),
         pickerDate: moment.unix(timestamp / 1000).toDate(),
         date: this.formatDate(timestamp / 1000),
         roundName: this.state.courseName + ' ' + this.formatDate(timestamp / 1000)
@@ -523,13 +525,17 @@ class HistoryScreen extends Component {
         this.setState({
             editDate: true
         })
-        /*if (this.state.topToBottomDate) {
-            this.state.history.sort((a, b) => (a.date < b.date) ? 1 : (a.date > b.date) ? -1 : 0);
-            this.setState({ topToBottomDate: false, topToBottomPlayer: null, topToBottomCourse: null });
+        if (this.state.topToBottomDate) {
+            this.setState({
+            editDate: true,
+            topToBottomDate: false
+        })
         } else {
-            this.state.history.sort((a, b) => (a.date > b.date) ? 1 : (a.date < b.date) ? -1 : 0);
-            this.setState({ topToBottomDate: true, topToBottomPlayer: null, topToBottomCourse: null });
-        }*/
+            this.setState({
+            editDate: false,
+            topToBottomDate: true
+        })
+        }
     }
 
     sortPlayer = () => {
