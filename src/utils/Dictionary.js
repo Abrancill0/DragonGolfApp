@@ -467,6 +467,10 @@ export const Dictionary = {
         'en': 'Change who gets the advantage',
         'es': 'Cambiar quien recibe la ventaja'
     },
+    change: {
+        'en': 'Change',
+        'es': 'Cambiar'
+    },
     //===========AddTee===============
     addTee: {
         'en': 'Add Tee',

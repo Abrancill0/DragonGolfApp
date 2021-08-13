@@ -44,6 +44,11 @@ class ScoreCardView extends Component {
     }
 
     ListadoTodos = async () => {
+    this.setState({
+        carga: true,
+        tees: [],
+        holeInfo:[]
+    })
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
     let IDRound = await AsyncStorage.getItem('IDRound')
@@ -287,6 +292,7 @@ class ScoreCardView extends Component {
                             switchAdv={switchAdv}
                             props={this.props}
                             id={id}
+                            clickHandler={this.ListadoTodos}
                         />
                         :
                         <ScoreVerticalComponent
@@ -301,6 +307,7 @@ class ScoreCardView extends Component {
                             switchAdv={switchAdv}
                             props={this.props}
                             id={id}
+                            clickHandler={this.ListadoTodos}
                         />
                     }
                 </ScrollView> : <ListEmptyComponent

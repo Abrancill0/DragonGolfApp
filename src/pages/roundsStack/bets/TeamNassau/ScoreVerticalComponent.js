@@ -7,6 +7,7 @@ import Colors from '../../../../utils/Colors';
 import ChangeStartingHole from '../../../../utils/ChangeStartingHole';
 import AsyncStorage from '@react-native-community/async-storage';
 import { CambioVentaja } from '../../../../Services/Services'
+import DragonButton from '../../../global/DragonButton';
 
 export default class ScoreVerticalComponent extends Component {
     constructor(props) {
@@ -588,7 +589,8 @@ export default class ScoreVerticalComponent extends Component {
     .then((res) => {
         console.warn(res)
         AsyncStorage.setItem('arreglo', 'false');
-      this.props.props.navigation.navigate('BetsView')
+        this.props.clickHandler()
+      //this.props.props.navigation.navigate('BetsView')
     })
 
     /*const roundData = {
@@ -644,6 +646,7 @@ export default class ScoreVerticalComponent extends Component {
 
         const {
             hole,
+            change,
             changeAdvantage
         } = Dictionary;
 
@@ -654,16 +657,13 @@ export default class ScoreVerticalComponent extends Component {
               <View style={{ height: 5 }} />
               <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
-                  <View style={styles.switchView}>
-                    <TouchableOpacity style={{width: '80%'}} /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.switchAdv })}*/>
+                  <View style={styles.switchView,{flexDirection:'row'}}>
+                    <TouchableOpacity style={{width: '70%'}} /*onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.switchAdv })}*/>
                       <Text style={styles.question,{marginLeft:30}} numberOfLines={2}>{changeAdvantage[language]}<Text style={{ color: Colors.Primary }}>?</Text></Text>
                     </TouchableOpacity>
-                    <Switch
-                      value={switchAdv}
-                      thumbColor={switchAdv ? Colors.Primary : Colors.Primary}
-                      trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
-                      onValueChange={this.onChangeSwitchAdv}
-                    />
+                    <View style={styles.bottomButtom,{height:20, width:'25%'}}>
+                      <DragonButton title={change[language]} onPress={this.onChangeSwitchAdv} />
+                    </View>
                   </View>
                 </View>
               </View>
