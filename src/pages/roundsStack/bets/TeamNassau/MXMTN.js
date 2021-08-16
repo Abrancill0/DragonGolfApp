@@ -7,7 +7,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, CrearDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
+import { ListadoAmigosRonda, CrearDetalleApuestaTeam, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -22,7 +22,8 @@ const {
   Manually,
   OverrideAdv,
   auto,
-  Press
+  Press,
+  submit
 } = Dictionary;
 
 
@@ -350,8 +351,8 @@ class SNBetView extends Component {
               itemTextColor="#000"
               displayKey="name"
               searchInputStyle={{ color: '#CCC' }}
-              submitButtonColor="#CCC"
-              submitButtonText="Submit"
+              submitButtonColor={Colors.Primary}
+              submitButtonText={submit[language]}
             />
             </View>
             {/*<View style={{ flex: 1, marginLeft: Platform.OS === 'android' && 30 }}>
@@ -439,6 +440,44 @@ class SNBetView extends Component {
                 carga:false
               })
             }
+        })
+    InfoUsuarioAB(idUsu)
+        .then((res2) => {
+          console.warn(res2)
+          if(res2.estatus == 1){
+            let useFactor = false
+            if(res2.Result[0].set_tmw_use_factor == 1 ){
+              useFactor = true
+            }
+              else{
+              useFactor = false
+              }
+              console.warn(useFactor)
+            this.setState({
+              useFactor : useFactor,
+              front9 : res2.Result[0].set_tmw_front_9.toString(),
+              back9 : res2.Result[0].set_tmw_back_9.toString(),
+              match : res2.Result[0].set_tmw_match.toString(),
+              carry : res2.Result[0].set_tmw_carry.toString(),
+              medal : res2.Result[0].set_tmw_medal.toString(),
+              autoPress : res2.Result[0].set_tmw_automatic_press.toString(),
+              //advStrokes : res2.Result[0].usu_handicapindex,
+              whoGetsAdv : res2.Result[0].set_tmw_adv_strokes.toString() === 'Hi Handicap' ? 0 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Low Handicap' ? 1 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Each' ? 2 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Slid Hi' ? 3 : res2.Result[0].set_tmw_adv_strokes.toString() === 'Slid Low' ? 4 : 5
+            })
+          }
+          else{
+            this.setState({
+              useFactor : false,
+              front9 : 0,
+              back9 : 0,
+              match : 0,
+              carry : 0,
+              medal : 0,
+              autoPress : 0,
+              advStrokes : 0,
+              whoGetsAdv: 0
+            })
+          }
         })
   }
 
@@ -728,75 +767,254 @@ class SNBetView extends Component {
 
   submit = async () => {
 
-    if(this.state.selectedItems.length<3){
+    let arreglo = this.state.selectedItems
+
+    if(arreglo.length<3){
       showMessage({
         message: fewPlayerTN[this.state.language],
         type: 'warning',
       });
     }
-    else{/*
+    else{
 
-      console.warn(this.state.selectedItems)
+      console.warn(arreglo)
 
-      var pairs = new Array(),
+      let whoGetsString =  this.state.whoGetsAdv === 0 ? 'Hi Handicap' : this.state.whoGetsAdv === 1 ? 'Low Handicap' : this.state.whoGetsAdv === 2 ? 'Each' : this.state.whoGetsAdv === 3 ? 'Slid Hi' : this.state.whoGetsAdv === 4 ? 'Slid Low' : 'Automatic'
 
-      pos = 0;
+      if(arreglo.length%2==0){
 
-      for (var i = 0; i < this.state.selectedItems.length; i++) {
+        var pairs = new Array(),
 
-          for (var j = 0; j < this.state.selectedItems.length; j++) {
+        pos = 0;
 
-            if(i!=j){
-              console.warn(pairs)
-              var element = [this.state.selectedItems[i], this.state.selectedItems[j]];
-              var element2 = [this.state.selectedItems[j], this.state.selectedItems[i]];
-              console.warn(element)
-              console.warn(element2)
-              let pos2 = pairs.indexOf(element.toString())
-              let pos3 = pairs.indexOf(element2.toString())
-              console.warn(pos2)
-              console.warn(pos3)
+        for (var i = 0; i < arreglo.length; i++) {
 
-              if(pos2 == pos3){
-                pairs[pos++] = [this.state.selectedItems[i], this.state.selectedItems[j]].toString();
-                let playerA = this.state.selectedItems[i];
-                let playerB = this.state.selectedItems[j];
-                ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
-                .then((res) => {
-                  console.warn(res)
-                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
-                  .then((res) => {
-                    console.warn(res)
-                    if(res.estatus == 1){
-                      showMessage({
-                        message: successSaveTeeData[this.state.language],
-                        type: 'success',
-                      });
-                      this.setState({
-                        carga:false
+          for (var j = 0; j < arreglo.length; j++) {
+
+            for (var k = 0; k < arreglo.length; k++) {
+
+              for (var l = 0; l < arreglo.length; l++) {
+
+                if(i!=j && i!=k && i!=l && j!=k && j!=l && k!=l){
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  var element   = [arreglo[i], arreglo[j],arreglo[k], arreglo[l]];//[1,2,3,4]Este
+                  var element2  = [arreglo[i], arreglo[j],arreglo[l], arreglo[k]];//[1,2,4,3]
+                  var element3  = [arreglo[i], arreglo[k],arreglo[j], arreglo[l]];//[1,3,2,4]Este
+                  var element4  = [arreglo[i], arreglo[k],arreglo[l], arreglo[j]];//[1,3,4,2]
+                  var element5  = [arreglo[i], arreglo[l],arreglo[j], arreglo[k]];//[1,4,2,3]Este
+                  var element6  = [arreglo[i], arreglo[l],arreglo[k], arreglo[j]];//[1,4,3,2]
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  var element7  = [arreglo[j], arreglo[i],arreglo[k], arreglo[l]];//[2,1,3,4]
+                  var element8  = [arreglo[j], arreglo[i],arreglo[l], arreglo[k]];//[2,1,4,3]
+                  var element9  = [arreglo[j], arreglo[k],arreglo[i], arreglo[l]];//[2,3,1,4]
+                  var element10 = [arreglo[j], arreglo[k],arreglo[l], arreglo[i]];//[2,3,4,1]
+                  var element11 = [arreglo[j], arreglo[l],arreglo[i], arreglo[k]];//[2,4,1,3]
+                  var element12 = [arreglo[j], arreglo[l],arreglo[k], arreglo[i]];//[2,4,3,1]
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  var element13 = [arreglo[k], arreglo[i],arreglo[j], arreglo[l]];//[3,1,2,4]
+                  var element14 = [arreglo[k], arreglo[i],arreglo[l], arreglo[j]];//[3,1,4,2]
+                  var element15 = [arreglo[k], arreglo[j],arreglo[i], arreglo[l]];//[3,2,1,4]
+                  var element16 = [arreglo[k], arreglo[j],arreglo[l], arreglo[i]];//[3,2,4,1]
+                  var element17 = [arreglo[k], arreglo[l],arreglo[i], arreglo[j]];//[3,4,1,2]
+                  var element18 = [arreglo[k], arreglo[l],arreglo[j], arreglo[i]];//[3,4,2,1]
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  var element19 = [arreglo[l], arreglo[i],arreglo[j], arreglo[k]];//[4,1,2,3]
+                  var element20 = [arreglo[l], arreglo[i],arreglo[k], arreglo[j]];//[4,1,3,2]
+                  var element21 = [arreglo[l], arreglo[j],arreglo[i], arreglo[k]];//[4,2,1,3]
+                  var element22 = [arreglo[l], arreglo[j],arreglo[k], arreglo[i]];//[4,2,3,1]
+                  var element23 = [arreglo[l], arreglo[k],arreglo[i], arreglo[j]];//[4,3,1,2]
+                  var element24 = [arreglo[l], arreglo[k],arreglo[j], arreglo[i]];//[4,3,2,1]
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  let pos2  = pairs.indexOf(element2.toString())
+                  let pos3  = pairs.indexOf(element2.toString())
+                  let pos4  = pairs.indexOf(element2.toString())
+                  let pos5  = pairs.indexOf(element2.toString())
+                  let pos6  = pairs.indexOf(element2.toString())
+                  let pos7  = pairs.indexOf(element2.toString())
+                  let pos8  = pairs.indexOf(element2.toString())
+                  let pos9  = pairs.indexOf(element2.toString())
+                  let pos10 = pairs.indexOf(element2.toString())
+                  let pos11 = pairs.indexOf(element2.toString())
+                  let pos12 = pairs.indexOf(element11.toString())
+                  let pos13 = pairs.indexOf(element12.toString())
+                  let pos14 = pairs.indexOf(element13.toString())
+                  let pos15 = pairs.indexOf(element14.toString())
+                  let pos16 = pairs.indexOf(element15.toString())
+                  let pos17 = pairs.indexOf(element16.toString())
+                  let pos18 = pairs.indexOf(element17.toString())
+                  let pos19 = pairs.indexOf(element18.toString())
+                  let pos20 = pairs.indexOf(element19.toString())
+                  let pos21 = pairs.indexOf(element20.toString())
+                  let pos22 = pairs.indexOf(element21.toString())
+                  let pos23 = pairs.indexOf(element22.toString())
+                  let pos24 = pairs.indexOf(element23.toString())
+                  let pos25 = pairs.indexOf(element24.toString())
+
+                  if(pos2 == pos3 && pos3 == pos4 && pos4 == pos5 && pos5 == pos6 && pos6 == pos7 && pos7 == pos8 && pos8 == pos9 && pos9 == pos10 && pos10 == pos11 && pos11 == pos12 && pos12 == pos13 && pos13 == pos14 && pos14 == pos15 && pos15 == pos16 && pos16 == pos17 && pos17 == pos18 && pos18 == pos19 && pos19 == pos20 && pos20 == pos21 && pos21 == pos22 && pos22 == pos23 && pos23 == pos24 && pos24 == pos25){
+                    pairs[pos++] = [arreglo[i], arreglo[j], arreglo[k], arreglo[l]].toString();
+                    let playerA = arreglo[i];
+                    let playerB = arreglo[j];
+                    let playerC = arreglo[k];
+                    let playerD = arreglo[l];
+                    CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
+                    .then((res) => {
+                      console.warn(res)
+                      CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
+                      .then((res) => {
+                        console.warn(res)
+                        if(res.estatus == 1){
+                          showMessage({
+                            message: successSaveTeeData[this.state.language],
+                            type: 'success',
+                          });
+                          this.setState({
+                            carga:false
+                          })
+                          //AsyncStorage.setItem('arreglo', 'false');
+                          //this.props.navigation.goBack()
+                        }
+                        else{
+                          this.setState({
+                            carga:false
+                          })
+                          showMessage({
+                            message: error[this.state.language],
+                            type: 'danger',
+                          });
+                        }
                       })
-                      //AsyncStorage.setItem('arreglo', 'false');
-                      //this.props.navigation.goBack()
-                    }
-                    else{
-                      this.setState({
-                        carga:false
-                      })
-                      showMessage({
-                        message: error[this.state.language],
-                        type: 'danger',
-                      });
-                    }
-                  })
-                })
+                    })
+                  }
+                  else{
+                    console.warn('NO')
+                  }
+                }
               }
             }
           }
+        }
+        console.warn('Par')
       }
+      else{
+
+        var pairs = new Array(),
+
+        pos = 0;
+
+        for (var i = 0; i < arreglo.length; i++) {
+
+          for (var j = 0; j < arreglo.length; j++) {
+
+            for (var k = 0; k < arreglo.length; k++) {
+
+              for (var l = 0; l < arreglo.length; l++) {
+
+                if(i!=k && i!=l && j!=k && j!=l && k!=l){
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  var element   = [arreglo[i], arreglo[j],arreglo[k], arreglo[l]];//[1,2,3,4]Este
+                  var element2  = [arreglo[i], arreglo[j],arreglo[l], arreglo[k]];//[1,2,4,3]
+                  var element3  = [arreglo[i], arreglo[k],arreglo[j], arreglo[l]];//[1,3,2,4]Este
+                  var element4  = [arreglo[i], arreglo[k],arreglo[l], arreglo[j]];//[1,3,4,2]
+                  var element5  = [arreglo[i], arreglo[l],arreglo[j], arreglo[k]];//[1,4,2,3]Este
+                  var element6  = [arreglo[i], arreglo[l],arreglo[k], arreglo[j]];//[1,4,3,2]
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  var element7  = [arreglo[j], arreglo[i],arreglo[k], arreglo[l]];//[2,1,3,4]
+                  var element8  = [arreglo[j], arreglo[i],arreglo[l], arreglo[k]];//[2,1,4,3]
+                  var element9  = [arreglo[j], arreglo[k],arreglo[i], arreglo[l]];//[2,3,1,4]
+                  var element10 = [arreglo[j], arreglo[k],arreglo[l], arreglo[i]];//[2,3,4,1]
+                  var element11 = [arreglo[j], arreglo[l],arreglo[i], arreglo[k]];//[2,4,1,3]
+                  var element12 = [arreglo[j], arreglo[l],arreglo[k], arreglo[i]];//[2,4,3,1]
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  var element13 = [arreglo[k], arreglo[i],arreglo[j], arreglo[l]];//[3,1,2,4]
+                  var element14 = [arreglo[k], arreglo[i],arreglo[l], arreglo[j]];//[3,1,4,2]
+                  var element15 = [arreglo[k], arreglo[j],arreglo[i], arreglo[l]];//[3,2,1,4]
+                  var element16 = [arreglo[k], arreglo[j],arreglo[l], arreglo[i]];//[3,2,4,1]
+                  var element17 = [arreglo[k], arreglo[l],arreglo[i], arreglo[j]];//[3,4,1,2]
+                  var element18 = [arreglo[k], arreglo[l],arreglo[j], arreglo[i]];//[3,4,2,1]
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  var element19 = [arreglo[l], arreglo[i],arreglo[j], arreglo[k]];//[4,1,2,3]
+                  var element20 = [arreglo[l], arreglo[i],arreglo[k], arreglo[j]];//[4,1,3,2]
+                  var element21 = [arreglo[l], arreglo[j],arreglo[i], arreglo[k]];//[4,2,1,3]
+                  var element22 = [arreglo[l], arreglo[j],arreglo[k], arreglo[i]];//[4,2,3,1]
+                  var element23 = [arreglo[l], arreglo[k],arreglo[i], arreglo[j]];//[4,3,1,2]
+                  var element24 = [arreglo[l], arreglo[k],arreglo[j], arreglo[i]];//[4,3,2,1]
+                  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  let pos2  = pairs.indexOf(element2.toString())
+                  let pos3  = pairs.indexOf(element2.toString())
+                  let pos4  = pairs.indexOf(element2.toString())
+                  let pos5  = pairs.indexOf(element2.toString())
+                  let pos6  = pairs.indexOf(element2.toString())
+                  let pos7  = pairs.indexOf(element2.toString())
+                  let pos8  = pairs.indexOf(element2.toString())
+                  let pos9  = pairs.indexOf(element2.toString())
+                  let pos10 = pairs.indexOf(element2.toString())
+                  let pos11 = pairs.indexOf(element2.toString())
+                  let pos12 = pairs.indexOf(element11.toString())
+                  let pos13 = pairs.indexOf(element12.toString())
+                  let pos14 = pairs.indexOf(element13.toString())
+                  let pos15 = pairs.indexOf(element14.toString())
+                  let pos16 = pairs.indexOf(element15.toString())
+                  let pos17 = pairs.indexOf(element16.toString())
+                  let pos18 = pairs.indexOf(element17.toString())
+                  let pos19 = pairs.indexOf(element18.toString())
+                  let pos20 = pairs.indexOf(element19.toString())
+                  let pos21 = pairs.indexOf(element20.toString())
+                  let pos22 = pairs.indexOf(element21.toString())
+                  let pos23 = pairs.indexOf(element22.toString())
+                  let pos24 = pairs.indexOf(element23.toString())
+                  let pos25 = pairs.indexOf(element24.toString())
+
+                  if(pos2 == pos3 && pos3 == pos4 && pos4 == pos5 && pos5 == pos6 && pos6 == pos7 && pos7 == pos8 && pos8 == pos9 && pos9 == pos10 && pos10 == pos11 && pos11 == pos12 && pos12 == pos13 && pos13 == pos14 && pos14 == pos15 && pos15 == pos16 && pos16 == pos17 && pos17 == pos18 && pos18 == pos19 && pos19 == pos20 && pos20 == pos21 && pos21 == pos22 && pos22 == pos23 && pos23 == pos24 && pos24 == pos25){
+                    pairs[pos++] = [arreglo[i], arreglo[j], arreglo[k], arreglo[l]].toString();
+                    let playerA = arreglo[i];
+                    let playerB = arreglo[j];
+                    let playerC = arreglo[k];
+                    let playerD = arreglo[l];
+                    CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
+                    .then((res) => {
+                      console.warn(res)
+                      CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
+                      .then((res) => {
+                        console.warn(res)
+                        if(res.estatus == 1){
+                          showMessage({
+                            message: successSaveTeeData[this.state.language],
+                            type: 'success',
+                          });
+                          this.setState({
+                            carga:false
+                          })
+                          //AsyncStorage.setItem('arreglo', 'false');
+                          //this.props.navigation.goBack()
+                        }
+                        else{
+                          this.setState({
+                            carga:false
+                          })
+                          showMessage({
+                            message: error[this.state.language],
+                            type: 'danger',
+                          });
+                        }
+                      })
+                    })
+                  }
+                  else{
+                    console.warn('NO')
+                  }
+                }
+              }
+            }
+          }
+        }
+        console.warn('Impar')
+      }
+      console.warn(pairs)
+      console.warn(pairs.length)
 
       AsyncStorage.setItem('arreglo', 'false');
       this.props.navigation.navigate('BetsView')
-    */}
+    }
   }
 }
 
