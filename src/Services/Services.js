@@ -586,6 +586,26 @@ export const Historia = (IDUsuario1,IDUsuario2) => {
                 });
 };
 
+export const HandicapIndex = (IDUsuario) => {
+    const URL = RutaBaseAB + "/HandicapIndex";
+    const date = new Date();
+    console.warn(date)
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDUsuario: IDUsuario
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const HistoriaFilter = (IDUsuario1,IDUsuario2,dateInicio,dateFin) => {
     console.warn(dateInicio)
     console.warn(dateFin)

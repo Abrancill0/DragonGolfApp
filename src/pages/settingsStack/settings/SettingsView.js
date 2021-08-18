@@ -33,6 +33,7 @@ import SQLite from 'react-native-sqlite-storage';
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from 'react-native-loading-spinner-overlay';
 import NetInfo from "@react-native-community/netinfo";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" });
 
@@ -200,6 +201,11 @@ class SettingsView extends Component {
         <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.openDrawer()}>
           <EntypoIcon name={'menu'} size={25} color={Colors.Primary} />
         </TouchableOpacity>
+              <View style={{ flex: 1, alignItems: 'flex-end', marginRight:20 }}>
+                <TouchableOpacity onPress={_ => this.props.navigation.navigate('HandicapIndex', { playerId: userData.id, playernickname: userData.nick_name })}>
+                  <MaterialIcons name='grid-on' size={25} color={Colors.Black} />
+                </TouchableOpacity>
+              </View>
           <Ripple
             style={styles.profileCard}
             rippleColor='gray'

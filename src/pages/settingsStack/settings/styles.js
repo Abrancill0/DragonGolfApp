@@ -19,6 +19,36 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 2.5
     },
+    headersView: {
+        width: '100%',
+        height: 30,
+        flexDirection: 'row',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
+    },
+    headers: {
+        flex: 1,
+        borderBottomWidth: 1,
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderColor: Colors.Gray,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.White
+    },
+    headerText: {
+        fontWeight: 'bold',
+        fontSize: 11,
+        color: Colors.Black,
+        textAlign: 'center'
+    },
     imageNameView: {
         flexDirection: 'row',
         alignItems: 'center'

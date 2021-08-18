@@ -50,6 +50,7 @@ import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
 import AddPlayer from './src/pages/playersStack/addPlayer/AddPlayerView'
 import PlayerInfo from './src/pages/playersStack/playerInfo/PlayerInfoView'
 import HistoryScreen from './src/pages/playersStack/history/HistoryScreen'
+import HandicapIndex from './src/pages/settingsStack/settings/HandicapIndex'
 import AddTee from './src/pages/coursesStack/addTee/AddTeeView'
 import EditTee from './src/pages/coursesStack/addTee/EditTeeView'
 import AddHole from './src/pages/coursesStack/teeData/AddHoleView'
@@ -697,7 +698,7 @@ export default class App extends Component {
             onPress={() => this.closeSesion(props)}
             style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
               <View style={{flex:.1}}>
-                  <Text style={{color:'white'}}>8.8</Text>
+                  <Text style={{color:'white'}}>8.9</Text>
               </View>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>
@@ -965,6 +966,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='HistoryScreen' component={HistoryScreen}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='HandicapIndex' component={HandicapIndex}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

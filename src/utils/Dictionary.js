@@ -896,6 +896,18 @@ export const Dictionary = {
         'en': 'Next Strokes',
         'es': 'Strokes Siguientes'
     },
+    rating: {
+        'en': 'Rating',
+        'es': 'Clasificación'
+    },
+    h18s: {
+        'en': '18-hole Score',
+        'es': 'Score hoyo 18'
+    },
+    differential: {
+        'en': 'Differential',
+        'es': 'Diferencial'
+    },
     next: {
         'en': 'Next',
         'es': 'Siguiente'
