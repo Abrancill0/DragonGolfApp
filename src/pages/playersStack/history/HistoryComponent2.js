@@ -53,16 +53,16 @@ export default class HistoryComponent extends Component {
                                 <Text style={styles.rowText}>{item.nick_name}</Text>
                             </TouchableOpacity> */}
                             <View style={[styles.headers, item.is_manual && { backgroundColor: Colors.PrimaryWithOpacity }]}>
-                                <Text style={[styles.rowText, item.is_manual && { fontWeight: 'bold' }]}>{item.played_hp}</Text>
+                                <Text style={[styles.rowText, item.is_manual && { fontWeight: 'bold' }]}>{item.money}</Text>
                             </View>
                             {/*<View style={styles.headers}>
                                 <Text style={styles.rowText}>{this.state.resultado}</Text>
                             </View>*/}
                             <View style={styles.headers}>
-                                <Text style={styles.rowText}>{item.next_hp}</Text>
+                                <Text style={styles.rowText}>{item.played_hp}</Text>
                             </View>
                             <View style={styles.headers}>
-                                <Text style={[styles.rowText, { color: item.money < 0 ? 'black' : item.money > 0 ? 'black' : Colors.Black }]}>{item.money}</Text>
+                                <Text style={[styles.rowText, { color: item.next_hp < 0 ? 'black' : item.next_hp > 0 ? 'black' : Colors.Black }]}>{item.next_hp}</Text>
                             </View>
                             <View style={styles.headers}>
                                 <Text style={[styles.rowText, { color: item.Diferencial < 0 ? 'black' : item.Diferencial > 0 ? 'black' : Colors.Black }]}>{item.Diferencial}</Text>

@@ -378,7 +378,7 @@ class HistoryScreen extends Component {
                   </View>
                 </View>
                 <View style={styles.headersView}>
-                    <TouchableOpacity style={styles.headers} onPress={this.sortDate}>
+                    <TouchableOpacity style={styles.headers} onPress={this.sortDate2}>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={styles.headerText}>{date[language]}</Text>
                         </View>
@@ -535,6 +535,16 @@ class HistoryScreen extends Component {
             editDate: false,
             topToBottomDate: true
         })
+        }
+    }
+
+    sortDate2 = () => {
+        if (!this.state.topToBottomDate) {
+            this.state.history.sort((a, b) => (a.date > b.date) ? 1 : (a.date < b.date) ? -1 : 0);
+            this.setState({ topToBottomPlayer: null, topToBottomDate: true, topToBottomCourse: null });
+        } else {
+            this.state.history.sort((a, b) => (a.date < b.date) ? 1 : (a.date > b.date) ? -1 : 0);
+            this.setState({ topToBottomPlayer: null, topToBottomDate: false, topToBottomCourse: null });
         }
     }
 
