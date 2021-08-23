@@ -108,7 +108,8 @@ export default function betsView(route) {
       ListadoDetalleApuesta(IDRound,1, IDUsuario)
           .then((res) => {
             console.warn(res)
-              if(res.estatus == 1){
+              if(res.estatus == 1 || res.estatus == 0){
+                if(res.estatus == 1){
                   const list = res.Result.map(item => (
                       {
                         ConsecutivosApuesta: item.ConsecutivosApuesta,
@@ -159,9 +160,11 @@ export default function betsView(route) {
                   ))
                     setRounds2(list)
                     setArrayholder(list)
+                  }
                     setRounds3([])
             ListadoDetalleApuestaTeam(IDRound,2, IDUsuario)
             .then((res) => {
+            console.warn(res)
               //console.warn('Hola')
               //console.warn(res)
                 if(res.estatus == 1){

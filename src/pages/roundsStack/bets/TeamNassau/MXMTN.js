@@ -825,16 +825,16 @@ class SNBetView extends Component {
                   var element23 = [arreglo[l], arreglo[k],arreglo[i], arreglo[j]];//[4,3,1,2]
                   var element24 = [arreglo[l], arreglo[k],arreglo[j], arreglo[i]];//[4,3,2,1]
                   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                  let pos2  = pairs.indexOf(element2.toString())
+                  let pos2  = pairs.indexOf(element.toString())
                   let pos3  = pairs.indexOf(element2.toString())
-                  let pos4  = pairs.indexOf(element2.toString())
-                  let pos5  = pairs.indexOf(element2.toString())
-                  let pos6  = pairs.indexOf(element2.toString())
-                  let pos7  = pairs.indexOf(element2.toString())
-                  let pos8  = pairs.indexOf(element2.toString())
-                  let pos9  = pairs.indexOf(element2.toString())
-                  let pos10 = pairs.indexOf(element2.toString())
-                  let pos11 = pairs.indexOf(element2.toString())
+                  let pos4  = pairs.indexOf(element3.toString())
+                  let pos5  = pairs.indexOf(element4.toString())
+                  let pos6  = pairs.indexOf(element5.toString())
+                  let pos7  = pairs.indexOf(element6.toString())
+                  let pos8  = pairs.indexOf(element7.toString())
+                  let pos9  = pairs.indexOf(element8.toString())
+                  let pos10 = pairs.indexOf(element9.toString())
+                  let pos11 = pairs.indexOf(element10.toString())
                   let pos12 = pairs.indexOf(element11.toString())
                   let pos13 = pairs.indexOf(element12.toString())
                   let pos14 = pairs.indexOf(element13.toString())
@@ -852,38 +852,6 @@ class SNBetView extends Component {
 
                   if(pos2 == pos3 && pos3 == pos4 && pos4 == pos5 && pos5 == pos6 && pos6 == pos7 && pos7 == pos8 && pos8 == pos9 && pos9 == pos10 && pos10 == pos11 && pos11 == pos12 && pos12 == pos13 && pos13 == pos14 && pos14 == pos15 && pos15 == pos16 && pos16 == pos17 && pos17 == pos18 && pos18 == pos19 && pos19 == pos20 && pos20 == pos21 && pos21 == pos22 && pos22 == pos23 && pos23 == pos24 && pos24 == pos25){
                     pairs[pos++] = [arreglo[i], arreglo[j], arreglo[k], arreglo[l]].toString();
-                    let playerA = arreglo[i];
-                    let playerB = arreglo[j];
-                    let playerC = arreglo[k];
-                    let playerD = arreglo[l];
-                    CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
-                    .then((res) => {
-                      console.warn(res)
-                      CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
-                      .then((res) => {
-                        console.warn(res)
-                        if(res.estatus == 1){
-                          showMessage({
-                            message: successSaveTeeData[this.state.language],
-                            type: 'success',
-                          });
-                          this.setState({
-                            carga:false
-                          })
-                          //AsyncStorage.setItem('arreglo', 'false');
-                          //this.props.navigation.goBack()
-                        }
-                        else{
-                          this.setState({
-                            carga:false
-                          })
-                          showMessage({
-                            message: error[this.state.language],
-                            type: 'danger',
-                          });
-                        }
-                      })
-                    })
                   }
                   else{
                     console.warn('NO')
@@ -939,16 +907,16 @@ class SNBetView extends Component {
                   var element23 = [arreglo[l], arreglo[k],arreglo[i], arreglo[j]];//[4,3,1,2]
                   var element24 = [arreglo[l], arreglo[k],arreglo[j], arreglo[i]];//[4,3,2,1]
                   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                  let pos2  = pairs.indexOf(element2.toString())
+                  let pos2  = pairs.indexOf(element.toString())
                   let pos3  = pairs.indexOf(element2.toString())
-                  let pos4  = pairs.indexOf(element2.toString())
-                  let pos5  = pairs.indexOf(element2.toString())
-                  let pos6  = pairs.indexOf(element2.toString())
-                  let pos7  = pairs.indexOf(element2.toString())
-                  let pos8  = pairs.indexOf(element2.toString())
-                  let pos9  = pairs.indexOf(element2.toString())
-                  let pos10 = pairs.indexOf(element2.toString())
-                  let pos11 = pairs.indexOf(element2.toString())
+                  let pos4  = pairs.indexOf(element3.toString())
+                  let pos5  = pairs.indexOf(element4.toString())
+                  let pos6  = pairs.indexOf(element5.toString())
+                  let pos7  = pairs.indexOf(element6.toString())
+                  let pos8  = pairs.indexOf(element7.toString())
+                  let pos9  = pairs.indexOf(element8.toString())
+                  let pos10 = pairs.indexOf(element9.toString())
+                  let pos11 = pairs.indexOf(element10.toString())
                   let pos12 = pairs.indexOf(element11.toString())
                   let pos13 = pairs.indexOf(element12.toString())
                   let pos14 = pairs.indexOf(element13.toString())
@@ -966,38 +934,6 @@ class SNBetView extends Component {
 
                   if(pos2 == pos3 && pos3 == pos4 && pos4 == pos5 && pos5 == pos6 && pos6 == pos7 && pos7 == pos8 && pos8 == pos9 && pos9 == pos10 && pos10 == pos11 && pos11 == pos12 && pos12 == pos13 && pos13 == pos14 && pos14 == pos15 && pos15 == pos16 && pos16 == pos17 && pos17 == pos18 && pos18 == pos19 && pos19 == pos20 && pos20 == pos21 && pos21 == pos22 && pos22 == pos23 && pos23 == pos24 && pos24 == pos25){
                     pairs[pos++] = [arreglo[i], arreglo[j], arreglo[k], arreglo[l]].toString();
-                    let playerA = arreglo[i];
-                    let playerB = arreglo[j];
-                    let playerC = arreglo[k];
-                    let playerD = arreglo[l];
-                    CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
-                    .then((res) => {
-                      console.warn(res)
-                      CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
-                      .then((res) => {
-                        console.warn(res)
-                        if(res.estatus == 1){
-                          showMessage({
-                            message: successSaveTeeData[this.state.language],
-                            type: 'success',
-                          });
-                          this.setState({
-                            carga:false
-                          })
-                          //AsyncStorage.setItem('arreglo', 'false');
-                          //this.props.navigation.goBack()
-                        }
-                        else{
-                          this.setState({
-                            carga:false
-                          })
-                          showMessage({
-                            message: error[this.state.language],
-                            type: 'danger',
-                          });
-                        }
-                      })
-                    })
                   }
                   else{
                     console.warn('NO')
@@ -1011,6 +947,71 @@ class SNBetView extends Component {
       }
       console.warn(pairs)
       console.warn(pairs.length)
+
+      if(pairs.length>1){
+
+      var n = 0;
+      var numero;
+      var aleatorios=[]
+      do {
+          numero = Math.floor((Math.random() * pairs.length));
+          if (aleatorios.indexOf(numero) == -1) {
+              n++;
+              aleatorios.push(numero)
+          }
+      } 
+  while (n < Math.floor(arreglo.length/2));
+
+      console.warn(aleatorios)
+
+    }
+    else{
+      var aleatorios=[0]
+    }
+
+    console.warn(pairs.length)
+
+    for (var i = 0; i <= pairs.length-1; i++) {
+      if(aleatorios.indexOf(i) != -1){
+        let players = pairs[i].split(',')
+        let playerA = players[0];
+        let playerB = players[1];
+        let playerC = players[2];
+        let playerD = players[3];
+        console.warn(playerA)
+        console.warn(playerB)
+        console.warn(playerC)
+        console.warn(playerD)
+        CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
+          .then((res) => {
+            console.warn(res)
+            CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
+              .then((res) => {
+                console.warn(res)
+                if(res.estatus == 1){
+                  showMessage({
+                    message: successSaveTeeData[this.state.language],
+                    type: 'success',
+                  });
+                  this.setState({
+                    carga:false
+                  })
+                  //AsyncStorage.setItem('arreglo', 'false');
+                  //this.props.navigation.goBack()
+                }
+                else{
+                  this.setState({
+                    carga:false
+                  })
+                  showMessage({
+                    message: error[this.state.language],
+                    type: 'danger',
+                  });
+                }
+              })
+          })
+      }
+    }
 
       AsyncStorage.setItem('arreglo', 'false');
       this.props.navigation.navigate('BetsView')
