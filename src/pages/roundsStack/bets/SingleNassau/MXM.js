@@ -19,6 +19,7 @@ const {
   error,
   successSaveTeeData,
   fewPlayer,
+  samePlayerTN,
   Manually,
   OverrideAdv,
   auto,
@@ -100,7 +101,8 @@ class SNBetView extends Component {
       players: [],
       IDBet:this.props.route.params.IDBet,
       IDRound:this.props.route.params.IDRound,
-      selectedItems : []
+      selectedItems : [],
+      selectedItems2 : []
     };
 
     this.playerSettings = [];
@@ -119,6 +121,10 @@ class SNBetView extends Component {
 
   onSelectedItemsChange = selectedItems => {
     this.setState({ selectedItems });
+  };
+
+  onSelectedItemsChange2 = selectedItems2 => {
+    this.setState({ selectedItems2 });
   };
 
   render() {
@@ -162,7 +168,8 @@ class SNBetView extends Component {
         </View>
 
           <View style={{ height: 20 }} />
-            <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, flexDirection:'row' }}>
+            <View style={{ flex: 0.5, margin:1 }}>
             <MultiSelect
               hideTags
               items={players}
@@ -185,6 +192,31 @@ class SNBetView extends Component {
               submitButtonText={submit[language]}
             />
             </View>
+
+            <View style={{ flex: 0.5,margin:1 }}>
+            <MultiSelect
+              hideTags
+              items={players}
+              uniqueKey="id"
+              onSelectedItemsChange={this.onSelectedItemsChange2}
+              selectedItems={this.state.selectedItems2}
+              selectText="Pick Items"
+              searchInputPlaceholderText="Search Items..."
+              onChangeInput={ (text)=> console.log(text)}
+              altFontFamily="ProximaNova-Light"
+              tagRemoveIconColor="#CCC"
+              tagBorderColor="#CCC"
+              tagTextColor="#CCC"
+              selectedItemTextColor="#CCC"
+              selectedItemIconColor="#CCC"
+              itemTextColor="#000"
+              displayKey="name"
+              searchInputStyle={{ color: '#CCC' }}
+              submitButtonColor={Colors.Primary}
+              submitButtonText={submit[language]}
+            />
+            </View>
+          </View>
 
         </ScrollView>
 
@@ -543,7 +575,9 @@ class SNBetView extends Component {
 
   submit = async () => {
 
-    if(this.state.selectedItems.length<2){
+    console.warn(this.state.selectedItems.length + this.state.selectedItems2.length)
+
+    if(this.state.selectedItems.length + this.state.selectedItems2.length <2){
       showMessage({
         message: fewPlayer[this.state.language],
         type: 'warning',
@@ -552,6 +586,30 @@ class SNBetView extends Component {
     else{
 
       console.warn(this.state.selectedItems)
+      console.warn(this.state.selectedItems2)
+
+      let mismo = false
+
+      if(this.state.selectedItems.length<this.state.players.length){
+        for (var i = 0; i <this.state.selectedItems.length; i++) {
+          if(this.state.selectedItems2.includes(this.state.selectedItems[i])){
+            mismo = true
+            showMessage({
+              message: samePlayerTN[this.state.language],
+              type: 'warning',
+            });
+            i=this.state.selectedItems.length
+          }
+        }
+      }
+
+      if(this.state.selectedItems.length===this.state.players.length){
+
+        this.setState({
+                        carga:true
+                      })
+
+        console.warn('Todos vs todos')
 
       var pairs = new Array(),
 
@@ -583,13 +641,13 @@ class SNBetView extends Component {
                   .then((res) => {
                     console.warn(res)
                     if(res.estatus == 1){
-                      showMessage({
+                      /*showMessage({
                         message: successSaveTeeData[this.state.language],
                         type: 'success',
                       });
                       this.setState({
                         carga:false
-                      })
+                      })*/
                       //AsyncStorage.setItem('arreglo', 'false');
                       //this.props.navigation.goBack()
                     }
@@ -607,10 +665,97 @@ class SNBetView extends Component {
               }
             }
           }
-      }
+        }
+
+        showMessage({
+                        message: successSaveTeeData[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:true
+                      })
 
       AsyncStorage.setItem('arreglo', 'false');
       this.props.navigation.navigate('BetsView')
+      }
+      else{
+
+        console.warn('Ciertos jugadores')
+
+        var pairs = new Array(),
+
+      pos = 0;
+
+      if(!mismo){
+        this.setState({
+                        carga:true
+                      })
+        console.warn('Entra')
+
+      for (var i = 0; i < this.state.selectedItems.length; i++) {
+
+          for (var j = 0; j < this.state.selectedItems2.length; j++) {
+              
+              var element = [this.state.selectedItems[i], this.state.selectedItems2[j]];
+              var element2 = [this.state.selectedItems2[j], this.state.selectedItems[i]];
+              console.warn(element)
+              console.warn(element2)
+              let pos2 = pairs.indexOf(element.toString())
+              let pos3 = pairs.indexOf(element2.toString())
+              console.warn(pos2)
+              console.warn(pos3)
+
+              if(pos2 == pos3){
+                pairs[pos++] = [this.state.selectedItems[i], this.state.selectedItems2[j]].toString();
+                let playerA = this.state.selectedItems[i];
+                let playerB = this.state.selectedItems2[j];
+                console.warn(playerA)
+                console.warn(playerB)
+                ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
+                .then((res) => {
+                  console.warn(res)
+                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
+                  .then((res) => {
+                    console.warn(res)
+                    if(res.estatus == 1){
+                      /*showMessage({
+                        message: successSaveTeeData[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:false
+                      })*/
+                      //AsyncStorage.setItem('arreglo', 'false');
+                      //this.props.navigation.goBack()
+                    }
+                    else{
+                      this.setState({
+                        carga:false
+                      })
+                      showMessage({
+                        message: error[this.state.language],
+                        type: 'danger',
+                      });
+                    }
+                  })
+                })
+              }
+          }
+        }
+
+        showMessage({
+                        message: successSaveTeeData[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:true
+                      })
+
+      AsyncStorage.setItem('arreglo', 'false');
+      this.props.navigation.navigate('BetsView')
+        
+      }
+      }
     }
   }
 }

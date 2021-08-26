@@ -767,6 +767,203 @@ class SNBetView extends Component {
 
   submit = async () => {
 
+
+    var arreglo=this.state.selectedItems//[1,2,3,4,5]
+
+    if(arreglo.length<3){
+      showMessage({
+        message: fewPlayerTN[this.state.language],
+        type: 'warning',
+      });
+    }
+    else{
+
+    var n = 0;
+      var numero;
+      var aleatorios=[]
+      var cont=-1,aux;
+      var entra=true
+      do {
+          numero = Math.floor((Math.random() * arreglo.length/2));
+          
+          if(entra){
+            if (aleatorios.indexOf(numero) == -1) {
+              aux=cont;
+              cont=numero;
+              n++;
+              aleatorios.push(numero)
+            }
+            else{
+              if(cont==numero){
+                n++;
+                aleatorios.push(numero)
+                if(cont==aux){
+                  cont=-1;
+                }
+                else{
+                  cont=aux;
+                }
+              }
+              else{
+                 if(aux == numero){
+                  //n++;
+                  //aleatorios.push(numero)
+                  entra = false
+                  const specimens = aleatorios.filter((number, i) => i == 0 ? true : aleatorios[i - 1] != number);
+                  const counterSpecimens = specimens.map(spec => {
+                      return {number: spec, count: 0};
+                  });
+
+                  for (var i = 0; i < counterSpecimens.length - 1; i++) {
+                    const actualSpecLength = aleatorios.filter(number => number === counterSpecimens[i].number).length
+                    if(actualSpecLength<2){
+                        n++;
+                        aleatorios.push(counterSpecimens[i].number)
+                        i=0;
+                      }
+                  }
+                 }
+              }
+            }
+          }
+          else{
+            entra = true
+          }
+      } 
+  while (n < Math.floor(arreglo.length));
+
+  console.log(aleatorios)
+  var aleatoriosAux=[]
+
+  for (var i = aleatorios.length - 1; i >= 0; i--) {
+    if(aleatoriosAux.indexOf(aleatorios[i]) == -1){
+      aleatoriosAux.push(aleatorios[i])
+    }
+  }
+
+  console.log(aleatoriosAux)
+
+  if(aleatoriosAux.length<arreglo.length/2){
+    showMessage({
+      message: error[this.state.language],
+      type: 'danger',
+    });
+  }
+  else{
+
+  var pairs = new Array(),
+
+      pos = 0;
+
+      for (var i = 0; i < aleatoriosAux.length; i++) {
+
+          for (var j = 0; j < aleatoriosAux.length; j++) {
+
+            if(i!=j){
+              var element = [aleatoriosAux[i], aleatoriosAux[j]];
+              var element2 = [aleatoriosAux[j], aleatoriosAux[i]];
+              let pos2 = pairs.indexOf(element.toString())
+              let pos3 = pairs.indexOf(element2.toString())
+
+              if(pos2 == pos3){
+                pairs[pos++] = [aleatoriosAux[i], aleatoriosAux[j]].toString();
+              }
+            }
+          }
+      }
+              console.warn(pairs)
+              var equipos = []
+              var equipos2 = []
+              var equipos3 = []
+              var equipos4 = []
+
+            for (var i = 0; i < pairs.length; i++) {
+                var equipo = pairs[i].split(',')
+                console.warn(equipo)
+              for (var j = 0; j < aleatorios.length; j++) {
+                if(equipo[0]==aleatorios[j]){
+                  console.warn(arreglo[j])
+                  equipos.push(arreglo[j])
+                }
+                if(equipo[1]==aleatorios[j]){
+                  console.warn(arreglo[j])
+                  equipos2.push(arreglo[j])
+                }
+              }
+              equipos3.push(equipos)
+              equipos4.push(equipos2)
+              equipos = []
+              equipos2 = []
+            }
+        console.warn('------------------------------')
+
+
+        for (var i = 0; i < equipos3.length; i++) {
+          if(equipos3[i].length<equipos4[i].length){
+            equipos3[i].push(equipos3[i][0])
+          }
+          if (equipos3[i].length>equipos4[i].length) {
+            equipos4[i].push(equipos4[i][0])
+          }
+        }
+
+        let whoGetsString =  this.state.whoGetsAdv === 0 ? 'Hi Handicap' : this.state.whoGetsAdv === 1 ? 'Low Handicap' : this.state.whoGetsAdv === 2 ? 'Each' : this.state.whoGetsAdv === 3 ? 'Slid Hi' : this.state.whoGetsAdv === 4 ? 'Slid Low' : 'Automatic'
+
+        for (var i = 0; i < equipos3.length; i++) {
+          let playerA = equipos3[i][0];
+          let playerB = equipos3[i][1];
+          let playerC = equipos4[i][0];
+          let playerD = equipos4[i][1];
+          console.warn(playerA)
+          console.warn(playerB)
+          console.warn(playerC)
+          console.warn(playerD)
+          console.warn('------------------------------')
+          CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
+            .then((res) => {
+              console.warn(res)
+              CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
+                .then((res) => {
+                  console.warn(res)
+                  if(res.estatus == 1){
+                    /*showMessage({
+                      message: successSaveTeeData[this.state.language],
+                      type: 'success',
+                    });
+                    this.setState({
+                      carga:false
+                    })*/
+                    //AsyncStorage.setItem('arreglo', 'false');
+                    //this.props.navigation.goBack()
+                  }
+                  else{
+                    this.setState({
+                      carga:false
+                    })
+                    showMessage({
+                      message: error[this.state.language],
+                      type: 'danger',
+                    });
+                  }
+                })
+            })
+        }
+
+        showMessage({
+                      message: successSaveTeeData[this.state.language],
+                      type: 'success',
+                    });
+                    this.setState({
+                      carga:true
+                    })
+
+        AsyncStorage.setItem('arreglo', 'false');
+        this.props.navigation.navigate('BetsView')
+      }
+    }
+
+      /*
+
     let arreglo = this.state.selectedItems
 
     if(arreglo.length<3){
@@ -777,9 +974,65 @@ class SNBetView extends Component {
     }
     else{
 
+      var n = 0;
+      var numero;
+      var aleatorios=[0,1]
+      var cont = 1
+      do {
+          numero = Math.floor((Math.random() * arreglo.length/2));
+          if (aleatorios.indexOf(numero) == -1 && cont == 1) {
+            n++;
+            cont++;
+            aleatorios.push(numero)
+          }
+          else{
+            if(aleatorios.indexOf(numero) == -1){
+              n++;
+              cont =;
+              aleatorios.push(numero)
+            }
+            else{
+              if(cont == 2){
+                n++;
+                cont++;
+                aleatorios.push(numero)
+              }
+            }
+          }
+      } 
+  while (n < Math.floor(arreglo.length));
+      /*do {
+          numero = Math.floor((Math.random() * arreglo.length/2));
+          if (aleatorios.indexOf(numero) == -1 || par) {
+            if (aleatorios.indexOf(numero) == -1){ 
+              par = true;
+            }
+            else{
+              par = false
+            }
+            n++;
+            aleatorios.push(numero)
+          }
+      } 
+  while (n < Math.floor(arreglo.length));*/
+
+      /*console.warn(aleatorios)
+
       console.warn(arreglo)
 
       let whoGetsString =  this.state.whoGetsAdv === 0 ? 'Hi Handicap' : this.state.whoGetsAdv === 1 ? 'Low Handicap' : this.state.whoGetsAdv === 2 ? 'Each' : this.state.whoGetsAdv === 3 ? 'Slid Hi' : this.state.whoGetsAdv === 4 ? 'Slid Low' : 'Automatic'
+
+      var pairs = [];
+      if(arreglo.length%2==0){//PAR
+        for (var i = 0; i < arreglo.length; i++) {
+          if(pairs.indexOf(arreglo[i])==-1){
+            pairs.push(arreglo[i])
+          }
+        }
+      }
+      else{//IMPAR
+
+      }
 
       if(arreglo.length%2==0){
 
@@ -1011,11 +1264,8 @@ class SNBetView extends Component {
               })
           })
       }
-    }
-
-      AsyncStorage.setItem('arreglo', 'false');
-      this.props.navigation.navigate('BetsView')
-    }
+    }*/
+    //}
   }
 }
 
