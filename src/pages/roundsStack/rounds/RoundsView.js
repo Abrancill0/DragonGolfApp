@@ -57,13 +57,17 @@ export default function RoundsView(route) {
     
 
   async function ListadoRondas() {
+    let IDRound = await AsyncStorage.getItem('IDRound')
+    let IDCourse = await AsyncStorage.getItem('IDCourse')
+    console.log(IDRound)
+    console.log(IDCourse)
                 setStatus(true)
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
     setLanguage(language)
     ListarRonda(idUsu)
         .then((res) => {
-          console.warn(res)
+          //console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
@@ -218,7 +222,7 @@ export default function RoundsView(route) {
   };
 
   async function muestraRonda(IDCourse, IDRound, nombreRonda, handicap, hole, adv, fecha, nombre, status){
-    navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
+    //navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
     AsyncStorage.setItem('IDRound', IDRound.toString());
     AsyncStorage.setItem('nombreRonda', nombreRonda.toString());
     AsyncStorage.setItem('handicap', handicap.toString());
@@ -231,15 +235,15 @@ export default function RoundsView(route) {
     AsyncStorage.setItem('arreglo', 'false');
     let sn = await AsyncStorage.getItem('sn')
     let tn = await AsyncStorage.getItem('tn')
-    console.warn(sn)
-    console.warn(tn)
+    //console.warn(sn)
+    //console.warn(tn)
     AsyncStorage.setItem('sn', sn);
     AsyncStorage.setItem('tn', tn);
   }
 
 
   async function Elimina(id, tipo){
-    console.warn(tipo)
+    //console.warn(tipo)
     let idUsu = await AsyncStorage.getItem('usu_id')
     Alert.alert(
       "DragonGolf",
@@ -254,7 +258,7 @@ export default function RoundsView(route) {
           onPress: () => {
             EliminarCampo(id, tipo, idUsu)
               .then((res) => {
-                console.warn(res)
+                //console.warn(res)
                   if(res.estatus == 1){
                     ListadoRounds()
                   }

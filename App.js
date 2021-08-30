@@ -408,8 +408,45 @@ export default class App extends Component {
 
     function RoundTab() {
       return (
-        <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
-          <BottomTab.Screen name="Settings" component={PlayersViewRoundsList2} 
+        <Tab.Navigator tabBarOptions={{showLabel:false, showIcon:true}} backBehavior={'history'}>
+          <Tab.Screen name="RoundsStack" component={RoundsStack} 
+          options={({ route }) => ({
+            tabBarIcon:({ focused })=>{
+            if(focused==true)
+            {
+              return(
+              !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Primary}
+                    size={13} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
+              <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Primary}
+                    size={13} />
+              </View>
+              )
+            }else
+            {
+              return(
+                !isLandscape?<View style={{height:'60%',width:'60%', alignItems:'center'}}>
+                  <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Black}
+                    size={13} />
+              </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
+              <FontAwesome5
+                    name='golf-ball'
+                    color={Colors.Black}
+                    size={13} />
+              </View>
+              )
+            }
+          },
+          })}
+          />
+          <Tab.Screen name="Settings" component={PlayersViewRoundsList2} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -419,12 +456,12 @@ export default class App extends Component {
                   <FontAwesome5
                     name='user-friends'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
               <FontAwesome5
                     name='user-friends'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>
               )
             }else
@@ -434,19 +471,19 @@ export default class App extends Component {
                   <FontAwesome5
                     name='user-friends'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'90%', alignItems:'center', marginTop:5}}>
               <FontAwesome5
                     name='user-friends'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>
               )
             }
           },
           })}
           />
-          <BottomTab.Screen name="ScoreView" component={ScoreView} 
+          <Tab.Screen name="ScoreView" component={ScoreView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -456,12 +493,12 @@ export default class App extends Component {
                   <MaterialCommunityIcons
                     name='scoreboard'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <MaterialCommunityIcons
                     name='scoreboard'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>
               )
             }else
@@ -471,19 +508,19 @@ export default class App extends Component {
                   <MaterialCommunityIcons
                     name='scoreboard'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <MaterialCommunityIcons
                     name='scoreboard'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>
               )
             }
           },
           })}
           />
-          <BottomTab.Screen name="BetsView" component={BetsView} 
+          <Tab.Screen name="BetsView" component={BetsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -493,12 +530,12 @@ export default class App extends Component {
                   <FontAwesomeIcon
                     name='money'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <FontAwesomeIcon
                     name='money'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>
               )
             }else
@@ -508,19 +545,19 @@ export default class App extends Component {
                   <FontAwesomeIcon
                     name='money'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <FontAwesomeIcon
                     name='money'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>
               )
             }
           },
           })}
           />
-          <BottomTab.Screen name="More" component={More} 
+          <Tab.Screen name="More" component={More} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -530,12 +567,12 @@ export default class App extends Component {
                   <FontAwesomeIcon
                     name='star'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <FontAwesomeIcon
                     name='star'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>
               )
             }else
@@ -545,19 +582,19 @@ export default class App extends Component {
                   <FontAwesomeIcon
                     name='star'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <FontAwesomeIcon
                     name='star'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>
               )
             }
           },
           })}
           />
-        <BottomTab.Screen name="EditRound" component={EditRound} 
+        <Tab.Screen name="EditRound" component={EditRound} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -567,12 +604,12 @@ export default class App extends Component {
                   <MaterialIcons
                     name='settings'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <MaterialIcons
                     name='settings'
                     color={Colors.Primary}
-                    size={25} />
+                    size={13} />
               </View>
               )
             }else
@@ -582,19 +619,19 @@ export default class App extends Component {
                   <MaterialIcons
                     name='settings'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>:<View style={{height:'90%',width:'100%', alignItems:'center', marginTop:5}}>
               <MaterialIcons
                     name='settings'
                     color={Colors.Black}
-                    size={20} />
+                    size={13} />
               </View>
               )
             }
           },
           })}
           />
-        </BottomTab.Navigator>
+        </Tab.Navigator>
       );
     }
 
@@ -679,7 +716,7 @@ export default class App extends Component {
                   onPress={()=> props.navigation.navigate('CoursesView')}/>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('RoundsStack')}>
+              <TouchableOpacity style={{width:'100%',flexDirection:'row',alignItems:'center'}} onPress={()=> props.navigation.navigate('RoundTab')}>
                   <View style={{flex:.1}}>
                     <FontAwesome5 name='golf-ball' color='#0F222D' size={20}/>
                   </View>
@@ -687,7 +724,7 @@ export default class App extends Component {
                   <DrawerItem
                   label={rondas[this.state.language]}
                   labelStyle={{color:Colors.Primary}}
-                  onPress={()=> props.navigation.navigate('RoundsStack')}/>
+                  onPress={()=> props.navigation.navigate('RoundTab')}/>
                 </View>
               </TouchableOpacity> 
               </View>
@@ -720,7 +757,7 @@ export default class App extends Component {
       </Drawer.Navigator>
 
     CreateHomeBottomTabNavigator = () =>
-      <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
+      <BottomTab.Navigator tabBarOptions={{showLabel:false}} backBehavior={'history'}>
           <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -829,7 +866,7 @@ export default class App extends Component {
             }
           },
           })} />
-        <BottomTab.Screen name='RoundsStack' component={RoundsStack} 
+        <BottomTab.Screen name='RoundsStack' component={RoundTab} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)

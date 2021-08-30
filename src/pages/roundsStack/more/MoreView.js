@@ -18,7 +18,13 @@ class MoreView extends Component {
     };
   }
 
-  componentDidMount = async () => {
+  componentDidMount (){
+    this.ListadoTodos()
+    this.props.navigation.addListener('focus', () => {
+      this.ListadoTodos()
+    });
+    }
+  ListadoTodos = async () => {
     let language = await AsyncStorage.getItem('language')
     let status = await AsyncStorage.getItem('status')
 
@@ -26,7 +32,7 @@ class MoreView extends Component {
         language:language,
         status:status
     })
-    }
+  }
 
   cierraRonda = async () => {
     let IDRound = await AsyncStorage.getItem('IDRound')

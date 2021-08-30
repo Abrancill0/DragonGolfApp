@@ -120,7 +120,7 @@ export default function RoundsView(route) {
             onPress: () => {
               setStatus(true)
               navigation.navigate('RoundsStack')
-              navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
+              //navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
               AsyncStorage.setItem('IDRound', IDRound.toString());
               //navigation.navigate('RoundsStack')
             },

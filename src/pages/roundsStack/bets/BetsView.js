@@ -44,7 +44,7 @@ import styles from './styles';
 export default function betsView(route) {
 
     const navigation = useNavigation();
-    const [subebaja, setSubebaja] = useState(true);
+    const [subebaja, setSubebaja] = useState(false);
     const [rounds2, setRounds2] = useState([]);
     const [rounds3, setRounds3] = useState([]);
     const [bets2, setbets2] = useState([]);

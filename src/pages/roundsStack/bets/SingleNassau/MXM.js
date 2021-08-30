@@ -99,6 +99,7 @@ class SNBetView extends Component {
       playerB,
       language: '',
       players: [],
+      playersAux: [],
       IDBet:this.props.route.params.IDBet,
       IDRound:this.props.route.params.IDRound,
       selectedItems : [],
@@ -120,11 +121,15 @@ class SNBetView extends Component {
   }
 
   onSelectedItemsChange = selectedItems => {
-    this.setState({ selectedItems });
+    console.warn(this.state.players)
+    console.warn(selectedItems)
+    let players2 = this.state.players
+    players2.splice(selectedItems[selectedItems.length-1],1)
+    this.setState({ selectedItems,players:players2 });
   };
 
   onSelectedItemsChange2 = selectedItems2 => {
-    this.setState({ selectedItems2 });
+    this.setState({ selectedItems2,playersAux:this.state.playersAux-selectedItems2 });
   };
 
   render() {
@@ -146,7 +151,8 @@ class SNBetView extends Component {
 
     const {
       language,
-      players
+      players,
+      playersAux
     } = this.state;
 
     return (
@@ -196,7 +202,7 @@ class SNBetView extends Component {
             <View style={{ flex: 0.5,margin:1 }}>
             <MultiSelect
               hideTags
-              items={players}
+              items={playersAux}
               uniqueKey="id"
               onSelectedItemsChange={this.onSelectedItemsChange2}
               selectedItems={this.state.selectedItems2}
@@ -368,209 +374,6 @@ class SNBetView extends Component {
           }
         })
       }
-    //this.calculateAdvStrokes(player, type);
-    //this.changeBetsValues(player, type);
-  }
-
-  calculateAdvStrokes = async (player, type) => {
-    const { players, playerA, playerB, override } = this.state;
-    //const { players, hcpAdj, playersWithStrokes } = this.props;
-    let advStrokes = 0;
-    if (type === 'A') {
-      if (player && playerB) {
-        const strokes = 0//await database.listPlayersConfrontations(player);
-        const idx = strokes.findIndex(item => item.member_b_id === playerB);
-        if (idx >= 0) {
-          advStrokes = strokes[idx].adv_strokes;
-        } else {
-          const indexA = players.findIndex(item => item.id === player);
-          const indexB = players.findIndex(item => item.id === playerB);
-          const strokesA = ((players[indexA].handicap * players[indexA].tee.slope / 113) * hcpAdj).toFixed(0);
-          const strokesB = ((players[indexB].handicap * players[indexB].tee.slope / 113) * hcpAdj).toFixed(0);
-
-          if (players[indexA].player_id === 1) {
-            const playerId = players[indexB].player_id;
-            const playerIndex = playersWithStrokes.findIndex(item => item.id === playerId);
-            if (playerIndex >= 0) {
-              advStrokes = playersWithStrokes[playerIndex].strokes;
-            } else {
-              advStrokes = strokesA - strokesB;
-            }
-          } else if (players[indexB].player_id === 1) {
-            const playerId = players[indexA].player_id;
-            const playerIndex = playersWithStrokes.findIndex(item => item.id === playerId);
-            if (playerIndex >= 0) {
-              advStrokes = -playersWithStrokes[playerIndex].strokes;
-            } else {
-              advStrokes = strokesA - strokesB;
-            }
-          } else {
-            advStrokes = strokesA - strokesB;
-          }
-        }
-      }
-    }
-
-    if (type === 'B') {
-      if (player && playerA) {
-        const strokes = 0//await database.listPlayersConfrontations(playerA);
-        const idx = strokes.findIndex(item => item.member_b_id === player);
-        if (idx >= 0) {
-          advStrokes = strokes[idx].adv_strokes;
-        } else {
-          const indexA = players.findIndex(item => item.id === playerA);
-          const indexB = players.findIndex(item => item.id === player);
-          if (indexA >= 0 && indexB >= 0) {
-            const strokesA = ((players[indexA].handicap * players[indexA].tee.slope / 113) * hcpAdj).toFixed(0);
-            const strokesB = ((players[indexB].handicap * players[indexB].tee.slope / 113) * hcpAdj).toFixed(0);
-
-            if (players[indexA].player_id === 1) {
-              const playerId = players[indexB].player_id;
-              const playerIndex = playersWithStrokes.findIndex(item => item.id === playerId);
-              if (playerIndex >= 0) {
-                advStrokes = playersWithStrokes[playerIndex].strokes;
-              } else {
-                advStrokes = strokesA - strokesB;
-              }
-            } else if (players[indexB].player_id === 1) {
-              const playerId = players[indexA].player_id;
-              const playerIndex = playersWithStrokes.findIndex(item => item.id === playerId);
-              if (playerIndex >= 0) {
-                advStrokes = -playersWithStrokes[playerIndex].strokes;
-              } else {
-                advStrokes = strokesA - strokesB;
-              }
-            } else {
-              advStrokes = strokesA - strokesB;
-            }
-          }
-        }
-      }
-    }
-
-    if (!override) {
-      this.setState({ advStrokes: advStrokes.toString() });
-    }
-  }
-
-  changeBetsValues = (player, type) => {
-    const { players } = this.props;
-    if (type === 'B') {
-      const index = players.findIndex(item => item.id === player);
-      if (this.playerSettings[index]) {
-        const settings = this.playerSettings[index];
-        const useFactor = settings.use_factor === 'factor';
-        const value = settings.cantidad;
-        this.setState({
-          autoPress: settings.automatic_presses_every.toString(),
-          front9: useFactor ? (value * settings.front_9).toString() : settings.front_9.toString(),
-          back9: useFactor ? (value * settings.back_9).toString() : settings.back_9.toString(),
-          match: useFactor ? (value * settings.match).toString() : settings.match.toString(),
-          carry: useFactor ? (value * settings.carry).toString() : settings.carry.toString(),
-          medal: useFactor ? (value * settings.medal).toString() : settings.medal.toString(),
-        });
-      }
-    }
-  }
-
-  fieldValidations = () => {
-
-    const {
-      front9,
-      back9,
-      autoPress,
-      match,
-      carry,
-      medal,
-      advStrokes,
-      playerA,
-      playerB
-    } = this.state;
-
-    const {
-      language
-    } = this.state;
-
-    const { ok: front9Ok } = Validations.floatNumberValidation(front9 ? front9 : 1);
-    if (!front9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Front 9`
-      );
-      return false;
-    }
-
-    const { ok: back9Ok } = Validations.floatNumberValidation(back9 ? back9 : 1);
-    if (!back9Ok) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Back 9`
-      );
-      return false;
-    }
-
-    const { ok: autoPressOk } = Validations.intNumberValidation(autoPress ? autoPress : 1);
-    if (!autoPressOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Auto Press Every`
-      );
-      return false;
-    }
-
-    const { ok: matchOk } = Validations.floatNumberValidation(match ? match : 1);
-    if (!matchOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Match`
-      );
-      return false;
-    }
-
-    const { ok: carryOk } = Validations.floatNumberValidation(carry ? carry : 1);
-    if (!carryOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Carry`
-      );
-      return false;
-    }
-
-    const { ok: medalOk } = Validations.floatNumberValidation(medal ? medal : 1);
-    if (!medalOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Medal`
-      );
-      return false;
-    }
-
-    const { ok: advStrokesOk } = Validations.floatNumberValidation(advStrokes ? advStrokes : 1);
-    if (!advStrokesOk) {
-      Alert.alert(
-        'Error',
-        `${Dictionary.verifyField[language]} Adv. Strokes`
-      );
-      return false;
-    }
-
-    if (!playerA || !playerB) {
-      Alert.alert(
-        'Error',
-        Dictionary.mustSelect[language]
-      );
-      return false;
-    }
-
-    if (playerA === playerB) {
-      Alert.alert(
-        'Error',
-        Dictionary.samePlayer[language]
-      );
-      return false;
-    }
-
-    return true;
   }
 
   submit = async () => {
@@ -587,6 +390,8 @@ class SNBetView extends Component {
 
       console.warn(this.state.selectedItems)
       console.warn(this.state.selectedItems2)
+      console.warn(this.state.players)
+      console.warn(this.state.playersAux)
 
       let mismo = false
 
@@ -637,7 +442,11 @@ class SNBetView extends Component {
                 ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
                 .then((res) => {
                   console.warn(res)
-                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
+                  let back9UF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_back_9).toString() : res.Result[0].set_snw_back_9.toString()
+                  let matchUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_match).toString() : res.Result[0].set_snw_match.toString()
+                  let carryUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_carry).toString() : res.Result[0].set_snw_carry.toString()
+                  let medalUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_medal).toString() : res.Result[0].set_snw_medal.toString()
+                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,back9UF,matchUF,carryUF,medalUF,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
                   .then((res) => {
                     console.warn(res)
                     if(res.estatus == 1){

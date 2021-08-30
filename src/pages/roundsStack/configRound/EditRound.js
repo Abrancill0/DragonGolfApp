@@ -75,51 +75,58 @@ class ConfigRoundView extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    let language = await AsyncStorage.getItem('language')
-    let nombreRonda = await AsyncStorage.getItem('nombreRonda');
-    let handicap = await AsyncStorage.getItem('handicap');
-    let hole = await AsyncStorage.getItem('hole');
-    let adv = await AsyncStorage.getItem('adv')==1?true:false;
-    let fecha = await AsyncStorage.getItem('fecha');
-    let IDCourse = await AsyncStorage.getItem('IDCourse');
-    let nombre = await AsyncStorage.getItem('nombre');
-    let IDRound = await AsyncStorage.getItem('IDRound');
-    let selectedButton = 0
-    switch(handicap){
-          case '100': selectedButton = 0
-          break;
-          case '95': selectedButton = 1
-          break;
-          case '90': selectedButton = 2
-          break;
-          case '85': selectedButton = 3
-          break;
-          case '80': selectedButton = 4
-          break;
+  componentDidMount (){
+    this.ListadoTodos()
+    this.props.navigation.addListener('focus', () => {
+      this.ListadoTodos()
+    });
+    }
+
+    ListadoTodos = async () => {
+      let language = await AsyncStorage.getItem('language')
+      let nombreRonda = await AsyncStorage.getItem('nombreRonda');
+      let handicap = await AsyncStorage.getItem('handicap');
+      let hole = await AsyncStorage.getItem('hole');
+      let adv = await AsyncStorage.getItem('adv')==1?true:false;
+      let fecha = await AsyncStorage.getItem('fecha');
+      let IDCourse = await AsyncStorage.getItem('IDCourse');
+      let nombre = await AsyncStorage.getItem('nombre');
+      let IDRound = await AsyncStorage.getItem('IDRound');
+      let selectedButton = 0
+      switch(handicap){
+            case '100': selectedButton = 0
+            break;
+            case '95': selectedButton = 1
+            break;
+            case '90': selectedButton = 2
+            break;
+            case '85': selectedButton = 3
+            break;
+            case '80': selectedButton = 4
+            break;
+          }
+      console.warn(nombreRonda)
+      console.warn(handicap)
+      console.warn(hole)
+      console.warn(adv)
+      console.warn(fecha)
+      this.setState({
+          language:language,
+          roundName: nombreRonda,// + ' ' + this.formatDate(timestamp / 1000),
+          date: fecha,//this.formatDate(timestamp / 1000),
+          holeNumber: parseInt(hole),
+          switchAdv: adv,
+          IDCourse: IDCourse,
+          courseName: nombre,
+          selectedButton: selectedButton,
+          pickerTextDate: fecha,
+          pickerTextDate2: fecha.split('/').reverse().join('/'),
+          IDRound: IDRound
+      })
+      this.refs.nombre.setValue(nombreRonda)//this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
+      if(Platform.OS === 'android'){
+        this.refs.fecha.setValue(fecha)
         }
-    console.warn(nombreRonda)
-    console.warn(handicap)
-    console.warn(hole)
-    console.warn(adv)
-    console.warn(fecha)
-    this.setState({
-        language:language,
-        roundName: nombreRonda,// + ' ' + this.formatDate(timestamp / 1000),
-        date: fecha,//this.formatDate(timestamp / 1000),
-        holeNumber: parseInt(hole),
-        switchAdv: adv,
-        IDCourse: IDCourse,
-        courseName: nombre,
-        selectedButton: selectedButton,
-        pickerTextDate: fecha,
-        pickerTextDate2: fecha.split('/').reverse().join('/'),
-        IDRound: IDRound
-    })
-    this.refs.nombre.setValue(nombreRonda)//this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
-    if(Platform.OS === 'android'){
-      this.refs.fecha.setValue(fecha)
-      }
     }
 
     navegaBack (){

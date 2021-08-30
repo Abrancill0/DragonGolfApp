@@ -40,8 +40,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 export default function RoundsView(route) {
 
     const navigation = useNavigation();
-    const [IDCourse, setIDCourse] = useState(route.route.params.IDCourse);
-    const [IDRound, setIDRound] = useState(route.route.params.IDRound);
+    const [IDCourse, setIDCourse] = useState(0);
+    const [IDRound, setIDRound] = useState(0);
     const [players, setPlayers] = useState([]);
     const [UsuarioCreo, setUsuarioCreo] = useState(1);
     const [ValidaUsuarioCreo, setValidaUsuarioCreo] = useState(0);
@@ -70,7 +70,11 @@ export default function RoundsView(route) {
   async function ListadoTodos() {
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
+    let IDCourse = await AsyncStorage.getItem('IDCourse')
+    let IDRound = await AsyncStorage.getItem('IDRound')
     setLanguage(language)
+    setIDCourse(IDCourse)
+    setIDRound(IDRound)
     console.warn(idUsu)
     console.warn(IDRound)
     ListadoAmigosRonda2(idUsu, IDRound)
