@@ -15,6 +15,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 const {
   save,
+  allToAll,
   useFactor: useFactorText,
   error,
   successSaveTeeData,
@@ -121,15 +122,35 @@ class SNBetView extends Component {
   }
 
   onSelectedItemsChange = selectedItems => {
-    console.warn(this.state.players)
+    console.warn(this.state.playersAux)
     console.warn(selectedItems)
-    let players2 = this.state.players
-    players2.splice(selectedItems[selectedItems.length-1],1)
-    this.setState({ selectedItems,players:players2 });
+    let players2 = this.state.playersAux
+    for (var i = 0; i < players2.length; i++) {
+      for (var j = 0; j <selectedItems.length; j++) {
+        if(players2[i].id === selectedItems[j]){
+          players2.splice(i,1)
+        }
+      }
+    }
+
+    console.warn(players2)
+    this.setState({ selectedItems: selectedItems});
   };
 
   onSelectedItemsChange2 = selectedItems2 => {
-    this.setState({ selectedItems2,playersAux:this.state.playersAux-selectedItems2 });
+    console.warn(this.state.players)
+    console.warn(selectedItems2)
+    let players3 = this.state.players
+    for (var i = 0; i < players3.length; i++) {
+      for (var j = 0; j <selectedItems2.length; j++) {
+        if(players3[i].id === selectedItems2[j]){
+          players3.splice(i,1)
+        }
+      }
+    }
+
+    console.warn(players3)
+    this.setState({ selectedItems2: selectedItems2});
   };
 
   render() {
@@ -227,6 +248,9 @@ class SNBetView extends Component {
         </ScrollView>
 
         <View style={styles.bottomButtom}>
+          <DragonButton title={allToAll[language]} onPress={this.submit2} />
+        </View>
+        <View style={styles.bottomButtom}>
           <DragonButton title={save[language]} onPress={this.submit} />
         </View>
 
@@ -281,6 +305,8 @@ class SNBetView extends Component {
 
                 this.setState({
                   players:list,
+                  playersAux:list,
+                  playersAux2:list,
                   carga:false,
                   playerA:list[0].id,
                   playerB:list[0].id
@@ -289,6 +315,8 @@ class SNBetView extends Component {
             else{
               this.setState({
                 players:[],
+                playersAux:[],
+                playersAux2:[],
                 carga:false
               })
             }
@@ -374,6 +402,85 @@ class SNBetView extends Component {
           }
         })
       }
+  }
+
+  submit2 = async () => {
+    this.setState({
+                        carga:true
+                      })
+
+        console.warn('Todos vs todos')
+
+      var pairs = new Array(),
+
+      pos = 0;
+
+      for (var i = 0; i < this.state.playersAux2.length; i++) {
+
+          for (var j = 0; j < this.state.playersAux2.length; j++) {
+
+            if(i!=j){
+              console.warn(pairs)
+              var element = [this.state.playersAux2[i], this.state.playersAux2[j]];
+              var element2 = [this.state.playersAux2[j], this.state.playersAux2[i]];
+              console.warn(element)
+              console.warn(element2)
+              let pos2 = pairs.indexOf(element.toString())
+              let pos3 = pairs.indexOf(element2.toString())
+              console.warn(pos2)
+              console.warn(pos3)
+
+              if(pos2 == pos3){
+                pairs[pos++] = [this.state.playersAux2[i], this.state.playersAux2[j]].toString();
+                let playerA = this.state.playersAux2[i];
+                let playerB = this.state.playersAux2[j];
+                ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
+                .then((res) => {
+                  console.warn(res)
+                  let back9UF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_back_9).toString() : res.Result[0].set_snw_back_9.toString()
+                  let matchUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_match).toString() : res.Result[0].set_snw_match.toString()
+                  let carryUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_carry).toString() : res.Result[0].set_snw_carry.toString()
+                  let medalUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_medal).toString() : res.Result[0].set_snw_medal.toString()
+                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,back9UF,matchUF,carryUF,medalUF,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
+                  .then((res) => {
+                    console.warn(res)
+                    if(res.estatus == 1){
+                      /*showMessage({
+                        message: successSaveTeeData[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:false
+                      })*/
+                      //AsyncStorage.setItem('arreglo', 'false');
+                      //this.props.navigation.goBack()
+                    }
+                    else{
+                      this.setState({
+                        carga:false
+                      })
+                      showMessage({
+                        message: error[this.state.language],
+                        type: 'danger',
+                      });
+                    }
+                  })
+                })
+              }
+            }
+          }
+        }
+
+        showMessage({
+                        message: successSaveTeeData[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:true
+                      })
+
+      AsyncStorage.setItem('arreglo', 'false');
+      this.props.navigation.navigate('BetsView')
   }
 
   submit = async () => {

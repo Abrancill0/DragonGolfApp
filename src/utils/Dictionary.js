@@ -183,6 +183,10 @@ export const Dictionary = {
         'en': 'All',
         'es': 'Todos'
     },
+    allToAll: {
+        'en': 'All vs All',
+        'es': 'Todos contra Todos'
+    },
     guests: {
         'en': 'Guests',
         'es': 'Invitados'
