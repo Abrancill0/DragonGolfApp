@@ -36,6 +36,7 @@ import moment from 'moment';
 export default function RoundsView(route) {
 
     const navigation = useNavigation();
+    const [IDRound, setIDRound] = useState(0);
     const [rounds, setRounds] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
@@ -57,10 +58,12 @@ export default function RoundsView(route) {
     
 
   async function ListadoRondas() {
+    console.warn('RoundsView')
     let IDRound = await AsyncStorage.getItem('IDRound')
     let IDCourse = await AsyncStorage.getItem('IDCourse')
     console.log(IDRound)
     console.log(IDCourse)
+    setIDRound(IDRound)
                 setStatus(true)
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
@@ -235,10 +238,23 @@ export default function RoundsView(route) {
     AsyncStorage.setItem('arreglo', 'false');
     let sn = await AsyncStorage.getItem('sn')
     let tn = await AsyncStorage.getItem('tn')
+    if (sn != null )
+    {
+      AsyncStorage.setItem('sn', sn);
+    }
+    else{
+      AsyncStorage.setItem('sn', 'false');
+    }
+    if (tn != null )
+    {
+      AsyncStorage.setItem('tn', tn);
+    }
+    else{
+      AsyncStorage.setItem('tn', 'false');
+    }
     //console.warn(sn)
     //console.warn(tn)
-    AsyncStorage.setItem('sn', sn);
-    AsyncStorage.setItem('tn', tn);
+    ListadoRondas()
   }
 
 
@@ -402,7 +418,7 @@ export default function RoundsView(route) {
                           showsHorizontalScrollIndicator={false}>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
-                              <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
+                              <View style={{flex:.05,backgroundColor:item.id==IDRound?Colors.Primary:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
