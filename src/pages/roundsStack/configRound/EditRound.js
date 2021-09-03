@@ -150,6 +150,7 @@ class ConfigRoundView extends Component {
       carga,
       language,
       IDCourse,
+      IDRound,
       roundName,
       selectedButton,
       holeNumber,
@@ -162,6 +163,7 @@ class ConfigRoundView extends Component {
     } = this.state;
 
     return (
+      IDRound!=0 &&
       <View style={{ flex: 1 }}>
         <Spinner
             visible={carga}

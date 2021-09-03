@@ -161,6 +161,26 @@ class SNBetView extends Component {
           </View>
         </View>
 
+        <View style={styles.betField}>
+            <View style={styles.betRow}>
+              <Text style={styles.betText}>Front 9 </Text>
+              <View style={{ width: 10 }} />
+              <Text style={styles.dollarSym}>$ </Text>
+              <TextInput
+                style={styles.betInput}
+                selectionColor={Colors.Primary}
+                placeholder="0"
+                keyboardType="numeric"
+                returnKeyType='done'
+                maxLength={5}
+                onChangeText={(front9) => this.setState({ front9 })}
+                value={front9}
+                blurOnSubmit={false}
+                selectTextOnFocus={true}
+              />
+            </View>
+          </View>
+
         {/*
 
           <View style={styles.betField}>
@@ -769,6 +789,7 @@ class SNBetView extends Component {
 
 
     var arreglo=this.state.selectedItems//[1,2,3,4,5]
+    console.warn(this.state.front9)
 
     if(arreglo.length<3){
       showMessage({

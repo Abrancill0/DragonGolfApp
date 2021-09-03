@@ -14,7 +14,8 @@ class MoreView extends Component {
     super(props);
     this.state = {
       language: 'es',
-      status: '1'
+      status: '1',
+      IDRound:0
     };
   }
 
@@ -27,10 +28,12 @@ class MoreView extends Component {
   ListadoTodos = async () => {
     let language = await AsyncStorage.getItem('language')
     let status = await AsyncStorage.getItem('status')
+    let IDRound = await AsyncStorage.getItem('IDRound')
 
     this.setState({
         language:language,
-        status:status
+        status:status,
+        IDRound:IDRound
     })
   }
 
@@ -86,6 +89,7 @@ class MoreView extends Component {
     } = Dictionary;
 
     return (
+      this.state.IDRound!=0 &&
       <View style={styles.container}>
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
