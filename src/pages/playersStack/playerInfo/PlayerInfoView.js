@@ -130,7 +130,7 @@ class PlayerInfoView extends Component {
                 this.setState({
                 update:true,
                 advantageMove: res.Result[0].set_how_adv_move,
-                strokesPerRound: res.Result[0].set_strokes_moved_per_round.toString(),
+                strokesPerRound: res.Result[0].set_strokes_moved_per_round!=0?res.Result[0].set_strokes_moved_per_round.toString():'0.5',
                 advMovesHoles: res.Result[0].set_adv_moves_on_9_holes,
                 carryMoveAdv: res.Result[0].set_carry_moves_adv,
                 rabbit16: res.Result[0].set_rabbit_1_6.toString(),
@@ -185,7 +185,7 @@ class PlayerInfoView extends Component {
                           this.setState({
                           update:false,
                           advantageMove: res.Result[0].set_how_adv_move,
-                          strokesPerRound: res.Result[0].set_strokes_moved_per_round.toString(),
+                          strokesPerRound: res.Result[0].set_strokes_moved_per_round!=0?res.Result[0].set_strokes_moved_per_round.toString():'0.5',
                           advMovesHoles: res.Result[0].set_adv_moves_on_9_holes,
                           carryMoveAdv: res.Result[0].set_carry_moves_adv,
                           rabbit16: res.Result[0].set_rabbit_1_6.toString(),
