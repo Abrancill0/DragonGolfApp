@@ -25,7 +25,7 @@ import Details from '../../../utils/Details';
 import DragonButton from '../../global/DragonButton';
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
-import { ActualizarRonda } from '../../../Services/Services'
+import { ActualizarRonda, CambioRonda } from '../../../Services/Services'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -632,18 +632,33 @@ class ConfigRoundView extends Component {
                 message: successSaveTeeData[language],
                 type:'success',
             });
-            AsyncStorage.setItem('nombreRonda', roundName.toString());
-            AsyncStorage.setItem('handicap', Ro_HandicapAdjustment.toString());
-            AsyncStorage.setItem('hole', holeNumber.toString());
-            AsyncStorage.setItem('adv', Ro_SwitchAdventage.toString());
-            AsyncStorage.setItem('fecha', pickerTextDate2.toString());
-            AsyncStorage.setItem('IDCourse', IDCourse.toString());
-            AsyncStorage.setItem('courseName', courseName.toString());
-            AsyncStorage.setItem('arreglo', 'false');
-            //navigation.navigate('createDetalleTab', { screen: 'Detalle', params: { RmReqId: RmReqId, RmReqProveedorNombre: RmReqProveedorNombre } })
-            this.props.navigation.goBack()//("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
-            //this.props.navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:res.idround} })
-            //AsyncStorage.setItem('IDRound', res.idround.toString());
+            CambioRonda(IDRound, Ro_SwitchAdventage)
+              .then((res1) => {
+                console.warn(res1)
+                if(res1.estatus > 0){
+                  AsyncStorage.setItem('nombreRonda', roundName.toString());
+                  AsyncStorage.setItem('handicap', Ro_HandicapAdjustment.toString());
+                  AsyncStorage.setItem('hole', holeNumber.toString());
+                  AsyncStorage.setItem('adv', Ro_SwitchAdventage.toString());
+                  AsyncStorage.setItem('fecha', pickerTextDate2.toString());
+                  AsyncStorage.setItem('IDCourse', IDCourse.toString());
+                  AsyncStorage.setItem('courseName', courseName.toString());
+                  AsyncStorage.setItem('arreglo', 'false');
+                  //navigation.navigate('createDetalleTab', { screen: 'Detalle', params: { RmReqId: RmReqId, RmReqProveedorNombre: RmReqProveedorNombre } })
+                  this.props.navigation.goBack()//("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
+                  //this.props.navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:res.idround} })
+                  //AsyncStorage.setItem('IDRound', res.idround.toString());
+                }
+                else{
+                  this.setState({
+                    carga:false
+                  })
+                  showMessage({
+                    message: "Ocurrió un error, intente más tarde",
+                    type:'danger',
+                });
+                }
+              })
             }
             else{
               this.setState({

@@ -775,6 +775,25 @@ export const AbrirRonda = (IDRound) => {
                 });
 };
 
+export const CambioRonda = (IDRound,roCambio) => {
+    const URL = RutaBaseAB + "/CambioRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: IDRound,
+                    Ro_Cambio: roCambio
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const ListaApuesta = () => {
     const URL = RutaBaseAB + "/ListaApuesta";
     return fetch(URL, {
