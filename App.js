@@ -410,7 +410,7 @@ export default class App extends Component {
 
     function RoundTab() {
       return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex:1}}>
         <Tab.Navigator tabBarOptions={{showLabel:false, showIcon:true}} backBehavior={'history'}>
           <Tab.Screen name="RoundsStack" component={RoundsStack} 
           options={({ route }) => ({
