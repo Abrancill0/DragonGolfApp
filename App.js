@@ -85,6 +85,8 @@ import { InfoUsuarioAB } from './src/Services/Services';
 import NetInfo from "@react-native-community/netinfo";
 import RNRestart from 'react-native-restart'
 import SQLite from 'react-native-sqlite-storage';
+import { SafeAreaView } from 'react-navigation';
+
 
 var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" });
 
@@ -408,6 +410,7 @@ export default class App extends Component {
 
     function RoundTab() {
       return (
+        <SafeAreaView>
         <Tab.Navigator tabBarOptions={{showLabel:false, showIcon:true}} backBehavior={'history'}>
           <Tab.Screen name="RoundsStack" component={RoundsStack} 
           options={({ route }) => ({
@@ -632,6 +635,7 @@ export default class App extends Component {
           })}
           />
         </Tab.Navigator>
+        </SafeAreaView>
       );
     }
 
