@@ -7,7 +7,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, CrearDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
+import { ListadoAmigosRonda, ValidaDetalleApuesta, CrearDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -19,6 +19,7 @@ const {
   useFactor: useFactorText,
   error,
   successSaveTeeData,
+  betsRepeat,
   fewPlayer,
   samePlayerTN,
   Manually,
@@ -415,14 +416,16 @@ class SNBetView extends Component {
 
       pos = 0;
 
+      var repeat = false;
+
       for (var i = 0; i < this.state.playersAux2.length; i++) {
 
           for (var j = 0; j < this.state.playersAux2.length; j++) {
 
             if(i!=j){
               console.warn(pairs)
-              var element = [this.state.playersAux2[i], this.state.playersAux2[j]];
-              var element2 = [this.state.playersAux2[j], this.state.playersAux2[i]];
+              var element = [this.state.playersAux2[i].id, this.state.playersAux2[j].id];
+              var element2 = [this.state.playersAux2[j].id, this.state.playersAux2[i].id];
               console.warn(element)
               console.warn(element2)
               let pos2 = pairs.indexOf(element.toString())
@@ -431,9 +434,14 @@ class SNBetView extends Component {
               console.warn(pos3)
 
               if(pos2 == pos3){
-                pairs[pos++] = [this.state.playersAux2[i], this.state.playersAux2[j]].toString();
-                let playerA = this.state.playersAux2[i];
-                let playerB = this.state.playersAux2[j];
+                pairs[pos++] = [this.state.playersAux2[i].id, this.state.playersAux2[j].id].toString();
+                let playerA = this.state.playersAux2[i].id;
+                let playerB = this.state.playersAux2[j].id;
+                console.warn('----------')
+                console.warn(this.state.IDRound)
+                console.warn(playerA)
+                console.warn(playerB)
+                console.warn('----------')
                 ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
                 .then((res) => {
                   console.warn(res)
@@ -441,6 +449,16 @@ class SNBetView extends Component {
                   let matchUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_match).toString() : res.Result[0].set_snw_match.toString()
                   let carryUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_carry).toString() : res.Result[0].set_snw_carry.toString()
                   let medalUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_medal).toString() : res.Result[0].set_snw_medal.toString()
+                  ValidaDetalleApuesta(this.state.IDRound,this.state.IDBet,playerA,playerB)
+                  .then((res2) => {
+                    console.warn(res2)
+                    if(res2.estatus == 0){
+                      showMessage({
+                        message: betsRepeat[this.state.language],
+                        type: 'warning',
+                      });
+                    }
+                  })
                   CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,back9UF,matchUF,carryUF,medalUF,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
                   .then((res) => {
                     console.warn(res)
@@ -481,6 +499,7 @@ class SNBetView extends Component {
 
       AsyncStorage.setItem('arreglo', 'false');
       this.props.navigation.navigate('BetsView')
+
   }
 
   submit = async () => {
@@ -527,6 +546,8 @@ class SNBetView extends Component {
 
       pos = 0;
 
+      var repeat = false;
+
       for (var i = 0; i < this.state.selectedItems.length; i++) {
 
           for (var j = 0; j < this.state.selectedItems.length; j++) {
@@ -553,6 +574,16 @@ class SNBetView extends Component {
                   let matchUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_match).toString() : res.Result[0].set_snw_match.toString()
                   let carryUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_carry).toString() : res.Result[0].set_snw_carry.toString()
                   let medalUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_medal).toString() : res.Result[0].set_snw_medal.toString()
+                  ValidaDetalleApuesta(this.state.IDRound,this.state.IDBet,playerA,playerB)
+                  .then((res2) => {
+                    console.warn(res2)
+                    if(res2.estatus == 0){
+                      showMessage({
+                        message: betsRepeat[this.state.language],
+                        type: 'warning',
+                      });
+                    }
+                  })
                   CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,back9UF,matchUF,carryUF,medalUF,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
                   .then((res) => {
                     console.warn(res)
@@ -593,6 +624,7 @@ class SNBetView extends Component {
 
       AsyncStorage.setItem('arreglo', 'false');
       this.props.navigation.navigate('BetsView')
+
       }
       else{
 
@@ -601,6 +633,8 @@ class SNBetView extends Component {
         var pairs = new Array(),
 
       pos = 0;
+
+      var repeat = false;
 
       if(!mismo){
         this.setState({
@@ -630,6 +664,16 @@ class SNBetView extends Component {
                 ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
                 .then((res) => {
                   console.warn(res)
+                  ValidaDetalleApuesta(this.state.IDRound,this.state.IDBet,playerA,playerB)
+                  .then((res2) => {
+                    console.warn(res2)
+                    if(res2.estatus == 0){
+                      showMessage({
+                        message: betsRepeat[this.state.language],
+                        type: 'warning',
+                      });
+                    }
+                  })
                   CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
                   .then((res) => {
                     console.warn(res)

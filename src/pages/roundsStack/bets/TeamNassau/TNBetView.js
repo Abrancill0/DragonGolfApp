@@ -6,7 +6,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, CrearDetalleApuestaTeam, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
+import { ListadoAmigosRonda, ValidaDetalleApuestaTeam, CrearDetalleApuestaTeam, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -18,6 +18,7 @@ const {
   useFactor: useFactorText,
   error,
   successSaveTeeData,
+  betsRepeat,
   samePlayerTN,
   Manually,
   OverrideAdv,
@@ -905,6 +906,14 @@ class TNBetView extends Component {
       });
     }
     else{
+      var repeat = false;
+      ValidaDetalleApuestaTeam(IDRound,IDBet,playerA,playerC,playerB,playerD)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 0){
+            repeat = true;
+          }
+        })
       CrearDetalleApuestaTeam(IDBet,IDRound,playerA,playerC,playerB,playerD,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes,whoGetsString)
         .then((res) => {
           console.warn(res)
@@ -915,6 +924,12 @@ class TNBetView extends Component {
             });
             AsyncStorage.setItem('arreglo', 'false');
             this.props.navigation.goBack()
+            if(repeat){
+              showMessage({
+                message: betsRepeat[this.state.language],
+                type: 'warning',
+              });
+            }
           }
           else{
             showMessage({

@@ -168,12 +168,13 @@ export default function RoundsView(route) {
 
   function guardar(){
 
-    var x = []
+    var x = [];
+    var par = 0;
 
     for(var i=0;i<holes.length;i++){
       x.push(holes[i].adv)
+      par = par + parseInt(holes[i].par)
     }
-
     
     var elementos = x;
     var repetidos = [];
@@ -210,6 +211,15 @@ export default function RoundsView(route) {
       console.warn(IDTees)
       console.warn(NameTee)
       console.warn('['+dataSource.toString()+']')
+      console.warn('par')
+      console.warn(par)
+      if(par < 70 || par > 74){
+        showMessage({
+          message: Dictionary.parRangeError[language],
+          type: 'warning',
+          icon: 'warning',
+        });
+      }
       ActualizarHoles(IDTees, '['+dataSource.toString()+']')
         .then((res) => {
           console.warn('r: '+res)

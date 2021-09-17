@@ -7,7 +7,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, CrearDetalleApuestaTeam, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
+import { ListadoAmigosRonda, ValidaDetalleApuestaTeam, CrearDetalleApuestaTeam, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -18,6 +18,7 @@ const {
   useFactor: useFactorText,
   error,
   successSaveTeeData,
+  betsRepeat,
   fewPlayerTN,
   Manually,
   OverrideAdv,
@@ -876,6 +877,8 @@ class SNBetView extends Component {
 
       pos = 0;
 
+    var repeat = false;
+
       for (var i = 0; i < aleatoriosAux.length; i++) {
 
           for (var j = 0; j < aleatoriosAux.length; j++) {
@@ -943,6 +946,13 @@ class SNBetView extends Component {
           CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
             .then((res) => {
               console.warn(res)
+              ValidaDetalleApuestaTeam(this.state.IDRound,this.state.IDBet,playerA,playerC,playerB,playerD)
+              .then((res) => {
+                console.warn(res)
+                if(res.estatus == 0){
+                  repeat = true;
+                }
+              })
               CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
                 .then((res) => {
                   console.warn(res)
@@ -980,6 +990,13 @@ class SNBetView extends Component {
 
         AsyncStorage.setItem('arreglo', 'false');
         this.props.navigation.navigate('BetsView')
+
+        if(repeat){
+          showMessage({
+                        message: betsRepeat[this.state.language],
+                        type: 'warning',
+                      });
+        }
       }
     }
 

@@ -888,6 +888,68 @@ export const ListadoDetalleApuestaIndividual = (IDBetDetail, IDUsuario) => {
                 });
 };
 
+export const ValidaDetalleApuesta = (IDRonda,IDBet,BetD_Player1,BetD_Player2) => {
+    const URL = RutaBaseAB + "/ValidaDetalleApuesta";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRonda: IDRonda,
+                    IDBet: IDBet,
+                    BetD_Player1: BetD_Player1,
+                    BetD_Player2: BetD_Player2,
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const ValidaDetalleApuestaTeam = (IDRonda,IDBet,BetD_Player1,BetD_Player2,BetD_Player3,BetD_Player4) => {
+    const URL = RutaBaseAB + "/ValidaDetalleApuestaTeam";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRonda: IDRonda,
+                    IDBet: IDBet,
+                    BetD_Player1: BetD_Player1,
+                    BetD_Player2: BetD_Player2,
+                    BetD_Player3: BetD_Player3,
+                    BetD_Player4: BetD_Player4,
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const CrearPlantillaRonda = (IDRound) => {
+    const URL = RutaBaseAB + "/CrearPlantillaRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRound: IDRound
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const CrearDetalleApuesta = (IDBet,IDRonda,BetD_Player1,BetD_Player2,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers) => {
     const URL = RutaBaseAB + "/CrearDetalleApuesta";
     console.warn('---------------SER-------------------')

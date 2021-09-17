@@ -6,7 +6,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, CrearDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
+import { ListadoAmigosRonda, ValidaDetalleApuesta, CrearDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -17,6 +17,7 @@ const {
   useFactor: useFactorText,
   error,
   successSaveTeeData,
+  betsRepeat,
   samePlayer,
   Manually,
   OverrideAdv,
@@ -759,6 +760,14 @@ class SNBetView extends Component {
       this.setState({
         carga:true
       })
+      var repeat = false;
+      ValidaDetalleApuesta(IDRound,IDBet,playerA,playerB)
+        .then((res) => {
+          console.warn(res)
+          if(res.estatus == 0){
+            repeat = true;
+          }
+        })
       CrearDetalleApuesta(IDBet,IDRound,playerA,playerB,front9,back9UF,matchUF,carryUF,medalUF,autoPress,0,advStrokes)
         .then((res) => {
           console.warn(res)
@@ -772,6 +781,12 @@ class SNBetView extends Component {
             })
             AsyncStorage.setItem('arreglo', 'false');
             this.props.navigation.goBack()
+            if(repeat){
+              showMessage({
+                message: betsRepeat[this.state.language],
+                type: 'warning',
+              });
+            }
           }
           else{
             this.setState({

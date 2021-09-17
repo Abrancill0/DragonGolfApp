@@ -706,6 +706,10 @@ export const Dictionary = {
         'en': 'Bets',
         'es': 'Apuestas'
     },
+    betsRepeat: {
+        'en': 'There are repeat bets',
+        'es': 'Hay apuestas repetidas'
+    },
     tipe: {
         'en': 'Tipe',
         'es': 'Tipo'
@@ -843,6 +847,10 @@ export const Dictionary = {
     earningDetails: {
         'en': 'Earnings Summary',
         'es': 'Resumen de Ganancias'
+    },
+    template: {
+        'en': 'Template',
+        'es': 'Plantilla'
     },
     closeRound: {
         'en': 'Close Round',
