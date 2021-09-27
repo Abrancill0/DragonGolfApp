@@ -162,7 +162,7 @@ class SNBetView extends Component {
           </View>
         </View>
 
-        <View style={styles.betField}>
+        {/*<View style={styles.betField}>
             <View style={styles.betRow}>
               <Text style={styles.betText}>Front 9 </Text>
               <View style={{ width: 10 }} />
@@ -180,9 +180,7 @@ class SNBetView extends Component {
                 selectTextOnFocus={true}
               />
             </View>
-          </View>
-
-        {/*
+          </View>*/}
 
           <View style={styles.betField}>
             <View style={styles.useFactorView}>
@@ -350,8 +348,6 @@ class SNBetView extends Component {
             </View>
           </View>
 
-        */}
-
           <View style={{ height: 20 }} />
             <View style={{ flex: 1 }}>
             <MultiSelect
@@ -475,7 +471,7 @@ class SNBetView extends Component {
               }
               console.warn(useFactor)
             this.setState({
-              useFactor : useFactor,
+              useFactor : res2.Result[0].set_tmw_use_factor,
               front9 : res2.Result[0].set_tmw_front_9.toString(),
               back9 : res2.Result[0].set_tmw_back_9.toString(),
               match : res2.Result[0].set_tmw_match.toString(),
@@ -788,6 +784,20 @@ class SNBetView extends Component {
 
   submit = async () => {
 
+    const state = this.state;
+    if (state.front9 && state.front9 != 0) {
+      if (this.state.useFactor) {
+        state.back9 = (parseFloat(state.back9) * parseFloat(state.front9)).toString();
+        state.match = (parseFloat(state.match) * parseFloat(state.front9)).toString();
+        state.carry = (parseFloat(state.carry) * parseFloat(state.front9)).toString();
+        state.medal = (parseFloat(state.medal) * parseFloat(state.front9)).toString();
+      } 
+    }
+
+    console.warn(state)
+
+    this.setState(state);
+
 
     var arreglo=this.state.selectedItems//[1,2,3,4,5]
     console.warn(this.state.front9)
@@ -952,7 +962,7 @@ class SNBetView extends Component {
                 if(res.estatus == 0){
                   repeat = true;
                 }
-              })
+              }) 
               CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
                 .then((res) => {
                   console.warn(res)
