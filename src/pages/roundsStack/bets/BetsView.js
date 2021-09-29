@@ -763,7 +763,7 @@ export default function betsView(route) {
         borderBottomWidth:0.5}}
       />
       </View>}
-        <ScrollView style={{marginBottom:8}}>
+        <ScrollView style={{marginBottom:50}}>
           <FlatList
             refreshControl={
               <RefreshControl
