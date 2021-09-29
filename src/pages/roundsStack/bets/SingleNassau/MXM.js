@@ -122,7 +122,27 @@ class SNBetView extends Component {
     this.ListadoTodos()
   }
 
-  onSelectedItemsChange = selectedItems => {
+  onSelectedItemsChange = (selectedItems) => {
+
+    const filteredItems = selectedItems.filter(val => !this.state.selectedItems2.includes(val))
+    const filteredItems2 = this.state.playersAux.filter(val => !filteredItems.includes(val.id))
+    const filteredItems3 = this.state.playersAux2.filter(val => !this.state.selectedItems2.includes(val.id))
+    const filteredItems4 = this.state.playersAux.filter(val => !this.state.selectedItems.includes(val.id))
+    console.warn(this.state.selectedItems)
+    console.warn(filteredItems)
+    console.warn(filteredItems2)
+    console.warn(filteredItems3)
+    console.warn(filteredItems4)
+    if(filteredItems.length!=0){
+      this.setState({ selectedItems: filteredItems, playersAux: filteredItems2})
+    }
+    else{
+      this.setState({ selectedItems: filteredItems, playersAux: filteredItems3})
+    }
+    if(this.state.selectedItems.length!=0 && filteredItems.length==0){
+      this.setState({ selectedItems: filteredItems, playersAux: filteredItems4})
+    }
+  /*
     console.warn(this.state.playersAux)
     console.warn(selectedItems)
     let players2 = this.state.playersAux
@@ -135,10 +155,29 @@ class SNBetView extends Component {
     }
 
     console.warn(players2)
-    this.setState({ selectedItems: selectedItems});
+    this.setState({ selectedItems: selectedItems});*/
   };
 
   onSelectedItemsChange2 = selectedItems2 => {
+
+    const filteredItems = selectedItems2.filter(val => !this.state.selectedItems.includes(val))
+    const filteredItems2 = this.state.players.filter(val => !filteredItems.includes(val.id))
+    const filteredItems3 = this.state.playersAux2.filter(val => !this.state.selectedItems.includes(val.id))
+    const filteredItems4 = this.state.players.filter(val => !this.state.selectedItems2.includes(val.id))
+    console.warn(filteredItems)
+    console.warn(filteredItems2)
+    console.warn(filteredItems3)
+    console.warn(filteredItems4)
+    if(filteredItems.length!=0){
+      this.setState({ selectedItems2: filteredItems, players: filteredItems2 })
+    }
+    else{
+      this.setState({ selectedItems2: filteredItems, players: filteredItems3 })
+    }
+    if(this.state.selectedItems2.length!=0 && filteredItems.length==0){
+      this.setState({ selectedItems2: filteredItems, players: filteredItems4})
+    }
+  /*
     console.warn(this.state.players)
     console.warn(selectedItems2)
     let players3 = this.state.players
@@ -151,7 +190,7 @@ class SNBetView extends Component {
     }
 
     console.warn(players3)
-    this.setState({ selectedItems2: selectedItems2});
+    this.setState({ selectedItems2: selectedItems2});*/
   };
 
   render() {
@@ -407,12 +446,13 @@ class SNBetView extends Component {
 
   submit2 = async () => {
     this.setState({
-                        carga:true
+                        carga:false
                       })
 
         console.warn('Todos vs todos')
+        console.warn(this.state.playersAux2.length)
 
-      var pairs = new Array(),
+      /*var pairs = new Array(),
 
       pos = 0;
 
@@ -472,7 +512,7 @@ class SNBetView extends Component {
                       })*/
                       //AsyncStorage.setItem('arreglo', 'false');
                       //this.props.navigation.goBack()
-                    }
+                    /*}
                     else{
                       this.setState({
                         carga:false
@@ -498,7 +538,7 @@ class SNBetView extends Component {
                       })
 
       AsyncStorage.setItem('arreglo', 'false');
-      this.props.navigation.navigate('BetsView')
+      this.props.navigation.navigate('BetsView')*/
 
   }
 
