@@ -413,7 +413,7 @@ export default class App extends Component {
       return (
         <SafeAreaView style={{flex:1}}>
         <Tab.Navigator tabBarOptions={{showLabel:false, showIcon:true}} backBehavior={'history'}>
-          <Tab.Screen name="RoundsStack" component={RoundsStack} 
+          <Tab.Screen name='createRoundStack' children={createRoundStack} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -1319,18 +1319,6 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
-          <Stack.Screen name='CoursesViewRounds' component={CoursesViewRounds}
-          options={({ route }) => ({
-            headerBackTitle: '',
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-            headerTintColor: '#104E81',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-              headerShown:false
-          })} />
           <Stack.Screen name='ScoreCardView' component={ScoreCardView}
           options={({ route }) => ({
             headerBackTitle: '',
@@ -1464,6 +1452,34 @@ export default class App extends Component {
               headerShown:false
           })} />
         <Stack.Screen name='configureRounds' component={configureRounds}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+      </Stack.Navigator>
+
+      createRoundStack = () =>
+      <Stack.Navigator>
+        <Stack.Screen name='RoundsStack' component={RoundsStack}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+        <Stack.Screen name='CoursesViewRounds' component={CoursesViewRounds}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

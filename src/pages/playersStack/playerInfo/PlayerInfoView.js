@@ -357,7 +357,16 @@ class PlayerInfoView extends Component {
                 <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpIndex, language:language })}>
                   <Text style={styles.cardTitle}>{handicap[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
                 </TouchableOpacity>
+                <View style={{flex:0.5, flexDirection:'row'}}>
+                <View style={{flex:0.5}}>
                 <Text style={styles.cardInfo}>{item.handicap}</Text>
+                </View>
+                <View style={{ flex: 0.5}}>
+                <TouchableOpacity onPress={_ => this.props.navigation.navigate('HandicapIndex', { playerId: item.id, playernickname: item.nick_name })}>
+                  <MaterialIcons name='grid-on' size={25} color={Colors.Black} />
+                </TouchableOpacity>
+              </View>
+              </View>
               </View>
               <View>
                 <Text style={styles.cardTitle}>Strokes</Text>
@@ -406,7 +415,16 @@ class PlayerInfoView extends Component {
                 <TouchableOpacity onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.hcpIndex, language:language })}>
                   <Text style={styles.cardTitle}>{handicap[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
                 </TouchableOpacity>
+                <View style={{flex:0.5, flexDirection:'row'}}>
+                <View style={{flex:0.5}}>
                 <Text style={styles.cardInfo}>{item.handicap}</Text>
+                </View>
+                <View style={{ flex: 0.5}}>
+                <TouchableOpacity onPress={_ => this.props.navigation.navigate('HandicapIndex', { playerId: item.id, playernickname: item.nick_name })}>
+                  <MaterialIcons name='grid-on' size={25} color={Colors.Black} />
+                </TouchableOpacity>
+              </View>
+              </View>
               </View>
               <View>
                 <Text style={styles.cardTitle}>Strokes</Text>

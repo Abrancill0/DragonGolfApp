@@ -27,6 +27,7 @@ class HistoryScreen extends Component {
         let pickerTextDateFin2 = moment().format('YYYY-MM-DD');
 
         this.state = {
+            token: 0,
             landscape: Dimensions.get('window').width > Dimensions.get('window').height,
             topToBottomDate: true,
             topToBottomPlayer: null,
@@ -64,12 +65,15 @@ class HistoryScreen extends Component {
     }
 
     obtenHistorial = async () => {
-        const token = await AsyncStorage.getItem('usu_id')
+        const token = this.props.route.params.playerId //await AsyncStorage.getItem('usu_id')
         const language = await AsyncStorage.getItem('language')
         this.setState({
-          language:language
+          language:language,
+          token:token
         })
-        HandicapIndex(token)
+        console.warn(this.props.route.params.playerId)
+        console.warn('---------------------------------------')
+        HandicapIndex(this.props.route.params.playerId)
         .then((res) => {
           console.warn(res)
           if(res.estatus == 1){
@@ -334,6 +338,7 @@ class HistoryScreen extends Component {
     render() {
 
         const {
+            token,
             language,
             landscape,
             topToBottomDate,

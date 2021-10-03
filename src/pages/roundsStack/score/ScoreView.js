@@ -88,6 +88,7 @@ class ScoreView extends Component {
     let IDRound = await AsyncStorage.getItem('IDRound')
     let hole = await AsyncStorage.getItem('hole');
     this.setState({
+        players: [],
         carga:true,
         language:language,
         initHole:parseInt(hole)
