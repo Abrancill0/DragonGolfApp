@@ -231,13 +231,13 @@ class SNBetView extends Component {
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-            <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.CreateBet[language]}</Text>
+            <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.allToAll[language]}</Text>
           </View>
         </View>
 
           <View style={{ height: 20 }} />
           <View style={{ flex: 1, flexDirection:'row' }}>
-            <View style={{ flex: 0.5, margin:1 }}>
+            <View style={{ flex: 1, margin:1, alignSelf:'center' }}>
             <MultiSelect
               hideTags
               items={players}
@@ -260,37 +260,9 @@ class SNBetView extends Component {
               submitButtonText={submit[language]}
             />
             </View>
-
-            <View style={{ flex: 0.5,margin:1 }}>
-            <MultiSelect
-              hideTags
-              items={playersAux}
-              uniqueKey="id"
-              onSelectedItemsChange={this.onSelectedItemsChange2}
-              selectedItems={this.state.selectedItems2}
-              selectText="Pick Items"
-              searchInputPlaceholderText="Search Items..."
-              onChangeInput={ (text)=> console.log(text)}
-              altFontFamily="ProximaNova-Light"
-              tagRemoveIconColor="#CCC"
-              tagBorderColor="#CCC"
-              tagTextColor="#CCC"
-              selectedItemTextColor="#CCC"
-              selectedItemIconColor="#CCC"
-              itemTextColor="#000"
-              displayKey="name"
-              searchInputStyle={{ color: '#CCC' }}
-              submitButtonColor={Colors.Primary}
-              submitButtonText={submit[language]}
-            />
-            </View>
           </View>
 
         </ScrollView>
-
-        <View style={styles.bottomButtom}>
-          <DragonButton title={allToAll[language]} onPress={this.submit2} />
-        </View>
         <View style={styles.bottomButtom}>
           <DragonButton title={save[language]} onPress={this.submit} />
         </View>
@@ -445,16 +417,15 @@ class SNBetView extends Component {
       }
   }
 
-  submit2 = async () => {
-
-    this.props.navigation.navigate('MXMALL',{IDBet:this.state.IDBet, IDRound:this.state.IDRound});/*
-
+  submit = async () => {
     this.setState({
                         carga:false
                       })
 
         console.warn('Todos vs todos')
-        console.warn(this.state.playersAux2.length)
+        console.warn(this.state.playersAux2)
+
+        console.warn(this.state.selectedItems)
 
       var pairs = new Array(),
 
@@ -462,14 +433,14 @@ class SNBetView extends Component {
 
       var repeat = false;
 
-      for (var i = 0; i < this.state.playersAux2.length; i++) {
+      for (var i = 0; i < this.state.selectedItems.length; i++) {
 
-          for (var j = 0; j < this.state.playersAux2.length; j++) {
+          for (var j = 0; j < this.state.selectedItems.length; j++) {
 
             if(i!=j){
               console.warn(pairs)
-              var element = [this.state.playersAux2[i].id, this.state.playersAux2[j].id];
-              var element2 = [this.state.playersAux2[j].id, this.state.playersAux2[i].id];
+              var element = [this.state.selectedItems[i], this.state.selectedItems[j]];
+              var element2 = [this.state.selectedItems[j], this.state.selectedItems[i]];
               console.warn(element)
               console.warn(element2)
               let pos2 = pairs.indexOf(element.toString())
@@ -478,9 +449,9 @@ class SNBetView extends Component {
               console.warn(pos3)
 
               if(pos2 == pos3){
-                pairs[pos++] = [this.state.playersAux2[i].id, this.state.playersAux2[j].id].toString();
-                let playerA = this.state.playersAux2[i].id;
-                let playerB = this.state.playersAux2[j].id;
+                pairs[pos++] = [this.state.selectedItems[i], this.state.selectedItems[j]].toString();
+                let playerA = this.state.selectedItems[i];
+                let playerB = this.state.selectedItems[j];
                 console.warn('----------')
                 console.warn(this.state.IDRound)
                 console.warn(playerA)
@@ -516,7 +487,7 @@ class SNBetView extends Component {
                       })*/
                       //AsyncStorage.setItem('arreglo', 'false');
                       //this.props.navigation.goBack()
-                    /*}
+                    }
                     else{
                       this.setState({
                         carga:false
@@ -542,11 +513,11 @@ class SNBetView extends Component {
                       })
 
       AsyncStorage.setItem('arreglo', 'false');
-      this.props.navigation.navigate('BetsView')*/
+      this.props.navigation.navigate('BetsView')
 
   }
 
-  submit = async () => {
+  submit2 = async () => {
 
     console.warn(this.state.selectedItems.length + this.state.selectedItems2.length)
 
@@ -718,7 +689,6 @@ class SNBetView extends Component {
                       });
                     }
                   })
-                  //pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerB.toString() + ','+res.Result[0].set_snw_front_9.toString() + ','+back9UF.toString() + ','+matchUF.toString() + ','+carryUF.toString() + ','+medalUF.toString() + ','+res.Result[0].set_snw_automatic_press.toString() + ',0,'+res.Result[0].set_golpesventaja.toString()+'}')
                   CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
                   .then((res) => {
                     console.warn(res)

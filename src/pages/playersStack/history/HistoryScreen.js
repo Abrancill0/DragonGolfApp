@@ -85,7 +85,8 @@ class HistoryScreen extends Component {
                       money: item.GanadoPerdido,
                       played_hp: item.Stroke,
                       next_hp: item.StrokeSiguiente,
-                      date: moment(item.Fecha).format('DD/MM/YYYY').toString()
+                      date: moment(item.Fecha).format('DD/MM/YYYY').toString(),
+                      date2: new Date(item.Fecha)
                     }
                 ))
                 this.total = suma
@@ -384,11 +385,11 @@ class HistoryScreen extends Component {
                         </View>
                         <FontAwesome name={topToBottomDate === null ? 'minus' : topToBottomDate ? 'caret-down' : 'caret-up'} color={Colors.Black} size={15} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.headers} /*onPress={this.sortCourse}*/>
+                    <TouchableOpacity style={styles.headers} onPress={this.sortCourse}>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: 3 }}>
                             <Text style={styles.headerText}>{course[language]}</Text>
                         </View>
-                        {/*<FontAwesome name={topToBottomCourse === null ? 'minus' : topToBottomCourse ? 'caret-down' : 'caret-up'} color={Colors.Black} size={15} />*/}
+                        <FontAwesome name={topToBottomCourse === null ? 'minus' : topToBottomCourse ? 'caret-down' : 'caret-up'} color={Colors.Black} size={15} />
                     </TouchableOpacity>
                     {/* <TouchableOpacity style={styles.headers} onPress={this.sortPlayer}>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: 3 }}>
@@ -540,10 +541,10 @@ class HistoryScreen extends Component {
 
     sortDate2 = () => {
         if (!this.state.topToBottomDate) {
-            this.state.history.sort((a, b) => (a.date > b.date) ? 1 : (a.date < b.date) ? -1 : 0);
+            this.state.history.sort((a, b) => (a.date2 > b.date2) ? 1 : (a.date2 < b.date2) ? -1 : 0);
             this.setState({ topToBottomPlayer: null, topToBottomDate: true, topToBottomCourse: null });
         } else {
-            this.state.history.sort((a, b) => (a.date < b.date) ? 1 : (a.date > b.date) ? -1 : 0);
+            this.state.history.sort((a, b) => (a.date2 < b.date2) ? 1 : (a.date2 > b.date2) ? -1 : 0);
             this.setState({ topToBottomPlayer: null, topToBottomDate: false, topToBottomCourse: null });
         }
     }

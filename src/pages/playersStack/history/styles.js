@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         borderColor: Colors.Gray,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 3,
+        paddingHorizontal: 0,
         justifyContent: 'center',
         backgroundColor: Colors.White
     },
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     rowText: {
-        fontSize: 11,
+        fontSize: 10,
         color: Colors.Black,
         textAlign: 'center'
     },
