@@ -24,6 +24,7 @@ import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
 import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRound'
 import PlayersViewRoundsList2 from './src/pages/roundsStack/players/PlayersViewRound2'
 import StrokesView from './src/pages/roundsStack/players/StrokesView'
+import StrokesRoundView from './src/pages/roundsStack/players/StrokesRoundView'
 import ScoreView from './src/pages/roundsStack/score/ScoreView'
 import BetsView from './src/pages/roundsStack/bets/BetsView'
 import More from './src/pages/roundsStack/more/MoreView'
@@ -1380,6 +1381,18 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+          <Stack.Screen name='StrokesView' component={StrokesView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
           <Stack.Screen name='InfoScreen' component={InfoScreen}
           options={({ route }) => ({
             headerBackTitle: '',
@@ -1492,7 +1505,7 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
-        <Stack.Screen name='StrokesView' component={StrokesView}
+        <Stack.Screen name='StrokesRoundView' component={StrokesRoundView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

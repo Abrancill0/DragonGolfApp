@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   StatusBar,
@@ -10,6 +10,9 @@ import {
   Text,
   ScrollView,
   Image,
+  Button,
+  TextInput,
+  FlatList
 } from 'react-native';
 import { SearchBar, ButtonGroup } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -23,118 +26,101 @@ import Snackbar from 'react-native-snackbar';
 import Colors from '../../../utils/Colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, EliminarAmigosRonda, ListaInvitados, ListadoAmigosRonda2 } from '../../../Services/Services'
+import { ListaAmigos, ActualizaStrokerPvPRonda, ListaInvitados, ListadoRondaStroker } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import styles from './styles';
-import styles4 from './styles4';
+import styles3 from './styles3';
 import { showMessage } from "react-native-flash-message";
 import DragonButton from '../../global/DragonButton';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function RoundsView(route) {
 
+    //const refInput = useRef();
     const navigation = useNavigation();
-    const [IDCourse, setIDCourse] = useState(0);
-    const [IDRound, setIDRound] = useState(0);
+    const [IDRound, setIDRound] = useState(route.route.params.IDRound);
+    const [IDUsuario, setIDUsuario] = useState(route.route.params.IDUsuario);
+    const [Nickname, setNickname] = useState(route.route.params.Nickname);
     const [players, setPlayers] = useState([]);
-    const [UsuarioCreo, setUsuarioCreo] = useState(1);
-    const [ValidaUsuarioCreo, setValidaUsuarioCreo] = useState(0);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
     const [value3, setValue3] = useState('');
     const [value4, setValue4] = useState('');
+    const [signoMas] = useState(true);
+    const [signoMenos] = useState(false);
+    const [strokesReg, setstrokesReg] = useState(route.route.params.strokes);
+    const [strokesRegAbs, setStrokesRegAbs] = useState(Math.abs(route.route.params.strokes))
     const [language, setLanguage] = useState('es');
     const ScreenWidth = Dimensions.get("window").width;
     const [search, setSearch] = useState(false);
     const [visible, setVisible] = useState(true);
-    const [carga, setStatus] = useState(true);
     const buttons = ['Todos', 'Amigos', 'Invitados']
     const BlankProfile = require('../../../../assets/globals/blank-profile.png');
     const [selectedIndex, setSelectedIndex] = useState(0)
+    const [dataInState, setDataInState] = useState([]);
         useEffect(() => {
-          ListadoTodos();
          const unsubscribe = navigation.addListener("focus", () => {
             ListadoTodos();
+            setSelectedIndex(0)
           });
 
         return unsubscribe;
-      }, []);
+      }, [navigation]);
 
   async function ListadoTodos() {
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
-    let IDCourse = await AsyncStorage.getItem('IDCourse')
-    let IDRound = await AsyncStorage.getItem('IDRound')
     setLanguage(language)
-    setIDCourse(IDCourse)
-    setIDRound(IDRound)
     console.warn(idUsu)
     console.warn(IDRound)
-    ListadoAmigosRonda2(idUsu, IDRound)
+    console.warn(IDUsuario)
+    ListadoRondaStroker(IDRound, IDUsuario)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      idUsu: item.IDUsuario,
-                      id: item.PlayerId,
+                      Player1Id: item.Player1Id,
+                      Player2Id: item.Player2Id,
+                      RoundId: item.RoundId,
                       nickname: item.usu_nickname,
-                      handicap: item.usu_handicapindex,
-                      strokes: item.usu_golpesventaja,
-                      tee: item.PlayerTee,
-                      colorTee: item.Te_TeeColor,
-                      handicapAuto: item.handicapAuto
+                      strokes: item.P1vsP2Strokes
                     }
                 ))
                 setPlayers(list)
-                console.warn(res.Result[0].ValidaUsuarioCreo)
-                setUsuarioCreo(res.Result[0].ValidaUsuarioCreo)
-                setValidaUsuarioCreo(idUsu)
                 setArrayholder(list)
-                setStatus(false)
             }
             else{
               setPlayers([])
-              setStatus(false)
             }
         })
   }
 
   function finalizar(){
-    console.warn(players.length)
-    if(players.length<2){
-      showMessage({
-        message: needTwoPlayers[language],
-        type:'warning',
-      });
-    }
-    else{
-      Alert.alert(
-        "DragonGolf",
-        exitRound[language],
-        [
-          {
-            text: cancel[language],
-            onPress: () => {
-            },
+    navigation.goBack()
+    /*Alert.alert(
+      "DragonGolf",
+      exitRound[language],
+      [
+        {
+          text: cancel[language],
+          onPress: () => {
           },
-          {
-            text: continuar[language],
-            onPress: () => {
-              navigation.navigate('RoundsStack')
-            },
-          }
-        ],
-        { cancelable: true }
-      );
-    }
+        },
+        {
+          text: continuar[language],
+          onPress: () => {
+            navigation.navigate('RoundsStack')
+          },
+        }
+      ],
+      { cancelable: true }
+    );*/
   }
     
 
@@ -172,7 +158,7 @@ export default function RoundsView(route) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      id: item.IDUsuario,
+                      id: item.Player2Id,
                       nombre: item.usu_nombre,
                       apellido: item.usu_apellido_paterno,
                       nickname: item.usu_nickname,
@@ -214,35 +200,147 @@ export default function RoundsView(route) {
     }
   }
 
-  async function Elimina(PlayerId){
-    Alert.alert(
+  async function Elimina(RoundId, Player1Id, Player2Id, strokes){
+    console.warn('R: '+RoundId)
+    console.warn('P1: '+Player1Id)
+    console.warn('P2: '+Player2Id)
+    console.warn('S: '+strokes)
+    ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, strokes)
+      .then((res) => {
+        console.warn(res)
+          if(res.estatus == 1){
+            /*showMessage({
+              message: successSaveTeeData[language],
+              type:'success',
+            });
+            ListadoTodos()*/
+          }
+          else{
+            showMessage({
+              message: error[language],
+              type:'danger',
+            });
+          }
+      })
+    /*Alert.alert(
       "DragonGolf",
-      deletePlayer[language],
+      "¿Desea eliminar este jugador de su lista de amigos?",
       [
         {
-          text: cancel[language],
+          text: "Cancelar",
           onPress: () => {
           },
         },
         {
-          text: continuar[language],
+          text: "Eliminar",
           onPress: () => {
-            EliminarAmigosRonda(IDRound,PlayerId)
+            ActualizaStrokerPvPRonda(IDUsuarioFav,idUsu)
                 .then((res) => {
                   console.warn(res)
                     if(res.estatus == 1){
                       showMessage({
-                        message: deleted[language],
+                        message: "Jugador eliminado correctamente",
                         type:'success',
                       });
-                      ListadoTodos()
+                      ListadoJugadores()
                     }
                 })
           },
         }
       ],
       { cancelable: false }
-    );
+    );*/
+  }
+
+  async function Elimina2(RoundId, Player1Id, Player2Id, strokes){
+    const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
+    if (strokes === "" || re.test(strokes)) {
+      console.warn('R: '+RoundId)
+      console.warn('P1: '+Player1Id)
+      console.warn('P2: '+Player2Id)
+      console.warn('S: '+strokes)
+      ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, strokes)
+        .then((res) => {
+          console.warn(res)
+            if(res.estatus == 1){
+              /*showMessage({
+                message: successSaveTeeData[language],
+                type:'success',
+              });
+              ListadoTodos()*/
+            }
+            else{
+              showMessage({
+                message: error[language],
+                type:'danger',
+              });
+            }
+        })
+    }
+    else{
+      console.warn('Incorrecto')
+    }
+    /*Alert.alert(
+      "DragonGolf",
+      "¿Desea eliminar este jugador de su lista de amigos?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {
+          },
+        },
+        {
+          text: "Eliminar",
+          onPress: () => {
+            ActualizaStrokerPvPRonda(IDUsuarioFav,idUsu)
+                .then((res) => {
+                  console.warn(res)
+                    if(res.estatus == 1){
+                      showMessage({
+                        message: "Jugador eliminado correctamente",
+                        type:'success',
+                      });
+                      ListadoJugadores()
+                    }
+                })
+          },
+        }
+      ],
+      { cancelable: false }
+    );*/
+  }
+
+  function checaEntero(text){
+    console.warn('Entró')
+    if(text.length == 1 && text == '-'){ return '-'}
+      else{
+        let strokes = parseFloat(text)
+        const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
+        let filteredData = text.split(".")
+        console.warn(filteredData)
+        if(filteredData[1]=='')
+        {
+          return text
+        }
+        if (strokes === "" || re.test(strokes)) {
+          return strokes 
+        }
+        
+        return '' 
+      }
+  }
+
+  function chechaStrokes(text){
+    let filteredData = text.toString().split(".")
+        console.warn(filteredData)
+        if(filteredData[1]=='')
+        {
+          return 0
+        }
+    if(text.length == 1 && text == '-' || text == ''){ return 0}
+      else{
+        return text
+      }
   }
 
   function searchFilterFunction(text,busqueda){
@@ -286,74 +384,46 @@ export default function RoundsView(route) {
         );  
     };
 
-    function navegaStrokes(id,strokes,nickname){
-      if(UsuarioCreo == 1){
-        navigation.navigate("StrokesRoundView",{IDRound:IDRound,IDUsuario:id, strokes:strokes, Nickname:nickname})
-      }
-      else{
-        if(ValidaUsuarioCreo == id){
-          navigation.navigate("StrokesRoundView",{IDRound:IDRound,IDUsuario:id, strokes:strokes, Nickname:nickname})
-        }
-        else{
-          showMessage({
-            message: sinPermiso[language],
-            type:'warning',
-          });
-        }
-      }
-    }
-
-    function navegaTees(id){
-      if(UsuarioCreo == 1){
-        navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:id})
-      }
-      else{
-        if(ValidaUsuarioCreo == id){
-          navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:id})
-        }
-        else{
-          showMessage({
-            message: sinPermiso[language],
-            type:'warning',
-          });
-        }
-      }
-    }
-
     const {
       emptyPlayerList,
       finish,
-      FriendsinRound,
+      save,
+      strokesPlayer,
       exitRound,
       cancel,
       continuar,
-      needTwoPlayers,
-      deletePlayer,
-      deleted,
-      sinPermiso
+      strokes,
+      error,
+      successSaveTeeData
     } = Dictionary;
 
     return (
       <View style={{ flex: 1 }}>
-        <Spinner
-            visible={carga}
-            color={Colors.Primary} />
+        <StatusBar
+          backgroundColor="#FFFFFF"
+          barStyle="dark-content"
+          translucent={false}
+        />
 
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{FriendsinRound[language]}</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{strokesPlayer[language]}</Text>
+        <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT', color:'#123c5b', alignSelf:'center',backgroundColor:'#f1f2f2',fontWeight:'bold'}}>{Nickname}</Text>
           </View>
-          {UsuarioCreo==1 && <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+          {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRounds', {IDCourse:IDCourse, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View>}
+          </View>*/}
         </View>
+        { visible &&
+          <ScrollView>
+
         {/*<ButtonGroup
               onPress={updateIndex}
               selectedIndex={selectedIndex}
@@ -439,49 +509,64 @@ export default function RoundsView(route) {
         borderBottomWidth:2}}
       />
       </View>}
-          <SwipeListView
-            refreshControl={
-              <RefreshControl
-                refreshing={false}
-                onRefresh={()=>{
-                  if(selectedIndex==0)
-                    ListadoTodos()
-                  if(selectedIndex==1)
-                    ListadoJugadores()
-                  if(selectedIndex==2)
-                    ListadoInvitados()
-                  setValue1('')
-                  setValue2('')
-                  setValue3('')
-                  setValue4('')
-                }}
-              />
-            }
+          <FlatList
             data={players}
             renderItem={({item}) =>
             <View style={{flex:.2,padding:5}}>
               <ScrollView
-                horizontal={true}
+                horizontal={false}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navegaStrokes(item.id,item.strokes,item.nickname)}>
+              <View /*activeOpacity={0} /*onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}*/>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    <TouchableOpacity onPress={()=> navegaTees(item.id)}><View style={{flex:1,backgroundColor:item.colorTee}}><Text style={{textAlign:'center'}}>Selec Tee</Text></View></TouchableOpacity>
                     <View style={{flex:1}}>
-                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
-                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
-                        <View style={[styles4.teeColorView],{flex:.2}}>
-                          <View style={[styles4.colorSquare, { backgroundColor: item.colorTee, marginVertical:2}]} />
+                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:5}}>
+                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:5}}>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nickname}</Text>
+                        <View style={styles3.switchView}>
+                          <Text style={styles3.question}>{strokes[language]}</Text>
+                          
+                          <View style={[styles3.costInputView,{flexDirection:'row', justifyContent:'space-between'}]}>
+                          <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
+                            <Button
+                              title={signoMenos?'+':'-'}
+                              onPress={() => {item.strokes=chechaStrokes(item.strokes)-0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              color={Colors.Primary}
+                            />
+                          </View>
+                          <View style={{flex:1, paddingLeft:0}}>
+                            <TextInput
+                              ref={ref => item.id = ref}
+                              //editable={false}
+                              style={styles3.costInput}
+                              selectionColor={Colors.Secondary}
+                              placeholder="0"
+                              keyboardType="default"
+                              returnKeyType='done'
+                              onChange={(change) => {console.warn(change.nativeEvent.text);item.strokes=checaEntero(change.nativeEvent.text);setDataInState([...dataInState, players]);Elimina2(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              defaultValue={item.strokes.toString()}
+                              value={item.strokes.toString()}
+                              selectTextOnFocus={true}
+                            />
+                            </View>
+                            <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
+                            <Button
+                              title={signoMas?'+':'-'}
+                              onPress={() => {item.strokes=chechaStrokes(item.strokes)+0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              color={Colors.Primary}
+                            />
+                          </View>
+                          </View>
                         </View>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginLeft:20 }}>{item.tee}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicap: '+item.handicap}</Text>
+                        {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
+                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>*/}
                       </View>
-                      <View style={{flex: 1, margin:20, marginTop:10, alignSelf:'center'}}>
-                        {/*<TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesRoundView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
-                          <MaterialIcon name={'info-outline'} size={27} color={Colors.Primary} />
-                        </TouchableOpacity>*/ }
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',marginTop:10, alignSelf:'flex-start'}}>{'Strokes: '+item.handicapAuto}</Text>
+                      {/*<View>
+                        <TouchableOpacity style={{margin:20, marginTop:10}} onPress={()=> navigation.navigate("StrokesView")}>
+                          <MaterialIcon name={'info-outline'} size={25} color={Colors.Primary} />
+                        </TouchableOpacity>
+                        {item.idUsu!=item.id?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginHorizontal:20}}>{'Strokes: '+item.strokes}</Text>:null}
                         {/*<Image
                           source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
                           style={{
@@ -491,37 +576,36 @@ export default function RoundsView(route) {
                             borderRadius: 30,
                             marginHorizontal:30
                           }}
-                        />*/}
-                      </View>
+                        />
+                      </View>*/}
                       </View>
                       </View>
                     </View>
-                  </TouchableOpacity>
-            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
-              {UsuarioCreo == 1 && <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
-                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
-              </TouchableOpacity>}
-              {/*<TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
-                <FontAwesome name={'edit'} size={30} color={Colors.White} />
-              </TouchableOpacity>*/}
-            </View>
+                  </View>
+            {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity style={{flex:1,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}>
+                <FontAwesome name={'save'} size={30} color={Colors.White} />
+              </TouchableOpacity>
+            </View>*/}
           </ScrollView>
         </View>
               }
-              keyExtractor={item=>item.id}
+              keyExtractor={item=>item.Player2Id}
               ListEmptyComponent={
               <View style={styles.emptyView}>
                   <FontAwesome5 name={"user-friends"} size={50} color="red" />
                 <Text style={styles.emptyText}>{emptyPlayerList[language]}</Text>
               </View>
             }
-            //stopLeftSwipe={Dimensions.get('window').width * .5}
-            //stopRightSwipe={-(Dimensions.get('window').width * .5)}
+            stopLeftSwipe={Dimensions.get('window').width * .5}
+            stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
         {/*<View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
-          <DragonButton title={finish[language]} onPress={()=>finalizar()} />
+          <DragonButton title={finish[language]} onPress={()=>finalizar()}/>
         </View>*/}
+        
+      </ScrollView>}
       </View>
     );
 }

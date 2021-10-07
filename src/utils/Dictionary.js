@@ -410,6 +410,10 @@ export const Dictionary = {
         'en': 'Are you sure you want to delete this course?',
         'es': '¿Seguro deseas eliminar este campo?'
     },
+    sureToUpdateRound: {
+        'en': 'Are you sure you want to delete this round?',
+        'es': '¿Seguro deseas eliminar esta ronda?'
+    },
     sureToUpdateTee: {
         'en': 'Are you sure you want to delete this tee?',
         'es': '¿Seguro deseas eliminar este tee?'

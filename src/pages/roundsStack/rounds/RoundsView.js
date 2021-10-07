@@ -24,7 +24,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListarRonda } from '../../../Services/Services'
+import { ListarRonda, EliminarRonda } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
@@ -259,25 +259,23 @@ export default function RoundsView(route) {
   }
 
 
-  async function Elimina(id, tipo){
-    //console.warn(tipo)
-    let idUsu = await AsyncStorage.getItem('usu_id')
+  async function Elimina(id){
     Alert.alert(
       "DragonGolf",
-      "¿Está seguro de eliminar este campo?",
+      Dictionary.sureToUpdateRound[language],
       [
         {
-          text: "Cancelar",
+          text: Dictionary.cancel[language],
           style: 'cancel',
         },
         {
-          text: "Continuar",
+          text: Dictionary.continuar[language],
           onPress: () => {
-            EliminarCampo(id, tipo, idUsu)
+            EliminarRonda(id)
               .then((res) => {
                 //console.warn(res)
                   if(res.estatus == 1){
-                    ListadoRounds()
+                    ListadoRondas()
                   }
               })
           },
@@ -437,14 +435,14 @@ export default function RoundsView(route) {
                             </View>*/}
                               </View>
                           </TouchableOpacity>
-                          {/*<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
-                          <TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
+                          {item.status == 1?<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
+                          {/*<TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
                             <FontAwesome name={'edit'} size={30} color={Colors.White} />
-                          </TouchableOpacity>
-                          <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id, item.tipo)}>
+                          </TouchableOpacity>*/}
+                          <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                             <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
                           </TouchableOpacity>
-                          </View>*/}
+                          </View>:null}
                           </ScrollView>
                     </View>
               }

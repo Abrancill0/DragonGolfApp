@@ -993,6 +993,27 @@ export const CrearDetalleApuesta = (IDBet,IDRonda,BetD_Player1,BetD_Player2,BetD
                 });
 };
 
+export const CrearDetalleApuestaMasivo = (Arreglo) => {
+    const URL = RutaBaseAB + "/CrearDetalleApuestaMasivo";
+    console.warn('---------------SER-------------------')
+    console.warn(Arreglo)
+    console.warn('----------------------------------')
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    Arreglo: Arreglo
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const CrearDetalleApuestaTeam = (IDBet,IDRonda,BetD_Player1,BetD_Player2,BetD_Player3,BetD_Player4,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers,TypeHandicap) => {
     const URL = RutaBaseAB + "/CrearDetalleApuestaTeam";
     console.warn('---------------SER-------------------')
@@ -1417,6 +1438,24 @@ export const ActualizarRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_Sta
                     IDUsuario: IDUsuario,
                     IDRound: IDRound,
                     Ro_Date: Ro_Date
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
+export const EliminarRonda = (IDRounds) => {
+    const URL = RutaBaseAB + "/EliminarRonda";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRounds: IDRounds
                 }),
             })
             .then((response) => response.json())
