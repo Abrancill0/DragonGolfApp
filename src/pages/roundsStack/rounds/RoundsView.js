@@ -413,7 +413,7 @@ export default function RoundsView(route) {
             renderItem={({item}) =>
                     <View style={{flex:.2,padding:5}}>
                         <ScrollView
-                          horizontal={false}
+                          horizontal={true}
                           showsHorizontalScrollIndicator={false}>
                           <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
