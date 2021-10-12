@@ -85,7 +85,8 @@ class ConfigRoundView extends Component {
     }
 
     navegaBack (){
-      Alert.alert(
+      this.props.navigation.navigate('RoundsStack')
+      /*Alert.alert(
               Dictionary.exitRound[this.state.language],
               '',
               [
@@ -96,7 +97,7 @@ class ConfigRoundView extends Component {
                   }
                 },
               ]
-            )
+            )*/
     }
 
   render() {

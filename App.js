@@ -742,7 +742,7 @@ export default class App extends Component {
             onPress={() => this.closeSesion(props)}
             style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
               <View style={{flex:.1}}>
-                  <Text style={{color:'white'}}>9.9</Text>
+                  <Text style={{color:'white'}}>10.0</Text>
               </View>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>
@@ -1381,7 +1381,7 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
-          <Stack.Screen name='StrokesView' component={StrokesView}
+          <Stack.Screen name='StrokesRoundView' component={StrokesRoundView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
@@ -1505,7 +1505,7 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
-        <Stack.Screen name='StrokesRoundView' component={StrokesRoundView}
+        <Stack.Screen name='StrokesView' component={StrokesView}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

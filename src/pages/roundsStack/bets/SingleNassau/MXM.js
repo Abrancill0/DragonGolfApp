@@ -721,11 +721,11 @@ class SNBetView extends Component {
                       });
                     }
                   })
-                  pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerB.toString() + ','+res.Result[0].set_snw_front_9.toString() + ','+back9UF.toString() + ','+matchUF.toString() + ','+carryUF.toString() + ','+medalUF.toString() + ','+res.Result[0].set_snw_automatic_press.toString() + ',0,'+res.Result[0].set_golpesventaja.toString()+'}')
+                  /*pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerB.toString() + ','+res.Result[0].set_snw_front_9.toString() + ','+back9UF.toString() + ','+matchUF.toString() + ','+carryUF.toString() + ','+medalUF.toString() + ','+res.Result[0].set_snw_automatic_press.toString() + ',0,'+res.Result[0].set_golpesventaja.toString()+'}')
                   this.setState({
                     pairsCrea: pairsCrea
-                  })
-                  /*CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
+                  })*/
+                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
                   .then((res) => {
                     console.warn(res)
                     if(res.estatus == 1){
@@ -738,7 +738,7 @@ class SNBetView extends Component {
                       })*/
                       //AsyncStorage.setItem('arreglo', 'false');
                       //this.props.navigation.goBack()
-                    /*}
+                    }
                     else{
                       this.setState({
                         carga:false
@@ -748,26 +748,22 @@ class SNBetView extends Component {
                         type: 'danger',
                       });
                     }
-                  })*/
+                  })
                 })
               }
           }
         }
 
-        CrearDetalleApuestaMasivo(pairsCrea.toString())
-          .then((res) => {
-            if(res.estatus == 1){
-              showMessage({
-                message: successSaveTeeData[this.state.language],
-                type: 'success',
-              });
-              this.setState({
-                carga:true
-              })
-            AsyncStorage.setItem('arreglo', 'false');
-            this.props.navigation.navigate('BetsView')
-            }
-          })
+        showMessage({
+                        message: successSaveTeeData[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:true
+                      })
+
+      AsyncStorage.setItem('arreglo', 'false');
+      this.props.navigation.navigate('BetsView')
       }
       //}
     }

@@ -72,6 +72,7 @@ export default function RoundsView(route) {
     let language = await AsyncStorage.getItem('language')
     let IDCourse = await AsyncStorage.getItem('IDCourse')
     let IDRound = await AsyncStorage.getItem('IDRound')
+    setPlayers([])
     setLanguage(language)
     setIDCourse(IDCourse)
     setIDRound(IDRound)

@@ -32,6 +32,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
+import { showMessage } from "react-native-flash-message";
 
 export default function RoundsView(route) {
 
@@ -276,6 +277,10 @@ export default function RoundsView(route) {
                 //console.warn(res)
                   if(res.estatus == 1){
                     ListadoRondas()
+                    showMessage({
+                      message: Dictionary.deleted[language],
+                      type: 'success',
+                    });
                   }
               })
           },

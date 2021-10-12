@@ -67,6 +67,7 @@ export default function RoundsView(route) {
       }, []);
 
   async function ListadoTodos() {
+    AsyncStorage.setItem('IDRound', IDRound.toString());
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
     setLanguage(language)
@@ -269,7 +270,8 @@ export default function RoundsView(route) {
   };
 
   function navegaBack (){
-      Alert.alert(
+    navigation.navigate('RoundsStack')
+      /*Alert.alert(
               Dictionary.exitRound[language],
               '',
               [
@@ -280,7 +282,7 @@ export default function RoundsView(route) {
                   }
                 },
               ]
-            )
+            )*/
     }
 
    function renderSeparator(){  
@@ -496,9 +498,9 @@ export default function RoundsView(route) {
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-        <View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
+        {/*<View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
           <DragonButton title={finish[language]} onPress={()=>finalizar()} />
-        </View>
+        </View>*/}
         
       </ScrollView>}
       </View>
