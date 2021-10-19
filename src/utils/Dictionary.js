@@ -171,6 +171,10 @@ export const Dictionary = {
         'en': 'Create Bet',
         'es': 'Crear Apuesta'
     },
+    pairsText: {
+        'en': 'Pairs',
+        'es': 'Parejas'
+    },
     InfoBet: {
         'en': 'Information Bet',
         'es': 'Información Apuesta'
@@ -795,6 +799,10 @@ export const Dictionary = {
     fewPlayerTN: {
         'en': 'Please select more than 2 players',
         'es': 'Favor de seleccionar más de 2 jugadores'
+    },
+    fewThrowballsTN: {
+        'en': 'Please, Throw Balls',
+        'es': 'Favor de echar bolas'
     },
     seeResults: {
         'en': 'See results',
