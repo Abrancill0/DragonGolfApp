@@ -508,16 +508,16 @@ class SNBetView extends Component {
           }
         }
 
-        if (pairs.length>0) {
+        /*if (pairs.length>0) {
           this.setState({
             parejas:true,
             parejasMM: pairsCrea
           })
-        }
+        }*/
 
-        setTimeout(() => {
-        console.warn(this.state.parejasMM)
-        }, 3000);
+        await console.warn('this.state.parejasMM')
+        await console.warn(pairsCrea)
+        await console.warn('----------------------')
 
         /*showMessage({
                         message: successSaveTeeData[this.state.language],
