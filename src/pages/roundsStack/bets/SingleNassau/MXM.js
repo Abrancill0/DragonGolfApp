@@ -708,17 +708,18 @@ class SNBetView extends Component {
                 let playerB = this.state.selectedItems2[j];
                 console.warn(playerA)
                 console.warn(playerB)
-                ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
+                await ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
                 .then((res) => {
                   console.warn(res)
                   ValidaDetalleApuesta(this.state.IDRound,this.state.IDBet,playerA,playerB)
                   .then((res2) => {
                     console.warn(res2)
                     if(res2.estatus == 0){
-                      showMessage({
+                      repeat = true;
+                      /*showMessage({
                         message: betsRepeat[this.state.language],
                         type: 'warning',
-                      });
+                      });*/
                     }
                   })
                   /*pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerB.toString() + ','+res.Result[0].set_snw_front_9.toString() + ','+back9UF.toString() + ','+matchUF.toString() + ','+carryUF.toString() + ','+medalUF.toString() + ','+res.Result[0].set_snw_automatic_press.toString() + ',0,'+res.Result[0].set_golpesventaja.toString()+'}')
@@ -764,6 +765,13 @@ class SNBetView extends Component {
 
       AsyncStorage.setItem('arreglo', 'false');
       this.props.navigation.navigate('BetsView')
+
+      if(repeat){
+                      showMessage({
+                                    message: betsRepeat[this.state.language],
+                                    type: 'warning',
+                                  });
+                    }
       }
       //}
     }

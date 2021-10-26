@@ -1,6 +1,6 @@
 const RutaBase = 'http://trascenti.com/pruebasDragon/public/api/';
-const RutaBaseAB = 'http://13.90.32.51/DragonGolfBackEnd/api'
-//const RutaBaseAB = 'http://20.115.123.73/dragongolf/api'
+//const RutaBaseAB = 'http://13.90.32.51/DragonGolfBackEnd/api'
+const RutaBaseAB = 'http://20.115.123.73/dragongolf/api'
 
 export const Logearse = (email,password) => {
     const URL = RutaBase + "usuarios/login?usu_email=" + email+"&usu_password="+password ;

@@ -7,7 +7,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, ValidaDetalleApuesta, CrearDetalleApuesta, ListadoAmigosRondaData } from '../../../../Services/Services'
+import { ListadoAmigosRonda, ValidaDetalleApuesta, CrearDetalleApuestaMasivo, ListadoAmigosRondaData } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -421,7 +421,7 @@ class SNBetView extends Component {
 
   submit = async () => {
     this.setState({
-                        carga:false
+                        carga:true
                       })
 
         console.warn('Todos vs todos')
@@ -460,7 +460,7 @@ class SNBetView extends Component {
                 console.warn(playerA)
                 console.warn(playerB)
                 console.warn('----------')
-                ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
+                await ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
                 .then((res) => {
                   console.warn(res)
                   let back9UF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_back_9).toString() : res.Result[0].set_snw_back_9.toString()
@@ -471,10 +471,11 @@ class SNBetView extends Component {
                   .then((res2) => {
                     console.warn(res2)
                     if(res2.estatus == 0){
-                      showMessage({
+                      repeat = true;
+                      /*showMessage({
                         message: betsRepeat[this.state.language],
                         type: 'warning',
-                      });
+                      });*/
                     }
                   })
                   pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerB.toString() + ','+res.Result[0].set_snw_front_9.toString() + ','+back9UF.toString() + ','+matchUF.toString() + ','+carryUF.toString() + ','+medalUF.toString() + ','+res.Result[0].set_snw_automatic_press.toString() + ',0,'+res.Result[0].set_golpesventaja.toString()+'}')
@@ -508,6 +509,11 @@ class SNBetView extends Component {
           }
         }
 
+        /*this.setState({
+            parejas:true,
+            parejasMM: pairsCrea
+          })
+
         /*if (pairs.length>0) {
           this.setState({
             parejas:true,
@@ -515,11 +521,14 @@ class SNBetView extends Component {
           })
         }*/
 
-        await console.warn('this.state.parejasMM')
-        await console.warn(pairsCrea)
-        await console.warn('----------------------')
+        console.warn('this.state.parejasMM')
+        console.warn(pairsCrea)
+        console.warn('----------------------')
 
-        /*showMessage({
+        CrearDetalleApuestaMasivo(pairsCrea.toString())
+          .then((res) => {
+             if(res.estatus == 1){
+                    showMessage({
                         message: successSaveTeeData[this.state.language],
                         type: 'success',
                       });
@@ -527,8 +536,26 @@ class SNBetView extends Component {
                         carga:true
                       })
 
-      AsyncStorage.setItem('arreglo', 'false');
-      this.props.navigation.navigate('BetsView')*/
+                  AsyncStorage.setItem('arreglo', 'false');
+                  this.props.navigation.navigate('BetsView')
+
+                  if(repeat){
+                      showMessage({
+                                    message: betsRepeat[this.state.language],
+                                    type: 'warning',
+                                  });
+                    }
+                  }
+                  else{
+                    this.setState({
+                      carga:false
+                    })
+                    showMessage({
+                      message: error[this.state.language],
+                      type: 'danger',
+                    });
+                  }
+          })
 
   }
 
