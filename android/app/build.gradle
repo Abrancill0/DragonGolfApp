@@ -130,10 +130,10 @@ android {
 
     defaultConfig {
         applicationId "com.dragongolfapp"
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion 19
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 102
-        versionName "10.2"
+        versionCode 103
+        versionName "10.3"
         multiDexEnabled true
     }
     splits {

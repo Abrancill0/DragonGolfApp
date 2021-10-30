@@ -21,6 +21,7 @@ import CoursesViewRounds from './src/pages/roundsStack/courses/CoursesViewRound'
 import PlayersView from './src/pages/playersStack/players/PlayersView'
 import NotificationsView from './src/pages/playersStack/players/NotificationsView'
 import PlayersViewRounds from './src/pages/roundsStack/players/PlayersView'
+import PlayersViewRoundsC from './src/pages/roundsStack/players/PlayersView'
 import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRound'
 import PlayersViewRoundsList2 from './src/pages/roundsStack/players/PlayersViewRound2'
 import StrokesView from './src/pages/roundsStack/players/StrokesView'
@@ -742,7 +743,7 @@ export default class App extends Component {
             onPress={() => this.closeSesion(props)}
             style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
               <View style={{flex:.1}}>
-                  <Text style={{color:'white'}}>10.2</Text>
+                  <Text style={{color:'white'}}>10.3</Text>
               </View>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>
@@ -1358,6 +1359,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='NotificationsView' component={NotificationsView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='PlayersViewRoundsC' component={PlayersViewRoundsC}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
