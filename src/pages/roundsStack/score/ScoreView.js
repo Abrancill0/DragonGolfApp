@@ -87,6 +87,9 @@ class ScoreView extends Component {
     let language = await AsyncStorage.getItem('language')
     let IDRound = await AsyncStorage.getItem('IDRound')
     let hole = await AsyncStorage.getItem('hole');
+    let arreglo = await AsyncStorage.getItem('arreglo')
+    arreglo=arreglo=='true'?true:false
+    if(!arreglo){
     this.setState({
         players: [],
         carga:true,
@@ -204,6 +207,7 @@ class ScoreView extends Component {
               })
             }
         })
+    }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {

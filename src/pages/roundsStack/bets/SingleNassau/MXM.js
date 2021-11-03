@@ -711,6 +711,10 @@ class SNBetView extends Component {
                 await ListadoAmigosRondaData(playerA,playerB, this.state.IDRound)
                 .then((res) => {
                   console.warn(res)
+                  let back9UF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_back_9).toString() : res.Result[0].set_snw_back_9.toString()
+                  let matchUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_match).toString() : res.Result[0].set_snw_match.toString()
+                  let carryUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_carry).toString() : res.Result[0].set_snw_carry.toString()
+                  let medalUF = res.Result[0].set_snw_use_factor == 1 ? (res.Result[0].set_snw_front_9 * res.Result[0].set_snw_medal).toString() : res.Result[0].set_snw_medal.toString()
                   ValidaDetalleApuesta(this.state.IDRound,this.state.IDBet,playerA,playerB)
                   .then((res2) => {
                     console.warn(res2)
@@ -726,7 +730,7 @@ class SNBetView extends Component {
                   this.setState({
                     pairsCrea: pairsCrea
                   })*/
-                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,res.Result[0].set_snw_back_9,res.Result[0].set_snw_match,res.Result[0].set_snw_carry,res.Result[0].set_snw_medal,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
+                  CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,back9UF,matchUF,carryUF,medalUF,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
                   .then((res) => {
                     console.warn(res)
                     if(res.estatus == 1){

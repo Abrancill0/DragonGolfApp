@@ -340,7 +340,7 @@ class SettingsView extends Component {
                 <Switch
                   value={asAdvMoves}
                   thumbColor={asAdvMoves ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
                   onValueChange={(asAdvMoves) => this.setState({ asAdvMoves })}
                 />
               </View>
@@ -354,7 +354,7 @@ class SettingsView extends Component {
                 <Switch
                   value={asDoesCarryMove}
                   thumbColor={asDoesCarryMove ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
                   onValueChange={(asDoesCarryMove) => this.setState({ asDoesCarryMove })}
                 />
               </View>
@@ -529,7 +529,7 @@ class SettingsView extends Component {
                 <Switch
                   value={skinCarry}
                   thumbColor={skinCarry ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
                   onValueChange={(skinCarry) => this.setState({ skinCarry })}
                 />
               </View>
@@ -545,7 +545,7 @@ class SettingsView extends Component {
                 <Switch
                   value={lowedAdv}
                   thumbColor={lowedAdv ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
                   onValueChange={(lowedAdv) => this.setState({ lowedAdv })}
                 />
               </View>
@@ -579,7 +579,7 @@ class SettingsView extends Component {
                 <Switch
                   value={snwUseFactor}
                   thumbColor={snwUseFactor ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
                   onValueChange={this.changeSNUseFactor}
                 />
               </View>
@@ -820,7 +820,7 @@ class SettingsView extends Component {
                 <Switch
                   value={tnwUseFactor}
                   thumbColor={tnwUseFactor ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.PrimaryWithOpacity, false: Colors.PrimaryWithOpacity }}
+                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
                   onValueChange={this.changeTNUseFactor}
                 />
               </View>
@@ -1408,7 +1408,7 @@ class SettingsView extends Component {
               handicap: row.Handicap,
               cellphone:row.Cellphone,
               password:row.Password,
-              //photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen
+              //photo: 'http://20.115.123.73/dragongolf/images/' + res.Result[0].usu_imagen
             }]
 
           this.setState({
@@ -1541,7 +1541,7 @@ class SettingsView extends Component {
       console.warn(this.state.una)
       InfoUsuarioAB(token)
         .then((res) => {
-          //console.warn(res)
+          console.warn(res)
             if(res.estatus==1){
 
                 const lista =[
@@ -1558,7 +1558,7 @@ class SettingsView extends Component {
                   cellphone:res.Result[0].usu_telefono,
                   cellphoneAux:this.formatCellphone(res.Result[0].usu_telefono),
                   password:res.Result[0].usu_pass,
-                  photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen
+                  photo: 'http://20.115.123.73/dragongolf/images/' + res.Result[0].usu_imagen
                 }]
 
                 ////console.warn(lista[0])

@@ -193,7 +193,7 @@ export default class App extends Component {
               ghin_number: res.Result[0].usu_ghinnumber,
               handicap: res.Result[0].usu_handicapindex,
               cellphone:res.Result[0].usu_telefono,
-              photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen,
+              photo: 'http://20.115.123.73/dragongolf/images' + res.Result[0].usu_imagen,
               //language: res.Result[0].set_idioma
             }]
             this.setState({
@@ -271,7 +271,7 @@ export default class App extends Component {
               handicap: result.usu_handicapindex,
               cellphone:result.usu_telefono,
               //language: result.set_idioma,
-              photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + result.usu_imagen,
+              photo: 'http://20.115.123.73/dragongolf/images' + result.usu_imagen,
               //language: result.set_idioma.substring(0,2)
             }]
             //console.warn(result)
@@ -372,7 +372,7 @@ export default class App extends Component {
               handicap: row.Handicap,
               cellphone:row.Cellphone,
               password:row.Password,
-              //photo: 'http://13.90.32.51/DragonGolfBackEnd/images' + res.Result[0].usu_imagen
+              //photo: 'http://20.115.123.73/dragongolf/images' + res.Result[0].usu_imagen
             }]
 
           this.setState({
@@ -743,7 +743,7 @@ export default class App extends Component {
             onPress={() => this.closeSesion(props)}
             style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
               <View style={{flex:.1}}>
-                  <Text style={{color:'white'}}>10.3</Text>
+                  <Text style={{color:'white'}}>10.4</Text>
               </View>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>

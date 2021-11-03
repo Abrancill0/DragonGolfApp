@@ -304,7 +304,7 @@ export default class ScoreVerticalComponent extends Component {
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
                     teesf9.push([this.props.tees[i]['Par_Hole8'], this.props.tees[i]['Par_Hole9'], this.props.tees[i]['Par_Hole10'], this.props.tees[i]['Par_Hole11'], this.props.tees[i]['Par_Hole12'], this.props.tees[i]['Par_Hole13'], this.props.tees[i]['Par_Hole14'],this.props.tees[i]['Par_Hole15'],this.props.tees[i]['Par_Hole16']])
-                    teesb9.push([this.props.tees[i]['Par_Hole17'], this.props.tees[i]['Par_Hole18'], this.props.tees[i]['Par_Hole1'], this.props.tees[i]['Par_Hole2'], this.props.tees[i]['Par_Hole3'], this.props.tees[i]['Par_Hole4'], this.props.tees[i]['Par_Hole5'],this.props.tees[i]['Par_Hole6'],this.props.tees[i]['Par_Hole7'],this.props.tees[i]['Par_Hole8']])
+                    teesb9.push([this.props.tees[i]['Par_Hole17'], this.props.tees[i]['Par_Hole18'], this.props.tees[i]['Par_Hole1'], this.props.tees[i]['Par_Hole2'], this.props.tees[i]['Par_Hole3'], this.props.tees[i]['Par_Hole4'], this.props.tees[i]['Par_Hole5'],this.props.tees[i]['Par_Hole6'],this.props.tees[i]['Par_Hole7']])
                     TeeColor.push(this.props.tees[i]['Te_TeeColor'])
                 }
                 TeeNumberF=[8,9,10,11,12,13,14,15,16];
@@ -330,7 +330,7 @@ export default class ScoreVerticalComponent extends Component {
 
                  for (var i = 0 ; i <= this.props.tees.length - 1; i++) {
                     teesf9.push([this.props.tees[i]['Par_Hole9'], this.props.tees[i]['Par_Hole10'], this.props.tees[i]['Par_Hole11'], this.props.tees[i]['Par_Hole12'], this.props.tees[i]['Par_Hole13'], this.props.tees[i]['Par_Hole14'],this.props.tees[i]['Par_Hole15'],this.props.tees[i]['Par_Hole16'],this.props.tees[i]['Par_Hole17']])
-                    teesb9.push([this.props.tees[i]['Par_Hole18'], this.props.tees[i]['Par_Hole1'], this.props.tees[i]['Par_Hole2'], this.props.tees[i]['Par_Hole3'], this.props.tees[i]['Par_Hole4'], this.props.tees[i]['Par_Hole5'],this.props.tees[i]['Par_Hole6'],this.props.tees[i]['Par_Hole7'],this.props.tees[i]['Par_Hole8'],this.props.tees[i]['Par_Hole8']])
+                    teesb9.push([this.props.tees[i]['Par_Hole18'], this.props.tees[i]['Par_Hole1'], this.props.tees[i]['Par_Hole2'], this.props.tees[i]['Par_Hole3'], this.props.tees[i]['Par_Hole4'], this.props.tees[i]['Par_Hole5'],this.props.tees[i]['Par_Hole6'],this.props.tees[i]['Par_Hole7'],this.props.tees[i]['Par_Hole8']])
                     TeeColor.push(this.props.tees[i]['Te_TeeColor'])
                 }
                 TeeNumberF=[9,10,11,12,13,14,15,16,17];
