@@ -868,6 +868,10 @@ export const Dictionary = {
         'en': 'Close Round',
         'es': 'Cerrar Ronda'
     },
+    signRoundAsk: {
+        'en': 'Are you sure you want to sign round?',
+        'es': '¿Seguro que quieres cerrar ronda?'
+    },
     closeRoundSuccess: {
         'en': 'Round closed successfully',
         'es': 'Ronda cerrada con éxito'

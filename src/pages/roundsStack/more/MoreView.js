@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Alert } from 'react-native';
 import { Dictionary } from '../../../utils/Dictionary';
 import Colors from '../../../utils/Colors';
 import styles from './styles';
@@ -8,6 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { CerrarRonda, AbrirRonda } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class MoreView extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class MoreView extends Component {
     this.state = {
       language: 'es',
       status: '1',
-      IDRound:0
+      IDRound:0,
+      carga: false
     };
   }
 
@@ -39,23 +41,45 @@ class MoreView extends Component {
 
   cierraRonda = async () => {
     let IDRound = await AsyncStorage.getItem('IDRound')
-    CerrarRonda(IDRound)
-        .then((res) => {
-          console.warn(res)
-            if(res.estatus == 1){
-              showMessage({
-                message: Dictionary.closeRoundSuccess[this.state.language],
-                type: 'success',
-              });
-              this.props.navigation.navigate('RoundsStack')
-            }
-            else{
-              showMessage({
-                message: Dictionary.error[this.state.language],
-                type: 'danger',
-              });
-            }
-        })
+    Alert.alert(
+      'Dragon Golf',
+      Dictionary.signRoundAsk[this.state.language],
+      [
+        { text: Dictionary.cancel[this.state.language], onPress: () => { return null } },
+        {
+          text: Dictionary.continuar[this.state.language], onPress: () => {
+            this.setState({
+              carga:true
+          })
+            console.warn(IDRound)
+            CerrarRonda(IDRound)
+                .then((res) => {
+                  console.warn(res)
+                    if(res.estatus == 1){
+                      showMessage({
+                        message: Dictionary.closeRoundSuccess[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:false
+                    })
+                      this.props.navigation.navigate('RoundsStack')
+                    }
+                    else{
+                      showMessage({
+                        message: Dictionary.error[this.state.language],
+                        type: 'danger',
+                      });
+                      this.setState({
+                        carga:false
+                    })
+                    }
+                })
+          }
+        },
+      ],
+      { cancelable: false }
+    )
   }
   abreRonda = async () => {
     let IDRound = await AsyncStorage.getItem('IDRound')
@@ -92,6 +116,9 @@ class MoreView extends Component {
     return (
       this.state.IDRound!=0 &&
       <View style={styles.container}>
+      <Spinner
+            visible={this.state.carga}
+            color={Colors.Primary} />
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
             <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.openDrawer()}>
@@ -125,12 +152,12 @@ class MoreView extends Component {
           onPress={() => this.cierraRonda()}
           iconName='ios-lock-closed-outline'
           iconFamily='Ionicons'
-        />:<MoreOptionComponent 
+        />:null/*<MoreOptionComponent 
           title={OpenRound[language]} 
           onPress={() => this.abreRonda()}
           iconName='ios-lock-open-outline'
           iconFamily='Ionicons'
-        />
+        />*/
       }
       </View>
     );

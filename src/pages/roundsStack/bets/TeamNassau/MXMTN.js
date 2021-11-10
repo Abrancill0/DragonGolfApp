@@ -828,7 +828,22 @@ class SNBetView extends Component {
   }
 
   submit2 = async () => {
+
     if (this.state.equipos3.length>0 && this.state.equipos4.length>0) {
+
+      const state = this.state;
+    if (state.front9 && state.front9 != 0) {
+      if (this.state.useFactor) {
+        state.back9 = (parseFloat(state.back9) * parseFloat(state.front9)).toString();
+        state.match = (parseFloat(state.match) * parseFloat(state.front9)).toString();
+        state.carry = (parseFloat(state.carry) * parseFloat(state.front9)).toString();
+        state.medal = (parseFloat(state.medal) * parseFloat(state.front9)).toString();
+      } 
+    }
+
+    console.warn(state)
+
+    this.setState(state);
 
       var repeat = false;
 
@@ -910,14 +925,14 @@ class SNBetView extends Component {
   submit = async () => {
 
     const state = this.state;
-    if (state.front9 && state.front9 != 0) {
+    /*if (state.front9 && state.front9 != 0) {
       if (this.state.useFactor) {
         state.back9 = (parseFloat(state.back9) * parseFloat(state.front9)).toString();
         state.match = (parseFloat(state.match) * parseFloat(state.front9)).toString();
         state.carry = (parseFloat(state.carry) * parseFloat(state.front9)).toString();
         state.medal = (parseFloat(state.medal) * parseFloat(state.front9)).toString();
       } 
-    }
+    }*/
 
     console.warn(state)
 
