@@ -61,7 +61,8 @@ class MoreView extends Component {
                         type: 'success',
                       });
                       this.setState({
-                        carga:false
+                        carga:false,
+                        status: '0'
                     })
                       this.props.navigation.navigate('RoundsStack')
                     }

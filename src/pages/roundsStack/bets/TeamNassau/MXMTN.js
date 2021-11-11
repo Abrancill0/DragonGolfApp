@@ -7,7 +7,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, ValidaDetalleApuestaTeam, CrearDetalleApuestaTeam, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
+import { ListadoAmigosRonda, ValidaDetalleApuestaTeam, CrearDetalleApuestaMasivo, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -847,6 +847,8 @@ class SNBetView extends Component {
 
       var repeat = false;
 
+      var pairsCrea = new Array()
+
   let whoGetsString =  this.state.whoGetsAdv === 0 ? 'Hi Handicap' : this.state.whoGetsAdv === 1 ? 'Low Handicap' : this.state.whoGetsAdv === 2 ? 'Each' : this.state.whoGetsAdv === 3 ? 'Slid Hi' : this.state.whoGetsAdv === 4 ? 'Slid Low' : 'Automatic'
 
         for (var i = 0; i < this.state.equipos3.length; i++) {
@@ -859,7 +861,7 @@ class SNBetView extends Component {
           console.warn(playerC)
           console.warn(playerD)
           console.warn('------------------------------')
-          CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
+         await CalcularGolpesVentajaTeam(playerA, playerC, playerB, playerD, this.state.IDRound)
             .then((res) => {
               console.warn(res)
               ValidaDetalleApuestaTeam(this.state.IDRound,this.state.IDBet,playerA,playerC,playerB,playerD)
@@ -868,8 +870,9 @@ class SNBetView extends Component {
                 if(res.estatus == 0){
                   repeat = true;
                 }
-              }) 
-              CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
+              })
+              pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerC.toString() + ','+playerB.toString() + ','+playerD.toString() + ','+this.state.front9.toString() + ','+this.state.back9.toString() + ','+this.state.match.toString() + ','+this.state.carry.toString() + ','+this.state.medal.toString() + ','+this.state.autoPress.toString() + ',0,'+res.golpesventaja.toString() +whoGetsString.toString()+'}') 
+              /*CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
                 .then((res) => {
                   console.warn(res)
                   if(res.estatus == 1){
@@ -882,6 +885,40 @@ class SNBetView extends Component {
                     })*/
                     //AsyncStorage.setItem('arreglo', 'false');
                     //this.props.navigation.goBack()
+                  /*}
+                  else{
+                    this.setState({
+                      carga:false
+                    })
+                    showMessage({
+                      message: error[this.state.language],
+                      type: 'danger',
+                    });
+                  }
+                })*/
+            })
+        }
+
+        CrearDetalleApuestaMasivo(pairsCrea.toString())
+          .then((res) => {
+             if(res.estatus == 1){
+                    showMessage({
+                        message: successSaveTeeData[this.state.language],
+                        type: 'success',
+                      });
+                      this.setState({
+                        carga:true
+                      })
+
+                  AsyncStorage.setItem('arreglo', 'false');
+                  this.props.navigation.navigate('BetsView')
+
+                  if(repeat){
+                      showMessage({
+                                    message: betsRepeat[this.state.language],
+                                    type: 'warning',
+                                  });
+                    }
                   }
                   else{
                     this.setState({
@@ -892,27 +929,7 @@ class SNBetView extends Component {
                       type: 'danger',
                     });
                   }
-                })
-            })
-        }
-
-        showMessage({
-                      message: successSaveTeeData[this.state.language],
-                      type: 'success',
-                    });
-                    this.setState({
-                      carga:true
-                    })
-
-        AsyncStorage.setItem('arreglo', 'false');
-        this.props.navigation.navigate('BetsView')
-
-        if(repeat){
-          showMessage({
-                        message: betsRepeat[this.state.language],
-                        type: 'warning',
-                      });
-        }
+          })
       }
       else{
         showMessage({
