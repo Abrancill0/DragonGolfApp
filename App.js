@@ -48,6 +48,7 @@ import TNBetViewInfo from './src/pages/roundsStack/bets/TeamNassau/TNBetViewInfo
 import TNBetViewEdit from './src/pages/roundsStack/bets/TeamNassau/TNBetViewEdit'
 import TeesView from './src/pages/coursesStack/tees/TeesView'
 import TeesViewRound from './src/pages/roundsStack/players/TeesView'
+import TeesViewRoundC from './src/pages/roundsStack/players/TeesView'
 import TeeDataView from './src/pages/coursesStack/teeData/TeeDataView'
 import TeeDataViewRound from './src/pages/roundsStack/players/TeeDataView'
 import AddCourse from './src/pages/coursesStack/addCourse/AddCourseView'
@@ -1371,6 +1372,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='PlayersViewRoundsC' component={PlayersViewRoundsC}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='TeesViewRoundC' component={TeesViewRoundC}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

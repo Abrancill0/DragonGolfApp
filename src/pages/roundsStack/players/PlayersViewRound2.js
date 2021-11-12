@@ -306,11 +306,11 @@ export default function RoundsView(route) {
 
     function navegaTees(id){
       if(UsuarioCreo == 1){
-        navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:id})
+        navigation.navigate('TeesViewRoundC', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:id})
       }
       else{
         if(ValidaUsuarioCreo == id){
-          navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:id})
+          navigation.navigate('TeesViewRoundC', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:id})
         }
         else{
           showMessage({
