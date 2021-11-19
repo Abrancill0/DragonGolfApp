@@ -12,7 +12,7 @@ import moment from 'moment';
 import { TextField } from 'react-native-material-textfield';
 import Entypo from 'react-native-vector-icons/Entypo';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import DragonButton from '../../global/DragonButton';
+import DragonButton from '../../global/DragonButton'; 
 
 class HistoryScreen extends Component {
     constructor(props) {
@@ -90,9 +90,10 @@ class HistoryScreen extends Component {
                       played_hp: item.Te_Slope,
                       next_hp: item.Score18,
                       PlayerTee: item.PlayerTee,
-                      Diferencial: item.Diferencial.toFixed(2),
-                      handicap: item.Handicap.toFixed(2),
-                      date: '01/01/2020'//moment().toDate()//moment(item.Fecha).format('DD/MM/YYYY').toString()
+                      Diferencial: item.Diferencial.toFixed(1),
+                      handicap: item.Handicap.toFixed(1),
+                      date: moment(item.Fecha).format('DD/MM/YYYY').toString(),
+                      date2: new Date(item.Fecha)
                     }
                 ))
                 this.total = list[0].handicap
@@ -374,7 +375,7 @@ class HistoryScreen extends Component {
 
         return (
             <View style={{ flex: 1 }}>
-            <View style={{ flex: 0.5 }}>
+            <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
                     <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>
@@ -389,12 +390,12 @@ class HistoryScreen extends Component {
                   </View>*/}
                 </View>
                 <View style={styles.headersView}>
-                    {/*<TouchableOpacity style={styles.headers} onPress={this.sortDate}>
+                    <TouchableOpacity style={styles.headers} onPress={this.sortDate2}>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={styles.headerText}>{date[language]}</Text>
                         </View>
                         <FontAwesome name={topToBottomDate === null ? 'minus' : topToBottomDate ? 'caret-down' : 'caret-up'} color={Colors.Black} size={15} />
-                    </TouchableOpacity>*/}
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.headers} /*onPress={this.sortCourse}*/>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: 3 }}>
                             <Text style={styles.headerText}>{course[language]}</Text>
@@ -407,13 +408,13 @@ class HistoryScreen extends Component {
                         </View>
                         <FontAwesome name={topToBottomPlayer === null ? 'minus' : topToBottomPlayer ? 'caret-down' : 'caret-up'} color={Colors.Black} size={15} />
                     </TouchableOpacity> */}
-                    <View style={styles.headers}>
+                    <View style={styles.headers2}>
                         <Text style={styles.headerText}>{rating[language]}</Text>
                     </View>
                     {/*<View style={styles.headers}>
                         <Text style={styles.headerText}>{result[language]}</Text>
                     </View>*/}
-                    <View style={styles.headers}>
+                    <View style={styles.headers2}>
                         <Text style={styles.headerText}>Slope</Text>
                     </View>
                     <View style={styles.headers}>
@@ -552,6 +553,16 @@ class HistoryScreen extends Component {
             editDate: false,
             topToBottomDate: true
         })
+        }
+    }
+
+    sortDate2 = () => {
+        if (!this.state.topToBottomDate) {
+            this.state.history.sort((a, b) => (a.date2 > b.date2) ? 1 : (a.date2 < b.date2) ? -1 : 0);
+            this.setState({ topToBottomPlayer: null, topToBottomDate: true, topToBottomCourse: null });
+        } else {
+            this.state.history.sort((a, b) => (a.date2 < b.date2) ? 1 : (a.date2 > b.date2) ? -1 : 0);
+            this.setState({ topToBottomPlayer: null, topToBottomDate: false, topToBottomCourse: null });
         }
     }
 

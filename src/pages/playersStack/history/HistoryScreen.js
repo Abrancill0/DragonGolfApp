@@ -364,7 +364,7 @@ class HistoryScreen extends Component {
 
         return (
             <View style={{ flex: 1 }}>
-            <View style={{ flex: 0.5 }}>
+            <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
                     <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.goBack()}>

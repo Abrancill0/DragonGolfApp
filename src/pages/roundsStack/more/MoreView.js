@@ -30,6 +30,7 @@ class MoreView extends Component {
   ListadoTodos = async () => {
     let language = await AsyncStorage.getItem('language')
     let status = await AsyncStorage.getItem('status')
+    console.warn(status)
     let IDRound = await AsyncStorage.getItem('IDRound')
 
     this.setState({
@@ -64,6 +65,7 @@ class MoreView extends Component {
                         carga:false,
                         status: '0'
                     })
+                      AsyncStorage.setItem('status', '0');
                       this.props.navigation.navigate('RoundsStack')
                     }
                     else{

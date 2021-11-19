@@ -925,8 +925,8 @@ export const Dictionary = {
         'es': 'Strokes Siguientes'
     },
     rating: {
-        'en': 'Rating',
-        'es': 'Clasificación'
+        'en': 'Rat',
+        'es': 'Clas'
     },
     h18s: {
         'en': '18-hole Score',

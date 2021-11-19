@@ -43,22 +43,22 @@ export default class HistoryComponent extends Component {
         return (
             <View>
                 <View style={styles.rowView}>
-                            {/*<View style={styles.headers}>
+                            <View style={styles.headers}>
                                 <Text style={styles.rowText}>{item.date}</Text>
-                            </View>*/}
+                            </View>
                             <View style={styles.headers}>
                                 <Text style={styles.rowText}>{item.course_name}</Text>
                             </View>
                             {/* <TouchableOpacity style={styles.headers} onPress={_ => navigation.push('HistoryScreen', { playerId: item.player_id })} disabled={!!playerId}>
                                 <Text style={styles.rowText}>{item.nick_name}</Text>
                             </TouchableOpacity> */}
-                            <View style={[styles.headers, item.is_manual && { backgroundColor: Colors.PrimaryWithOpacity }]}>
+                            <View style={[styles.headers2, item.is_manual && { backgroundColor: Colors.PrimaryWithOpacity }]}>
                                 <Text style={[styles.rowText, item.is_manual && { fontWeight: 'bold' }]}>{item.money}</Text>
                             </View>
                             {/*<View style={styles.headers}>
                                 <Text style={styles.rowText}>{this.state.resultado}</Text>
                             </View>*/}
-                            <View style={styles.headers}>
+                            <View style={styles.headers2}>
                                 <Text style={styles.rowText}>{item.played_hp}</Text>
                             </View>
                             <View style={styles.headers}>

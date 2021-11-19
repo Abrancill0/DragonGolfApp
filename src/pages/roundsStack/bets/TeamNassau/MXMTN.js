@@ -7,7 +7,7 @@ import Colors from '../../../../utils/Colors';
 import { Dictionary } from '../../../../utils/Dictionary';
 import DragonButton from '../../../global/DragonButton';
 import moment from 'moment';
-import { ListadoAmigosRonda, ValidaDetalleApuestaTeam, CrearDetalleApuestaMasivo, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
+import { ListadoAmigosRonda, ValidaDetalleApuestaTeam, CrearDetalleApuestaTeam, InfoUsuarioAB, CalcularGolpesVentajaTeam } from '../../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -871,8 +871,8 @@ class SNBetView extends Component {
                   repeat = true;
                 }
               })
-              pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerC.toString() + ','+playerB.toString() + ','+playerD.toString() + ','+this.state.front9.toString() + ','+this.state.back9.toString() + ','+this.state.match.toString() + ','+this.state.carry.toString() + ','+this.state.medal.toString() + ','+this.state.autoPress.toString() + ',0,'+res.golpesventaja.toString() +whoGetsString.toString()+'}') 
-              /*CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
+              //pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerC.toString() + ','+playerB.toString() + ','+playerD.toString() + ','+this.state.front9.toString() + ','+this.state.back9.toString() + ','+this.state.match.toString() + ','+this.state.carry.toString() + ','+this.state.medal.toString() + ','+this.state.autoPress.toString() + ',0,'+res.golpesventaja.toString() + ','+whoGetsString.toString()+'}') 
+              CrearDetalleApuestaTeam(this.state.IDBet,this.state.IDRound,playerA,playerC,playerB,playerD,this.state.front9,this.state.back9,this.state.match,this.state.carry,this.state.medal,this.state.autoPress,0,res.golpesventaja.toString(),whoGetsString)
                 .then((res) => {
                   console.warn(res)
                   if(res.estatus == 1){
@@ -885,7 +885,7 @@ class SNBetView extends Component {
                     })*/
                     //AsyncStorage.setItem('arreglo', 'false');
                     //this.props.navigation.goBack()
-                  /*}
+                  }
                   else{
                     this.setState({
                       carga:false
@@ -895,13 +895,15 @@ class SNBetView extends Component {
                       type: 'danger',
                     });
                   }
-                })*/
+                })
             })
         }
 
+        /*console.warn(pairsCrea)
+
         CrearDetalleApuestaMasivo(pairsCrea.toString())
-          .then((res) => {
-             if(res.estatus == 1){
+          .then((res) => {*/
+             //if(res.estatus == 1){
                     showMessage({
                         message: successSaveTeeData[this.state.language],
                         type: 'success',
@@ -919,7 +921,7 @@ class SNBetView extends Component {
                                     type: 'warning',
                                   });
                     }
-                  }
+                  /*}
                   else{
                     this.setState({
                       carga:false
@@ -928,8 +930,8 @@ class SNBetView extends Component {
                       message: error[this.state.language],
                       type: 'danger',
                     });
-                  }
-          })
+                  }*/
+          //})
       }
       else{
         showMessage({

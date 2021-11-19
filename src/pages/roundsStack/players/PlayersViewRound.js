@@ -230,6 +230,7 @@ export default function RoundsView(route) {
                         message: deleted[language],
                         type:'success',
                       });
+                      AsyncStorage.setItem('arreglo2', 'false');
                       ListadoTodos()
                     }
                 })

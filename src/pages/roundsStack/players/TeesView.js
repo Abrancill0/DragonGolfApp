@@ -95,7 +95,8 @@ export default function RoundsView(route) {
             showMessage({
               message: successSaveTeeData[language],
               type:'success',
-            });
+            });  
+            AsyncStorage.setItem('arreglo2', 'false');
             navigation.goBack()
             //navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:IDRound})
           }

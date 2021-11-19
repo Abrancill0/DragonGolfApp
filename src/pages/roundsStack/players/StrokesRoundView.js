@@ -53,6 +53,7 @@ export default function RoundsView(route) {
     const [value4, setValue4] = useState('');
     const [signoMas] = useState(true);
     const [signoMenos] = useState(false);
+    const [valorMenos, setValorMemos] = useState(route.route.params.strokes.toString().substring(0,1)=='-'?false:true);
     const [strokesReg, setstrokesReg] = useState(route.route.params.strokes);
     const [strokesRegAbs, setStrokesRegAbs] = useState(Math.abs(route.route.params.strokes))
     const [language, setLanguage] = useState('es');
@@ -312,7 +313,7 @@ export default function RoundsView(route) {
 
   function checaEntero(text){
     console.warn('Entró')
-    if(text.length == 1 && text == '-'){ return '-'}
+    if(text.length == 1 && text == '-'){ return ''}
       else{
         let strokes = parseFloat(text)
         const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
@@ -519,42 +520,43 @@ export default function RoundsView(route) {
               <View /*activeOpacity={0} /*onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}*/>
                 <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
                   <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    <View style={{flex:1}}>
+                    <View style={{flex:0.8}}>
                       <View style={{flex:1, flexDirection:'row',paddingHorizontal:5}}>
-                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:5}}>
+                      <View style={{flex:1,justifyContent:'center',paddingHorizontal:5}}>
                         <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nickname}</Text>
                         <View style={styles3.switchView}>
                           <Text style={styles3.question}>{strokes[language]}</Text>
                           
-                          <View style={[styles3.costInputView,{flexDirection:'row', justifyContent:'space-between'}]}>
-                          <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
+                          <View style={[{flexDirection:'row', justifyContent:'space-between'}]}>
+                          <View style={{flex:0.2, alignSelf:'center', marginHorizontal:30}}>
+                          <TouchableOpacity onPress={() => {item.strokes=chechaStrokes(item.strokes)-0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}>
+                            <MaterialIcon name={'expand-more'} size={25} color={Colors.Primary} />
+                          </TouchableOpacity>
+                          </View>
                             <Button
-                              title={signoMenos?'+':'-'}
-                              onPress={() => {item.strokes=chechaStrokes(item.strokes)-0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              title={item.strokes.toString().substring(0,1)=='-'?'-':'+'}
+                              onPress={() => {item.strokes=item.strokes*-1;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
                               color={Colors.Primary}
                             />
-                          </View>
-                          <View style={{flex:1, paddingLeft:0}}>
+                            <View style={{flex:0.2, alignSelf:'center', marginHorizontal:15}}>
                             <TextInput
                               ref={ref => item.id = ref}
                               //editable={false}
                               style={styles3.costInput}
                               selectionColor={Colors.Secondary}
                               placeholder="0"
-                              keyboardType="default"
+                              keyboardType="numeric"
                               returnKeyType='done'
                               onChange={(change) => {console.warn(change.nativeEvent.text);item.strokes=checaEntero(change.nativeEvent.text);setDataInState([...dataInState, players]);Elimina2(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
-                              defaultValue={item.strokes.toString()}
-                              value={item.strokes.toString()}
+                              defaultValue={Math.abs(item.strokes).toString()}
+                              value={Math.abs(item.strokes).toString()}
                               selectTextOnFocus={true}
                             />
                             </View>
                             <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
-                            <Button
-                              title={signoMas?'+':'-'}
-                              onPress={() => {item.strokes=chechaStrokes(item.strokes)+0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
-                              color={Colors.Primary}
-                            />
+                            <TouchableOpacity onPress={() => {item.strokes=chechaStrokes(item.strokes)+0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}>
+                              <MaterialIcon name={'expand-less'} size={25} color={Colors.Primary} />
+                            </TouchableOpacity>
                           </View>
                           </View>
                         </View>

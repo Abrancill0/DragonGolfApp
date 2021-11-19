@@ -27,6 +27,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: Colors.White
     },
+    headers2: {
+        flex: 0.5,
+        borderBottomWidth: 1,
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderColor: Colors.Gray,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 0,
+        justifyContent: 'center',
+        backgroundColor: Colors.White
+    },
     headerText: {
         fontWeight: 'bold',
         fontSize: 12,

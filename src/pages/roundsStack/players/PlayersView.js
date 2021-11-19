@@ -237,6 +237,7 @@ export default function RoundsView(route) {
                       message: successSavePlayer[language],
                       type:'success',
                   });
+                    AsyncStorage.setItem('arreglo2', 'false');
                     if(selectedIndex==0)
                       ListadoTodos()
                     if(selectedIndex==1)
