@@ -15,7 +15,7 @@ class MoreView extends Component {
     super(props);
     this.state = {
       language: 'es',
-      status: '1',
+      status: '0',
       IDRound:0,
       carga: false
     };

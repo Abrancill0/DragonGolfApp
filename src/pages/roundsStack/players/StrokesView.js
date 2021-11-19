@@ -53,6 +53,7 @@ export default function RoundsView(route) {
     const [value4, setValue4] = useState('');
     const [signoMas] = useState(true);
     const [signoMenos] = useState(false);
+    const [valorMenos, setValorMemos] = useState(props.route.params.strokes.toString().substring(0,1)=='-'?false:true);
     const [strokesReg, setstrokesReg] = useState(route.route.params.strokes);
     const [strokesRegAbs, setStrokesRegAbs] = useState(Math.abs(route.route.params.strokes))
     const [language, setLanguage] = useState('es');
@@ -253,13 +254,18 @@ export default function RoundsView(route) {
   }
 
   async function Elimina2(RoundId, Player1Id, Player2Id, strokes){
+    let StrokesRegSigno = ''
+      if(!valorMenos)
+        StrokesRegSigno = '-'+setStrokesRegAbs
+      else
+          StrokesRegSigno = setStrokesRegAbs
     const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
-    if (strokes === "" || re.test(strokes)) {
+    if (setStrokesRegAbs === "" || re.test(setStrokesRegAbs)) {
       console.warn('R: '+RoundId)
       console.warn('P1: '+Player1Id)
       console.warn('P2: '+Player2Id)
-      console.warn('S: '+strokes)
-      ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, strokes)
+      console.warn('S: '+setStrokesRegAbs)
+      ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, setStrokesRegAbs)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -531,6 +537,13 @@ export default function RoundsView(route) {
                             <Button
                               title={signoMenos?'+':'-'}
                               onPress={() => {item.strokes=chechaStrokes(item.strokes)-0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              color={Colors.Primary}
+                            />
+                          </View>
+                          <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
+                            <Button
+                              title={valorMenos?'+':'-'}
+                              onPress={() => this.setState({valorMenos:!valorMenos})}
                               color={Colors.Primary}
                             />
                           </View>
