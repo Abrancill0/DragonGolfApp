@@ -350,6 +350,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole1.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,1)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -366,6 +367,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole2.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,2)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -382,6 +384,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole3.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,3)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -398,6 +401,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole4.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,4)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -414,6 +418,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole5.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,5)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -430,6 +435,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole6.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,6)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -446,6 +452,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole7.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,7)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -462,6 +469,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole8.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,8)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -478,6 +486,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole9.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,9)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -494,6 +503,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole10.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,10)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -510,6 +520,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole11.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,11)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -526,6 +537,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole12.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,12)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -542,6 +554,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole13.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,13)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -558,6 +571,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole14.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,14)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -574,6 +588,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole15.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,15)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -590,6 +605,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole16.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,16)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -606,6 +622,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole17.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,17)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -622,6 +639,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole18.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,18)}
                                 keyboardType='number-pad'
+                                editable={item.id==16?false:true}
                             />
                         </View>
                     </View>
@@ -642,25 +660,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par1!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par1,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par1,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par1,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par1,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par1,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par1,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par1,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par1,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -674,25 +692,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par2!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par2,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par2,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par2,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par2,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par2,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par2,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par2,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par2,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -706,25 +724,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par3!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par3,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par3,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par3,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par3,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par3,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par3,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par3,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par3,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -738,25 +756,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par4!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par4,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par4,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par4,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par4,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par4,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par4,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par4,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par4,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -770,25 +788,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par5!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par5,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par5,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par5,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par5,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par5,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par5,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par5,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par5,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -802,25 +820,25 @@ class PlayerScoreComponent extends Component {
                     item.ho_par6!=0&&<View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingTop: 5, alignItems: 'center' }}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par6,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par6,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par6,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par6,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par6,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par6,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par6,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par6,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -834,25 +852,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par7!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par7,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par7,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par7,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par7,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par7,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par7,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par7,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par7,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -866,25 +884,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par8!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par8,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par8,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par8,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par8,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par8,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par8,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par8,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par8,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -898,25 +916,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par9!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par9,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par9,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par9,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par9,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par9,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par9,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par9,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par9,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -930,25 +948,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par10!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par10,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par10,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par10,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par10,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par10,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par10,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par10,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par10,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -962,25 +980,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par11!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par11,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par11,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par11,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par11,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par11,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par11,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par11,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par11,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -994,25 +1012,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par12!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par12,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par12,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par12,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par12,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par12,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par12,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par12,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par12,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -1026,25 +1044,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par13!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par13,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par13,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par13,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par13,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par13,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par13,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par13,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par13,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -1058,25 +1076,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par14!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par14,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par14,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par14,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par14,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par14,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par14,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par14,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par14,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -1090,25 +1108,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par15!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par15,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par15,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par15,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par15,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par15,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par15,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par15,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par15,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -1122,25 +1140,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par16!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par16,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par16,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par16,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par16,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par16,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par16,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par16,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par16,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -1154,25 +1172,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par17!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par17,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par17,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par17,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par17,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par17,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par17,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par17,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par17,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -1186,25 +1204,25 @@ class PlayerScoreComponent extends Component {
                      item.ho_par18!=0&&<View style={styles.buttonGroupView}>
                         <TouchableOpacity
                             style={styles.birdieButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par18,0)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par18,0)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Birdie</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.parButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par18,1)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par18,1)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>Par</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.bogeyButtonView}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par18,2)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par18,2)}
                         >
                             <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 11 : null }}>Bogey</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.dblButtonView1}
-                            onPress={_ => this.onPressButtonGroup(item.ho_par18,3)}
+                            onPress={_ => this.onPressButtonGroup(item.id,item.ho_par18,3)}
                         >
                             <View style={styles.dblButtonView2}>
                                 <Text numberOfLines={1} adjustsFontSizeToFit style={{ fontSize: Platform.OS === 'android' ? 12 : null }}>DBL</Text>
@@ -1287,7 +1305,8 @@ class PlayerScoreComponent extends Component {
         }
     }
 
-    onPressButtonGroup = (par, value) => {
+    onPressButtonGroup = (id,par, value) => {
+        if(id==16){
         const { holeInfo, index, hole } = this.props;
         let bogy = 0;
         let score = 0;
@@ -1821,6 +1840,8 @@ class PlayerScoreComponent extends Component {
             break;
         }
         this.saveScore(score);
+        }
+        else{console.warn('Hola')}
     }
 
     onChangeScore = async (score, value) => {

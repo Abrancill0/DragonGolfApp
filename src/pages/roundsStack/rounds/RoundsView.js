@@ -73,7 +73,7 @@ export default function RoundsView(route) {
     setLanguage(language)
     ListarRonda(idUsu)
         .then((res) => {
-          //console.warn(res)
+          console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
