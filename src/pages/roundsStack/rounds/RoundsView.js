@@ -38,6 +38,7 @@ export default function RoundsView(route) {
 
     const navigation = useNavigation();
     const [IDRound, setIDRound] = useState(0);
+    const [IDUsuarioCreo, setIDUsuarioCreo] = useState(0);
     const [rounds, setRounds] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
@@ -77,6 +78,7 @@ export default function RoundsView(route) {
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
+                      idUsuCreo: item.IDUsuario,
                       id: item.IDRounds,
                       idCourse: item.IDCourse,
                       nombre: item.Cou_Nombre,
@@ -227,8 +229,9 @@ export default function RoundsView(route) {
     );
   };
 
-  async function muestraRonda(IDCourse, IDRound, nombreRonda, handicap, hole, adv, fecha, nombre, status){
+  async function muestraRonda(IDUsuarioCreo,IDCourse, IDRound, nombreRonda, handicap, hole, adv, fecha, nombre, status){
     //navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:IDRound} })
+    AsyncStorage.setItem('IDUsuarioCreo', IDUsuarioCreo.toString());
     AsyncStorage.setItem('IDRound', IDRound.toString());
     AsyncStorage.setItem('nombreRonda', nombreRonda.toString());
     AsyncStorage.setItem('handicap', handicap.toString());
@@ -422,7 +425,7 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)}>
+                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idUsuCreo,item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)}>
                             <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
                               <View style={{flex:.05,backgroundColor:item.id==IDRound?Colors.Primary:'#123c5b'}}/>
                                 <View style={{flex:.85}}>

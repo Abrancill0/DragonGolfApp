@@ -26,6 +26,8 @@ class PlayerScoreComponent extends Component {
             }
         }
         this.state = {
+            idUsuCreo: 0,
+            idUsuSistema: 0,
             buttonIndex: null,
             holeScore,
             ScoreHole1: this.props.item.ScoreHole1,
@@ -79,6 +81,12 @@ class PlayerScoreComponent extends Component {
     }
 
     componentDidMount = async () => {
+        let idUsu = await AsyncStorage.getItem('IDUsuarioCreo');
+        let idUsuSist = await AsyncStorage.getItem('usu_id');
+        this.setState({
+            idUsuCreo: idUsu,
+            idUsuSistema: idUsuSist
+        })
         /*let playerHole= await AsyncStorage.getItem(this.props.item.id.toString())
         var myArray = playerHole.split(',');
         this.setState({
@@ -350,7 +358,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole1.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,1)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -367,7 +375,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole2.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,2)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -384,7 +392,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole3.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,3)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -401,7 +409,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole4.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,4)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -418,7 +426,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole5.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,5)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -435,7 +443,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole6.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,6)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -452,7 +460,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole7.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,7)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -469,7 +477,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole8.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,8)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -486,7 +494,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole9.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,9)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -503,7 +511,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole10.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,10)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -520,7 +528,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole11.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,11)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -537,7 +545,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole12.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,12)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -554,7 +562,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole13.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,13)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -571,7 +579,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole14.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,14)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -588,7 +596,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole15.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,15)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -605,7 +613,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole16.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,16)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -622,7 +630,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole17.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,17)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -639,7 +647,7 @@ class PlayerScoreComponent extends Component {
                                 value={ScoreHole18.toString()}
                                 onChangeText={(score)=>this.onChangeScore(score,18)}
                                 keyboardType='number-pad'
-                                editable={item.id==16?false:true}
+                                editable={item.id.toString()==this.state.idUsuCreo.toString()?true:item.id.toString()==this.state.idUsuSistema.toString()?true:false}
                             />
                         </View>
                     </View>
@@ -1306,7 +1314,8 @@ class PlayerScoreComponent extends Component {
     }
 
     onPressButtonGroup = (id,par, value) => {
-        if(id==16){
+        let entra = id.toString()==this.state.idUsuCreo.toString()?true:id.toString()==this.state.idUsuSistema.toString()?true:false
+        if(entra){
         const { holeInfo, index, hole } = this.props;
         let bogy = 0;
         let score = 0;

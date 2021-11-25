@@ -10,10 +10,12 @@ import { CerrarRonda, AbrirRonda } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 import Spinner from 'react-native-loading-spinner-overlay';
 
-class MoreView extends Component {
+class MoreView extends Component { 
   constructor(props) {
     super(props);
     this.state = {
+      idUsuCreo: 0,
+      idUsuSistema: 0,
       language: 'es',
       status: '0',
       IDRound:0,
@@ -32,11 +34,15 @@ class MoreView extends Component {
     let status = await AsyncStorage.getItem('status')
     console.warn(status)
     let IDRound = await AsyncStorage.getItem('IDRound')
+    let idUsu = await AsyncStorage.getItem('IDUsuarioCreo');
+    let idUsuSist = await AsyncStorage.getItem('usu_id');
 
     this.setState({
         language:language,
         status:status,
-        IDRound:IDRound
+        IDRound:IDRound,
+        idUsuCreo: idUsu,
+        idUsuSistema: idUsuSist
     })
   }
 
@@ -150,7 +156,7 @@ class MoreView extends Component {
           iconName='copy-outline'
           iconFamily='Ionicons'
         />
-        {this.state.status=='1'?<MoreOptionComponent 
+        {this.state.idUsuCreo==this.state.idUsuSistema && this.state.status=='1'?<MoreOptionComponent 
           title={closeRound[language]} 
           onPress={() => this.cierraRonda()}
           iconName='ios-lock-closed-outline'
