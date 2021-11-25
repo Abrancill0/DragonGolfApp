@@ -26,10 +26,12 @@ import PlayersViewRoundsList from './src/pages/roundsStack/players/PlayersViewRo
 import PlayersViewRoundsList2 from './src/pages/roundsStack/players/PlayersViewRound2'
 import StrokesView from './src/pages/roundsStack/players/StrokesView'
 import StrokesRoundView from './src/pages/roundsStack/players/StrokesRoundView'
+import StrokesRoundViewTorneo from './src/pages/roundsStack/players/StrokesRoundViewTorneo'
 import ScoreView from './src/pages/roundsStack/score/ScoreView'
 import BetsView from './src/pages/roundsStack/bets/BetsView'
 import More from './src/pages/roundsStack/more/MoreView'
 import ScoreCardView from './src/pages/roundsStack/more/ScoreCardView'
+import ScoreCardViewTorneo from './src/pages/roundsStack/more/ScoreCardViewTorneo'
 import Template from './src/pages/roundsStack/more/Template';
 import SNScoreCardView from './src/pages/roundsStack/bets/SingleNassau/ScoreCardView'
 import MXM from './src/pages/roundsStack/bets/SingleNassau/MXM'
@@ -744,7 +746,7 @@ export default class App extends Component {
             onPress={() => this.closeSesion(props)}
             style={{height:'10%',flexDirection:'row',alignItems:'center',backgroundColor:Colors.Primary,padding:10}}>
               <View style={{flex:.1}}>
-                  <Text style={{color:'white'}}>10.8</Text>
+                  <Text style={{color:'white'}}>10.9</Text>
               </View>
               <View style={{flex:.1}}>
                   <FontAwesomeIcon name='sign-out' color='white' size={20}/>
@@ -1335,6 +1337,18 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
+          <Stack.Screen name='ScoreCardViewTorneo' component={ScoreCardViewTorneo}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
           <Stack.Screen name='SummaryView' component={SummaryView}
           options={({ route }) => ({
             headerBackTitle: '',
@@ -1408,6 +1422,18 @@ export default class App extends Component {
               headerShown:false
           })} />
           <Stack.Screen name='StrokesRoundView' component={StrokesRoundView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='StrokesRoundViewTorneo' component={StrokesRoundViewTorneo}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {

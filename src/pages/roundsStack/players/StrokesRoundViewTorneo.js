@@ -27,7 +27,7 @@ import Colors from '../../../utils/Colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, ActualizaStrokerPvPRonda, ListaInvitados, ListadoRondaStroker } from '../../../Services/Services'
+import { ListaAmigos, ActualizaStableFordStrokes, ListaInvitados, ListadoJugadoreStableFordStrokes } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -43,9 +43,9 @@ export default function RoundsView(route) {
     //const refInput = useRef();
     const navigation = useNavigation();
     const [IDRound, setIDRound] = useState(route.route.params.IDRound);
-    const [IDUsuario, setIDUsuario] = useState(route.route.params.IDUsuario);
+    const [IDUsuario, setIDUsuario] = useState(0);
     const [IDUsuarioCreo, setIDUsuarioCreo] = useState(0);
-    const [Nickname, setNickname] = useState(route.route.params.Nickname);
+    const [Nickname, setNickname] = useState('');
     const [players, setPlayers] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
@@ -54,8 +54,8 @@ export default function RoundsView(route) {
     const [value4, setValue4] = useState('');
     const [signoMas] = useState(true);
     const [signoMenos] = useState(false);
-    const [valorMenos, setValorMemos] = useState(route.route.params.strokes.toString().substring(0,1)=='-'?false:true);
-    const [strokesReg, setstrokesReg] = useState(route.route.params.strokes);
+    const [valorMenos, setValorMemos] = useState(false);
+    const [strokesReg, setstrokesReg] = useState(0);
     const [strokesRegAbs, setStrokesRegAbs] = useState(Math.abs(route.route.params.strokes))
     const [language, setLanguage] = useState('es');
     const ScreenWidth = Dimensions.get("window").width;
@@ -82,17 +82,18 @@ export default function RoundsView(route) {
     console.warn(idUsu)
     console.warn(IDRound)
     console.warn(IDUsuario)
-    ListadoRondaStroker(IDRound, IDUsuario)
+    setPlayers([])
+    ListadoJugadoreStableFordStrokes(IDRound)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
                 const list = res.Result.map(item => (
                     {
-                      Player1Id: item.Player1Id,
+                      Player1Id: item.IDUsuario,
                       Player2Id: item.Player2Id,
                       RoundId: item.RoundId,
                       nickname: item.usu_nickname,
-                      strokes: item.P1vsP2Strokes
+                      strokes: item.Strokes
                     }
                 ))
                 setPlayers(list)
@@ -105,7 +106,7 @@ export default function RoundsView(route) {
   }
 
   function finalizar(){
-    navigation.navigate('StrokesRoundViewTorneo',{IDRound:IDRound})
+    navigation.goBack()
     /*Alert.alert(
       "DragonGolf",
       exitRound[language],
@@ -203,12 +204,12 @@ export default function RoundsView(route) {
     }
   }
 
-  async function Elimina(RoundId, Player1Id, Player2Id, strokes){
-    console.warn('R: '+RoundId)
+  async function Elimina(Player1Id, Player2Id, strokes){
+    console.warn('R: '+IDRound)
     console.warn('P1: '+Player1Id)
     console.warn('P2: '+Player2Id)
     console.warn('S: '+strokes)
-    ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, strokes)
+    ActualizaStableFordStrokes(Player1Id, IDRound, strokes)
       .then((res) => {
         console.warn(res)
           if(res.estatus == 1){
@@ -237,7 +238,7 @@ export default function RoundsView(route) {
         {
           text: "Eliminar",
           onPress: () => {
-            ActualizaStrokerPvPRonda(IDUsuarioFav,idUsu)
+            ActualizaStableFordStrokes(IDUsuarioFav,idUsu)
                 .then((res) => {
                   console.warn(res)
                     if(res.estatus == 1){
@@ -255,14 +256,14 @@ export default function RoundsView(route) {
     );*/
   }
 
-  async function Elimina2(RoundId, Player1Id, Player2Id, strokes){
+  async function Elimina2(Player1Id, Player2Id, strokes){
     const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
     if (strokes === "" || re.test(strokes)) {
-      console.warn('R: '+RoundId)
+      console.warn('R: '+IDRound)
       console.warn('P1: '+Player1Id)
       console.warn('P2: '+Player2Id)
       console.warn('S: '+strokes)
-      ActualizaStrokerPvPRonda(RoundId,Player1Id, Player2Id, strokes)
+      ActualizaStableFordStrokes(Player1Id, IDRound, strokes)
         .then((res) => {
           console.warn(res)
             if(res.estatus == 1){
@@ -295,7 +296,7 @@ export default function RoundsView(route) {
         {
           text: "Eliminar",
           onPress: () => {
-            ActualizaStrokerPvPRonda(IDUsuarioFav,idUsu)
+            ActualizaStableFordStrokes(IDUsuarioFav,idUsu)
                 .then((res) => {
                   console.warn(res)
                     if(res.estatus == 1){
@@ -318,7 +319,7 @@ export default function RoundsView(route) {
     if(text.length == 1 && text == '-'){ return ''}
       else{
         let strokes = parseFloat(text)
-        const re = /^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$/;
+        const re = /^[+-]?[0-9]{1,9}(?:[0-9]{1,2})?$/;
         let filteredData = text.split(".")
         console.warn(filteredData)
         if(filteredData[1]=='')
@@ -329,7 +330,7 @@ export default function RoundsView(route) {
           return strokes 
         }
         
-        return '' 
+        return '0' 
       }
   }
 
@@ -531,15 +532,15 @@ export default function RoundsView(route) {
                           
                           <View style={[{flexDirection:'row', justifyContent:'space-between'}]}>
                           <View style={{flex:0.2, alignSelf:'center', marginHorizontal:30}}>
-                          <TouchableOpacity onPress={() => {item.strokes=chechaStrokes(item.strokes)-0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}>
+                          <TouchableOpacity onPress={() => {item.strokes=chechaStrokes(item.strokes)-1>=0?item.strokes-1:item.strokes;setDataInState([...dataInState, players]);Elimina(item.Player1Id, item.Player2Id, item.strokes)}}>
                             <MaterialIcon name={'expand-more'} size={25} color={Colors.Primary} />
                           </TouchableOpacity>
                           </View>
-                            <Button
+                            {/*<Button
                               title={item.strokes.toString().substring(0,1)=='-'?'-':'+'}
                               onPress={() => {item.strokes=item.strokes*-1;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
                               color={Colors.Primary}
-                            />
+                            />*/}
                             <View style={{flex:0.2, alignSelf:'center', marginHorizontal:15}}>
                             <TextInput
                               ref={ref => item.id = ref}
@@ -549,14 +550,14 @@ export default function RoundsView(route) {
                               placeholder="0"
                               keyboardType="numeric"
                               returnKeyType='done'
-                              onChange={(change) => {console.warn(change.nativeEvent.text);item.strokes=checaEntero(change.nativeEvent.text);setDataInState([...dataInState, players]);Elimina2(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}
+                              onChange={(change) => {console.warn(change.nativeEvent.text);item.strokes=checaEntero(change.nativeEvent.text);setDataInState([...dataInState, players]);Elimina2(item.Player1Id, item.Player2Id, item.strokes)}}
                               defaultValue={Math.abs(item.strokes).toString()}
                               value={Math.abs(item.strokes).toString()}
                               selectTextOnFocus={true}
                             />
                             </View>
                             <View style={{flex:1, alignSelf:'center', marginHorizontal:3}}>
-                            <TouchableOpacity onPress={() => {item.strokes=chechaStrokes(item.strokes)+0.5;setDataInState([...dataInState, players]);Elimina(item.RoundId, item.Player1Id, item.Player2Id, item.strokes)}}>
+                            <TouchableOpacity onPress={() => {item.strokes=chechaStrokes(item.strokes)+1;setDataInState([...dataInState, players]);Elimina(item.Player1Id, item.Player2Id, item.strokes)}}>
                               <MaterialIcon name={'expand-less'} size={25} color={Colors.Primary} />
                             </TouchableOpacity>
                           </View>
@@ -605,9 +606,6 @@ export default function RoundsView(route) {
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-        {IDUsuario.toString()==IDUsuarioCreo.toString()?<View style={[styles.bottomButtom,{flex:0.2, margin:10}]}>
-          <DragonButton title={tournaments[language]} onPress={()=>finalizar()}/>
-        </View>:null}
         
       </ScrollView>}
       </View>

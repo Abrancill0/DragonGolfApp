@@ -1854,6 +1854,7 @@ class PlayerScoreComponent extends Component {
     }
 
     onChangeScore = async (score, value) => {
+        if(score!=''){
         console.warn(score)
         console.warn(value)
         switch (value) {
@@ -1941,6 +1942,7 @@ class PlayerScoreComponent extends Component {
                 this.setState({ holeScore: score.toString(), buttonIndex, inputStyle, inputBorder });
                 this.saveScore(score);
             }*/
+        }
     }
 
     saveScore = async (score) => {

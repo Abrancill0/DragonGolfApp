@@ -116,6 +116,7 @@ class MoreView extends Component {
     const { language } = this.state;
     const {
       earningDetails,
+      tournaments,
       more,
       closeRound,
       template,
@@ -144,6 +145,12 @@ class MoreView extends Component {
           </View>*/}
         </View>
         <MoreOptionComponent title='Score Card' onPress={() => this.props.navigation.navigate('ScoreCardView')} />
+        <MoreOptionComponent 
+          title={tournaments[language]} 
+          onPress={() => this.props.navigation.navigate('ScoreCardViewTorneo')}
+          iconName='ios-bar-chart-sharp'
+          iconFamily='Ionicons' 
+          />
         <MoreOptionComponent
           title={earningDetails[language]}
           onPress={() => this.props.navigation.navigate('SummaryView')}
