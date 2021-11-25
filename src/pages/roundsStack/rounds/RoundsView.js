@@ -63,9 +63,13 @@ export default function RoundsView(route) {
     console.warn('RoundsView')
     let IDRound = await AsyncStorage.getItem('IDRound')
     let IDCourse = await AsyncStorage.getItem('IDCourse')
+    let IDUsuarioCreo = await AsyncStorage.getItem('IDUsuarioCreo')
     AsyncStorage.setItem('arreglo', 'false');
     AsyncStorage.setItem('arreglo2', 'false');
-    AsyncStorage.setItem('IDUsuarioCreo', '0');
+    if (IDUsuarioCreo == null )
+        {
+          AsyncStorage.setItem('IDUsuarioCreo', '0');
+        }
     console.log(IDRound)
     console.log(IDCourse)
     setIDRound(IDRound)

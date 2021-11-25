@@ -45,6 +45,7 @@ export default function RoundsView(route) {
     const [players, setPlayers] = useState([]);
     const [UsuarioCreo, setUsuarioCreo] = useState(1);
     const [ValidaUsuarioCreo, setValidaUsuarioCreo] = useState(0);
+    const [IDUsuarioCreo, setIDUsuarioCreo] = useState(0);
     const [arrayholder, setArrayholder] = useState([]);
     const [value1, setValue1] = useState('');
     const [value2, setValue2] = useState('');
@@ -68,11 +69,13 @@ export default function RoundsView(route) {
       }, []);
 
   async function ListadoTodos() {
+    let IDUsuarioCreo = await AsyncStorage.getItem('IDUsuarioCreo')
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
     let IDCourse = await AsyncStorage.getItem('IDCourse')
     let IDRound = await AsyncStorage.getItem('IDRound')
     setPlayers([])
+    setIDUsuarioCreo(IDUsuarioCreo)
     setLanguage(language)
     setIDCourse(IDCourse)
     setIDRound(IDRound)
@@ -290,11 +293,11 @@ export default function RoundsView(route) {
 
     function navegaStrokes(id,strokes,nickname){
       if(UsuarioCreo == 1){
-        navigation.navigate("StrokesRoundView",{IDRound:IDRound,IDUsuario:id, strokes:strokes, Nickname:nickname})
+        navigation.navigate("StrokesRoundView",{IDUsuarioCreo:IDUsuarioCreo,IDRound:IDRound,IDUsuario:id, strokes:strokes, Nickname:nickname})
       }
       else{
         if(ValidaUsuarioCreo == id){
-          navigation.navigate("StrokesRoundView",{IDRound:IDRound,IDUsuario:id, strokes:strokes, Nickname:nickname})
+          navigation.navigate("StrokesRoundView",{IDUsuarioCreo:IDUsuarioCreo,IDRound:IDRound,IDUsuario:id, strokes:strokes, Nickname:nickname})
         }
         else{
           showMessage({

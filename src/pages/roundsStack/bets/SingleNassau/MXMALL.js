@@ -478,7 +478,7 @@ class SNBetView extends Component {
                       });*/
                     }
                   })
-                  pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerB.toString() + ','+res.Result[0].set_snw_front_9.toString() + ','+back9UF.toString() + ','+matchUF.toString() + ','+carryUF.toString() + ','+medalUF.toString() + ','+res.Result[0].set_snw_automatic_press.toString() + ',0,'+res.Result[0].set_golpesventaja.toString()+'}')
+                  pairsCrea.push('{'+this.state.IDBet.toString() + ',' + this.state.IDRound.toString() + ',' +playerA.toString() + ','+playerB.toString() + ',0,0,'+res.Result[0].set_snw_front_9.toString() + ','+back9UF.toString() + ','+matchUF.toString() + ','+carryUF.toString() + ','+medalUF.toString() + ','+res.Result[0].set_snw_automatic_press.toString() + ',0,'+res.Result[0].set_golpesventaja.toString()+',0}')
                   /*CrearDetalleApuesta(this.state.IDBet,this.state.IDRound,playerA,playerB,res.Result[0].set_snw_front_9,back9UF,matchUF,carryUF,medalUF,res.Result[0].set_snw_automatic_press,0,res.Result[0].set_golpesventaja)
                   .then((res) => {
                     console.warn(res)
@@ -527,6 +527,7 @@ class SNBetView extends Component {
 
         CrearDetalleApuestaMasivo(pairsCrea.toString())
           .then((res) => {
+            console.warn(res)
              if(res.estatus == 1){
                     showMessage({
                         message: successSaveTeeData[this.state.language],

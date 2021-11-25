@@ -44,7 +44,7 @@ export default function RoundsView(route) {
     const navigation = useNavigation();
     const [IDRound, setIDRound] = useState(route.route.params.IDRound);
     const [IDUsuario, setIDUsuario] = useState(route.route.params.IDUsuario);
-    const [IDUsuarioCreo, setIDUsuarioCreo] = useState(0);
+    const [IDUsuarioCreo, setIDUsuarioCreo] = useState(route.route.params.IDUsuarioCreo);
     const [Nickname, setNickname] = useState(route.route.params.Nickname);
     const [players, setPlayers] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
@@ -75,6 +75,8 @@ export default function RoundsView(route) {
       }, [navigation]);
 
   async function ListadoTodos() {
+    console.warn('IDUsuarioCreo')
+     console.warn(IDUsuarioCreo)
     let idUsu = await AsyncStorage.getItem('IDUsuarioCreo')
     let language = await AsyncStorage.getItem('language')
     setLanguage(language)
