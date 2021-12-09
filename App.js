@@ -418,7 +418,7 @@ export default class App extends Component {
     function RoundTab() {
       return (
         <SafeAreaView style={{flex:1}}>
-        <Tab.Navigator tabBarOptions={{showLabel:false, showIcon:true}} backBehavior={'history'}>
+        <Tab.Navigator tabBarOptions={{showLabel:false, showIcon:true}}>
           <Tab.Screen name='createRoundStack' children={createRoundStack} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -567,7 +567,7 @@ export default class App extends Component {
           },
           })}
           />
-          <Tab.Screen name="More" component={More} 
+          <Tab.Screen name='createMoreStack' children={createMoreStack}
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
             if(focused==true)
@@ -768,7 +768,7 @@ export default class App extends Component {
       </Drawer.Navigator>
 
     CreateHomeBottomTabNavigator = () =>
-      <BottomTab.Navigator tabBarOptions={{showLabel:false}} backBehavior={'history'}>
+      <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
           <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -1558,6 +1558,70 @@ export default class App extends Component {
               headerShown:false
           })} />
         <Stack.Screen name='StrokesView' component={StrokesView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+      </Stack.Navigator>
+
+      createMoreStack = () =>
+      <Stack.Navigator>
+        <Stack.Screen name='More' component={More}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+        <Stack.Screen name='ScoreCardView' component={ScoreCardView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+        <Stack.Screen name='SummaryView' component={SummaryView}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+        <Stack.Screen name='ScoreCardViewTorneo' component={ScoreCardViewTorneo}
+          options={({ route }) => ({
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#104E81',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+              headerShown:false
+          })} />
+          <Stack.Screen name='Template' component={Template}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
