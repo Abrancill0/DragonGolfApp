@@ -965,7 +965,7 @@ export default class App extends Component {
             },
               headerShown:false
           })} />
-        <Stack.Screen name='RoundTab' component={RoundTab}
+        {/*<Stack.Screen name='RoundTab' component={RoundTab}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
@@ -976,7 +976,7 @@ export default class App extends Component {
               fontWeight: 'bold',
             },
               headerShown:false
-          })} />
+          })} />*/}
         <Stack.Screen name='AddCourse' component={AddCourse}
           options={({ route }) => ({
             headerBackTitle: '',

@@ -1398,6 +1398,28 @@ export const ActualizarRondaHoyos = (IDRound, IDUsuario, Arreglo, NumeroArreglo)
                 });
 };
 
+export const ActualizarRondaHoyosIndividual = (IDRound, id, Score, Hole) => {
+    const URL = RutaBaseAB + "/ActualizarScoreHoyo";
+    return fetch(URL, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    IDRounds: IDRound,
+                    IDUsuario: 0,
+                    PlayerId: id,
+                    Score: Score,
+                    hole: Hole
+                }),
+            })
+            .then((response) => response.json())
+            .catch((error) => {
+                    console.warn(error);
+                });
+};
+
 export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario, Ro_Date) => {
     const URL = RutaBaseAB + "/CrearRonda";
     return fetch(URL, {

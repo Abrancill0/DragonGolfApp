@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../utils/Colors';
 import { showMessage } from "react-native-flash-message";
-import { ActualizarRondaHoyos } from '../../../Services/Services'
+import { ActualizarRondaHoyosIndividual } from '../../../Services/Services'
 
 class PlayersScore extends Component {
   constructor(props) {
@@ -64,7 +64,7 @@ class PlayersScore extends Component {
             this.setState({
                 playerHole:playersHoleAux
             })
-            this.guardar(2)
+            this.guardar(2,score,id,hole)
         }
         else{
             //this.llenaArreglo()
@@ -213,7 +213,7 @@ class PlayersScore extends Component {
             }
     }*/
 
-    guardar = async (tipo) => {
+    guardar = async (tipo,score,id,hole) => {
         let idUsu = await AsyncStorage.getItem('usu_id')
         let IDRound = await AsyncStorage.getItem('IDRound')
         console.warn(idUsu)
@@ -230,7 +230,26 @@ class PlayersScore extends Component {
         }
         console.warn(arreglo)
         if(arreglo!= ''){
-        ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
+        /*ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
+        .then((res) => {
+          AsyncStorage.setItem('arreglo', 'false');
+          console.warn(res)
+          if(tipo==1){
+            if(res.estatus == 1){
+              showMessage({
+                message: Dictionary.successSaveTeeData[this.state.language],
+                type:'success',
+              });
+            }
+            else{
+              showMessage({
+                message: Dictionary.error[this.state.language],
+                type:'danger',
+              });
+            }
+          }
+        })*/
+        ActualizarRondaHoyosIndividual(IDRound, id, score, hole)
         .then((res) => {
           AsyncStorage.setItem('arreglo', 'false');
           console.warn(res)

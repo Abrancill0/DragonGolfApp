@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../utils/Colors';
 import { showMessage } from "react-native-flash-message";
-import { ActualizarRondaHoyos } from '../../../Services/Services'
+import { ActualizarRondaHoyosIndividual } from '../../../Services/Services'
 
 class HorizontalScoreView extends Component {
     constructor(props) {
@@ -66,7 +66,7 @@ class HorizontalScoreView extends Component {
                 playerHole:playersHoleAux
             })
             console.warn(this.props.playerHole)
-            this.guardar(2)
+            this.guardar(2,score,id,hole)
         }
         else{
             //this.llenaArreglo()
@@ -77,7 +77,7 @@ class HorizontalScoreView extends Component {
         console.warn(IDRound)//this.setState({ count: this.state.count++ });*/
     }
 
-    guardar = async (tipo) => {
+    guardar = async (tipo,score,id,hole) => {
         let idUsu = await AsyncStorage.getItem('usu_id')
         let IDRound = await AsyncStorage.getItem('IDRound')
         console.warn(idUsu)
@@ -94,7 +94,26 @@ class HorizontalScoreView extends Component {
         }
         console.warn(arreglo)
         if(arreglo!= ''){
-        ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
+        /*ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
+        .then((res) => {
+          console.warn(res)
+          AsyncStorage.setItem('arreglo', 'false');
+          if(tipo==1){
+            if(res.estatus == 1){
+              showMessage({
+                message: Dictionary.successSaveTeeData[this.state.language],
+                type:'success',
+              });
+            }
+            else{
+              showMessage({
+                message: Dictionary.error[this.state.language],
+                type:'danger',
+              });
+            }
+          }
+        })*/
+        ActualizarRondaHoyosIndividual(IDRound, id, score, hole)
         .then((res) => {
           console.warn(res)
           AsyncStorage.setItem('arreglo', 'false');
