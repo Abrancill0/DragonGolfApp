@@ -123,9 +123,9 @@ export default class App extends Component {
     super(props);
 
     let isLandscape = false;
-    if (Dimensions.get('window').width > Dimensions.get('window').height) {
+    /*if (Dimensions.get('window').width > Dimensions.get('window').height) {
       isLandscape = true;
-    }
+    }*/
 
     this.state={
       isLandscape,
@@ -167,7 +167,7 @@ export default class App extends Component {
     this.loadSesion()//this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
     Dimensions.addEventListener('change', (dimensions) => {
       const { width, height } = dimensions.window;
-      this.setState({ isLandscape: width > height });
+      //this.setState({ isLandscape: width > height });
     });
   }
 
