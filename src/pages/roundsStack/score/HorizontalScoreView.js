@@ -93,6 +93,10 @@ class HorizontalScoreView extends Component {
             arreglo += HolesAux
         }
         console.warn(arreglo)
+        console.warn(IDRound)
+        console.warn(id)
+        console.warn(score)
+        console.warn(hole)
         if(arreglo!= ''){
         /*ActualizarRondaHoyos(IDRound, idUsu, '['+arreglo+']', this.state.playerHole.length)
         .then((res) => {

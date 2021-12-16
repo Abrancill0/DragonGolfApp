@@ -54,9 +54,17 @@ class ScoreView extends Component {
     });*/
 
     Dimensions.addEventListener('change', (dimensions) => {
+      this.cambia()
       const { width, height } = dimensions.window;
       this.setState({ isLandscape: width > height });
     });
+  }
+
+  cambia = async () => {
+      console.warn('Hola')
+      AsyncStorage.setItem('arreglo2', 'false');
+      this.ListadoTodos()
+      //ListadoBets()
   }
 
   llenaArreglo = async (players) => {

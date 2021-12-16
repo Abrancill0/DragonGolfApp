@@ -267,6 +267,7 @@ export default function RoundsView(route) {
     //console.warn(sn)
     //console.warn(tn)
     ListadoRondas()
+    navigation.navigate("ScoreView")
   }
 
 
