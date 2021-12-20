@@ -71,7 +71,9 @@ class ConfigRoundView extends Component {
       pickerTextDate,
       pickerTextDate2,
       editDate: false,
-      IDRound: 0
+      IDRound: 0,
+      idUsuCreo: 0,
+      idUsuSistema: 0
     };
   }
 
@@ -92,6 +94,8 @@ class ConfigRoundView extends Component {
       let IDCourse = await AsyncStorage.getItem('IDCourse');
       let nombre = await AsyncStorage.getItem('nombre');
       let IDRound = await AsyncStorage.getItem('IDRound');
+      let idUsu = await AsyncStorage.getItem('IDUsuarioCreo');
+      let idUsuSist = await AsyncStorage.getItem('usu_id');
       let selectedButton = 0
       switch(handicap){
             case '100': selectedButton = 0
@@ -121,7 +125,9 @@ class ConfigRoundView extends Component {
           selectedButton: selectedButton,
           pickerTextDate: fecha,
           pickerTextDate2: fecha.split('/').reverse().join('/'),
-          IDRound: IDRound
+          IDRound: IDRound,
+          idUsuCreo: idUsu,
+          idUsuSistema: idUsuSist
       })
       this.refs.nombre.setValue(nombreRonda)//this.state.courseName + ' ' + this.formatDate(timestamp / 1000))
       if(Platform.OS === 'android'){
@@ -159,11 +165,13 @@ class ConfigRoundView extends Component {
       showDatePicker,
       pickerDate,
       pickerTextDate,
-      editDate
+      editDate,
+      idUsuCreo,
+      idUsuSistema
     } = this.state;
 
     return (
-      IDRound!=0 &&
+      IDRound!=0 && idUsuCreo==idUsuSistema &&
       <View style={{ flex: 1 }}>
         <Spinner
             visible={carga}
