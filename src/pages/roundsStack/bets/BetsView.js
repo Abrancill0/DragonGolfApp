@@ -84,6 +84,12 @@ export default function betsView(route) {
       //ListadoBets()
   }
 
+  async function cambia2() {
+      console.warn('Hola')
+      AsyncStorage.setItem('arreglo', 'false');
+      ListadoBets()
+  }
+
   async function ListadoBets() {
       setCollapsed([])
       setCollapsedArray([])
@@ -742,6 +748,9 @@ export default function betsView(route) {
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{bets[language]}</Text>
           </View>
+          <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> cambia2()}>
+            <MaterialIcon name={'sync'} size={25} color={Colors.Primary} />
+          </TouchableOpacity>
         </View>
 
       {search && <View style={{margin:5}}>

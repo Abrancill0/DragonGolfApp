@@ -169,11 +169,11 @@ class HorizontalScoreView extends Component {
                   <View style={{ flex:0.6, justifyContent: 'center' }}>
                     <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.hoyos[language]}</Text>
                   </View>
-                {/*<View>
-                  <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.guardar(1)}>
-                    <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
+                <View>
+                  <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.clickHandlerR()}>
+                    <MaterialIcon name={'sync'} size={25} color={Colors.Primary} />
                   </TouchableOpacity>
-                </View>*/}
+                </View>
                 </View>
                 <ScrollView keyboardShouldPersistTaps='handled' style={{ paddingTop: 2 }}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>

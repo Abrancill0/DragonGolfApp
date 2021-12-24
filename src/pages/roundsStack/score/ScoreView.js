@@ -270,7 +270,7 @@ class ScoreView extends Component {
             </TouchableOpacity>
           </View>*/}
         {isLandscape ?
-          <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} props={this.props} /> :
+          <HorizontalScoreView holes={this.holes} holes2={this.holesHor} players={players} playerHole={playerHole} props={this.props} clickHandlerR={this.cambia}/> :
           initHole != 0 ? <ViewPager
             initialPage={initHole-1}
             ref={ref => this.pager = ref}
@@ -279,7 +279,7 @@ class ScoreView extends Component {
           >
             {this.holes.map(item => (
               <View style={{ flex: 1 }} key={item.hole.toString()} >
-                <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} clickHandlerI={this.onChangePage} clickHandlerD={this.onChangePage2} clickHandler={this.onChangePage3} />
+                <PlayersScore item={item.hole} players={players} playerHole={playerHole} props={this.props} clickHandlerI={this.onChangePage} clickHandlerD={this.onChangePage2} clickHandler={this.onChangePage3} clickHandlerR={this.cambia} />
               </View>
             ))}
           </ViewPager>:null

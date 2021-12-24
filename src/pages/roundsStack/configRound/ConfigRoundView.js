@@ -589,6 +589,7 @@ class ConfigRoundView extends Component {
             this.props.navigation.navigate("PlayersViewRoundsList", {IDCourse:IDCourse, IDRound:res.idround})
             //this.props.navigation.navigate("RoundTab", { screen: 'Settings', params: {IDCourse:IDCourse, IDRound:res.idround} })
             //AsyncStorage.setItem('IDRound', res.idround.toString());
+              AsyncStorage.setItem('IDUsuarioCreo', token.toString());
               AsyncStorage.setItem('nombreRonda', roundName.toString());
               AsyncStorage.setItem('handicap', Ro_HandicapAdjustment.toString());
               AsyncStorage.setItem('hole', holeNumber.toString());

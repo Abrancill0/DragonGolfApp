@@ -652,7 +652,7 @@ class HorizontalScoreComponent extends Component {
     }
 
     onChangeScore = (score, value) => {
-        if(score!=''){
+        //if(score!=''){
         console.warn(score)
         console.warn(value)
         switch (value) {
@@ -711,7 +711,9 @@ class HorizontalScoreComponent extends Component {
                 this.setState({ ScoreHole18: score.toString()});
                 break;
         }
-        this.saveScore(score);
+        if(score!=''){
+            this.saveScore(score);
+        }
             /*if (parseInt(score ? score : 1) > 0) {
                 const { holeInfo, index, hole } = this.props;
                 const par = holeInfo[index].holes[hole - 1].par;
@@ -722,7 +724,7 @@ class HorizontalScoreComponent extends Component {
                 this.setState({ holeScore: score.toString(), buttonIndex, inputStyle, inputBorder });
                 this.saveScore(score);
             }*/
-        }
+        //}
     }
 
     saveScore = async (score) => {

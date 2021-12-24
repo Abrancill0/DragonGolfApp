@@ -301,11 +301,11 @@ class PlayersScore extends Component {
           <View style={{ flex:0.6, justifyContent: 'center' }}>
           <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{Dictionary.hoyos[language]}</Text>
           </View>
-        {/*<View style={{ flex:0.2, justifyContent: 'flex-end' }}>
-          <TouchableOpacity style={{margin:20, marginTop:0}} onPress={()=> this.guardar(1)}>
-            <MaterialIcon name={'save'} size={25} color={Colors.Primary} />
+        <View style={{ flex:0.2, justifyContent: 'flex-end' }}>
+          <TouchableOpacity style={{margin:20, marginTop:0}} onPress={()=> this.props.clickHandlerR()}>
+            <MaterialIcon name={'sync'} size={25} color={Colors.Primary} />
           </TouchableOpacity>
-        </View>*/}
+        </View>
         </View>
         <FlatList
           ListHeaderComponent={<HoleHeader hole={hole} clickHandlerI2={this.props.clickHandlerI} clickHandlerD2={this.props.clickHandlerD} clickHandler2={this.props.clickHandler} />}
