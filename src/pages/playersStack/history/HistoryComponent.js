@@ -22,22 +22,22 @@ export default class HistoryComponent extends Component {
         if(props.item.IDUsuarioGano.toString() == token && props.language=='en'){
             this.setState({
                 resultado: 'W'
-            };
+            })
         }
         else if(props.IDUsuarioGano.toString() != token && props.language=='en'){
             this.setState({
                 resultado: 'L'
-            };
+            })
         }
         else if(props.item.IDUsuarioGano.toString() == token && props.language=='es'){
             this.setState({
                 resultado: 'G'
-            };
+            })
         }
         else{
             this.setState({
                 resultado: 'P'
-            };
+            })
         }
     }
 
