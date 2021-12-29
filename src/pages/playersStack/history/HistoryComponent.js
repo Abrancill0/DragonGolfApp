@@ -2,22 +2,31 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import styles from './styles';
 import Colors from '../../../utils/Colors';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class HistoryComponent extends Component {
     constructor(props) {
         console.warn(props.language)
         super(props);
-        if(props.item.money>0 && props.language=='en'){
+    }
+
+    componentDidMount() {
+        this.obtenHistorial()
+    }
+
+    obtenHistorial = async () => {
+        const token = await AsyncStorage.getItem('usu_id')
+        if(props.item.IDUsuarioGano.toString() == token && props.language=='en'){
             this.state = {
                 resultado: 'W'
             };
         }
-        else if(props.item.money<0 && props.language=='en'){
+        else if(props.IDUsuarioGano.toString() != token && props.language=='en'){
             this.state = {
                 resultado: 'L'
             };
         }
-        else if(props.item.money>0 && props.language=='es'){
+        else if(props.item.IDUsuarioGano.toString() == token && props.language=='es'){
             this.state = {
                 resultado: 'G'
             };
@@ -27,7 +36,6 @@ export default class HistoryComponent extends Component {
                 resultado: 'P'
             };
         }
-        
     }
 
 
