@@ -19,17 +19,17 @@ export default class HistoryComponent extends Component {
 
     obtenHistorial = async () => {
         const token = await AsyncStorage.getItem('usu_id')
-        if(props.item.IDUsuarioGano.toString() == token && props.language=='en'){
+        if(this.props.item.IDUsuarioGano == token && this.props.language=='en'){
             this.setState({
                 resultado: 'W'
             })
         }
-        else if(props.IDUsuarioGano.toString() != token && props.language=='en'){
+        else if(this.props.IDUsuarioGano != token && this.props.language=='en'){
             this.setState({
                 resultado: 'L'
             })
         }
-        else if(props.item.IDUsuarioGano.toString() == token && props.language=='es'){
+        else if(this.props.item.IDUsuarioGano == token && this.props.language=='es'){
             this.setState({
                 resultado: 'G'
             })
