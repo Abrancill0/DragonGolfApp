@@ -8,6 +8,9 @@ export default class HistoryComponent extends Component {
     constructor(props) {
         console.warn(props.language)
         super(props);
+        this.state={
+            resultado:''
+        }
     }
 
     componentDidMount() {
@@ -17,22 +20,22 @@ export default class HistoryComponent extends Component {
     obtenHistorial = async () => {
         const token = await AsyncStorage.getItem('usu_id')
         if(props.item.IDUsuarioGano.toString() == token && props.language=='en'){
-            this.state = {
+            this.setState({
                 resultado: 'W'
             };
         }
         else if(props.IDUsuarioGano.toString() != token && props.language=='en'){
-            this.state = {
+            this.setState({
                 resultado: 'L'
             };
         }
         else if(props.item.IDUsuarioGano.toString() == token && props.language=='es'){
-            this.state = {
+            this.setState({
                 resultado: 'G'
             };
         }
         else{
-            this.state = {
+            this.setState({
                 resultado: 'P'
             };
         }
