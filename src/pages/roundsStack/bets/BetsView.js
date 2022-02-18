@@ -773,9 +773,8 @@ export default function betsView(route) {
           }}
         />
       </View>}
-            <View>
-              
-                  <View style={{ flexDirection: 'row' }}>
+
+      <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity style={{marginLeft:20, flex: 0.2, justifyContent: 'flex-start', marginLeft: 15 }} onPress={() => muestraRonda(1, IDRound)}>
                       <Entypo name={collapsed2[0] ? 'chevron-thin-up' : 'chevron-thin-down'} size={20} color={Colors.Primary} />
                     </TouchableOpacity>
@@ -788,6 +787,8 @@ export default function betsView(route) {
                       </TouchableOpacity>
                     </View>
                   </View>
+            <ScrollView>
+                  
                   {collapsed2[0] &&
                 <ScrollView style={{ marginBottom: 50 }}>
                   <Spinner
@@ -895,12 +896,13 @@ export default function betsView(route) {
                   //onSwipeValueChange={this.onSwipeValueChange}
                   />
                 </ScrollView>}
-                  <View style={{ flexDirection: 'row' }}>
-                    <View style={{ flex: 0.2, justifyContent: 'flex-start', marginLeft: 15 }}>
-                      <TouchableOpacity style={{marginLeft:20, flex: 0.2, justifyContent: 'flex-start' }} onPress={() => muestraRonda(2, IDRound)}>
+
+                </ScrollView>
+
+        <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity style={{marginLeft:20, flex: 0.2, justifyContent: 'flex-start', marginLeft: 15 }} onPress={() => muestraRonda(2, IDRound)}>
                         <Entypo name={collapsed2[1] ? 'chevron-thin-up' : 'chevron-thin-down'} size={20} color={Colors.Primary} />
                       </TouchableOpacity>
-                    </View>
                     <View style={{ flex: 0.6, justifyContent: 'flex-start' }}>
                       <Text style={{ margin: 0, marginTop: 0, fontSize: 16, fontFamily: 'BankGothic Lt BT', alignSelf: 'center', color: Colors.Primary, fontWeight: 'bold' }}>TEAM NASSAU{/*bets[language]*/}</Text>
                     </View>
@@ -910,6 +912,8 @@ export default function betsView(route) {
                       </TouchableOpacity>
                     </View>
                   </View>
+
+                <ScrollView>
 
                   {collapsed2[1] &&
                 <ScrollView style={{ marginBottom: 50 }}>
@@ -1026,7 +1030,7 @@ export default function betsView(route) {
                   />
                 </ScrollView>
                 }
-            </View>
+            </ScrollView>
     </View>
   );
 }

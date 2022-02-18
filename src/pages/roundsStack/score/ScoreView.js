@@ -24,12 +24,16 @@ class ScoreView extends Component {
     props.navigation.setParams({isLandscape});
 
     this.state = {
+      dataInState: [],
       isLandscape,
       players: [],
       playerHole: [],
       carga:true,
       initHole: 0
     };
+    this.setState({
+        dataInState:[...this.state.dataInState, this.state.initHole]
+    })
 
     this.holes = [];
     this.holesHor = [];
@@ -99,12 +103,14 @@ class ScoreView extends Component {
     let arreglo2 = await AsyncStorage.getItem('arreglo2')
     arreglo2=arreglo2=='true'?true:false
     console.warn(arreglo2)
+    console.warn(hole)
     if(!arreglo2){
     this.setState({
         players: [],
         carga:true,
         language:language,
-        initHole:parseInt(hole)
+        initHole:0,
+        dataInState:[...this.state.dataInState, this.state.initHole]
     })
     //console.warn(idUsu)
     //console.warn(IDRound)
@@ -207,7 +213,8 @@ class ScoreView extends Component {
                 this.setState({
                   players:list,
                   carga:false,
-                  initHole: list[0].initHole
+                  initHole: list[0].initHole,
+                  dataInState:[...this.state.dataInState, this.state.initHole]
                 })
             }
             else{
