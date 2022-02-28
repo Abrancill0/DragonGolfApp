@@ -418,7 +418,7 @@ export default class App extends Component {
     function RoundTab() {
       return (
         <SafeAreaView style={{flex:1}}>
-        <Tab.Navigator tabBarOptions={{showLabel:false, showIcon:true}}>
+        <Tab.Navigator lazy tabBarOptions={{showLabel:false, showIcon:true}}>
           <Tab.Screen name='createRoundStack' children={createRoundStack} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -768,7 +768,7 @@ export default class App extends Component {
       </Drawer.Navigator>
 
     CreateHomeBottomTabNavigator = () =>
-      <BottomTab.Navigator tabBarOptions={{showLabel:false}}>
+      <BottomTab.Navigator lazy tabBarOptions={{showLabel:false}}>
           <BottomTab.Screen name='SettingsView' component={SettingsView} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{

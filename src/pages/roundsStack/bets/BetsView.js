@@ -71,7 +71,6 @@ export default function betsView(route) {
       ListadoBets();
     });
     Dimensions.addEventListener('change', (dimensions) => {
-      console.warn('Adios')
       cambia()
     });
     return unsubscribe;
@@ -79,13 +78,11 @@ export default function betsView(route) {
 
 
   async function cambia() {
-    console.warn('Hola')
     AsyncStorage.setItem('arreglo', 'false');
     //ListadoBets()
   }
 
   async function cambia2() {
-    console.warn('Hola')
     AsyncStorage.setItem('arreglo', 'false');
     ListadoBets()
   }
@@ -113,7 +110,6 @@ export default function betsView(route) {
       setRounds2([])
       ListadoDetalleApuesta(IDRound, 1, IDUsuario)
         .then((res) => {
-          console.warn(res)
           if (res.estatus == 1 || res.estatus == 0) {
             if (res.estatus == 1) {
               const list = res.Result.map(item => (
@@ -170,7 +166,6 @@ export default function betsView(route) {
             setRounds3([])
             ListadoDetalleApuestaTeam(IDRound, 2, IDUsuario)
               .then((res) => {
-                console.warn(res)
                 //console.warn('Hola')
                 //console.warn(res)
                 if (res.estatus == 1) {
@@ -382,9 +377,7 @@ export default function betsView(route) {
   }
 
   function showSheetView(item, index) {
-    console.warn('Entra función')
     //muestraRonda2(IDRound,IDBet, item.id, index)
-    console.warn(item.id)
     const {
       seeResults,
       editBet,
@@ -395,7 +388,6 @@ export default function betsView(route) {
     } = Dictionary;
 
     if (Platform.OS === 'ios') {
-      console.warn('Entra if')
       ActionSheetIOS.showActionSheetWithOptions(
         {
           options: [
@@ -415,7 +407,6 @@ export default function betsView(route) {
         },
       );
     } else {
-      console.warn('Entra al else')
       const resultsIcon = <Icon name='counter' color={Colors.Primary} size={40} family={"MaterialCommunityIcons"} />;
       const editIcon = <Icon name='edit' color={Colors.Primary} size={40} family={"Entypo"} />;
       const addPressIcon = <Icon name='md-add-circle-outline' color={Colors.Primary} size={40} family={"Ionicons"} />;
@@ -440,7 +431,6 @@ export default function betsView(route) {
   }
 
   function doAction(index, index2, item) {
-    console.warn(item)
     switch (index2) {
       case 0:
         navigation.navigate('SNScoreCardView', { Item: item });
@@ -488,15 +478,13 @@ export default function betsView(route) {
   }
 
   async function subeSN(index) {
-    //console.warn(rounds)
     let aux;
     if (index != 0) {
-      console.warn(rounds2[index - 1].id)
-      console.warn(rounds2[index].id)
       let IDUsuario = await AsyncStorage.getItem('usu_id')
-      console.warn(IDUsuario)
       ActualizarOrdenApuesta(rounds2[index - 1].id, rounds2[index].id, IDUsuario)
-        .then((res) => { console.warn(res) })
+        .then((res) => { 
+
+         })
       aux = rounds2[index]
       rounds2[index] = rounds2[index - 1]
       rounds2[index - 1] = aux
@@ -506,12 +494,11 @@ export default function betsView(route) {
   async function bajaSN(index) {
     let aux;
     if (index != rounds2.length - 1) {
-      console.warn(rounds2[index + 1].id)
-      console.warn(rounds2[index].id)
       let IDUsuario = await AsyncStorage.getItem('usu_id')
-      console.warn(IDUsuario)
       ActualizarOrdenApuesta(rounds2[index + 1].id, rounds2[index].id, IDUsuario)
-        .then((res) => { console.warn(res) })
+        .then((res) => { 
+
+        })
       aux = rounds2[index]
       rounds2[index] = rounds2[index + 1]
       rounds2[index + 1] = aux
@@ -521,7 +508,6 @@ export default function betsView(route) {
 
   function showSheetViewTN(item, index) {
     //muestraRonda2(IDRound,IDBet, item.id, index)
-    console.warn(item.id)
     const {
       seeResults,
       editBet,
@@ -625,7 +611,6 @@ export default function betsView(route) {
   }
 
   function doActionTN(index, index2, item) {
-    console.warn(item)
     switch (index2) {
       case 0:
         navigation.navigate('TNScoreCardView', { Item: item });
@@ -673,47 +658,37 @@ export default function betsView(route) {
   }
 
   async function subeTN(index) {
-    console.warn(rounds3)
     let aux;
     if (index != 0) {
-      console.warn(rounds3[index - 1].id)
-      console.warn(rounds3[index].id)
       let IDUsuario = await AsyncStorage.getItem('usu_id')
-      console.warn(IDUsuario)
       ActualizarOrdenApuesta(rounds3[index - 1].id, rounds3[index].id, IDUsuario)
-        .then((res) => { console.warn(res) })
+        .then((res) => { 
+          
+         })
       aux = rounds3[index]
       rounds3[index] = rounds3[index - 1]
       rounds3[index - 1] = aux
       setDataInState([...dataInState, rounds3])
     }
-    console.warn(rounds3)
-    console.warn(index)
   }
   async function bajaTN(index) {
-    console.warn(rounds3)
     let aux;
     if (index != rounds3.length - 1) {
-      console.warn(rounds3[index + 1].id)
-      console.warn(rounds3[index].id)
       let IDUsuario = await AsyncStorage.getItem('usu_id')
-      console.warn(IDUsuario)
       ActualizarOrdenApuesta(rounds3[index + 1].id, rounds3[index].id, IDUsuario)
-        .then((res) => { console.warn(res) })
+        .then((res) => { 
+          
+         })
       aux = rounds3[index]
       rounds3[index] = rounds3[index + 1]
       rounds3[index + 1] = aux
       setDataInState([...dataInState, rounds3])
     }
-    console.warn(rounds3)
-    console.warn(index)
   }
 
   async function Elimina(id, index) {
-    console.warn(id)
     EliminarApuesta(id)
       .then((res) => {
-        console.warn(res)
         if (res.estatus == 1) {
           AsyncStorage.setItem('arreglo', 'false');
           ListadoBets()
@@ -732,7 +707,7 @@ export default function betsView(route) {
   } = Dictionary;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1,alignItems:'center' }}>
       <Spinner
         visible={carga}
         color={Colors.Primary} />
@@ -753,7 +728,7 @@ export default function betsView(route) {
         </TouchableOpacity>
       </View>
 
-      {search && <View style={{ margin: 5 }}>
+      {search && <View style={{ margin: 5,width:'100%' }}>
         <SearchBar
           icon={() => <Entypo name={'magnifying-glass'} size={20} color={Colors.Primary} />}
           placeholder={nickname[language]}
@@ -774,27 +749,23 @@ export default function betsView(route) {
         />
       </View>}
 
-      <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity style={{marginLeft:20, flex: 0.2, justifyContent: 'flex-start', marginLeft: 15 }} onPress={() => muestraRonda(1, IDRound)}>
-                      <Entypo name={collapsed2[0] ? 'chevron-thin-up' : 'chevron-thin-down'} size={20} color={Colors.Primary} />
-                    </TouchableOpacity>
-                    <View style={{ flex: 0.6, justifyContent: 'flex-start' }}>
-                      <Text style={{ margin: 0, marginTop: 0, fontSize: 16, fontFamily: 'BankGothic Lt BT', alignSelf: 'center', color: Colors.Primary, fontWeight: 'bold' }}>SINGLE NASSAU{/*bets[language]*/}</Text>
-                    </View>
-                    <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-                      <TouchableOpacity style={{ margin: 0, marginTop: 0, justifyContent: 'flex-end' }} onPress={() => navigation.navigate('SNBetView', { IDBet: 1, IDRound: IDRound })}>
-                        <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+                <View style={{ flexDirection: 'row', padding:20 }}>
+                      <TouchableOpacity style={{marginLeft:20, flex: 0.2, justifyContent: 'flex-start', marginLeft: 15 }} onPress={() => muestraRonda(1, IDRound)}>
+                        <Entypo name={collapsed2[0] ? 'chevron-thin-up' : 'chevron-thin-down'} size={20} color={Colors.Primary} />
                       </TouchableOpacity>
-                    </View>
-                  </View>
-            <ScrollView>
-                  
+                      <View style={{ flex: 0.6, justifyContent: 'flex-start' }}>
+                        <Text style={{ margin: 0, marginTop: 0, fontSize: 16, fontFamily: 'BankGothic Lt BT', alignSelf: 'center', color: Colors.Primary, fontWeight: 'bold' }}>SINGLE NASSAU{/*bets[language]*/}</Text>
+                      </View>
+                      <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+                        <TouchableOpacity style={{ margin: 0, marginTop: 0, justifyContent: 'flex-end' }} onPress={() => navigation.navigate('SNBetView', { IDBet: 1, IDRound: IDRound })}>
+                          <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+                        </TouchableOpacity>
+                      </View>
+                </View>
                   {collapsed2[0] &&
-                <ScrollView style={{ marginBottom: 50 }}>
-                  <Spinner
-                    visible={carga}
-                    color={Colors.Primary} />
                   <FlatList
+                    style={{width:'100%'}}
+                    contentContainerStyle={{width:'100%'}}
                     refreshControl={
                       <RefreshControl
                         refreshing={false}
@@ -809,7 +780,7 @@ export default function betsView(route) {
                     }
                     data={rounds2}
                     renderItem={({ item, index }) =>
-                      <View style={{ flexDirection: 'row' }}>
+                      <View style={{ flexDirection: 'row',width:'100%' }}>
                         {subebaja && <View style={{ flexDirection: 'column', justifyContent: "center" }}>
                           <TouchableOpacity style={{ padding: 0 }} onPress={() => subeSN(index)}>
                             <Entypo name={'chevron-small-up'} size={25} color={Colors.Primary} />
@@ -828,14 +799,14 @@ export default function betsView(route) {
                           >
                             <View style={{ flex: 1, margin: 0 }}>
                               <View style={styles.betGeneralInfoView}>
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row',width:'100%' }}>
                                   <Text style={[styles.advInfo, { color: rounds2[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds2[index].BetD_AdvStrokers}] </Text>
                                   <Text style={styles.vsInfo}> {rounds2[index].Player1} vs {rounds2[index].Player2}</Text>
                                 </View>
                                 <Text style={[styles.profitText, { color: rounds2[index].BetD_MontoPerdidoGanado < 0 ? Colors.Primary : rounds2[index].BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${rounds2[index].BetD_MontoPerdidoGanado}</Text>
                               </View>
                               <View style={styles.betInfoView}>
-                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                <View style={{ flexDirection: 'row', marginBottom: 5,width:'100%' }}>
                                   <Text style={{ marginRight: 10, color: rounds2[index].BetD_MontoF9 < 0 ? 'red' : Colors.Black }}>${rounds2[index].BetD_MontoF9} <Text style={{ fontWeight: 'bold', color: Colors.Black }}>F9:</Text></Text>
                                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
@@ -854,7 +825,7 @@ export default function betsView(route) {
                                   <Text style={{ marginRight: 0, color: rounds2[index].BetD_MontoCalculoF9 < 0 ? 'red' : Colors.Black }}>${rounds2[index].BetD_MontoCalculoF9}</Text>
                                   <View style={{ width: 30 }} />
                                 </View>
-                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                <View style={{ flexDirection: 'row', marginBottom: 5,width:'100%' }}>
                                   <Text style={{ marginRight: 10, color: rounds2[index].BetD_MontoB9 < 0 ? 'red' : Colors.Black }}>${rounds2[index].BetD_MontoB9} <Text style={{ fontWeight: 'bold', color: Colors.Black }}>B9:</Text></Text>
                                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
@@ -875,7 +846,7 @@ export default function betsView(route) {
                                     <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{/*rounds2[index].BetD_AutoPress ? `${rounds2[index].BetD_AutoPress}P` : ''*/}</Text>
                                   </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' ,width:'100%'}}>
                                   <Text style={{ fontSize: 14, textDecorationLine: rounds2[index].BetD_CarryCalculado != 0 ? 'line-through' : 'none', color: rounds2[index].BetD_MachMonto < 0 ? 'red' : Colors.Black }}>${rounds2[index].BetD_MachMonto} <Text
                                     style={{
                                       textDecorationLine: rounds2[index].BetD_CarryCalculado != 0 ? 'line-through' : 'none',
@@ -895,11 +866,8 @@ export default function betsView(route) {
                     }
                   //onSwipeValueChange={this.onSwipeValueChange}
                   />
-                </ScrollView>}
-
-                </ScrollView>
-
-        <View style={{ flexDirection: 'row' }}>
+                  }
+                  <View style={{ flexDirection: 'row' ,padding:20,width:'100%'}}>
                     <TouchableOpacity style={{marginLeft:20, flex: 0.2, justifyContent: 'flex-start', marginLeft: 15 }} onPress={() => muestraRonda(2, IDRound)}>
                         <Entypo name={collapsed2[1] ? 'chevron-thin-up' : 'chevron-thin-down'} size={20} color={Colors.Primary} />
                       </TouchableOpacity>
@@ -913,16 +881,11 @@ export default function betsView(route) {
                     </View>
                   </View>
 
-                <ScrollView>
-
                   {collapsed2[1] &&
-                <ScrollView style={{ marginBottom: 50 }}>
-
-                  <Spinner
-                    visible={carga}
-                    color={Colors.Primary} />
 
                   <FlatList
+                    style={{width:'100%'}}
+                    contentContainerStyle={{width:'100%'}}
                     refreshControl={
                       <RefreshControl
                         refreshing={false}
@@ -937,7 +900,7 @@ export default function betsView(route) {
                     }
                     data={rounds3}
                     renderItem={({ item, index }) =>
-                      <View style={{ flexDirection: 'row' }}>
+                      <View style={{ flexDirection: 'row',width:'100%' }}>
                         {subebaja && <View style={{ flexDirection: 'column', justifyContent: "center" }}>
                           <TouchableOpacity style={{ padding: 0 }} onPress={() => subeTN(index)}>
                             <Entypo name={'chevron-small-up'} size={25} color={Colors.Primary} />
@@ -956,7 +919,7 @@ export default function betsView(route) {
                           >
                             <View style={{ flex: 1, margin: 0 }}>
                               <View style={styles.betGeneralInfoView}>
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row',width:'100%' }}>
                                   <Text style={[styles.advInfo, { color: rounds3[index].BetD_AdvStrokers < 0 ? 'red' : Colors.Black }]}>[{rounds3[index].BetD_AdvStrokers}] </Text>
                                   {item.BetD_Player1 == item.BetD_Player3 && item.BetD_Player2 != item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds3[index].Player1} {rounds3[index].Player3} vs {rounds3[index].Player2} {rounds3[index].Player4}</Text>}
                                   {item.BetD_Player1 != item.BetD_Player3 && item.BetD_Player2 != item.BetD_Player4 && <Text style={styles.vsInfo}> {rounds3[index].Player1} {rounds3[index].Player3} vs {rounds3[index].Player2} {rounds3[index].Player4}</Text>}
@@ -966,7 +929,7 @@ export default function betsView(route) {
                                 <Text style={[styles.profitText, { color: rounds3[index].BetD_MontoPerdidoGanado < 0 ? Colors.Primary : rounds3[index].BetD_MontoPerdidoGanado > 1 ? 'green' : Colors.Black }]}>${rounds3[index].BetD_MontoPerdidoGanado}</Text>
                               </View>
                               <View style={styles.betInfoView}>
-                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                <View style={{ flexDirection: 'row', marginBottom: 5,width:'100%' }}>
                                   <Text style={{ marginRight: 10, color: rounds3[index].BetD_MontoF9 < 0 ? 'red' : Colors.Black }}>${rounds3[index].BetD_MontoF9} <Text style={{ fontWeight: 'bold', color: Colors.Black }}>F9:</Text></Text>
                                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
@@ -985,7 +948,7 @@ export default function betsView(route) {
                                   <Text style={{ marginRight: 0, color: rounds3[index].BetD_MontoCalculoF9 < 0 ? 'red' : Colors.Black }}>${rounds3[index].BetD_MontoCalculoF9}</Text>
                                   <View style={{ width: 30 }} />
                                 </View>
-                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                <View style={{ flexDirection: 'row', marginBottom: 5,width:'100%' }}>
                                   <Text style={{ marginRight: 10, color: rounds3[index].BetD_MontoB9 < 0 ? 'red' : Colors.Black }}>${rounds3[index].BetD_MontoB9} <Text style={{ fontWeight: 'bold', color: Colors.Black }}>B9:</Text></Text>
                                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                                     {
@@ -1006,7 +969,7 @@ export default function betsView(route) {
                                     <Text style={{ color: Colors.Primary, fontWeight: 'bold', fontSize: 12 }}>{/*rounds3[index].BetD_AutoPress ? `${rounds3[index].BetD_AutoPress}P` : ''*/}</Text>
                                   </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between',width:'100%' }}>
                                   <Text style={{ textDecorationLine: rounds3[index].BetD_CarryCalculado != 0 ? 'line-through' : 'none', color: rounds3[index].BetD_MachMonto < 0 ? 'red' : Colors.Black }}>${rounds3[index].BetD_MachMonto} <Text
                                     style={{
                                       textDecorationLine: rounds3[index].BetD_CarryCalculado != 0 ? 'line-through' : 'none',
@@ -1028,9 +991,7 @@ export default function betsView(route) {
                     stopRightSwipe={-(Dimensions.get('window').width * .5)}
                   //onSwipeValueChange={this.onSwipeValueChange}
                   />
-                </ScrollView>
                 }
-            </ScrollView>
     </View>
   );
 }

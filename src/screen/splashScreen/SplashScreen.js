@@ -222,7 +222,7 @@ class SplashScreen extends Component {
     else this.props.navigation.navigate('IndexStack');*/
   };
 
-  loopAnimation = () => {
+  /*loopAnimation = () => {
     const loopDuration = 500;
     Animated.loop(
       Animated.sequence([
@@ -342,7 +342,7 @@ class SplashScreen extends Component {
         ]),
       ]),
     ).start();
-  };
+  };*/
 }
 
 export default SplashScreen;
