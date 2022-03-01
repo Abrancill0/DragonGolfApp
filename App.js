@@ -94,10 +94,14 @@ import RNRestart from 'react-native-restart'
 import SQLite from 'react-native-sqlite-storage';
 import { SafeAreaView } from 'react-navigation';
 
+import { CardStyleInterpolators } from "@react-navigation/stack";
 
 var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" });
 
 const Drawer = createDrawerNavigator()
+
+const StackAuth = createStackNavigator();
+const StackHome = createStackNavigator();
 const Stack = createStackNavigator();
 var { width, height } = Dimensions.get('window');
 const BottomTab = createBottomTabNavigator();
@@ -400,7 +404,7 @@ export default class App extends Component {
         {
           text: continuar[this.state.language], onPress: () => {
             AsyncStorage.clear();
-            RNRestart.Restart();
+            this.loadSesion()
           }
         },
       ],
@@ -917,43 +921,7 @@ export default class App extends Component {
     
     createHomeStack = () =>
       <Stack.Navigator>
-        <Stack.Screen name='Login' component={this.state.activo?CreateHomeBottomTabNavigator:Login}
-          options={({ route }) => ({
-            headerBackTitle: '',
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-            headerTintColor: '#104E81',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-              headerShown:false
-          })} />
-        <Stack.Screen name='RecuperaContrasena' component={RecuperaContrasena}
-          options={({ route }) => ({
-            headerBackTitle: '',
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-            headerTintColor: '#104E81',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-              headerShown:false
-          })} />
-          <Stack.Screen name='CambioContrasena' component={CambioContrasena}
-          options={({ route }) => ({
-            headerBackTitle: '',
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-            headerTintColor: '#104E81',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-              headerShown:false
-          })} />
-        <Stack.Screen name='RegisterView' component={RegisterView}
+        <Stack.Screen name='Home' component={CreateHomeBottomTabNavigator}
           options={({ route }) => ({
             headerBackTitle: '',
             headerStyle: {
@@ -1635,6 +1603,29 @@ export default class App extends Component {
           })} />
       </Stack.Navigator>
 
+      const AuthStack  = () => {
+        return(
+        <StackHome.Navigator screenOptions={{cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}>
+          <StackHome.Screen name='Login' children={() => <Login logeadoHandler={this.loadSesion}/>}
+            options={({ route }) => ({
+              headerShown:false
+            })} />
+          <StackHome.Screen name='RegisterView'component={RegisterView}
+            options={({ route }) => ({
+              headerShown:false
+            })} />
+          <StackHome.Screen name='RecuperaContrasena' component={RecuperaContrasena}
+            options={({ route }) => ({
+              headerShown:false,
+            })} />
+          <StackHome.Screen name='CambioContrasena' component={CambioContrasena}
+            options={({ route }) => ({
+              headerShown:false,
+            })} />
+        </StackHome.Navigator>
+        )
+      }
+
     if (this.state.isLoading) {
       // We haven't finished checking for the token yet
       return <SplashScreen />;
@@ -1650,10 +1641,23 @@ export default class App extends Component {
         :
         null
         */}
-        <Stack.Navigator
-         headerMode="none">
-          <Drawer.Screen name='Home' children={createHomeDrawer} options={{ title: 'Dragon Golf' }} />
-        </Stack.Navigator>
+        <StackAuth.Navigator headerMode="none">
+          {
+            this.state.splash
+            ?
+            <StackAuth.Screen name='Splash' component={SplashScreen}/>
+            :
+            <>
+              {
+              !this.state.logeado
+              ?
+              <StackAuth.Screen name='Auth' component={AuthStack}/>
+              :
+              <StackAuth.Screen name='App' component={createHomeDrawer}/>
+              }
+            </> 
+          }
+        </StackAuth.Navigator>
         <FlashMessage position="top" />
       </NavigationContainer>
     )

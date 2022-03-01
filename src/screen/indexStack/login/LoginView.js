@@ -9,15 +9,17 @@ import {
     ScrollView,
     Easing,
     Alert,
-    Picker,
     KeyboardAvoidingView,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    TextInput,
+    StyleSheet,
+    Image
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import Ripple from 'react-native-material-ripple';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import styles from './styles';
 import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
 import { HomeTab } from '../../../routes/HomeTab';
@@ -27,10 +29,13 @@ import { showMessage } from "react-native-flash-message";
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
 import SQLite from 'react-native-sqlite-storage';
+import {Picker} from '@react-native-picker/picker';
 //Assets
 import HeaderImage from '../../../../assets/globals/header.jpg';
 import { useNavigation } from "@react-navigation/native";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Button } from "react-native-elements";
+import { Fonts } from "../../../utils/Fonts";
 
 const {
             email,
@@ -69,7 +74,7 @@ export default function Login({ logeadoHandler }) {
 
   function createAnAccountAction() {
         Keyboard.dismiss();
-        navigation.navigate('RegisterView', { language: language });
+        navigation.navigate('RegisterView', { language: language ,logeadoHandler});
     }
 
     function recupera(){
@@ -131,8 +136,8 @@ export default function Login({ logeadoHandler }) {
                 navigation.navigate("SettingsView");*/
 
                 setTimeout(
-                  () => { RNRestart.Restart();
-                    setStatus(false)
+                  () => { 
+                    logeadoHandler()
                    },
                   1000
                 )
@@ -205,88 +210,169 @@ export default function Login({ logeadoHandler }) {
     }
 
   return (
-            <View style={{ flex: 1 }}>
-                <Spinner
+    <KeyboardAvoidingView style={{flex:1}} behavior="padding">
+      <Spinner
                   visible={carga}
                   color={Colors.Primary} />
-                <Animated.View
-                    style={[styles.header, { height: headerHeight }]}
-                >
-                    <ImageBackground
-                        style={styles.headerImage}
-                        source={HeaderImage}
-                        resizeMode="cover"
-                    >
-                        <Text style={styles.headerText}>DRAGON GOLF</Text>
-                    </ImageBackground>
-                </Animated.View>
-                <KeyboardAvoidingView style={styles.body} behavior='padding' enabled={Platform.OS === 'ios'}>
-                    <View style={styles.selectlanguage}>
-                        <Ionicon name='md-globe' size={18} color={Colors.Primary} />
-                        <View style={{ flex: 1 }}>
-                            <Picker
-                                selectedValue={language}
-                                onValueChange={changeLanguage}
-                                mode="dropdown"
-                            >
-                                <Picker.Item label='🇺🇸 EN' value='en' />
-                                <Picker.Item label='🇪🇸 ES' value='es' />
-                            </Picker>
-                        </View>
-                    </View>
-                    <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled">
-                        <View style={styles.formContainer}>
-                            <View style={styles.inputContainer}>
-                                <TextField
-                                    ref={refInput}
-                                    label={email[language]}
-                                    tintColor={Colors.Primary}
-                                    autoCapitalize="none"
-                                    autoCompleteType='email'
-                                    keyboardType="email-address"
-                                    onChangeText={(email) => setemailLogin(email)}
-                                    onSubmitEditing={({nativeEvent: {text}}) => {
-                                        //passInput.focus();
-                                    }}
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <TextField
-                                    //ref={ref => passInput = ref}
-                                    ref={passInput}
-                                    label={password[language]}
-                                    tintColor={Colors.Primary}
-                                    secureTextEntry
-                                    autoCompleteType='password'
-                                    autoCapitalize="none"
-                                    onChangeText={(password) => setpasswordLogin(password)}
-                                    onSubmitEditing={({nativeEvent: {text}}) => {
-                                        //passInput.blur();
-                                    }}
-                                />
-                            </View>
-                        </View>
-                        <View style={styles.buttonsView}>
-                            <Ripple
-                                style={[styles.button, { backgroundColor: Colors.Gray }]}
-                                onPress={createAnAccountAction}
-                            >
-                                <Text style={styles.buttonText}>{createAccount[language]}</Text>
-                            </Ripple>
-                            <Ripple
-                                style={[styles.button, { backgroundColor: Colors.Primary }]}
-                                onPress={()=>Logearse()}
-                            >
-                                <Text style={[styles.buttonText, { color: Colors.White }]}>{login[language]}</Text>
-                                <View style={{ width: 30 }} />
-                                <Ionicon name="ios-arrow-forward" size={30} color={Colors.White} />
-                            </Ripple>
-                        </View>
-                        <TouchableOpacity style={{padding:10, alignSelf: 'center'}} onPress={()=>recupera()}>
-                            <Text style={{color:Colors.Primary,fontWeight:'bold',fontSize:16}}>{Recupera[language]}</Text>
-                        </TouchableOpacity>
-                    </ScrollView>
-                </KeyboardAvoidingView>
+    <StatusBar translucent barStyle='light-content' backgroundColor='transparent'/>
+    <Image 
+          source={require('../../../../assets/globals/back_login.jpg')}
+          style={{ 
+          flex: 1, 
+          width: undefined, 
+          height: undefined, 
+          position:'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0, 
+          }}
+          blurRadius={0.4}
+        />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View style={{flex:1,padding:20}}>
+      <View style={{flex:1,justifyContent:'center'}}>
+            <View style={{height:'20%',justifyContent:'center',width:undefined,marginBottom:10,borderRadius:10}}>
+                <Text style={styles.headerText}>DRAGON GOLF</Text>
             </View>
+            <View style={styles.caja}>
+                <View style={styles.selectlanguage}>
+                    <Ionicon name='md-globe' size={18} color={Colors.Primary} />
+                    <View style={{ flex: 1 }}>
+                        <Picker
+                            selectedValue={language}
+                            onValueChange={changeLanguage}
+                            mode="dropdown"
+                            
+                        >
+                            <Picker.Item label='🇺🇸 EN' value='en' />
+                            <Picker.Item label='🇪🇸 ES' value='es' />
+                        </Picker>
+                    </View>
+                </View>
+                <View style={styles.inputContainer}>
+                    <TextField
+                        ref={refInput}
+                        label={email[language]}
+                        tintColor={Colors.Primary}
+                        autoCapitalize="none"
+                        autoCompleteType='email'
+                        keyboardType="email-address"
+                        onChangeText={(email) => setemailLogin(email)}
+                        onSubmitEditing={({nativeEvent: {text}}) => {
+                            //passInput.focus();
+                        }}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <TextField
+                        //ref={ref => passInput = ref}
+                        ref={passInput}
+                        label={password[language]}
+                        tintColor={Colors.Primary}
+                        secureTextEntry
+                        autoCompleteType='password'
+                        autoCapitalize="none"
+                        onChangeText={(password) => setpasswordLogin(password)}
+                        onSubmitEditing={({nativeEvent: {text}}) => {
+                            //passInput.blur();
+                        }}
+                    />
+                </View>
+                <View style={{ 
+                  justifyContent:'center',
+                  alignItems:'center'}}>
+                    <View style={styles.buttonsView}>
+                        <Ripple
+                            style={[styles.button, { backgroundColor: Colors.Gray }]}
+                            onPress={createAnAccountAction}
+                        >
+                            <Text style={styles.buttonText}>{createAccount[language]}</Text>
+                        </Ripple>
+                        <Ripple
+                            style={[styles.button, { backgroundColor: Colors.Primary }]}
+                            onPress={()=>Logearse()}
+                        >
+                            <Text style={[styles.buttonText, { color: Colors.White }]}>{login[language]}</Text>
+                            <View style={{ width: 30 }} />
+                            <Ionicon name="ios-arrow-forward" size={30} color={Colors.White} />
+                        </Ripple>
+                    </View>
+                    <TouchableOpacity style={{padding:10, alignSelf: 'center'}} onPress={()=>recupera()}>
+                        <Text style={{color:Colors.Primary,fontWeight:'bold',fontSize:16}}>{Recupera[language]}</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+      </View>
+    </View>
+    </TouchableWithoutFeedback>
+    <Spinner isloading={carga}/>
+  </KeyboardAvoidingView>
         )
 }
+
+const styles = StyleSheet.create({
+  caja: {
+    paddingHorizontal:30,
+    backgroundColor:'rgba(400, 400, 400,.8)',
+    borderRadius:10,
+    paddingVertical:20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.00,
+    elevation: 1,
+  },
+  headerText: {
+      color: Colors.White,
+      fontSize: 30,
+      letterSpacing: 3,
+      marginHorizontal: 15,
+      marginVertical: 20,
+      fontFamily: Fonts.BankGothic
+  },
+  buttonsView: {
+      alignSelf: 'center',
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingVertical: 20,
+      marginTop: 20,
+
+  },
+  button: {
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    borderRadius: 6,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  selectlanguage: {
+    width: '65%',
+    height: 50,
+    alignSelf: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  inputContainer: {
+    width: '100%',
+    height: 70,
+    justifyContent: 'center',
+    marginTop: 5,
+  },
+});
+
+

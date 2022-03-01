@@ -738,7 +738,8 @@ class RegisterView extends Component {
            this.GuardarFoto(res.Result[0].IDUsuario)
 
            setTimeout(
-                  () => { RNRestart.Restart();
+                  () => { 
+                    this.props.route.params.logeadoHandler()
                    },
                   2000
                 )
