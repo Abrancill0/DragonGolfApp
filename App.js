@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Text, Image, Alert, Dimensions, ScrollView } from 'react-native';
+import { TouchableOpacity, View, Text, Image, Alert, Dimensions, ScrollView, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator,DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer'
@@ -93,7 +93,7 @@ import NetInfo from "@react-native-community/netinfo";
 import RNRestart from 'react-native-restart'
 import SQLite from 'react-native-sqlite-storage';
 import { SafeAreaView } from 'react-navigation';
-
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { CardStyleInterpolators } from "@react-navigation/stack";
 
 var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" });
@@ -167,7 +167,19 @@ export default class App extends Component {
     }
   };
 
-  componentDidMount() {
+  performTimeConsumingTask = async () => {
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        resolve("result");
+      }, 1000)
+    );
+  };
+
+  
+
+  async componentDidMount() {
+   await this.performTimeConsumingTask();
+
     this.loadSesion()//this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
     Dimensions.addEventListener('change', (dimensions) => {
       const { width, height } = dimensions.window;
@@ -1611,16 +1623,40 @@ export default class App extends Component {
               headerShown:false
             })} />
           <StackHome.Screen name='RegisterView'component={RegisterView}
-            options={({ route }) => ({
-              headerShown:false
+            options={({ navigation }) => ({
+              header:()=>{
+                return(
+                <SafeAreaView style={{backgroundColor:Colors.White}}>
+                  <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> navigation.goBack()}>
+                    <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+                  </TouchableOpacity>
+                </SafeAreaView>
+                )
+              }
             })} />
           <StackHome.Screen name='RecuperaContrasena' component={RecuperaContrasena}
             options={({ route }) => ({
-              headerShown:false,
+              header:()=>{
+                return(
+                <SafeAreaView style={{backgroundColor:Colors.White}}>
+                  <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> navigation.goBack()}>
+                    <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+                  </TouchableOpacity>
+                </SafeAreaView>
+                )
+              }
             })} />
           <StackHome.Screen name='CambioContrasena' component={CambioContrasena}
             options={({ route }) => ({
-              headerShown:false,
+              header:()=>{
+                return(
+                <SafeAreaView style={{backgroundColor:Colors.White}}>
+                  <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> navigation.goBack()}>
+                    <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
+                  </TouchableOpacity>
+                </SafeAreaView>
+                )
+              }
             })} />
         </StackHome.Navigator>
         )

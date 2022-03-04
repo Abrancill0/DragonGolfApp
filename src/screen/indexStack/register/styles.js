@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 1,
+        backgroundColor:Colors.White
     },
     formContainer: {
         width: '100%',

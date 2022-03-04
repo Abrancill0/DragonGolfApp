@@ -21,7 +21,7 @@ import Colors from '../../../utils/Colors';
 import { Dictionary } from '../../../utils/Dictionary';
 import { showMessage } from "react-native-flash-message";
 import { RegistroAB, SubirImagenUsuario } from '../../../Services/Services'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
 import RNRestart from 'react-native-restart'
 import AsyncStorage from '@react-native-community/async-storage';
 import ImageResizer from "react-native-image-resizer";
@@ -141,16 +141,9 @@ class RegisterView extends Component {
 
         return (
             <View style={{ flex: 1 }}>
-                <StatusBar
-                    backgroundColor="#FFFFFF"
-                    barStyle="dark-content"
-                    translucent={false}
-                />
+                <StatusBar translucent barStyle='dark-content' backgroundColor='transparent'/>
                 <KeyboardAvoidingView style={styles.body} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
                     <ScrollView style={{ flex: 1, paddingTop: 20 }} keyboardShouldPersistTaps='handled'>
-                        <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> this.props.navigation.goBack()}>
-                          <MaterialIcon name={'arrow-back'} size={30} color={Colors.Primary} />
-                        </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.imagePicker}
                             onPress={this.pickImage}

@@ -60,11 +60,7 @@ class SplashScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <StatusBar
-          backgroundColor="transparent"
-          barStyle="dark-content"
-          translucent
-        />
+         <StatusBar translucent barStyle='dark-content' backgroundColor='transparent'/>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Animated.Image
             source={SplashImage}

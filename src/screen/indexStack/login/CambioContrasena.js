@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, ScrollView, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, StyleSheet, Image, Text, ScrollView, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native';
 import { Button, Overlay } from 'react-native-elements';
 import {
   TextField,
@@ -101,11 +101,9 @@ export default class Mascota extends Component {
     return (
       <ScrollView keyboardShouldPersistTaps='always'
         contentContainerStyle={{ height: ScreenHeight, backgroundColor: '#123c5b' }}>
+      <StatusBar translucent barStyle='dark-content' backgroundColor='transparent'/>
       <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
         <View style={styles2.container}>
-        <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> this.props.navigation.goBack()}>
-          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-        </TouchableOpacity>
         <View style={{flex: .9}}>
           <View style={{paddingHorizontal:50, alignSelf: 'center'}}>
             <Text style={{ color: Colors.Primary, fontFamily: 'Montserrat', fontSize: 18}}>{CamPass[language]}</Text>

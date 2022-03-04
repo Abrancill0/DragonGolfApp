@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, ScrollView, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, StyleSheet, Image, Text, ScrollView, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native';
 import { Button, Overlay } from 'react-native-elements';
 import {
   TextField,
@@ -100,12 +100,10 @@ export default class Mascota extends Component {
     return (
       <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
         <View style={styles2.container}>
+        <StatusBar translucent barStyle='dark-content' backgroundColor='transparent'/>
         <Spinner
             visible={this.state.status}
             color={Colors.Primary} />
-        <TouchableOpacity style={{paddingTop:30, paddingLeft:10}} onPress={()=> this.props.navigation.goBack()}>
-          <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-        </TouchableOpacity>
         <View style={{ flex: .5, margin: 15, justifyContent: 'space-around' }}>
 
                 <View style={{ alignSelf: 'center' }}>

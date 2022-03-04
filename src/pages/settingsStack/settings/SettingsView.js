@@ -34,6 +34,7 @@ import EntypoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from 'react-native-loading-spinner-overlay';
 import NetInfo from "@react-native-community/netinfo";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var db = SQLite.openDatabase({ name: "a", createFromLocation: "~DragonGolf.db" });
 
@@ -193,1109 +194,1111 @@ class SettingsView extends Component {
     } = Dictionary;
 
     return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
-        <ScrollView style={{ width: '100%' }} keyboardShouldPersistTaps="handled" >
-        <Spinner
-            visible={this.state.status}
-            color={Colors.Primary} />
-        <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> this.props.navigation.openDrawer()}>
-          <EntypoIcon name={'menu'} size={25} color={Colors.Primary} />
-        </TouchableOpacity>
-              <View style={{ flex: 1, alignItems: 'flex-end', marginRight:20 }}>
-                <TouchableOpacity onPress={_ => this.props.navigation.navigate('HandicapIndex', { playerId: userData.id, playernickname: userData.nick_name })}>
-                  <MaterialIcons name='grid-on' size={25} color={Colors.Black} />
+      <SafeAreaView style={{flex:1,backgroundColor:Colors.White}}>
+          <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={85} enabled={Platform.OS === 'ios'}>
+            <Spinner
+                visible={this.state.status}
+                color={Colors.Primary} />
+              <View style={{flex:.1,justifyContent:'space-between',flexDirection:'row'}}>
+                    <TouchableOpacity style={{padding:10}} onPress={()=> this.props.navigation.openDrawer()}>
+                        <EntypoIcon name={'menu'} size={25} color={Colors.Primary} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ padding:10 }} onPress={_ => this.props.navigation.navigate('HandicapIndex', { playerId: userData.id, playernickname: userData.nick_name })}>
+                        <MaterialIcons name='grid-on' size={25} color={Colors.Black} />
+                    </TouchableOpacity>
+              </View>
+              <ScrollView style={{ width: '100%',flex:.9}} keyboardShouldPersistTaps="handled" >
+              <Ripple
+                style={styles.profileCard}
+                rippleColor='gray'
+                onPress={() => this.props.navigation.navigate('EditUserView', {userData:userData, language:language, getUserData:this.getUserData})}
+              >
+                <View style={styles.imageNameView}>
+                  <Image
+                    source={userData ? userData.photo ? { uri: userData.photo } : BlankProfile : BlankProfile}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 30
+                    }}
+                  />
+                  <View style={styles.userInfoView}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={styles.userName}>{userData ? userData.name : 'User name'}</Text>
+                      <Text style={styles.nicknameText}>({userData ? userData.nick_name : 'Nickname'})</Text>
+                    </View>
+                    <View>
+                      <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{userData ? userData.email : 'example@mail.com'}</Text>
+                      <Text style={styles.textLink} ellipsizeMode="tail">{userData.cellphoneAux}</Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.infoGolfView}>
+                  <View style={{ marginRight: 20 }}>
+                    <Text style={styles.cardTitle}>{ghinNumber[language]}</Text>
+                    <Text style={styles.cardInfo}>{userData ? userData.ghin_number : '1234567'}</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.cardTitle}>{handicap[language]}</Text>
+                    <Text style={styles.cardInfo}>{userData ? userData.handicap : '20.0'}</Text>
+                  </View>
+                </View>
+              </Ripple>
+
+              {/* <View style={{ width: '100%', paddingHorizontal: 10, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                <TouchableOpacity onPress={_ => navigation.navigate('HistoryScreen')}>
+                  <Text style={styles.textButton}>{history[language]}</Text>
                 </TouchableOpacity>
-              </View>
-          <Ripple
-            style={styles.profileCard}
-            rippleColor='gray'
-            onPress={() => this.props.navigation.navigate('EditUserView', {userData:userData, language:language, getUserData:this.getUserData})}
-          >
-            <View style={styles.imageNameView}>
-              <Image
-                source={userData ? userData.photo ? { uri: userData.photo } : BlankProfile : BlankProfile}
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 30
-                }}
-              />
-              <View style={styles.userInfoView}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={styles.userName}>{userData ? userData.name : 'User name'}</Text>
-                  <Text style={styles.nicknameText}>({userData ? userData.nick_name : 'Nickname'})</Text>
-                </View>
-                <View>
-                  <Text style={[styles.textLink, { color: Colors.Primary, marginRight: 10 }]}>{userData ? userData.email : 'example@mail.com'}</Text>
-                  <Text style={styles.textLink} ellipsizeMode="tail">{userData.cellphoneAux}</Text>
+              </View> */}
+
+              <Text style={styles.settingsTitle}>{languageText[language]}</Text>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Ionicon name="md-globe" size={20} color={Colors.Primary} />
+                  <View style={{ flex: 1, marginLeft: 5 }}>
+                    <Picker
+                      selectedValue={language}
+                      onValueChange={this.changeLanguage}
+                      mode="dropdown"
+                    >
+                      <Picker.Item label='🇺🇸 English' value='en' />
+                      <Picker.Item label='🇪🇸 Español' value='es' />
+                    </Picker>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View style={styles.infoGolfView}>
-              <View style={{ marginRight: 20 }}>
-                <Text style={styles.cardTitle}>{ghinNumber[language]}</Text>
-                <Text style={styles.cardInfo}>{userData ? userData.ghin_number : '1234567'}</Text>
-              </View>
-              <View>
-                <Text style={styles.cardTitle}>{handicap[language]}</Text>
-                <Text style={styles.cardInfo}>{userData ? userData.handicap : '20.0'}</Text>
-              </View>
-            </View>
-          </Ripple>
 
-          {/* <View style={{ width: '100%', paddingHorizontal: 10, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-            <TouchableOpacity onPress={_ => navigation.navigate('HistoryScreen')}>
-              <Text style={styles.textButton}>{history[language]}</Text>
-            </TouchableOpacity>
-          </View> */}
-
-          <Text style={styles.settingsTitle}>{languageText[language]}</Text>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Ionicon name="md-globe" size={20} color={Colors.Primary} />
-              <View style={{ flex: 1, marginLeft: 5 }}>
-                <Picker
-                  selectedValue={language}
-                  onValueChange={this.changeLanguage}
-                  mode="dropdown"
+              <Text style={styles.settingsTitle}>{advSettings[language]}</Text>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{howAdvantage[language]}</Text>
+                </View>
+                <RadioButton.Group
+                  onValueChange={asHowAdvMove => this.setState({ asHowAdvMove })}
+                  value={asHowAdvMove}
                 >
-                  <Picker.Item label='🇺🇸 English' value='en' />
-                  <Picker.Item label='🇪🇸 Español' value='es' />
-                </Picker>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                    <View style={styles.radioButtonView}>
+                      <RadioButton value="Match" color={Colors.Primary} />
+                      <TouchableOpacity
+                        onPress={() => this.setState({ asHowAdvMove: 'Match' })}
+                      >
+                        <Text style={[styles.radioButtonText, { color: asHowAdvMove === 'Match' ? Colors.Primary : Colors.Black }]}>{match[language]}</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.radioButtonView}>
+                      <RadioButton value="Money" color={Colors.Primary} />
+                      <TouchableOpacity
+                        onPress={() => this.setState({ asHowAdvMove: 'Money' })}
+                      >
+                        <Text style={[styles.radioButtonText, { color: asHowAdvMove === 'Money' ? Colors.Primary : Colors.Black }]}>{money[language]}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </RadioButton.Group>
               </View>
-            </View>
-          </View>
 
-          <Text style={styles.settingsTitle}>{advSettings[language]}</Text>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{howAdvantage[language]}</Text>
-            </View>
-            <RadioButton.Group
-              onValueChange={asHowAdvMove => this.setState({ asHowAdvMove })}
-              value={asHowAdvMove}
-            >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <View style={styles.radioButtonView}>
-                  <RadioButton value="Match" color={Colors.Primary} />
-                  <TouchableOpacity
-                    onPress={() => this.setState({ asHowAdvMove: 'Match' })}
-                  >
-                    <Text style={[styles.radioButtonText, { color: asHowAdvMove === 'Match' ? Colors.Primary : Colors.Black }]}>{match[language]}</Text>
-                  </TouchableOpacity>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{strokesPerRound[language]}</Text>
                 </View>
-                <View style={styles.radioButtonView}>
-                  <RadioButton value="Money" color={Colors.Primary} />
-                  <TouchableOpacity
-                    onPress={() => this.setState({ asHowAdvMove: 'Money' })}
-                  >
-                    <Text style={[styles.radioButtonText, { color: asHowAdvMove === 'Money' ? Colors.Primary : Colors.Black }]}>{money[language]}</Text>
-                  </TouchableOpacity>
+                <RadioButton.Group
+                  onValueChange={asHowManyStrokes => this.setState({ asHowManyStrokes })}
+                  value={asHowManyStrokes}
+                >
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                    <View style={styles.radioButtonView}>
+                      <RadioButton value="0.5" color={Colors.Primary} />
+                      <TouchableOpacity
+                        onPress={() => this.setState({ asHowManyStrokes: '0.5' })}
+                      >
+                        <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '0.5' ? Colors.Primary : Colors.Black }]}>0.5</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.radioButtonView}>
+                      <RadioButton value="1" color={Colors.Primary} />
+                      <TouchableOpacity
+                        onPress={() => this.setState({ asHowManyStrokes: '1' })}
+                      >
+                        <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '1' ? Colors.Primary : Colors.Black }]}>1</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.radioButtonView}>
+                      <RadioButton value="2" color={Colors.Primary} />
+                      <TouchableOpacity
+                        onPress={() => this.setState({ asHowManyStrokes: '2' })}
+                      >
+                        <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '2' ? Colors.Primary : Colors.Black }]}>2</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </RadioButton.Group>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{advMoves[language]}</Text>
+                  <View style={styles.costInputView}>
+                    <Switch
+                      value={asAdvMoves}
+                      thumbColor={asAdvMoves ? Colors.Primary : Colors.Gray}
+                      trackColor={{ true: Colors.Primary, false: Colors.Primary }}
+                      onValueChange={(asAdvMoves) => this.setState({ asAdvMoves })}
+                    />
+                  </View>
                 </View>
               </View>
-            </RadioButton.Group>
-          </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{strokesPerRound[language]}</Text>
-            </View>
-            <RadioButton.Group
-              onValueChange={asHowManyStrokes => this.setState({ asHowManyStrokes })}
-              value={asHowManyStrokes}
-            >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <View style={styles.radioButtonView}>
-                  <RadioButton value="0.5" color={Colors.Primary} />
-                  <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '0.5' })}
-                  >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '0.5' ? Colors.Primary : Colors.Black }]}>0.5</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.radioButtonView}>
-                  <RadioButton value="1" color={Colors.Primary} />
-                  <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '1' })}
-                  >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '1' ? Colors.Primary : Colors.Black }]}>1</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.radioButtonView}>
-                  <RadioButton value="2" color={Colors.Primary} />
-                  <TouchableOpacity
-                    onPress={() => this.setState({ asHowManyStrokes: '2' })}
-                  >
-                    <Text style={[styles.radioButtonText, { color: asHowManyStrokes === '2' ? Colors.Primary : Colors.Black }]}>2</Text>
-                  </TouchableOpacity>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{carryMove[language]}</Text>
+                  <View style={styles.costInputView}>
+                    <Switch
+                      value={asDoesCarryMove}
+                      thumbColor={asDoesCarryMove ? Colors.Primary : Colors.Gray}
+                      trackColor={{ true: Colors.Primary, false: Colors.Primary }}
+                      onValueChange={(asDoesCarryMove) => this.setState({ asDoesCarryMove })}
+                    />
+                  </View>
                 </View>
               </View>
-            </RadioButton.Group>
-          </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{advMoves[language]}</Text>
-              <View style={styles.costInputView}>
-                <Switch
-                  value={asAdvMoves}
-                  thumbColor={asAdvMoves ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
-                  onValueChange={(asAdvMoves) => this.setState({ asAdvMoves })}
-                />
+              <Text style={styles.settingsTitle}>{generalSettings[language]}</Text>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Rabbit 1-6</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(rabbit16) => this.setState({ rabbit16 })}
+                      onSubmitEditing={_ => this.focusNextField('gs2')}
+                      value={rabbit16}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Rabbit 7-12</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      ref={ref => this.inputs['gs2'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(rabbit712) => this.setState({ rabbit712 })}
+                      onSubmitEditing={_ => this.focusNextField('gs3')}
+                      value={rabbit712}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Rabbit 13-18</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      ref={ref => this.inputs['gs3'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(rabbit1318) => this.setState({ rabbit1318 })}
+                      onSubmitEditing={_ => this.focusNextField('gs4')}
+                      value={rabbit1318}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Medal Play F9</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      ref={ref => this.inputs['gs4'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(medalF9) => this.setState({ medalF9 })}
+                      onSubmitEditing={_ => this.focusNextField('gs5')}
+                      value={medalF9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Medal Play B9</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      ref={ref => this.inputs['gs5'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(medalB9) => this.setState({ medalB9 })}
+                      onSubmitEditing={_ => this.focusNextField('gs6')}
+                      value={medalB9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Medal Play 18</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      ref={ref => this.inputs['gs6'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(medal18) => this.setState({ medal18 })}
+                      onSubmitEditing={_ => this.focusNextField('gs7')}
+                      value={medal18}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Skins</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      ref={ref => this.inputs['gs7'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(skins) => this.setState({ skins })}
+                      value={skins}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.skinCarryOver, language: language })}>
+                    <Text style={styles.optionsText}>Skin Carry Over <Text style={{ color: Colors.Primary }}>?</Text></Text>
+                  </TouchableOpacity>
+                  <View style={styles.costInputView}>
+                    <Switch
+                      value={skinCarry}
+                      thumbColor={skinCarry ? Colors.Primary : Colors.Gray}
+                      trackColor={{ true: Colors.Primary, false: Colors.Primary }}
+                      onValueChange={(skinCarry) => this.setState({ skinCarry })}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.lowerAdvOnF9, language: language })}>
+                    <Text style={styles.optionsText}>Lower Adv On F9 <Text style={{ color: Colors.Primary }}>?</Text></Text>
+                  </TouchableOpacity>
+                  <View style={styles.costInputView}>
+                    <Switch
+                      value={lowedAdv}
+                      thumbColor={lowedAdv ? Colors.Primary : Colors.Gray}
+                      trackColor={{ true: Colors.Primary, false: Colors.Primary }}
+                      onValueChange={(lowedAdv) => this.setState({ lowedAdv })}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <Text style={styles.settingsTitle}>Single Nassau Wagers</Text>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{autoPress[language]}</Text>
+                  <View style={styles.costInputView}>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={2}
+                      onChangeText={(snwAutoPress) => this.setState({ snwAutoPress })}
+                      value={snwAutoPress}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{useFactorText[language]}</Text>
+                  <View style={styles.costInputView}>
+                    <Switch
+                      value={snwUseFactor}
+                      thumbColor={snwUseFactor ? Colors.Primary : Colors.Gray}
+                      trackColor={{ true: Colors.Primary, false: Colors.Primary }}
+                      onValueChange={this.changeSNUseFactor}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              {/* {snwUseFactor && <Animatable.View animation='flipInX' duration={500} style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{valueFactorText[language]}</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Primary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwValueFactor) => this.setState({ snwValueFactor })}
+                      value={snwValueFactor}
+                    />
+                  </View>
+                </View>
+              </Animatable.View>} */}
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Front 9</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{snwUseFactor ? '$ ': '$ ' }</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwFront9) => this.setState({ snwFront9 })}
+                      onSubmitEditing={_ => this.focusNextField('snw2')}
+                      value={snwFront9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              {
+                snwUseFactor ? 
+              <View>
+                <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Back 9</Text>
+                    <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                <TextInput
+                      ref={ref => this.inputs['snw2'] = ref}
+                      style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwBack9) => this.setState({ snwBack9 })}
+                      onSubmitEditing={_ => this.focusNextField('snw3')}
+                      value={snwBack9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+              </View> 
+              <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Match</Text>
+                    <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['snw3'] = ref}
+                      style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwMatch) => this.setState({ snwMatch })}
+                      onSubmitEditing={_ => this.focusNextField('snw4')}
+                      value={snwMatch}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+              </View>
+              <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Carry</Text>
+                    <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['snw4'] = ref}
+                      style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwCarry) => this.setState({ snwCarry })}
+                      onSubmitEditing={_ => this.focusNextField('snw5')}
+                      value={snwCarry}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+              </View>
+              <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Medal</Text>
+                    <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['snw5'] = ref}
+                      style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwMedal) => this.setState({ snwMedal })}
+                      value={snwMedal}
+                      selectTextOnFocus={true}
+                    />
               </View>
             </View>
-          </View>
+              :
+            <View>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Back 9</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['snw2'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwBack9) => this.setState({ snwBack9 })}
+                      onSubmitEditing={_ => this.focusNextField('snw3')}
+                      value={snwBack9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Match</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['snw3'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwMatch) => this.setState({ snwMatch })}
+                      onSubmitEditing={_ => this.focusNextField('snw4')}
+                      value={snwMatch}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Carry</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['snw4'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwCarry) => this.setState({ snwCarry })}
+                      onSubmitEditing={_ => this.focusNextField('snw5')}
+                      value={snwCarry}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{carryMove[language]}</Text>
-              <View style={styles.costInputView}>
-                <Switch
-                  value={asDoesCarryMove}
-                  thumbColor={asDoesCarryMove ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
-                  onValueChange={(asDoesCarryMove) => this.setState({ asDoesCarryMove })}
-                />
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Medal</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['snw5'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(snwMedal) => this.setState({ snwMedal })}
+                      value={snwMedal}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
             </View>
-          </View>
-
-          <Text style={styles.settingsTitle}>{generalSettings[language]}</Text>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Rabbit 1-6</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(rabbit16) => this.setState({ rabbit16 })}
-                  onSubmitEditing={_ => this.focusNextField('gs2')}
-                  value={rabbit16}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Rabbit 7-12</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  ref={ref => this.inputs['gs2'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(rabbit712) => this.setState({ rabbit712 })}
-                  onSubmitEditing={_ => this.focusNextField('gs3')}
-                  value={rabbit712}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Rabbit 13-18</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  ref={ref => this.inputs['gs3'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(rabbit1318) => this.setState({ rabbit1318 })}
-                  onSubmitEditing={_ => this.focusNextField('gs4')}
-                  value={rabbit1318}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Medal Play F9</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  ref={ref => this.inputs['gs4'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(medalF9) => this.setState({ medalF9 })}
-                  onSubmitEditing={_ => this.focusNextField('gs5')}
-                  value={medalF9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Medal Play B9</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  ref={ref => this.inputs['gs5'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(medalB9) => this.setState({ medalB9 })}
-                  onSubmitEditing={_ => this.focusNextField('gs6')}
-                  value={medalB9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Medal Play 18</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  ref={ref => this.inputs['gs6'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(medal18) => this.setState({ medal18 })}
-                  onSubmitEditing={_ => this.focusNextField('gs7')}
-                  value={medal18}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Skins</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  ref={ref => this.inputs['gs7'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(skins) => this.setState({ skins })}
-                  value={skins}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.skinCarryOver, language: language })}>
-                <Text style={styles.optionsText}>Skin Carry Over <Text style={{ color: Colors.Primary }}>?</Text></Text>
-              </TouchableOpacity>
-              <View style={styles.costInputView}>
-                <Switch
-                  value={skinCarry}
-                  thumbColor={skinCarry ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
-                  onValueChange={(skinCarry) => this.setState({ skinCarry })}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <TouchableOpacity style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.lowerAdvOnF9, language: language })}>
-                <Text style={styles.optionsText}>Lower Adv On F9 <Text style={{ color: Colors.Primary }}>?</Text></Text>
-              </TouchableOpacity>
-              <View style={styles.costInputView}>
-                <Switch
-                  value={lowedAdv}
-                  thumbColor={lowedAdv ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
-                  onValueChange={(lowedAdv) => this.setState({ lowedAdv })}
-                />
-              </View>
-            </View>
-          </View>
-
-          <Text style={styles.settingsTitle}>Single Nassau Wagers</Text>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{autoPress[language]}</Text>
-              <View style={styles.costInputView}>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={2}
-                  onChangeText={(snwAutoPress) => this.setState({ snwAutoPress })}
-                  value={snwAutoPress}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{useFactorText[language]}</Text>
-              <View style={styles.costInputView}>
-                <Switch
-                  value={snwUseFactor}
-                  thumbColor={snwUseFactor ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
-                  onValueChange={this.changeSNUseFactor}
-                />
-              </View>
-            </View>
-          </View>
-
-          {/* {snwUseFactor && <Animatable.View animation='flipInX' duration={500} style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{valueFactorText[language]}</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Primary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwValueFactor) => this.setState({ snwValueFactor })}
-                  value={snwValueFactor}
-                />
-              </View>
-            </View>
-          </Animatable.View>} */}
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Front 9</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? '$ ': '$ ' }</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwFront9) => this.setState({ snwFront9 })}
-                  onSubmitEditing={_ => this.focusNextField('snw2')}
-                  value={snwFront9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          {
-            snwUseFactor ? 
-          <View>
-            <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
-              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Back 9</Text>
-                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-            <TextInput
-                  ref={ref => this.inputs['snw2'] = ref}
-                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwBack9) => this.setState({ snwBack9 })}
-                  onSubmitEditing={_ => this.focusNextField('snw3')}
-                  value={snwBack9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-          </View> 
-          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
-              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Match</Text>
-                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['snw3'] = ref}
-                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwMatch) => this.setState({ snwMatch })}
-                  onSubmitEditing={_ => this.focusNextField('snw4')}
-                  value={snwMatch}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-          </View>
-          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
-              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Carry</Text>
-                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['snw4'] = ref}
-                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwCarry) => this.setState({ snwCarry })}
-                  onSubmitEditing={_ => this.focusNextField('snw5')}
-                  value={snwCarry}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-          </View>
-          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
-              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Medal</Text>
-                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['snw5'] = ref}
-                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwMedal) => this.setState({ snwMedal })}
-                  value={snwMedal}
-                  selectTextOnFocus={true}
-                />
-          </View>
-        </View>
-          :
-        <View>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Back 9</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['snw2'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwBack9) => this.setState({ snwBack9 })}
-                  onSubmitEditing={_ => this.focusNextField('snw3')}
-                  value={snwBack9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Match</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['snw3'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwMatch) => this.setState({ snwMatch })}
-                  onSubmitEditing={_ => this.focusNextField('snw4')}
-                  value={snwMatch}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Carry</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['snw4'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwCarry) => this.setState({ snwCarry })}
-                  onSubmitEditing={_ => this.focusNextField('snw5')}
-                  value={snwCarry}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Medal</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{snwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['snw5'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(snwMedal) => this.setState({ snwMedal })}
-                  value={snwMedal}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-          }
-          <Text style={styles.settingsTitle}>Team Nassau Wagers</Text>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{autoPress[language]}</Text>
-              <View style={styles.costInputView}>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={2}
-                  onChangeText={(tnwAutoPress) => this.setState({ tnwAutoPress })}
-                  value={tnwAutoPress}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{useFactorText[language]}</Text>
-              <View style={styles.costInputView}>
-                <Switch
-                  value={tnwUseFactor}
-                  thumbColor={tnwUseFactor ? Colors.Primary : Colors.Gray}
-                  trackColor={{ true: Colors.Primary, false: Colors.Primary }}
-                  onValueChange={this.changeTNUseFactor}
-                />
-              </View>
-            </View>
-          </View>
-
-          {/* {tnwUseFactor && <Animatable.View animation='flipInX' duration={500} style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>{valueFactorText[language]}</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Primary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwValueFactor) => this.setState({ tnwValueFactor })}
-                  value={tnwValueFactor}
-                />
-              </View>
-            </View>
-          </Animatable.View>} */}
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Front 9</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? '$ ': '$ ' }</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwFront9) => this.setState({ tnwFront9 })}
-                  onSubmitEditing={_ => this.focusNextField('tnw2')}
-                  value={tnwFront9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          {
-            tnwUseFactor ? 
-        <View>
-          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
-              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Back 9</Text>
-                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['tnw2'] = ref}
-                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwBack9) => this.setState({ tnwBack9 })}
-                  onSubmitEditing={_ => this.focusNextField('tnw3')}
-                  value={tnwBack9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-          </View>
-
-          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
-              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Match</Text>
-                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['tnw3'] = ref}
-                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwMatch) => this.setState({ tnwMatch })}
-                  onSubmitEditing={_ => this.focusNextField('tnw4')}
-                  value={tnwMatch}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-          </View>
-
-          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
-              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Carry</Text>
-                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['tnw4'] = ref}
-                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwCarry) => this.setState({ tnwCarry })}
-                  onSubmitEditing={_ => this.focusNextField('tnw5')}
-                  value={tnwCarry}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-          </View>
-
-          <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
-              <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Medal</Text>
-                <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['tnw5'] = ref}
-                  style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
-                  value={tnwMedal}
-                  selectTextOnFocus={true}
-                />
-          </View>
-        </View>
-          :
-        <View>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Back 9</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['tnw2'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwBack9) => this.setState({ tnwBack9 })}
-                  onSubmitEditing={_ => this.focusNextField('tnw3')}
-                  value={tnwBack9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Match</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['tnw3'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwMatch) => this.setState({ tnwMatch })}
-                  onSubmitEditing={_ => this.focusNextField('tnw4')}
-                  value={tnwMatch}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Carry</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['tnw4'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwCarry) => this.setState({ tnwCarry })}
-                  onSubmitEditing={_ => this.focusNextField('tnw5')}
-                  value={tnwCarry}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Medal</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
-                <TextInput
-                  ref={ref => this.inputs['tnw5'] = ref}
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
-                  value={tnwMedal}
-                  selectTextOnFocus={true}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-      }
-
-          <View style={styles.optionSection}>
-            <View style={{ paddingHorizontal: 10 }}>
-              <TouchableOpacity  style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.whoGetsAdv, language: language })}>
-                <Text style={styles.optionsText}>{whoGetsAdv[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
-              </TouchableOpacity>
-              {Platform.OS === 'ios' &&
-                <TouchableOpacity style={styles.whoGetButton} onPress={_ => this.setState({ seePicker: !seePicker })}>
-                  <Text style={styles.optionsText}>{tnwWhoGets}</Text>
-                  <Ionicon name={!seePicker ? 'chevron-down' : 'chevron-up'} size={20} color={Colors.Black} />
-                </TouchableOpacity>
               }
-              {(Platform.OS === 'android' || seePicker) && <Picker
-                mode="dropdown"
-                selectedValue={tnwWhoGets}
-                onValueChange={(tnwWhoGets) =>
-                  this.setState({ tnwWhoGets })
-                }>
-                <Picker.Item label="Hi Handicap" value="Hi Handicap" />
-                <Picker.Item label="Low Handicap" value="Low Handicap" />
-                <Picker.Item label="Each" value="Each" />
-                <Picker.Item label="Slid Hi" value="Slid Hi" />
-                <Picker.Item label="Slid Low" value="Slid Low" />
-              </Picker>}
-            </View>
-          </View>
+              <Text style={styles.settingsTitle}>Team Nassau Wagers</Text>
 
-          <Text style={styles.settingsTitle}>Extra Bets</Text>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Wager</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(ebWager) => this.setState({ ebWager })}
-                  value={ebWager}
-                  selectTextOnFocus={true}
-                />
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{autoPress[language]}</Text>
+                  <View style={styles.costInputView}>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={2}
+                      onChangeText={(tnwAutoPress) => this.setState({ tnwAutoPress })}
+                      value={tnwAutoPress}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{useFactorText[language]}</Text>
+                  <View style={styles.costInputView}>
+                    <Switch
+                      value={tnwUseFactor}
+                      thumbColor={tnwUseFactor ? Colors.Primary : Colors.Gray}
+                      trackColor={{ true: Colors.Primary, false: Colors.Primary }}
+                      onValueChange={this.changeTNUseFactor}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              {/* {tnwUseFactor && <Animatable.View animation='flipInX' duration={500} style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>{valueFactorText[language]}</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Primary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwValueFactor) => this.setState({ tnwValueFactor })}
+                      value={tnwValueFactor}
+                    />
+                  </View>
+                </View>
+              </Animatable.View>} */}
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Front 9</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{tnwUseFactor ? '$ ': '$ ' }</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwFront9) => this.setState({ tnwFront9 })}
+                      onSubmitEditing={_ => this.focusNextField('tnw2')}
+                      value={tnwFront9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              {
+                tnwUseFactor ? 
+            <View>
+              <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Back 9</Text>
+                    <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['tnw2'] = ref}
+                      style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwBack9) => this.setState({ tnwBack9 })}
+                      onSubmitEditing={_ => this.focusNextField('tnw3')}
+                      value={tnwBack9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+              </View>
+
+              <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Match</Text>
+                    <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['tnw3'] = ref}
+                      style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwMatch) => this.setState({ tnwMatch })}
+                      onSubmitEditing={_ => this.focusNextField('tnw4')}
+                      value={tnwMatch}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+              </View>
+
+              <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Carry</Text>
+                    <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['tnw4'] = ref}
+                      style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwCarry) => this.setState({ tnwCarry })}
+                      onSubmitEditing={_ => this.focusNextField('tnw5')}
+                      value={tnwCarry}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+              </View>
+
+              <View style={[styles.optionSection,{flexDirection:'row', justifyContent:'space-between'}]}>
+                  <Text style={[styles.optionsText,{flex:0.3, paddingHorizontal:12,alignSelf:'center'}]}>Medal</Text>
+                    <Text style={[styles.dollarText,{flex:0.3,alignSelf:'center', textAlign:'center'}]}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['tnw5'] = ref}
+                      style={[styles.costInput,{flex:0.3, textAlign:'center'}]}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
+                      value={tnwMedal}
+                      selectTextOnFocus={true}
+                    />
               </View>
             </View>
-          </View>
+              :
+            <View>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Back 9</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['tnw2'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwBack9) => this.setState({ tnwBack9 })}
+                      onSubmitEditing={_ => this.focusNextField('tnw3')}
+                      value={tnwBack9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
 
-          <Text style={styles.settingsTitle}>Best Ball Teams</Text>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Wager F9</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(bbWagerF9) => this.setState({ bbWagerF9 })}
-                  onSubmitEditing={_ => this.focusNextField('bbt2')}
-                  value={bbWagerF9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Match</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['tnw3'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwMatch) => this.setState({ tnwMatch })}
+                      onSubmitEditing={_ => this.focusNextField('tnw4')}
+                      value={tnwMatch}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Carry</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['tnw4'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwCarry) => this.setState({ tnwCarry })}
+                      onSubmitEditing={_ => this.focusNextField('tnw5')}
+                      value={tnwCarry}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Medal</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>{tnwUseFactor ? 'Front 9 X ': '$ ' }</Text>
+                    <TextInput
+                      ref={ref => this.inputs['tnw5'] = ref}
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(tnwMedal) => this.setState({ tnwMedal })}
+                      value={tnwMedal}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
             </View>
-          </View>
+          }
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Wager B9</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(bbWagerB9) => this.setState({ bbWagerB9 })}
-                  ref={ref => this.inputs['bbt2'] = ref}
-                  onSubmitEditing={_ => this.focusNextField('bbt3')}
-                  value={bbWagerB9}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
+              <View style={styles.optionSection}>
+                <View style={{ paddingHorizontal: 10 }}>
+                  <TouchableOpacity  style={{ flex: 1 }} onPress={_ => this.props.navigation.navigate('InfoScreen', { data: Details.whoGetsAdv, language: language })}>
+                    <Text style={styles.optionsText}>{whoGetsAdv[language]} <Text style={{ color: Colors.Primary }}>?</Text></Text>
+                  </TouchableOpacity>
+                  {Platform.OS === 'ios' &&
+                    <TouchableOpacity style={styles.whoGetButton} onPress={_ => this.setState({ seePicker: !seePicker })}>
+                      <Text style={styles.optionsText}>{tnwWhoGets}</Text>
+                      <Ionicon name={!seePicker ? 'chevron-down' : 'chevron-up'} size={20} color={Colors.Black} />
+                    </TouchableOpacity>
+                  }
+                  {(Platform.OS === 'android' || seePicker) && <Picker
+                    mode="dropdown"
+                    selectedValue={tnwWhoGets}
+                    onValueChange={(tnwWhoGets) =>
+                      this.setState({ tnwWhoGets })
+                    }>
+                    <Picker.Item label="Hi Handicap" value="Hi Handicap" />
+                    <Picker.Item label="Low Handicap" value="Low Handicap" />
+                    <Picker.Item label="Each" value="Each" />
+                    <Picker.Item label="Slid Hi" value="Slid Hi" />
+                    <Picker.Item label="Slid Low" value="Slid Low" />
+                  </Picker>}
+                </View>
               </View>
-            </View>
-          </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Wager 18</Text>
-              <View style={styles.costInputView}>
-                <Text style={styles.dollarText}>$</Text>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={8}
-                  onChangeText={(bbWager18) => this.setState({ bbWager18 })}
-                  ref={ref => this.inputs['bbt3'] = ref}
-                  value={bbWager18}
-                  selectTextOnFocus={true}
-                />
+              <Text style={styles.settingsTitle}>Extra Bets</Text>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Wager</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(ebWager) => this.setState({ ebWager })}
+                      value={ebWager}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
 
-          <Text style={styles.settingsTitle}>Stableford Settings</Text>
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Double Eagle Points</Text>
-              <View style={styles.costInputView}>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={5}
-                  onChangeText={(ssDoubleEagle) => this.setState({ ssDoubleEagle })}
-                  onSubmitEditing={_ => this.focusNextField('ss2')}
-                  value={ssDoubleEagle}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
+              <Text style={styles.settingsTitle}>Best Ball Teams</Text>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Wager F9</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(bbWagerF9) => this.setState({ bbWagerF9 })}
+                      onSubmitEditing={_ => this.focusNextField('bbt2')}
+                      value={bbWagerF9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Eagle Points</Text>
-              <View style={styles.costInputView}>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={5}
-                  onChangeText={(ssEaglePoints) => this.setState({ ssEaglePoints })}
-                  ref={ref => this.inputs['ss2'] = ref}
-                  onSubmitEditing={_ => this.focusNextField('ss3')}
-                  value={ssEaglePoints}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Wager B9</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(bbWagerB9) => this.setState({ bbWagerB9 })}
+                      ref={ref => this.inputs['bbt2'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('bbt3')}
+                      value={bbWagerB9}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Birdie</Text>
-              <View style={styles.costInputView}>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={5}
-                  onChangeText={(ssBirdie) => this.setState({ ssBirdie })}
-                  ref={ref => this.inputs['ss3'] = ref}
-                  onSubmitEditing={_ => this.focusNextField('ss4')}
-                  value={ssBirdie}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Wager 18</Text>
+                  <View style={styles.costInputView}>
+                    <Text style={styles.dollarText}>$</Text>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={8}
+                      onChangeText={(bbWager18) => this.setState({ bbWager18 })}
+                      ref={ref => this.inputs['bbt3'] = ref}
+                      value={bbWager18}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Par</Text>
-              <View style={styles.costInputView}>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={5}
-                  onChangeText={(ssPar) => this.setState({ ssPar })}
-                  ref={ref => this.inputs['ss4'] = ref}
-                  onSubmitEditing={_ => this.focusNextField('ss5')}
-                  value={ssPar}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
+              <Text style={styles.settingsTitle}>Stableford Settings</Text>
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Double Eagle Points</Text>
+                  <View style={styles.costInputView}>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={5}
+                      onChangeText={(ssDoubleEagle) => this.setState({ ssDoubleEagle })}
+                      onSubmitEditing={_ => this.focusNextField('ss2')}
+                      value={ssDoubleEagle}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Bogey</Text>
-              <View style={styles.costInputView}>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={5}
-                  onChangeText={(ssBogey) => this.setState({ ssBogey })}
-                  ref={ref => this.inputs['ss5'] = ref}
-                  onSubmitEditing={_ => this.focusNextField('ss6')}
-                  value={ssBogey}
-                  blurOnSubmit={false}
-                  selectTextOnFocus={true}
-                />
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Eagle Points</Text>
+                  <View style={styles.costInputView}>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={5}
+                      onChangeText={(ssEaglePoints) => this.setState({ ssEaglePoints })}
+                      ref={ref => this.inputs['ss2'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('ss3')}
+                      value={ssEaglePoints}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
 
-          <View style={styles.optionSection}>
-            <View style={styles.optionView}>
-              <Text style={styles.optionsText}>Double Bogey</Text>
-              <View style={styles.costInputView}>
-                <TextInput
-                  style={styles.costInput}
-                  selectionColor={Colors.Secondary}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  returnKeyType='done'
-                  maxLength={5}
-                  onChangeText={(ssDoubleBogey) => this.setState({ ssDoubleBogey })}
-                  ref={ref => this.inputs['ss6'] = ref}
-                  value={ssDoubleBogey}
-                  selectTextOnFocus={true}
-                />
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Birdie</Text>
+                  <View style={styles.costInputView}>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={5}
+                      onChangeText={(ssBirdie) => this.setState({ ssBirdie })}
+                      ref={ref => this.inputs['ss3'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('ss4')}
+                      value={ssBirdie}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
               </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Par</Text>
+                  <View style={styles.costInputView}>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={5}
+                      onChangeText={(ssPar) => this.setState({ ssPar })}
+                      ref={ref => this.inputs['ss4'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('ss5')}
+                      value={ssPar}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Bogey</Text>
+                  <View style={styles.costInputView}>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={5}
+                      onChangeText={(ssBogey) => this.setState({ ssBogey })}
+                      ref={ref => this.inputs['ss5'] = ref}
+                      onSubmitEditing={_ => this.focusNextField('ss6')}
+                      value={ssBogey}
+                      blurOnSubmit={false}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.optionSection}>
+                <View style={styles.optionView}>
+                  <Text style={styles.optionsText}>Double Bogey</Text>
+                  <View style={styles.costInputView}>
+                    <TextInput
+                      style={styles.costInput}
+                      selectionColor={Colors.Secondary}
+                      placeholder="0"
+                      keyboardType="numeric"
+                      returnKeyType='done'
+                      maxLength={5}
+                      onChangeText={(ssDoubleBogey) => this.setState({ ssDoubleBogey })}
+                      ref={ref => this.inputs['ss6'] = ref}
+                      value={ssDoubleBogey}
+                      selectTextOnFocus={true}
+                    />
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+
+            <View style={styles.bottomButtom}>
+              <DragonButton title={save[language]} onPress={this.submit} />
             </View>
-          </View>
-        </ScrollView>
 
-        <View style={styles.bottomButtom}>
-          <DragonButton title={save[language]} onPress={this.submit} />
-        </View>
+            {
+              this.state.btnAct &&
+              <View style={styles.bottomButtom}>
+                <DragonButton title={update[language]} onPress={this.Actualizar} />
+              </View>
+            }
 
-        {
-          this.state.btnAct &&
-          <View style={styles.bottomButtom}>
-            <DragonButton title={update[language]} onPress={this.Actualizar} />
-          </View>
-        }
-
-      </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 
@@ -1522,7 +1525,6 @@ class SettingsView extends Component {
         status:true
       })
     }
-    console.warn("Hola")
     const token = await AsyncStorage.getItem('usu_id')
     const actualizar = await AsyncStorage.getItem('actualizar')
     let language = await AsyncStorage.getItem('language')
@@ -1563,47 +1565,46 @@ class SettingsView extends Component {
 
                 ////console.warn(lista[0])
 
-                this.setState({
-                asHowAdvMove: res.Result[0].set_how_adv_move,
-                asHowManyStrokes: res.Result[0].set_strokes_moved_per_round.toString(),
-                asAdvMoves: res.Result[0].set_adv_moves_on_9_holes,
-                asDoesCarryMove: res.Result[0].set_carry_moves_adv,
-                rabbit16: res.Result[0].set_rabbit_1_6.toString(),
-                rabbit712: res.Result[0].set_rabbit_7_12.toString(),
-                rabbit1318: res.Result[0].set_rabbit_13_18.toString(),
-                medalF9: res.Result[0].set_medal_play_f9.toString(),
-                medalB9: res.Result[0].set_medal_play_b9.toString(),
-                medal18: res.Result[0].set_medal_play_18.toString(),
-                skins: res.Result[0].set_skins.toString(),
-                skinCarry: res.Result[0].set_skins_carry_over,
-                lowedAdv: res.Result[0].set_lower_adv_f9,
-                snwUseFactor: res.Result[0].set_snw_use_factor,
-                snwAutoPress: res.Result[0].set_snw_automatic_press.toString(),
-                snwFront9: res.Result[0].set_snw_front_9.toString(),
-                snwBack9: res.Result[0].set_snw_back_9.toString(),
-                snwMatch: res.Result[0].set_snw_match.toString(),
-                snwCarry: res.Result[0].set_snw_carry.toString(),
-                snwMedal: res.Result[0].set_snw_medal.toString(),
-                tnwUseFactor: res.Result[0].set_tmw_use_factor,
-                tnwAutoPress: res.Result[0].set_tmw_automatic_press.toString(),
-                tnwFront9: res.Result[0].set_tmw_front_9.toString(),
-                tnwBack9: res.Result[0].set_tmw_back_9.toString(),
-                tnwMatch: res.Result[0].set_tmw_match.toString(),
-                tnwCarry: res.Result[0].set_tmw_carry.toString(),
-                tnwMedal: res.Result[0].set_tmw_medal.toString(),
-                tnwWhoGets: res.Result[0].set_tmw_adv_strokes,
-                ebWager: res.Result[0].set_eb_wager.toString(),
-                bbWagerF9: res.Result[0].set_bbt_wager_f9.toString(),
-                bbWagerB9: res.Result[0].set_bbt_wager_b9.toString(),
-                bbWager18: res.Result[0].set_bbt_wager_18.toString(),
-                ssDoubleEagle: res.Result[0].set_stableford_double_eagle.toString(),
-                ssEaglePoints: res.Result[0].set_stableford_eagle.toString(),
-                ssBirdie: res.Result[0].set_stableford_birdie.toString(),
-                ssPar: res.Result[0].set_stableford_par.toString(),
-                ssBogey: res.Result[0].set_stableford_bogey.toString(),
-                ssDoubleBogey: res.Result[0].set_stableford_double_bogey.toString(),
+                
+                this.state.asHowAdvMove= res.Result[0].set_how_adv_move,
+                this.state.asHowManyStrokes= res.Result[0].set_strokes_moved_per_round.toString(),
+                this.state.asAdvMoves= res.Result[0].set_adv_moves_on_9_holes,
+                this.state.asDoesCarryMove= res.Result[0].set_carry_moves_adv,
+                this.state.rabbit16= res.Result[0].set_rabbit_1_6.toString(),
+                this.state.rabbit712= res.Result[0].set_rabbit_7_12.toString(),
+                this.state.rabbit1318= res.Result[0].set_rabbit_13_18.toString(),
+                this.state.medalF9= res.Result[0].set_medal_play_f9.toString(),
+                this.state.medalB9= res.Result[0].set_medal_play_b9.toString(),
+                this.state.medal18= res.Result[0].set_medal_play_18.toString(),
+                this.state.skins= res.Result[0].set_skins.toString(),
+                this.state.skinCarry= res.Result[0].set_skins_carry_over,
+                this.state.lowedAdv= res.Result[0].set_lower_adv_f9,
+                this.state.snwUseFactor= res.Result[0].set_snw_use_factor,
+                this.state.snwAutoPress=res.Result[0].set_snw_automatic_press.toString(),
+                this.state.snwFront9= res.Result[0].set_snw_front_9.toString(),
+                this.state.snwBack9= res.Result[0].set_snw_back_9.toString(),
+                this.state.snwMatch=res.Result[0].set_snw_match.toString(),
+                this.state.snwCarry=res.Result[0].set_snw_carry.toString(),
+                this.state.snwMedal=res.Result[0].set_snw_medal.toString(),
+                this.state.tnwUseFactor=res.Result[0].set_tmw_use_factor,
+                this.state.tnwAutoPress=res.Result[0].set_tmw_automatic_press.toString(),
+                this.state.tnwFront9=res.Result[0].set_tmw_front_9.toString(),
+                this.state.tnwBack9=res.Result[0].set_tmw_back_9.toString(),
+                this.state.tnwMatch=res.Result[0].set_tmw_match.toString(),
+                this.state.tnwCarry=res.Result[0].set_tmw_carry.toString(),
+                this.state.tnwMedal=res.Result[0].set_tmw_medal.toString(),
+                this.state.tnwWhoGets=res.Result[0].set_tmw_adv_strokes,
+                this.state.ebWager=res.Result[0].set_eb_wager.toString(),
+                this.state.bbWagerF9= res.Result[0].set_bbt_wager_f9.toString(),
+                this.state.bbWagerB9=res.Result[0].set_bbt_wager_b9.toString(),
+                this.state.bbWager18=res.Result[0].set_bbt_wager_18.toString(),
+                this.state.ssDoubleEagle=res.Result[0].set_stableford_double_eagle.toString(),
+                this.state.ssEaglePoints=res.Result[0].set_stableford_eagle.toString(),
+                this.state.ssBirdie=res.Result[0].set_stableford_birdie.toString(),
+                this.state.ssPar=res.Result[0].set_stableford_par.toString(),
+                this.state.ssBogey=res.Result[0].set_stableford_bogey.toString(),
+                this.state.ssDoubleBogey=res.Result[0].set_stableford_double_bogey.toString(),
                 //seePicker: res.Result[0].usu_id
-              })
               //console.warn(res.Result[0])
               this.setState({
                 userData: lista[0],
@@ -1748,46 +1749,47 @@ class SettingsView extends Component {
             UseFactorT = true
           }
 
+          this.state.idSettings=row.idSettings
+          this.state.asHowAdvMove=row.HowAdvMove.toString(),
+          this.state.asHowManyStrokes=row.StrokesMovedPerRound.toString(),
+          this.state.asAdvMoves= move9,
+          this.state.asDoesCarryMove= moveAdv,
+          this.state.rabbit16= row.Rabbit1_6.toString(),
+          this.state.rabbit712= row.Rabbit7_12.toString(),
+          this.state.rabbit1318= row.Rabbit13_18.toString(),
+          this.state.medalF9= row.MedalPlayF9.toString(),
+          this.state.medalB9= row.MedalPlayB9.toString(),
+          this.state.medal18= row.MedalPlay18.toString(),
+          this.state.skins= row.Skins.toString(),
+          this.state.skinCarry= ScarryOver,
+          this.state.lowedAdv= LAdvF9,
+          this.state.snwUseFactor=  UseFactorS,
+          this.state.snwAutoPress= row.SNWAutomaticPress.toString(),
+          this.state.snwFront9=  row.SNWFront9.toString(),
+          this.state.snwBack9=  row.SNWBack9.toString(),
+          this.state.snwMatch= row.SNWMatch.toString(),
+          this.state.snwCarry= row.SNWCarry.toString(),
+          this.state.snwMedal= row.SNWMedal.toString(),
+          this.state.tnwUseFactor= UseFactorT,
+          this.state.tnwAutoPress= row.TMWAutomaticPress.toString(),
+          this.state.tnwFront9= row.TMWFront9.toString(),
+          this.state.tnwBack9= row.TMWBack9.toString(),
+          this.state.tnwMatch= row.TMWMatch.toString(),
+          this.state.tnwCarry= row.MTWCarry.toString(),
+          this.state.tnwMedal= row.TMWMedal.toString(),
+          this.state.tnwWhoGets= row.TMWAdvStrokes.toString(),
+          this.state.ebWager= row.EBWager.toString(),
+          this.state.bbWagerF9= row.BBTWagerF9.toString(),
+          this.state.bbWagerB9= row.BBTWagerB9.toString(),
+          this.state.bbWager18= row.BBTWager18.toString(),
+          this.state.ssDoubleEagle= row.StablefordDoubleEagle.toString(),
+          this.state.ssEaglePoints= row.StablefordEagle.toString(),
+          this.state.ssBirdie= row.StablefordBirdie.toString(),
+          this.state.ssPar= row.StablefordPar.toString(),
+          this.state.ssBogey= row.StablefordBogey.toString(),
+          this.state.ssDoubleBogey= row.StablefordDoubleBogey.toString(),
+
           this.setState({
-            idSettings: row.idSettings,
-            asHowAdvMove: row.HowAdvMove.toString(),
-            asHowManyStrokes: row.StrokesMovedPerRound.toString(),
-            asAdvMoves: move9,
-            asDoesCarryMove: moveAdv,
-            rabbit16: row.Rabbit1_6.toString(),
-            rabbit712: row.Rabbit7_12.toString(),
-            rabbit1318: row.Rabbit13_18.toString(),
-            medalF9: row.MedalPlayF9.toString(),
-            medalB9: row.MedalPlayB9.toString(),
-            medal18: row.MedalPlay18.toString(),
-            skins: row.Skins.toString(),
-            skinCarry: ScarryOver,
-            lowedAdv: LAdvF9,
-            snwUseFactor: UseFactorS,
-            snwAutoPress: row.SNWAutomaticPress.toString(),
-            snwFront9: row.SNWFront9.toString(),
-            snwBack9: row.SNWBack9.toString(),
-            snwMatch: row.SNWMatch.toString(),
-            snwCarry: row.SNWCarry.toString(),
-            snwMedal: row.SNWMedal.toString(),
-            tnwUseFactor: UseFactorT,
-            tnwAutoPress: row.TMWAutomaticPress.toString(),
-            tnwFront9: row.TMWFront9.toString(),
-            tnwBack9: row.TMWBack9.toString(),
-            tnwMatch: row.TMWMatch.toString(),
-            tnwCarry: row.MTWCarry.toString(),
-            tnwMedal: row.TMWMedal.toString(),
-            tnwWhoGets: row.TMWAdvStrokes.toString(),
-            ebWager: row.EBWager.toString(),
-            bbWagerF9: row.BBTWagerF9.toString(),
-            bbWagerB9: row.BBTWagerB9.toString(),
-            bbWager18: row.BBTWager18.toString(),
-            ssDoubleEagle: row.StablefordDoubleEagle.toString(),
-            ssEaglePoints: row.StablefordEagle.toString(),
-            ssBirdie: row.StablefordBirdie.toString(),
-            ssPar: row.StablefordPar.toString(),
-            ssBogey: row.StablefordBogey.toString(),
-            ssDoubleBogey: row.StablefordDoubleBogey.toString(),
             status: false
             //seePicker: res.Result[0].usu_id
           })

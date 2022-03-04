@@ -431,25 +431,34 @@ export default function RoundsView(route) {
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> muestraRonda(item.idUsuCreo,item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10, marginHorizontal:10}}>
-                              <View style={{flex:.05,backgroundColor:item.id==IDRound?Colors.Primary:'#123c5b'}}/>
-                                <View style={{flex:.85}}>
-                                  <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
+                          <TouchableOpacity 
+                          style={{
+                            width: ScreenWidth, 
+                            backgroundColor:Colors.White,
+                            padding:10,
+                            justifyContent:'center',
+                            shadowColor: "#000",
+                            shadowOffset: {
+                              width: 0,
+                              height: 5,
+                            },
+                            shadowOpacity: 0.36,
+                            shadowRadius: 6.68,
+                            elevation: 11,
+                          }} 
+                          activeOpacity={0} 
+                          onPress={()=> muestraRonda(item.idUsuCreo,item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)}>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{course[language]+': '+ item.nombre}</Text>
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>
                                     {item.status == 1?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{open[language]}</Text>:
                                     <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{close[language]}</Text>}
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
-                                  </View>
-                                </View>
                               {/*<View style={{flex:.2,padding:5}}>
                               <View style={{flex:.5}}>
                                     <Fontisto name={item.tipo=='Copia'?'cloud-down':'cloud-up'} size={30} color={Colors.Primary} />
                               </View>
                             </View>*/}
-                              </View>
                           </TouchableOpacity>
                           {item.status == 1?<View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
                           {/*<TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
