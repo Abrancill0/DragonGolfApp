@@ -9,7 +9,8 @@ import {
   RefreshControl,
   Text,
   ScrollView,
-  Image
+  Image,
+  StyleSheet
 } from 'react-native';
 import { SearchBar, ButtonGroup } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -31,7 +32,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
-import styles from './styles';
 import { showMessage } from "react-native-flash-message";
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -297,7 +297,8 @@ export default function RoundsView(route) {
         </View>
         { visible &&
           <ScrollView>
-
+      {
+        /*
         <ButtonGroup
               onPress={updateIndex}
               selectedIndex={selectedIndex}
@@ -316,24 +317,9 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
         </View>
-
-      {search && <View>
-      <SearchBar
-        placeholder={playerData[language]}
-        onChangeText={(text) => searchFilterFunction(text,1)}
-        autoCorrect={false}
-        value={value1}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        height:50,
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.5}}
-      />
+        */
+        }
+    
       {/*<SearchBar
         placeholder={lastName[language]}
         onChangeText={(text) => searchFilterFunction(text,2)}
@@ -386,8 +372,27 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />*/}
-      </View>}
-          <SwipeListView
+          <FlatList
+            ListHeaderComponent={()=>{
+              return(
+                <SearchBar
+                placeholder={playerData[language]}
+                onChangeText={(text) => searchFilterFunction(text,1)}
+                autoCorrect={false}
+                value={value1}
+                inputContainerStyle={{backgroundColor: 'white'}}
+                leftIconContainerStyle={{backgroundColor: 'white'}}
+                inputStyle={{backgroundColor: 'white'}}
+                containerStyle={{
+                height:50,
+                marginHorizontal: 50,
+                backgroundColor: '#FFFFFF',
+                justifyContent: 'space-around',
+                borderTopWidth:0,
+                borderBottomWidth:0.5}}
+              />
+              )
+            }}
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -407,38 +412,33 @@ export default function RoundsView(route) {
             }
             data={players}
             renderItem={({item}) =>
-            <View style={{flex:.2,padding:5}}>
+            <View style={styles.campos}>
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('PlayerInfo',{item:item})}>
-                <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
-                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    <View style={{flex:1}}>
+              <TouchableOpacity style={{width: ScreenWidth,padding:10}} activeOpacity={0} onPress={()=> navigation.navigate('PlayerInfo',{item:item})}>
                       <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
-                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nombre}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
+                          <View style={{flex:.2}}>
+                            <Image
+                              source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
+                              style={{
+                                alignSelf:'center',
+                                width: 60,
+                                height: 60,
+                                borderRadius: 30,
+                                marginHorizontal:30
+                              }}
+                            />
+                          </View>
+                          <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
+                            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
+                            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nombre}</Text>
+                            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
+                            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
+                          </View>
                       </View>
-                      <View>
-                        <Image
-                          source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
-                          style={{
-                            alignSelf:'center',
-                            width: 60,
-                            height: 60,
-                            borderRadius: 30,
-                            marginHorizontal:30
-                          }}
-                        />
-                      </View>
-                      </View>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+              </TouchableOpacity>
+            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center',width:150 }}>
               <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
                 <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
               </TouchableOpacity>
@@ -463,4 +463,35 @@ export default function RoundsView(route) {
       </View>
     );
 }
+
+
+const styles = StyleSheet.create({
+  campos: {
+    flex:1,
+    flexDirection:'row',
+    backgroundColor:Colors.White,
+    marginTop:5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    
+    elevation: 4,
+  },
+  emptyView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 80
+},
+emptyText: {
+    fontSize: 16,
+    color: 'red',
+    fontWeight: 'bold',
+    marginTop: 10
+},
+});
 

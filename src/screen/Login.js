@@ -60,10 +60,6 @@ export default function Login({logeadoHandler}) {
         return (
                 <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
                 <View style={{ flex: 1 }}>
-                <NavigationEvents
-                    onWillFocus={_ => this.props.setForceInset('never')}
-                    onWillBlur={_ => this.props.setForceInset('always')}
-                />
                 <StatusBar
                     backgroundColor="transparent"
                     barStyle="light-content"

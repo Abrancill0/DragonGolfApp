@@ -1635,7 +1635,7 @@ export default class App extends Component {
               }
             })} />
           <StackHome.Screen name='RecuperaContrasena' component={RecuperaContrasena}
-            options={({ route }) => ({
+            options={({ navigation }) => ({
               header:()=>{
                 return(
                 <SafeAreaView style={{backgroundColor:Colors.White}}>
@@ -1647,7 +1647,7 @@ export default class App extends Component {
               }
             })} />
           <StackHome.Screen name='CambioContrasena' component={CambioContrasena}
-            options={({ route }) => ({
+            options={({ navigation }) => ({
               header:()=>{
                 return(
                 <SafeAreaView style={{backgroundColor:Colors.White}}>

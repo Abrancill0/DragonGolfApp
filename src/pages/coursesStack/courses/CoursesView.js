@@ -160,26 +160,19 @@ export default function RoundsView(route) {
     } = Dictionary;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1,backgroundColor:Colors.White}}>
         <Spinner
             visible={carga}
             color={Colors.Primary} />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{myCourses[language]}</Text>
-          </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddCourse')}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
+        <View style={{flex:.1,justifyContent:'space-between',flexDirection:'row'}}>
+              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.openDrawer()}>
+                <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+              </TouchableOpacity>
+              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('AddCourse')}>
+                <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+              </TouchableOpacity>
         </View>
-      <View style={{ flexDirection: 'row' }}>
+      {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
           </View>
@@ -189,24 +182,9 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
         </View>
-
-      {search && <View>
-      <SearchBar
-        placeholder={courseData[language]}
-        onChangeText={(text) => searchFilterFunction(text,1)}
-        autoCorrect={false}
-        value={value1}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        leftIconContainerStyle={{backgroundColor: 'white'}}
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{
-        height:50,
-        marginHorizontal: 50,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-around',
-        borderTopWidth:0,
-        borderBottomWidth:0.5}}
-      />
+    */}
+     
+      
       {/*<SearchBar
         placeholder={courseShortName[language]}
         onChangeText={(text) => searchFilterFunction(text,2)}
@@ -259,8 +237,26 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />*/}
-      </View>}
+      <View style={{flex:.9}}>
           <FlatList
+            ListHeaderComponent={()=>{
+              return(<SearchBar
+                placeholder={courseData[language]}
+                onChangeText={(text) => searchFilterFunction(text,1)}
+                autoCorrect={false}
+                value={value1}
+                inputContainerStyle={{backgroundColor: 'white'}}
+                leftIconContainerStyle={{backgroundColor: 'white'}}
+                inputStyle={{backgroundColor: 'white'}}
+                containerStyle={{
+                height:50,
+                marginHorizontal: 50,
+                backgroundColor: '#FFFFFF',
+                justifyContent: 'space-around',
+                borderTopWidth:0,
+                borderBottomWidth:0.5}}
+              />)
+            }}
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -281,7 +277,6 @@ export default function RoundsView(route) {
                           showsHorizontalScrollIndicator={false}>
                             <TouchableOpacity style={{width:ScreenWidth}} activeOpacity={0} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
                                 <View style={{flexDirection:'row'}}>
-                                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                   <View style={{flex:1,justifyContent:'center',paddingHorizontal:10}}>
                                       <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nombre}</Text>
                                       <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nombreCorto}</Text>
@@ -320,7 +315,7 @@ export default function RoundsView(route) {
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-
+        </View>
       </View>
     );
 }
@@ -330,7 +325,8 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'row',
     height:70,
-    backgroundColor:'#f1f2f2',
+    backgroundColor:Colors.White,
+    marginTop:2,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
