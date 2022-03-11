@@ -88,7 +88,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from './src/utils/Colors';
 import { Dictionary } from './src/utils/Dictionary';
-import { InfoUsuarioAB } from './src/Services/Services';
+import { InfoUsuarioAB, RutaBaseAB } from './src/Services/Services';
 import NetInfo from "@react-native-community/netinfo";
 import RNRestart from 'react-native-restart'
 import SQLite from 'react-native-sqlite-storage';
@@ -212,7 +212,7 @@ export default class App extends Component {
               ghin_number: res.Result[0].usu_ghinnumber,
               handicap: res.Result[0].usu_handicapindex,
               cellphone:res.Result[0].usu_telefono,
-              photo: 'http://20.115.123.73/dragongolf/images' + res.Result[0].usu_imagen,
+              photo: RutaBaseAB+'/images'  + res.Result[0].usu_imagen
               //language: res.Result[0].set_idioma
             }]
             this.setState({
@@ -245,7 +245,7 @@ export default class App extends Component {
             isLoading:false,
             activo:true
           })
-          this.LoadUsuario(IDUsuario)
+          //this.LoadUsuario(IDUsuario)
         }
         else
         {
@@ -290,7 +290,7 @@ export default class App extends Component {
               handicap: result.usu_handicapindex,
               cellphone:result.usu_telefono,
               //language: result.set_idioma,
-              photo: 'http://20.115.123.73/dragongolf/images' + result.usu_imagen,
+              photo: RutaBaseAB+'/images'  + res.Result[0].usu_imagen
               //language: result.set_idioma.substring(0,2)
             }]
             //console.warn(result)
@@ -333,7 +333,7 @@ export default class App extends Component {
             isLoading:false,
             activo:true
           })
-          this.LoadUsuarioLocal(IDUsuario)
+          //this.LoadUsuarioLocal(IDUsuario)
         }
         else
         {

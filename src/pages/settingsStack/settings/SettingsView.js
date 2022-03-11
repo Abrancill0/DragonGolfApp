@@ -26,7 +26,7 @@ import moment from 'moment';
 import { RadioButton } from 'react-native-paper';
 import Details from '../../../utils/Details';
 import AsyncStorage from '@react-native-community/async-storage';
-import { InfoUsuarioAB, updateSettingsAB } from '../../../Services/Services'
+import { InfoUsuarioAB, RutaBaseAB, updateSettingsAB } from '../../../Services/Services'
 import { showMessage } from "react-native-flash-message";
 // import * as Animatable from 'react-native-animatable';
 import SQLite from 'react-native-sqlite-storage';
@@ -1560,8 +1560,10 @@ class SettingsView extends Component {
                   cellphone:res.Result[0].usu_telefono,
                   cellphoneAux:this.formatCellphone(res.Result[0].usu_telefono),
                   password:res.Result[0].usu_pass,
-                  photo: 'http://20.115.123.73/dragongolf/images/' + res.Result[0].usu_imagen
+                  photo:  RutaBaseAB+'/images'  + res.Result[0].usu_imagen
                 }]
+
+                console.log(RutaBaseAB+'/images'  + res.Result[0].usu_imagen)
 
                 ////console.warn(lista[0])
 

@@ -1,6 +1,6 @@
-const RutaBase = 'http://trascenti.com/pruebasDragon/public/api/';
-//const RutaBaseAB = 'http://13.90.32.51/DragonGolfBackEnd/api'
-const RutaBaseAB = 'http://20.115.123.73/DragonGolfBackendAB/api'
+export const RutaBase = 'http://trascenti.com/pruebasDragon/public/api/';
+//const RutaBaseAB+'api' = 'http://13.90.32.51/DragonGolfBackEnd/api'
+export const RutaBaseAB = 'http://20.115.123.73/DragonGolfBackendAB/'
 
 export const Logearse = (email,password) => {
     const URL = RutaBase + "usuarios/login?usu_email=" + email+"&usu_password="+password ;
@@ -14,7 +14,7 @@ export const Logearse = (email,password) => {
 };
 
 export const LogearseAB = (Usuario,Pass) => {
-    const URL = RutaBaseAB + "/LoginUsuario";
+    const URL = RutaBaseAB+'api' + "/LoginUsuario";
     return fetch(URL, {
       method: "POST",
       headers: {
@@ -45,7 +45,7 @@ export const InfoUsuario = (usu_id) => {
 };
 
 export const InfoUsuarioAB = (IDUsuario) => {
-    const URL = RutaBaseAB + "/InfoUsuario";
+    const URL = RutaBaseAB+'api' + "/InfoUsuario";
     return fetch(URL, {
       method: "POST",
       headers: {
@@ -63,7 +63,7 @@ export const InfoUsuarioAB = (IDUsuario) => {
 };
 
 export const ListadoSettingsFriend = (IDUsuario, IDUsuarioFriend) => {
-    const URL = RutaBaseAB + "/ListadoSettingsFriend";
+    const URL = RutaBaseAB+'api' + "/ListadoSettingsFriend";
     return fetch(URL, {
       method: "POST",
       headers: {
@@ -106,7 +106,7 @@ export const Registro = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,us
 };
 
 export const RegistroAB = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_email,usu_pass,usu_nickname,usu_telefono) => {
-    const URL = RutaBaseAB + "/RegistrarUsuario";
+    const URL = RutaBaseAB+'api' + "/RegistrarUsuario";
     return fetch(URL, {
       method: "POST",
       headers: {
@@ -131,7 +131,7 @@ export const RegistroAB = (usu_nombre,usu_apellido_paterno,usu_apellido_materno,
 };
 
 export const CrearInvitados = (usu_nombre,usu_apellido_paterno,usu_nickname,usu_handicapindex,usu_ghinnumber,usu_golpesventaja,usu_diferenciatee,IDUsuarioCrea,usu_email,usu_telefono) => {
-    const URL = RutaBaseAB + "/CrearInvitados";
+    const URL = RutaBaseAB+'api' + "/CrearInvitados";
     return fetch(URL, {
       method: "POST",
       headers: {
@@ -165,7 +165,7 @@ export const SubirImagenUsuario = (IDUsuario, file) => {
 
   formData.append('file', file);
 
-  const url = RutaBaseAB + '/SubirImagenUsuario';
+  const url = RutaBaseAB+'api' + '/SubirImagenUsuario';
   return fetch(url, {
 
     method: 'POST',
@@ -178,7 +178,7 @@ export const SubirImagenUsuario = (IDUsuario, file) => {
 };
 
 export const Update = (IDUsuario,usu_nombre,usu_apellido_paterno,usu_apellido_materno,usu_email,usu_nickname,usu_telefono,usu_ghinnumber,usu_handicapindex) => {
-    const URL = RutaBaseAB + "/ActualizarUsuario";
+    const URL = RutaBaseAB+'api' + "/ActualizarUsuario";
     return fetch(URL, {
       method: "POST",
       headers: {
@@ -204,7 +204,7 @@ export const Update = (IDUsuario,usu_nombre,usu_apellido_paterno,usu_apellido_ma
 };
 
 export const ActualizarInvitados = (IDUsuario,usu_nombre,usu_apellido_paterno,usu_email,usu_nickname,usu_telefono,usu_ghinnumber,usu_handicapindex) => {
-    const URL = RutaBaseAB + "/ActualizarInvitados";
+    const URL = RutaBaseAB+'api' + "/ActualizarInvitados";
     return fetch(URL, {
       method: "POST",
       headers: {
@@ -300,7 +300,7 @@ set_tmw_automatic_press, set_tmw_use_factor, set_tmw_front_9,set_tmw_back_9,set_
 set_tmw_medal,set_tmw_adv_strokes,set_eb_wager,set_bbt_wager_f9,set_bbt_wager_b9,set_bbt_wager_18,
 set_stableford_double_eagle,set_stableford_eagle,set_stableford_birdie,set_stableford_par,set_stableford_bogey,
 set_stableford_double_bogey) => {
-    const URL = RutaBaseAB + "/ActualizarSettings";
+    const URL = RutaBaseAB+'api' + "/ActualizarSettings";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -365,7 +365,7 @@ set_tmw_automatic_press, set_tmw_use_factor, set_tmw_front_9,set_tmw_back_9,set_
 set_tmw_medal,set_tmw_adv_strokes,set_eb_wager,set_bbt_wager_f9,set_bbt_wager_b9,set_bbt_wager_18,
 set_stableford_double_eagle,set_stableford_eagle,set_stableford_birdie,set_stableford_par,set_stableford_bogey,
 set_stableford_double_bogey,set_golpesventaja,set_diferenciatee) => {
-    const URL = RutaBaseAB + "/AltaSettingsFriend";
+    const URL = RutaBaseAB+'api' + "/AltaSettingsFriend";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -432,7 +432,7 @@ set_tmw_automatic_press, set_tmw_use_factor, set_tmw_front_9,set_tmw_back_9,set_
 set_tmw_medal,set_tmw_adv_strokes,set_eb_wager,set_bbt_wager_f9,set_bbt_wager_b9,set_bbt_wager_18,
 set_stableford_double_eagle,set_stableford_eagle,set_stableford_birdie,set_stableford_par,set_stableford_bogey,
 set_stableford_double_bogey,set_golpesventaja,set_diferenciatee) => {
-    const URL = RutaBaseAB + "/ActualizaSettingsFriend";
+    const URL = RutaBaseAB+'api' + "/ActualizaSettingsFriend";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -492,7 +492,7 @@ set_stableford_double_bogey,set_golpesventaja,set_diferenciatee) => {
 };
 
 export const ListaCampos = (IDUsuario) => {
-    const URL = RutaBaseAB + "/ListaCampos";
+    const URL = RutaBaseAB+'api' + "/ListaCampos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -510,7 +510,7 @@ export const ListaCampos = (IDUsuario) => {
 };
 
 export const ListaTodos = (IDUsuario) => {
-    const URL = RutaBaseAB + "/ListaTodos";
+    const URL = RutaBaseAB+'api' + "/ListaTodos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -528,7 +528,7 @@ export const ListaTodos = (IDUsuario) => {
 };
 
 export const ListaTodosAgregar = (IDUsuario, IDRonda) => {
-    const URL = RutaBaseAB + "/ListaTodosAgregar";
+    const URL = RutaBaseAB+'api' + "/ListaTodosAgregar";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -547,7 +547,7 @@ export const ListaTodosAgregar = (IDUsuario, IDRonda) => {
 };
 
 export const ListaAmigos = (IDUsuario) => {
-    const URL = RutaBaseAB + "/ListaAmigos";
+    const URL = RutaBaseAB+'api' + "/ListaAmigos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -565,7 +565,7 @@ export const ListaAmigos = (IDUsuario) => {
 };
 
 export const Historia = (IDUsuario1,IDUsuario2) => {
-    const URL = RutaBaseAB + "/Historia";
+    const URL = RutaBaseAB+'api' + "/Historia";
     const date = new Date();
     console.warn(date)
     return fetch(URL, {
@@ -588,7 +588,7 @@ export const Historia = (IDUsuario1,IDUsuario2) => {
 };
 
 export const HandicapIndex = (IDUsuario) => {
-    const URL = RutaBaseAB + "/HandicapIndex";
+    const URL = RutaBaseAB+'api' + "/HandicapIndex";
     const date = new Date();
     console.warn(date)
     return fetch(URL, {
@@ -610,7 +610,7 @@ export const HandicapIndex = (IDUsuario) => {
 export const HistoriaFilter = (IDUsuario1,IDUsuario2,dateInicio,dateFin) => {
     console.warn(dateInicio)
     console.warn(dateFin)
-    const URL = RutaBaseAB + "/Historia";
+    const URL = RutaBaseAB+'api' + "/Historia";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -631,7 +631,7 @@ export const HistoriaFilter = (IDUsuario1,IDUsuario2,dateInicio,dateFin) => {
 };
 
 export const CambioVentaja = (idDBetDetail) => {
-    const URL = RutaBaseAB + "/CambioVentaja";
+    const URL = RutaBaseAB+'api' + "/CambioVentaja";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -649,7 +649,7 @@ export const CambioVentaja = (idDBetDetail) => {
 };
 
 export const ListaAmigosAgregar = (IDUsuario, IDRonda) => {
-    const URL = RutaBaseAB + "/ListaAmigosAgregar";
+    const URL = RutaBaseAB+'api' + "/ListaAmigosAgregar";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -668,7 +668,7 @@ export const ListaAmigosAgregar = (IDUsuario, IDRonda) => {
 };
 
 export const ListaInvitados = (IDUsuarioCrea) => {
-    const URL = RutaBaseAB + "/ListadoInvitados";
+    const URL = RutaBaseAB+'api' + "/ListadoInvitados";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -686,7 +686,7 @@ export const ListaInvitados = (IDUsuarioCrea) => {
 };
 
 export const ListaInvitadosAgregar = (IDUsuarioCrea, IDRonda) => {
-    const URL = RutaBaseAB + "/ListadoInvitadosAgregar";
+    const URL = RutaBaseAB+'api' + "/ListadoInvitadosAgregar";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -705,7 +705,7 @@ export const ListaInvitadosAgregar = (IDUsuarioCrea, IDRonda) => {
 };
 
 export const ListaJugadores = (IDUsuario) => {
-    const URL = RutaBaseAB + "/ListaJugadores";
+    const URL = RutaBaseAB+'api' + "/ListaJugadores";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -723,7 +723,7 @@ export const ListaJugadores = (IDUsuario) => {
 };
 
 export const ListarRonda = (IDUsuario) => {
-    const URL = RutaBaseAB + "/ListadoRonda";
+    const URL = RutaBaseAB+'api' + "/ListadoRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -741,7 +741,7 @@ export const ListarRonda = (IDUsuario) => {
 };
 
 export const CerrarRonda = (IDRound) => {
-    const URL = RutaBaseAB + "/CerrarRonda";
+    const URL = RutaBaseAB+'api' + "/CerrarRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -759,7 +759,7 @@ export const CerrarRonda = (IDRound) => {
 };
 
 export const AbrirRonda = (IDRound) => {
-    const URL = RutaBaseAB + "/AbrirRonda";
+    const URL = RutaBaseAB+'api' + "/AbrirRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -777,7 +777,7 @@ export const AbrirRonda = (IDRound) => {
 };
 
 export const CambioRonda = (IDRound,roCambio) => {
-    const URL = RutaBaseAB + "/CambioRonda";
+    const URL = RutaBaseAB+'api' + "/CambioRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -796,7 +796,7 @@ export const CambioRonda = (IDRound,roCambio) => {
 };
 
 export const ListaApuesta = () => {
-    const URL = RutaBaseAB + "/ListaApuesta";
+    const URL = RutaBaseAB+'api' + "/ListaApuesta";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -811,7 +811,7 @@ export const ListaApuesta = () => {
 };
 
 export const ActualizarOrdenApuesta = (IDBetDetail1,IDBetDetail2, IDUsuario) => {
-    const URL = RutaBaseAB + "/ActualizarOrdenApuesta";
+    const URL = RutaBaseAB+'api' + "/ActualizarOrdenApuesta";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -831,7 +831,7 @@ export const ActualizarOrdenApuesta = (IDBetDetail1,IDBetDetail2, IDUsuario) => 
 };
 
 export const ListadoDetalleApuesta = (IDRonda,IDBet, IDUsuario) => {
-    const URL = RutaBaseAB + "/ListadoDetalleApuesta";
+    const URL = RutaBaseAB+'api' + "/ListadoDetalleApuesta";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -851,7 +851,7 @@ export const ListadoDetalleApuesta = (IDRonda,IDBet, IDUsuario) => {
 };
 
 export const ListadoDetalleApuestaTeam = (IDRonda,IDBet, IDUsuario) => {
-    const URL = RutaBaseAB + "/ListadoDetalleApuestaTeam";
+    const URL = RutaBaseAB+'api' + "/ListadoDetalleApuestaTeam";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -871,7 +871,7 @@ export const ListadoDetalleApuestaTeam = (IDRonda,IDBet, IDUsuario) => {
 };
 
 export const ListadoDetalleApuestaIndividual = (IDBetDetail, IDUsuario) => {
-    const URL = RutaBaseAB + "/ListadoDetalleApuestaIndividual";
+    const URL = RutaBaseAB+'api' + "/ListadoDetalleApuestaIndividual";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -890,7 +890,7 @@ export const ListadoDetalleApuestaIndividual = (IDBetDetail, IDUsuario) => {
 };
 
 export const ValidaDetalleApuesta = (IDRonda,IDBet,BetD_Player1,BetD_Player2) => {
-    const URL = RutaBaseAB + "/ValidaDetalleApuesta";
+    const URL = RutaBaseAB+'api' + "/ValidaDetalleApuesta";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -911,7 +911,7 @@ export const ValidaDetalleApuesta = (IDRonda,IDBet,BetD_Player1,BetD_Player2) =>
 };
 
 export const ValidaDetalleApuestaTeam = (IDRonda,IDBet,BetD_Player1,BetD_Player2,BetD_Player3,BetD_Player4) => {
-    const URL = RutaBaseAB + "/ValidaDetalleApuestaTeam";
+    const URL = RutaBaseAB+'api' + "/ValidaDetalleApuestaTeam";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -934,7 +934,7 @@ export const ValidaDetalleApuestaTeam = (IDRonda,IDBet,BetD_Player1,BetD_Player2
 };
 
 export const CrearPlantillaRonda = (IDRound) => {
-    const URL = RutaBaseAB + "/CrearPlantillaRonda";
+    const URL = RutaBaseAB+'api' + "/CrearPlantillaRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -952,7 +952,7 @@ export const CrearPlantillaRonda = (IDRound) => {
 };
 
 export const CrearDetalleApuesta = (IDBet,IDRonda,BetD_Player1,BetD_Player2,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers) => {
-    const URL = RutaBaseAB + "/CrearDetalleApuesta";
+    const URL = RutaBaseAB+'api' + "/CrearDetalleApuesta";
     console.warn('---------------SER-------------------')
     console.warn(IDBet)
     console.warn(IDRonda)
@@ -995,7 +995,7 @@ export const CrearDetalleApuesta = (IDBet,IDRonda,BetD_Player1,BetD_Player2,BetD
 };
 
 export const CrearDetalleApuestaMasivo = (Arreglo) => {
-    const URL = RutaBaseAB + "/CrearDetalleApuestaMasivo";
+    const URL = RutaBaseAB+'api' + "/CrearDetalleApuestaMasivo";
     console.warn('---------------SER-------------------')
     console.warn(Arreglo)
     console.warn('----------------------------------')
@@ -1016,7 +1016,7 @@ export const CrearDetalleApuestaMasivo = (Arreglo) => {
 };
 
 export const CrearDetalleApuestaTeam = (IDBet,IDRonda,BetD_Player1,BetD_Player2,BetD_Player3,BetD_Player4,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers,TypeHandicap) => {
-    const URL = RutaBaseAB + "/CrearDetalleApuestaTeam";
+    const URL = RutaBaseAB+'api' + "/CrearDetalleApuestaTeam";
     console.warn('---------------SER-------------------')
     console.warn(IDBet)
     console.warn(IDRonda)
@@ -1062,7 +1062,7 @@ export const CrearDetalleApuestaTeam = (IDBet,IDRonda,BetD_Player1,BetD_Player2,
 };
 
 export const ActualizarDetalleApuesta = (IDBet,IDBetDetail,IDRonda,BetD_Player1,BetD_Player2,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers) => {
-    const URL = RutaBaseAB + "/ActualizarDetalleApuesta";
+    const URL = RutaBaseAB+'api' + "/ActualizarDetalleApuesta";
     console.warn('---------------SER-------------------')
     console.warn(IDBet)
     console.warn(IDRonda)
@@ -1106,7 +1106,7 @@ export const ActualizarDetalleApuesta = (IDBet,IDBetDetail,IDRonda,BetD_Player1,
 };
 
 export const ActualizarDetalleApuestaTeam = (IDBet,IDBetDetail,IDRonda,BetD_Player1,BetD_Player2,BetD_Player3,BetD_Player4,BetD_MontoF9,BetD_MontoB9,BetD_Match,BetD_Carry,BetD_Medal,BetD_AutoPress,BetD_ManuallyOverrideAdv,BetD_AdvStrokers,TypeHandicap) => {
-    const URL = RutaBaseAB + "/ActualizarDetalleApuestaTeam";
+    const URL = RutaBaseAB+'api' + "/ActualizarDetalleApuestaTeam";
     console.warn('---------------SER-------------------')
     console.warn(IDBet)
     console.warn(IDRonda)
@@ -1153,7 +1153,7 @@ export const ActualizarDetalleApuestaTeam = (IDBet,IDBetDetail,IDRonda,BetD_Play
 };
 
 export const ListadoInvitacion = (IDUsuario) => {
-    const URL = RutaBaseAB + "/ListadoInvitacion";
+    const URL = RutaBaseAB+'api' + "/ListadoInvitacion";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1171,7 +1171,7 @@ export const ListadoInvitacion = (IDUsuario) => {
 };
 
 export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
-    const URL = RutaBaseAB + "/ListadoAmigosRonda";
+    const URL = RutaBaseAB+'api' + "/ListadoAmigosRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1190,7 +1190,7 @@ export const ListadoAmigosRonda = (IDUsuario, IDRounds) => {
 };
 
 export const ListadoAmigosRonda2 = (IDUsuario, IDRounds) => {
-    const URL = RutaBaseAB + "/ListadoAmigosRonda2";
+    const URL = RutaBaseAB+'api' + "/ListadoAmigosRonda2";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1209,7 +1209,7 @@ export const ListadoAmigosRonda2 = (IDUsuario, IDRounds) => {
 };
 
 export const ListadoAmigosRondaData = (Player1, Player2, IDRound) => {
-    const URL = RutaBaseAB + "/ListadoAmigosRondaData";
+    const URL = RutaBaseAB+'api' + "/ListadoAmigosRondaData";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1229,7 +1229,7 @@ export const ListadoAmigosRondaData = (Player1, Player2, IDRound) => {
 };
 
 export const CalcularGolpesVentajaTeam = (PlayerId1, PlayerId2, PlayerId3, PlayerId4, IDRound) => {
-    const URL = RutaBaseAB + "/CalcularGolpesVentajaTeam";
+    const URL = RutaBaseAB+'api' + "/CalcularGolpesVentajaTeam";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1251,7 +1251,7 @@ export const CalcularGolpesVentajaTeam = (PlayerId1, PlayerId2, PlayerId3, Playe
 };
 
 export const ListadoAmigosRondaTodos = (IDUsuario, IDRounds) => {
-    const URL = RutaBaseAB + "/ListadoAmigosRondaTodos";
+    const URL = RutaBaseAB+'api' + "/ListadoAmigosRondaTodos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1270,7 +1270,7 @@ export const ListadoAmigosRondaTodos = (IDUsuario, IDRounds) => {
 };
 
 export const ListadoAmigosRondaIndividual = (IDBetDetail) => {
-    const URL = RutaBaseAB + "/ListadoAmigosRondaIndividual";
+    const URL = RutaBaseAB+'api' + "/ListadoAmigosRondaIndividual";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1288,7 +1288,7 @@ export const ListadoAmigosRondaIndividual = (IDBetDetail) => {
 };
 
 export const ListadoAmigosRondaTeam = (IDBetDetail) => {
-    const URL = RutaBaseAB + "/ListadoAmigosRondaTeam";
+    const URL = RutaBaseAB+'api' + "/ListadoAmigosRondaTeam";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1306,7 +1306,7 @@ export const ListadoAmigosRondaTeam = (IDBetDetail) => {
 };
 
 export const ListadoMontoPerdidoGanado = (IDRound) => {
-    const URL = RutaBaseAB + "/ListadoMontoPerdidoGanado";
+    const URL = RutaBaseAB+'api' + "/ListadoMontoPerdidoGanado";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1324,7 +1324,7 @@ export const ListadoMontoPerdidoGanado = (IDRound) => {
 };
 
 export const ListadoTeesRonda = (IDRound) => {
-    const URL = RutaBaseAB + "/ListadoTeesRonda";
+    const URL = RutaBaseAB+'api' + "/ListadoTeesRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1342,7 +1342,7 @@ export const ListadoTeesRonda = (IDRound) => {
 };
 
 export const ListadoTeesRondaBetDetails = (IDBet_Detail) => {
-    const URL = RutaBaseAB + "/ListadoTeesRondaBetDetails";
+    const URL = RutaBaseAB+'api' + "/ListadoTeesRondaBetDetails";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1360,7 +1360,7 @@ export const ListadoTeesRondaBetDetails = (IDBet_Detail) => {
 };
 
 export const ListadoTeesRondaBetDetailsTeam = (IDBet_Detail) => {
-    const URL = RutaBaseAB + "/ListadoTeesRondaBetDetailsTeam";
+    const URL = RutaBaseAB+'api' + "/ListadoTeesRondaBetDetailsTeam";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1378,7 +1378,7 @@ export const ListadoTeesRondaBetDetailsTeam = (IDBet_Detail) => {
 };
 
 export const ActualizarRondaHoyos = (IDRound, IDUsuario, Arreglo, NumeroArreglo) => {
-    const URL = RutaBaseAB + "/ActualizarRondaHoyos";
+    const URL = RutaBaseAB+'api' + "/ActualizarRondaHoyos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1399,7 +1399,7 @@ export const ActualizarRondaHoyos = (IDRound, IDUsuario, Arreglo, NumeroArreglo)
 };
 
 export const ActualizarRondaHoyosIndividual = (IDRound, id, Score, Hole) => {
-    const URL = RutaBaseAB + "/ActualizarScoreHoyo";
+    const URL = RutaBaseAB+'api' + "/ActualizarScoreHoyo";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1421,7 +1421,7 @@ export const ActualizarRondaHoyosIndividual = (IDRound, id, Score, Hole) => {
 };
 
 export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario, Ro_Date) => {
-    const URL = RutaBaseAB + "/CrearRonda";
+    const URL = RutaBaseAB+'api' + "/CrearRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1445,7 +1445,7 @@ export const CrearRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_Starting
 };
 
 export const ActualizarRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_StartingHole, Ro_SwitchAdventage, IDUsuario, IDRound, Ro_Date) => {
-    const URL = RutaBaseAB + "/ActualizarRonda";
+    const URL = RutaBaseAB+'api' + "/ActualizarRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1470,7 +1470,7 @@ export const ActualizarRonda = (IDCourse, Ro_Name, Ro_HandicapAdjustment, Ro_Sta
 };
 
 export const EliminarRonda = (IDRounds) => {
-    const URL = RutaBaseAB + "/EliminarRonda";
+    const URL = RutaBaseAB+'api' + "/EliminarRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1488,7 +1488,7 @@ export const EliminarRonda = (IDRounds) => {
 };
 
 export const AgregarTeesRonda = (IDRound, IDUsuario, PlayerId, IDTees, estatus) => {
-    const URL = RutaBaseAB + "/AgregarTeesRonda";
+    const URL = RutaBaseAB+'api' + "/AgregarTeesRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1510,7 +1510,7 @@ export const AgregarTeesRonda = (IDRound, IDUsuario, PlayerId, IDTees, estatus) 
 };
 
 export const ActualizaStrokerPvPRonda = (RoundId, Player1Id, Player2Id, stroker) => {
-    const URL = RutaBaseAB + "/ActualizaStrokerPvPRonda";
+    const URL = RutaBaseAB+'api' + "/ActualizaStrokerPvPRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1531,7 +1531,7 @@ export const ActualizaStrokerPvPRonda = (RoundId, Player1Id, Player2Id, stroker)
 };
 
 export const ActualizaStableFordStrokes = (PlayerId, RoundId, stroker) => {
-    const URL = RutaBaseAB + "/ActualizaStableFordStrokes";
+    const URL = RutaBaseAB+'api' + "/ActualizaStableFordStrokes";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1551,7 +1551,7 @@ export const ActualizaStableFordStrokes = (PlayerId, RoundId, stroker) => {
 };
 
 export const AgregarAmigosRonda = (IDRounds, IDUsuario, PlayerId, RoundHandicap, PlayerTee, ScoreHole1, ScoreHole2, ScoreHole3, ScoreHole4, ScoreHole5, ScoreHole6, ScoreHole7, ScoreHole8, ScoreHole9, ScoreHole10, ScoreHole11, ScoreHole12, ScoreHole13, ScoreHole14, ScoreHole15, ScoreHole16, ScoreHole17, ScoreHole18) => {
-    const URL = RutaBaseAB + "/AgregarAmigosRonda";
+    const URL = RutaBaseAB+'api' + "/AgregarAmigosRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1591,7 +1591,7 @@ export const AgregarAmigosRonda = (IDRounds, IDUsuario, PlayerId, RoundHandicap,
 };
 
 export const AltaAmigos = (IDUsuarioFav,IDUsuario,Fav_Status) => {
-    const URL = RutaBaseAB + "/AltaAmigos";
+    const URL = RutaBaseAB+'api' + "/AltaAmigos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1611,7 +1611,7 @@ export const AltaAmigos = (IDUsuarioFav,IDUsuario,Fav_Status) => {
 };
 
 export const QuitarAmigos = (IDUsuarioFav,IDUsuario) => {
-    const URL = RutaBaseAB + "/QuitarAmigos";
+    const URL = RutaBaseAB+'api' + "/QuitarAmigos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1630,7 +1630,7 @@ export const QuitarAmigos = (IDUsuarioFav,IDUsuario) => {
 };
 
 export const EliminarAmigosRonda = (IDRounds,PlayerId) => {
-    const URL = RutaBaseAB + "/EliminarAmigosRonda";
+    const URL = RutaBaseAB+'api' + "/EliminarAmigosRonda";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1649,7 +1649,7 @@ export const EliminarAmigosRonda = (IDRounds,PlayerId) => {
 };
 
 export const ListadoRondaStroker = (IDRound,Player1) => {
-    const URL = RutaBaseAB + "/ListadoRondaStroker";
+    const URL = RutaBaseAB+'api' + "/ListadoRondaStroker";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1668,7 +1668,7 @@ export const ListadoRondaStroker = (IDRound,Player1) => {
 };
 
 export const ListadoJugadoreStableFordStrokes = (IDRound) => {
-    const URL = RutaBaseAB + "/ListadoJugadoreStableFordStrokes";
+    const URL = RutaBaseAB+'api' + "/ListadoJugadoreStableFordStrokes";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1686,7 +1686,7 @@ export const ListadoJugadoreStableFordStrokes = (IDRound) => {
 };
 
 export const ListadoStableFordStrokes = (IDRound) => {
-    const URL = RutaBaseAB + "/ListadoStableFordStrokes";
+    const URL = RutaBaseAB+'api' + "/ListadoStableFordStrokes";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1704,7 +1704,7 @@ export const ListadoStableFordStrokes = (IDRound) => {
 };
 
 export const ActualizarHoles = (IDTees,Arreglo) => {
-    const URL = RutaBaseAB + "/ActualizarHoles";
+    const URL = RutaBaseAB+'api' + "/ActualizarHoles";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1723,7 +1723,7 @@ export const ActualizarHoles = (IDTees,Arreglo) => {
 };
 
 export const ListaCamposTodos = (IDUsuario) => {
-    const URL = RutaBaseAB + "/ListaCamposTodos";
+    const URL = RutaBaseAB+'api' + "/ListaCamposTodos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1741,7 +1741,7 @@ export const ListaCamposTodos = (IDUsuario) => {
 };
 
 export const CopiarCampo = (IDCourse, IDUsuario) => {
-    const URL = RutaBaseAB + "/CopiarCampo";
+    const URL = RutaBaseAB+'api' + "/CopiarCampo";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1760,7 +1760,7 @@ export const CopiarCampo = (IDCourse, IDUsuario) => {
 };
 
 export const ListaTees = (IDCourse) => {
-    const URL = RutaBaseAB + "/ListaTees";
+    const URL = RutaBaseAB+'api' + "/ListaTees";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1778,7 +1778,7 @@ export const ListaTees = (IDCourse) => {
 };
 
 export const LastTees = (IDCourse) => {
-    const URL = RutaBaseAB + "/LastTees";
+    const URL = RutaBaseAB+'api' + "/LastTees";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1796,7 +1796,7 @@ export const LastTees = (IDCourse) => {
 };
 
 export const LastHole = (IDTees) => {
-    const URL = RutaBaseAB + "/LastHole";
+    const URL = RutaBaseAB+'api' + "/LastHole";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1814,7 +1814,7 @@ export const LastHole = (IDTees) => {
 };
 
 export const CalcularApuesta = (IDRonda, IDBet, IDBetDetail) => {
-    const URL = RutaBaseAB + "/CalcularApuesta";
+    const URL = RutaBaseAB+'api' + "/CalcularApuesta";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1834,7 +1834,7 @@ export const CalcularApuesta = (IDRonda, IDBet, IDBetDetail) => {
 };
 
 export const CalcularApuestaTeamNassau = (IDRonda, IDBet, IDBetDetail) => {
-    const URL = RutaBaseAB + "/CalcularApuestaTeamNassau";
+    const URL = RutaBaseAB+'api' + "/CalcularApuestaTeamNassau";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1854,7 +1854,7 @@ export const CalcularApuestaTeamNassau = (IDRonda, IDBet, IDBetDetail) => {
 };
 
 export const EliminarApuesta = (IDBetDetail) => {
-    const URL = RutaBaseAB + "/EliminaApuesta";
+    const URL = RutaBaseAB+'api' + "/EliminaApuesta";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1872,7 +1872,7 @@ export const EliminarApuesta = (IDBetDetail) => {
 };
 
 export const ListaHole = (IDTees) => {
-    const URL = RutaBaseAB + "/ListaHole";
+    const URL = RutaBaseAB+'api' + "/ListaHole";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1890,7 +1890,7 @@ export const ListaHole = (IDTees) => {
 };
 
 export const AltaCampo = (Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDUsuario) => {
-    const URL = RutaBaseAB + "/AltaCampo";
+    const URL = RutaBaseAB+'api' + "/AltaCampo";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1912,7 +1912,7 @@ export const AltaCampo = (Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDU
 };
 
 export const ActualizaCampo = (IDCourse, Cou_Nombre, Cou_NombreCorto, Cou_Ciudad, Cou_Pais, IDUsuario) => {
-    const URL = RutaBaseAB + "/ActualizarCampos";
+    const URL = RutaBaseAB+'api' + "/ActualizarCampos";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1935,7 +1935,7 @@ export const ActualizaCampo = (IDCourse, Cou_Nombre, Cou_NombreCorto, Cou_Ciudad
 };
 
 export const AltaTees = (Te_TeeName, Te_Slope, Te_Rating, Te_TeeColor, Te_In, Te_Out, Te_Total, IDCourse) => {
-    const URL = RutaBaseAB + "/AltaTees";
+    const URL = RutaBaseAB+'api' + "/AltaTees";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1960,7 +1960,7 @@ export const AltaTees = (Te_TeeName, Te_Slope, Te_Rating, Te_TeeColor, Te_In, Te
 };
 
 export const ActualizarTees = (IDTees, Te_TeeName, Te_Slope, Te_Rating, Te_TeeColor, Te_In, Te_Out, Te_Total, IDCourse) => {
-    const URL = RutaBaseAB + "/ActualizarTees";
+    const URL = RutaBaseAB+'api' + "/ActualizarTees";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -1986,7 +1986,7 @@ export const ActualizarTees = (IDTees, Te_TeeName, Te_Slope, Te_Rating, Te_TeeCo
 };
 
 export const AltaHoles = (Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advantage, Ho_Yards, IDTees) => {
-    const URL = RutaBaseAB + "/AltaHoles";
+    const URL = RutaBaseAB+'api' + "/AltaHoles";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -2009,7 +2009,7 @@ export const AltaHoles = (Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advantage, Ho_Yards, I
 };
 
 export const ActualizarHoles2 = (IDTees, Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advantage, Ho_Yards, IDHoles) => {
-    const URL = RutaBaseAB + "/ActualizarHoles";
+    const URL = RutaBaseAB+'api' + "/ActualizarHoles";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -2033,7 +2033,7 @@ export const ActualizarHoles2 = (IDTees, Ho_TeeName, Ho_Hole, Ho_Par, Ho_Advanta
 };
 
 export const EliminarCampo = (IDCourse, Tipo, IDUsuario) => {
-    const URL = RutaBaseAB + "/EliminarCampo";
+    const URL = RutaBaseAB+'api' + "/EliminarCampo";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -2053,7 +2053,7 @@ export const EliminarCampo = (IDCourse, Tipo, IDUsuario) => {
 };
 
 export const EliminarInvitacion = (IDInvitacion,IDUsuario) => {
-    const URL = RutaBaseAB + "/EliminarInvitacion";
+    const URL = RutaBaseAB+'api' + "/EliminarInvitacion";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -2072,7 +2072,7 @@ export const EliminarInvitacion = (IDInvitacion,IDUsuario) => {
 };
 
 export const EliminarTees = (IDCourse, IDTees) => {
-    const URL = RutaBaseAB + "/EliminarTees";
+    const URL = RutaBaseAB+'api' + "/EliminarTees";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -2091,7 +2091,7 @@ export const EliminarTees = (IDCourse, IDTees) => {
 };
 
 export const EliminarHoles = (IDHoles, IDTees) => {
-    const URL = RutaBaseAB + "/EliminarHoles";
+    const URL = RutaBaseAB+'api' + "/EliminarHoles";
     return fetch(URL, {
                 method: "POST",
                 headers: {
@@ -2110,7 +2110,7 @@ export const EliminarHoles = (IDHoles, IDTees) => {
 };
 
 export const OlvideContrasena = (usuario) => {
-    const URL = RutaBaseAB + "/OlvideContrasena";
+    const URL = RutaBaseAB+'api' + "/OlvideContrasena";
     return fetch(URL, {
                 method: "POST",
                 headers: {

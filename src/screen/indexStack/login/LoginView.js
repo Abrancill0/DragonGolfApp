@@ -135,13 +135,7 @@ export default function Login({ logeadoHandler }) {
                 /*logeadoHandler()
                 navigation.navigate("SettingsView");*/
 
-                setTimeout(
-                  () => { 
-                    logeadoHandler()
-                   },
-                  1000
-                )
-
+            
                 AsyncStorage.setItem('usu_id', res.Result[0].IDUsuario.toString());
                 AsyncStorage.setItem('actualizar', "false");
                 AsyncStorage.setItem('language', language);
@@ -149,6 +143,14 @@ export default function Login({ logeadoHandler }) {
                 AsyncStorage.setItem('sn', 'false');
                 AsyncStorage.setItem('tn', 'false');
                 AsyncStorage.setItem('hole', '0');
+
+                setTimeout(
+                  () => { 
+                    logeadoHandler()
+                   },
+                  1000
+                )
+
 
                 /*AsyncStorage.setItem('UsuVerCorreo',res.Result[0].UsuVerCorreo.toString());
                 AsyncStorage.setItem('UsuVerContrasena', res.Result[0].UsuVerContrasena.toString());

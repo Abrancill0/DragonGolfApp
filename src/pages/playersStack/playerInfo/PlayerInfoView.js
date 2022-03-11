@@ -26,7 +26,7 @@ import HeaderButton from '../../global/HeaderButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 import Details from '../../../utils/Details';
-import { ListadoSettingsFriend, InfoUsuarioAB, AltaSettingsFriend, ActualizaSettingsFriend } from '../../../Services/Services'
+import { ListadoSettingsFriend, InfoUsuarioAB, AltaSettingsFriend, ActualizaSettingsFriend, RutaBaseAB } from '../../../Services/Services'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from "react-native-flash-message";
 
@@ -321,7 +321,7 @@ class PlayerInfoView extends Component {
           {item.invitado&&<TouchableOpacity style={styles.profileCard} onPress={_ => this.props.navigation.navigate('EditPlayerView', { userData:item, language:language })}>
             <View style={styles.imageNameView}>
               <Image
-                source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile}
+                source={item.photo ? { uri: RutaBaseAB+'/images'   + item.photo } : BlankProfile}
                 style={{
                   width: 60,
                   height: 60,
@@ -379,7 +379,7 @@ class PlayerInfoView extends Component {
           <View style={styles.profileCard} onPress={_ => this.props.navigation.navigate('EditPlayerView', { userData:item, language:language })}>
             <View style={styles.imageNameView}>
               <Image
-                source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile}
+                source={item.photo ? { uri: RutaBaseAB+'/images'   + item.photo } : BlankProfile}
                 style={{
                   width: 60,
                   height: 60,

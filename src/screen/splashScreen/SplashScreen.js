@@ -29,14 +29,6 @@ class SplashScreen extends Component {
     this.entranceAnimation();
   }
 
-  performTimeConsumingTask = async () => {
-    return new Promise((resolve) =>
-      setTimeout(() => {
-        resolve('result');
-      }, 2000),
-    );
-  };
-
   componentDidMount() {
    // this.requestUserPermission();
    // this.LoadHandlers();

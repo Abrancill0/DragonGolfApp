@@ -32,6 +32,7 @@ import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
+import { TextField } from 'react-native-material-textfield';
 
 const ScreenWidth = Dimensions.get("window").width;
 
@@ -165,10 +166,13 @@ export default function RoundsView(route) {
             visible={carga}
             color={Colors.Primary} />
         <View style={{flex:.1,justifyContent:'space-between',flexDirection:'row'}}>
-              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.openDrawer()}>
+              <TouchableOpacity style={{padding:10,flex:.1}} onPress={()=> navigation.openDrawer()}>
                 <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
               </TouchableOpacity>
-              <TouchableOpacity style={{padding:10}} onPress={()=> navigation.navigate('AddCourse')}>
+              <View>
+                  <Text style={{ margin:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{myCourses[language]}</Text>
+              </View>
+              <TouchableOpacity style={{padding:10,flex:.1}} onPress={()=> navigation.navigate('AddCourse')}>
                 <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
               </TouchableOpacity>
         </View>
@@ -237,26 +241,18 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />*/}
-      <View style={{flex:.9}}>
+      <View style={{flex:.1}}>
+                  <TextField
+                      placeholder={Search[language]}
+                      tintColor={Colors.Primary}
+                      autoCapitalize="none"
+                      onChangeText={(text) => searchFilterFunction(text,1)}
+                      value={value1}
+                      style={{textAlign:'center',height:'100%',marginTop:0,padding:0}}
+                  />
+      </View>
+      <View style={{flex:.8}}>
           <FlatList
-            ListHeaderComponent={()=>{
-              return(<SearchBar
-                placeholder={courseData[language]}
-                onChangeText={(text) => searchFilterFunction(text,1)}
-                autoCorrect={false}
-                value={value1}
-                inputContainerStyle={{backgroundColor: 'white'}}
-                leftIconContainerStyle={{backgroundColor: 'white'}}
-                inputStyle={{backgroundColor: 'white'}}
-                containerStyle={{
-                height:50,
-                marginHorizontal: 50,
-                backgroundColor: '#FFFFFF',
-                justifyContent: 'space-around',
-                borderTopWidth:0,
-                borderBottomWidth:0.5}}
-              />)
-            }}
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -334,7 +330,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
-    
+    padding:10,
     elevation: 4,
   },
 });

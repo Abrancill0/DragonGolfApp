@@ -26,7 +26,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListaAmigos, QuitarAmigos, ListaInvitados, ListaTodos } from '../../../Services/Services'
+import { ListaAmigos, QuitarAmigos, ListaInvitados, ListaTodos, RutaBaseAB } from '../../../Services/Services'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ripple from 'react-native-material-ripple';
@@ -34,6 +34,7 @@ import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import { showMessage } from "react-native-flash-message";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { TextField } from 'react-native-material-textfield';
 
 const {
       emptyPlayerList,
@@ -275,19 +276,19 @@ export default function RoundsView(route) {
     };
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1,backgroundColor:'white' }}>
         <Spinner
             visible={carga}
             color={Colors.Primary} />
 
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{flex:.1,flexDirection: 'row' }}>
           <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
             <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
               <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
           <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{friends[language]}</Text>
+          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{all[language]}</Text>
           </View>
           <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
@@ -295,8 +296,6 @@ export default function RoundsView(route) {
             </TouchableOpacity>
           </View>
         </View>
-        { visible &&
-          <ScrollView>
       {
         /*
         <ButtonGroup
@@ -372,27 +371,18 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />*/}
+        <View style={{flex:.1}}>
+          <TextField
+              placeholder={Search[language]}
+              tintColor={Colors.Primary}
+              autoCapitalize="none"
+              onChangeText={(text) => searchFilterFunction(text,1)}
+              value={value1}
+              style={{textAlign:'center',height:'100%',marginTop:0,padding:0}}
+          />
+      </View>
+        <View style={{flex:.8}}>
           <FlatList
-            ListHeaderComponent={()=>{
-              return(
-                <SearchBar
-                placeholder={playerData[language]}
-                onChangeText={(text) => searchFilterFunction(text,1)}
-                autoCorrect={false}
-                value={value1}
-                inputContainerStyle={{backgroundColor: 'white'}}
-                leftIconContainerStyle={{backgroundColor: 'white'}}
-                inputStyle={{backgroundColor: 'white'}}
-                containerStyle={{
-                height:50,
-                marginHorizontal: 50,
-                backgroundColor: '#FFFFFF',
-                justifyContent: 'space-around',
-                borderTopWidth:0,
-                borderBottomWidth:0.5}}
-              />
-              )
-            }}
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -412,42 +402,44 @@ export default function RoundsView(route) {
             }
             data={players}
             renderItem={({item}) =>
-            <View style={styles.campos}>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity style={{width: ScreenWidth,padding:10}} activeOpacity={0} onPress={()=> navigation.navigate('PlayerInfo',{item:item})}>
-                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
-                          <View style={{flex:.2}}>
-                            <Image
-                              source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
-                              style={{
-                                alignSelf:'center',
-                                width: 60,
-                                height: 60,
-                                borderRadius: 30,
-                                marginHorizontal:30
-                              }}
-                            />
-                          </View>
-                          <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
-                            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
-                            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nombre}</Text>
-                            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.apellido}</Text>
-                            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
-                          </View>
-                      </View>
-              </TouchableOpacity>
-            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center',width:150 }}>
-              <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
-                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </View>
-              }
-              keyExtractor={item=>item.id}
-              ListEmptyComponent={
+            {
+              console.log(item.photo ? { uri:  RutaBaseAB+'/images' + item.photo } : false)
+                return(
+                <View style={styles.campos}>
+                      <ScrollView
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                      <TouchableOpacity style={{width: ScreenWidth,padding:10}} activeOpacity={0} onPress={()=> navigation.navigate('PlayerInfo',{item:item})}>
+                              <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
+                                  <View style={{flex:.2}}>
+                                    <Image
+                                      source={item.photo ? { uri:  RutaBaseAB+'/images' + item.photo } : BlankProfile }
+                                      style={{
+                                        alignSelf:'center',
+                                        width: 60,
+                                        height: 60,
+                                        borderRadius: 30,
+                                        marginHorizontal:30
+                                      }}
+                                    />
+                                  </View>
+                                  <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.nombre+ ' ' + item.apellido}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{item.ghinnumber}</Text>
+                                  </View>
+                              </View>
+                      </TouchableOpacity>
+                    <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center',width:150 }}>
+                      <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
+                        <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+                      </TouchableOpacity>
+                    </View>
+                  </ScrollView>
+                </View>
+            )}}
+            keyExtractor={item=>item.id}
+            ListEmptyComponent={
               <View style={styles.emptyView}>
                   <FontAwesome5 name={"user-friends"} size={50} color="red" />
                 <Text style={styles.emptyText}>{emptyPlayerList[language]}</Text>
@@ -457,9 +449,7 @@ export default function RoundsView(route) {
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-        
-      </ScrollView>}
-
+          </View>
       </View>
     );
 }
