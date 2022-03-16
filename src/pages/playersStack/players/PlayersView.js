@@ -276,25 +276,21 @@ export default function RoundsView(route) {
     };
 
     return (
-      <View style={{ flex: 1,backgroundColor:'white' }}>
+      <View style={{ flex: 1,backgroundColor:Colors.White }}>
         <Spinner
             visible={carga}
             color={Colors.Primary} />
 
-        <View style={{flex:.1,flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
+        <View style={{flex:.1,justifyContent:'space-between',flexDirection:'row'}}>
+          <TouchableOpacity style={{padding:10,flex:.1,justifyContent:'center'}} onPress={()=> navigation.openDrawer()}>
               <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
+          </TouchableOpacity>
+          <View>
+              <Text style={{ margin:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{all[language]}</Text>
           </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{all[language]}</Text>
-          </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddPlayer')}>
+          <TouchableOpacity style={{padding:10,flex:.1,justifyContent:'center'}} onPress={()=> navigation.navigate('AddPlayer')}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </View>
       {
         /*
@@ -445,6 +441,9 @@ export default function RoundsView(route) {
                 <Text style={styles.emptyText}>{emptyPlayerList[language]}</Text>
               </View>
             }
+            ItemSeparatorComponent={()=>{
+              return(<View style={{marginVertical:5}}/>)
+            }}
             stopLeftSwipe={Dimensions.get('window').width * .5}
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}

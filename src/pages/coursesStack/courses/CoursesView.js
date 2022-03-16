@@ -30,7 +30,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FeatherIcon from 'react-native-vector-icons/Feather'
 import Spinner from 'react-native-loading-spinner-overlay';
 import { TextField } from 'react-native-material-textfield';
 
@@ -166,13 +166,13 @@ export default function RoundsView(route) {
             visible={carga}
             color={Colors.Primary} />
         <View style={{flex:.1,justifyContent:'space-between',flexDirection:'row'}}>
-              <TouchableOpacity style={{padding:10,flex:.1}} onPress={()=> navigation.openDrawer()}>
+              <TouchableOpacity style={{padding:10,flex:.1,justifyContent:'center'}} onPress={()=> navigation.openDrawer()}>
                 <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
               </TouchableOpacity>
               <View>
                   <Text style={{ margin:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{myCourses[language]}</Text>
               </View>
-              <TouchableOpacity style={{padding:10,flex:.1}} onPress={()=> navigation.navigate('AddCourse')}>
+              <TouchableOpacity style={{padding:10,flex:.1,justifyContent:'center'}} onPress={()=> navigation.navigate('AddCourse')}>
                 <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
               </TouchableOpacity>
         </View>
@@ -241,7 +241,7 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />*/}
-      <View style={{flex:.1}}>
+      <View style={{flex:.1,padding:5}}>
                   <TextField
                       placeholder={Search[language]}
                       tintColor={Colors.Primary}

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   Text,
-  ScrollView
+  ScrollView,StyleSheet
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -267,28 +267,23 @@ export default function RoundsView(route) {
     } = Dictionary;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1,backgroundColor:Colors.White }}>
         <Spinner
             visible={carga}
             color={Colors.Primary} />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
-              <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
+        <View style={{ flex:.1,  flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity style={{flex:.1,padding:10}} onPress={()=> navigation.goBack()}>
+                <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
             </TouchableOpacity>
-          </View> 
-            <View style={{ flex:0.6, justifyContent: 'flex-end' }}>
-              <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{notifications[language]}</Text>
+            <View style={{flex:.9,padding:10,justifyContent:'flex-start'}}>
+                <Text style={{fontSize: 16, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold'}}>{notifications[language]}</Text>
             </View>
+        </View>
           {/*<View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{padding:20, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('AddHole', {IDTees:IDTees, NameTee:NameTee})}>
               <MaterialIcon name={'add'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>*/}
-        </View>
-        { visible &&
-          <ScrollView>
-
       {/*<View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
@@ -366,7 +361,8 @@ export default function RoundsView(route) {
         borderBottomWidth:2}}
       />
       </View>*/}
-          <SwipeListView
+      <View style={{flex:.9}}>
+          <FlatList
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -381,35 +377,34 @@ export default function RoundsView(route) {
             }
             data={courses}
             renderItem={({item}) =>
-                    <View style={{flex:.2,padding:5}}>
+                    <View style={styleDos.campos}>
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
-                          <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10}}>
+                          <TouchableOpacity style={{width: ScreenWidth, flexDirection:'row',height:100}} activeOpacity={0} onPress={()=> navigation.navigate('TeesView', {IDCourse: item.id})}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                                <View style={{flex:.85}}>
-                                  <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{player[language]+': '+ item.nombre}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{round[language]+': '+ item.Ro_Name}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+': '+ item.fecha}</Text>
-                                  </View>
-                                </View>
+                              <View style={{flex:.85,justifyContent:'center',alignItems:'center',padding:10}}>
+                                      <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{player[language]+': '+ item.nombre}</Text>
+                                      <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{round[language]+': '+ item.Ro_Name}</Text>
+                                      <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+': '+ item.fecha}</Text>
                               </View>
                           </TouchableOpacity>
-                          <View style={{flexDirection:'row', backgroundColor: 'red',height: 70, alignItems: 'center', justifyContent: 'center' }}>
+                          <View style={{flexDirection:'row', backgroundColor: 'red',height:100, alignItems: 'center', justifyContent: 'center',padding:5 }}>
                           {/*<TouchableOpacity activeOpacity={0} style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('EditCourse', {IDCourse: item.id, Nombre: item.nombre, NombreCorto: item.nombreCorto, Ciudad: item.ciudad, Pais: item.pais})}>
                             <FontAwesome name={'edit'} size={30} color={Colors.White} />
                           </TouchableOpacity>*/}
-                          <TouchableOpacity style={{flex:.2,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
-                            <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
-                          </TouchableOpacity>
+                              <TouchableOpacity onPress={()=> Elimina(item.id)}>
+                                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+                              </TouchableOpacity>
                           </View>
                           </ScrollView>
                     </View>
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}
+              ItemSeparatorComponent={()=>{
+                return(<View style={{marginVertical:5}}/>)
+              }}
               ListEmptyComponent={
               <ListEmptyComponent
                 text={emptynotifications[language]}
@@ -420,10 +415,23 @@ export default function RoundsView(route) {
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-        
-      </ScrollView>}
-
+      </View>
       </View>
     );
 }
+
+
+const styleDos = StyleSheet.create({
+  campos: {
+    backgroundColor:Colors.White,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  },
+});
 

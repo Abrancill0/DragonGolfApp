@@ -1610,7 +1610,6 @@ class SettingsView extends Component {
               //console.warn(res.Result[0])
               this.setState({
                 userData: lista[0],
-                status: false,
                 una:this.state.una + 1
               })
 
@@ -1659,6 +1658,10 @@ class SettingsView extends Component {
                   }
                 );
               });
+
+              this.setState({
+                status:false
+              })
             }  
             else{
                 //setLoading(false)

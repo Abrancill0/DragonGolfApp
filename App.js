@@ -136,6 +136,7 @@ export default class App extends Component {
       language:'es',
       logeado:false,
       isLoading:true,
+      splash:true,
       UsuNombre:'',
       UsuApellidoPaterno:'',
       UsuApelidoMaterno:'',
@@ -242,10 +243,10 @@ export default class App extends Component {
         {
           this.setState({
             logeado:true,
-            isLoading:false,
+            splash:false,
             activo:true
           })
-          //this.LoadUsuario(IDUsuario)
+          this.LoadUsuario(IDUsuario)
         }
         else
         {
@@ -272,7 +273,6 @@ export default class App extends Component {
             let result=res.Result[0]
             this.setState({
               logeado:true,
-              isLoading:false,
               UsuNombre:result.usu_nombre,
               UsuApellidoPaterno:result.usu_apellido_paterno,
               UsuApelidoMaterno:result.usu_apellido_materno
@@ -434,7 +434,7 @@ export default class App extends Component {
     function RoundTab() {
       return (
         <SafeAreaView style={{flex:1}}>
-        <Tab.Navigator lazy tabBarOptions={{showLabel:false, showIcon:true}}>
+        <Tab.Navigator lazy tabBarOptions={{showLabel:false, showIcon:true,scrollEnabled:false}}>
           <Tab.Screen name='createRoundStack' children={createRoundStack} 
           options={({ route }) => ({
             tabBarIcon:({ focused })=>{
@@ -1662,10 +1662,7 @@ export default class App extends Component {
         )
       }
 
-    if (this.state.isLoading) {
-      // We haven't finished checking for the token yet
-      return <SplashScreen />;
-    }
+   
     return (
       <NavigationContainer>
       {/*

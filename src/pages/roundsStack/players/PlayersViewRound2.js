@@ -344,20 +344,19 @@ export default function RoundsView(route) {
             visible={carga}
             color={Colors.Primary} />
 
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
+        <View style={{flex:.1,flexDirection: 'row' ,justifyContent:'center',alignItems:'center'}}>
+          <TouchableOpacity style={{flex:.1}} onPress={()=> navigation.openDrawer()}>
+            <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+          </TouchableOpacity>
+          <View style={{ flex:0.8,alignItems:'center'}}>
+                <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold'}}>{FriendsinRound[language]}</Text>
           </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{FriendsinRound[language]}</Text>
-          </View>
-          {UsuarioCreo==1 && <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRoundsC', {IDCourse:IDCourse, IDRound:IDRound})}>
+          {
+          UsuarioCreo==1 && 
+          <TouchableOpacity style={{flex:.1, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('PlayersViewRoundsC', {IDCourse:IDCourse, IDRound:IDRound})}>
               <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>}
+          </TouchableOpacity>
+          }
         </View>
         {/*<ButtonGroup
               onPress={updateIndex}
@@ -376,7 +375,7 @@ export default function RoundsView(route) {
               <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-        </View>*/}
+        </View>}
 
       {search && <View>
       <SearchBar
@@ -443,7 +442,8 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />
-      </View>}
+        </View>*/}
+      <View style={{flex:.9}}>
           <SwipeListView
             refreshControl={
               <RefreshControl
@@ -464,54 +464,54 @@ export default function RoundsView(route) {
             }
             data={players}
             renderItem={({item}) =>
-            <View style={{flex:.2,padding:5}}>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity activeOpacity={0} onPress={()=> navegaStrokes(item.id,item.strokes,item.nickname)}>
-                <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
-                  <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                    <TouchableOpacity onPress={()=> navegaTees(item.id)}><View style={{flex:1,backgroundColor:item.colorTee}}><Text style={{textAlign:'center'}}>Selec Tee</Text></View></TouchableOpacity>
-                    <View style={{flex:1}}>
-                      <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
-                      <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
-                        <View style={[styles4.teeColorView],{flex:.2}}>
-                          <View style={[styles4.colorSquare, { backgroundColor: item.colorTee, marginVertical:2}]} />
-                        </View>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginLeft:20 }}>{item.tee}</Text>
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicap: '+item.handicap}</Text>
-                      </View>
-                      <View style={{flex: 1, margin:20, marginTop:10, alignSelf:'center'}}>
-                        {/*<TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesRoundView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
-                          <MaterialIcon name={'info-outline'} size={27} color={Colors.Primary} />
-                        </TouchableOpacity>*/ }
-                        <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',marginTop:10, alignSelf:'flex-start'}}>{'Strokes: '+item.handicapAuto}</Text>
-                        {/*<Image
-                          source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
-                          style={{
-                            alignSelf:'center',
-                            width: 60,
-                            height: 60,
-                            borderRadius: 30,
-                            marginHorizontal:30
-                          }}
-                        />*/}
-                      </View>
-                      </View>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-            <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
-              {UsuarioCreo == 1 && <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
-                <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
-              </TouchableOpacity>}
-              {/*<TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
-                <FontAwesome name={'edit'} size={30} color={Colors.White} />
-              </TouchableOpacity>*/}
-            </View>
-          </ScrollView>
-        </View>
+                  <View style={{flex:.2,padding:5}}>
+                    <ScrollView
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}>
+                    <TouchableOpacity activeOpacity={0} onPress={()=> navegaStrokes(item.id,item.strokes,item.nickname)}>
+                      <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
+                        <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
+                          <TouchableOpacity onPress={()=> navegaTees(item.id)}><View style={{flex:1,backgroundColor:item.colorTee}}><Text style={{textAlign:'center'}}>Selec Tee</Text></View></TouchableOpacity>
+                          <View style={{flex:1}}>
+                            <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
+                            <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
+                              <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
+                              <View style={[styles4.teeColorView,{flex:.2}]}>
+                                <View style={[styles4.colorSquare, { backgroundColor: item.colorTee, marginVertical:2}]} />
+                              </View>
+                              <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginLeft:20 }}>{item.tee}</Text>
+                              <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicap: '+item.handicap}</Text>
+                            </View>
+                            <View style={{flex: 1, margin:20, marginTop:10, alignSelf:'center'}}>
+                              {/*<TouchableOpacity style={{marginTop:10, alignSelf:'center'}} onPress={()=> navigation.navigate("StrokesRoundView",{IDRound:IDRound,IDUsuario:item.id, strokes:item.strokes, Nickname:item.nickname})}>
+                                <MaterialIcon name={'info-outline'} size={27} color={Colors.Primary} />
+                              </TouchableOpacity>*/ }
+                              <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',marginTop:10, alignSelf:'flex-start'}}>{'Strokes: '+item.handicapAuto}</Text>
+                              {/*<Image
+                                source={item.photo ? { uri: 'http://13.90.32.51/DragonGolfBackEnd/images' + item.photo } : BlankProfile }
+                                style={{
+                                  alignSelf:'center',
+                                  width: 60,
+                                  height: 60,
+                                  borderRadius: 30,
+                                  marginHorizontal:30
+                                }}
+                              />*/}
+                            </View>
+                            </View>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                  <View style={{flexDirection:'row', backgroundColor: 'red',height: 90, alignItems: 'center', justifyContent: 'center' }}>
+                    {UsuarioCreo == 1 && <TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> Elimina(item.id)}>
+                      <FontAwesome name={'trash-o'} size={30} color={Colors.White} />
+                    </TouchableOpacity>}
+                    {/*<TouchableOpacity style={{flex:.8,padding:5,justifyContent:'center'}} onPress={()=> navigation.navigate('TeesViewRound', {IDCourse: IDCourse, IDRound:IDRound,PlayerID:item.id})}>
+                      <FontAwesome name={'edit'} size={30} color={Colors.White} />
+                    </TouchableOpacity>*/}
+                  </View>
+                </ScrollView>
+              </View>
               }
               keyExtractor={item=>item.id}
               ListEmptyComponent={
@@ -528,6 +528,7 @@ export default function RoundsView(route) {
           <DragonButton title={finish[language]} onPress={()=>finalizar()} />
         </View>*/}
       </View>
+    </View>
     );
 }
 

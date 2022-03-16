@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   Text,
+  StyleSheet,
   ScrollView
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
@@ -317,25 +318,21 @@ export default function RoundsView(route) {
         <Spinner
             visible={carga}
             color={Colors.Primary} />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.openDrawer()}>
-              <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{rondas[language]}</Text>
-          </View>
-          <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40, justifyContent:'flex-end'}} onPress={()=> navigation.navigate('CoursesViewRounds')}>
-              <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
+        <View style={{flex:.1, flexDirection: 'row' ,justifyContent:'center',alignItems:'center'}}>
+              <TouchableOpacity style={{flex:.1}} onPress={()=> navigation.openDrawer()}>
+                  <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
+              </TouchableOpacity>
+              <View style={{ flex:0.8}}>
+                  <Text style={{fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{rondas[language]}</Text>
+              </View>
+              <TouchableOpacity style={{flex: 0.1}} onPress={()=> navigation.navigate('CoursesViewRounds')}>
+                <MaterialIcon name={'add'} size={25} color={Colors.Primary} />
+              </TouchableOpacity>
         </View>
-        { visible &&
+        {/*{ visible &&
           <ScrollView>
 
-      {/*<View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row' }}>
           <View style={{ flex:1, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>Buscar por: </Text>
           </View>
@@ -344,7 +341,7 @@ export default function RoundsView(route) {
               <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
             </TouchableOpacity>
           </View>
-        </View>*/}
+        </View>
 
       {search && <View>
       <SearchBar
@@ -411,7 +408,8 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />
-      </View>}
+      </View>}*/}
+      <View style={{flex:.9}}>
           <FlatList
             refreshControl={
               <RefreshControl
@@ -427,7 +425,7 @@ export default function RoundsView(route) {
             }
             data={rounds}
             renderItem={({item}) =>
-                    <View style={{flex:.2,padding:5}}>
+                    <View style={styleDos.campos}>
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
@@ -473,6 +471,9 @@ export default function RoundsView(route) {
               }
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}
+              ItemSeparatorComponent={()=>{
+                return(<View style={{marginVertical:5}}/>)
+              }}
               ListEmptyComponent={
               <ListEmptyComponent
                 text={Dictionary.emptyRoundList[language]}
@@ -482,10 +483,22 @@ export default function RoundsView(route) {
             }
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-        
-      </ScrollView>}
-
+        </View>
       </View>
     );
 }
+
+const styleDos = StyleSheet.create({
+  campos: {
+    backgroundColor:Colors.White,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  },
+});
 
