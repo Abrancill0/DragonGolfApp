@@ -31,6 +31,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as NavigationService from '../../../routes/NavigationService';
+import { TextField } from 'react-native-material-textfield';
 
 export default function RoundsView(route) {
 
@@ -155,35 +156,21 @@ export default function RoundsView(route) {
     } = Dictionary;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1,backgroundColor:Colors.White }}>
         <Spinner
             visible={carga}
             color={Colors.Primary} />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:0.2, justifyContent: 'flex-start' }}>
-            <TouchableOpacity style={{margin:20, marginTop:40}} onPress={()=> navigation.goBack()}>
+        <View style={{flex:.1,flexDirection:'row'}}>
+          <TouchableOpacity style={{padding:10,flex:.1,justifyContent:'center'}} onPress={()=> navigation.goBack()}>
               <MaterialIcon name={'arrow-back'} size={25} color={Colors.Primary} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex:0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin:20, marginTop:40, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{selectCourse[language]}</Text>
-          </View>
-        </View>
-        { visible &&
-          <ScrollView>
-
-      <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex:1, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:Colors.Primary,fontWeight:'bold', marginHorizontal:50}}>{Search[language]}</Text>
-          </View>
-          <View style={{ flex: 0.3, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{padding:20, justifyContent: "flex-end"}} onPress={()=> setSearch(!search)}>
-              <Entypo name={search?'chevron-thin-up':'chevron-thin-down'} size={30} color={Colors.Primary} />
-            </TouchableOpacity>
+          </TouchableOpacity>
+          <View>
+              <Text style={{ margin:20, fontSize: 16, fontFamily: 'BankGothic Lt BT',alignSelf:'center' , color:Colors.Primary,fontWeight:'bold'}}>{selectCourse[language]}</Text>
           </View>
         </View>
 
-      {search && <View>
+
+      {/*search && <View>
       <SearchBar
         placeholder={courseData[language]}
         onChangeText={(text) => searchFilterFunction(text,1)}
@@ -252,8 +239,18 @@ export default function RoundsView(route) {
         borderTopWidth:1,
         borderBottomWidth:2}}
       />*/}
-      </View>}
-          <SwipeListView
+      <View style={{flex:.1}}>
+          <TextField
+              placeholder={Search[language]}
+              tintColor={Colors.Primary}
+              autoCapitalize="none"
+              onChangeText={(text) => searchFilterFunction(text,1)}
+              value={value1}
+              style={{textAlign:'center',height:'100%',marginTop:0,padding:0}}
+          />
+      </View>
+      <View style={{flex:.8}}>
+          <FlatList
             refreshControl={
               <RefreshControl
                 refreshing={false}
@@ -268,12 +265,22 @@ export default function RoundsView(route) {
             }
             data={courses}
             renderItem={({item}) =>
-                    <View style={{flex:.2,padding:5}}>
+                    <View style={{
+                      backgroundColor:Colors.White,
+                      paddingTop:5,
+                      shadowColor: "#000",
+                      shadowOffset: {
+                        width: 0,
+                        height: 2,
+                      },
+                      shadowOpacity: 0.23,
+                      shadowRadius: 2.62,
+                      elevation: 4,}}>
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
                           <TouchableOpacity activeOpacity={0} onPress={()=> navigation.navigate('configureRounds', {IDCourse:item.id, courseName: item.nombreCorto})}>
-                            <View style={{width: ScreenWidth, flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginVertical:10}}>
+                            <View style={{width: ScreenWidth, flexDirection:'row',height:70,marginVertical:10}}>
                               <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
                                 <View style={{flex:.85}}>
                                   <View style={{flex:.6,justifyContent:'center',paddingHorizontal:10}}>
@@ -308,13 +315,14 @@ export default function RoundsView(route) {
                 iconName="golf"
               />
             }
+            ItemSeparatorComponent={()=>{
+              return(<View style={{marginVertical:5}}/>)
+            }}
             stopLeftSwipe={Dimensions.get('window').width * .5}
             stopRightSwipe={-(Dimensions.get('window').width * .5)}
             //onSwipeValueChange={this.onSwipeValueChange}
           />
-        
-      </ScrollView>}
-
+        </View>
       </View>
     );
 }

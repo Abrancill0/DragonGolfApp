@@ -471,15 +471,16 @@ export default function RoundsView(route) {
                     <TouchableOpacity activeOpacity={0} onPress={()=> navegaStrokes(item.id,item.strokes,item.nickname)}>
                       <View style={{width: ScreenWidth,flexDirection:'row',height:70,backgroundColor:'#f1f2f2',marginHorizontal:10,marginVertical:10}}>
                         <View style={{flex:.05,backgroundColor:'#123c5b'}}/>
-                          <TouchableOpacity onPress={()=> navegaTees(item.id)}><View style={{flex:1,backgroundColor:item.colorTee}}><Text style={{textAlign:'center'}}>Selec Tee</Text></View></TouchableOpacity>
+                          <TouchableOpacity onPress={()=> navegaTees(item.id)}><View style={{flex:1,backgroundColor:item.colorTee,padding:10}}><Text style={{textAlign:'center'}}>Selec Tee</Text></View></TouchableOpacity>
                           <View style={{flex:1}}>
                             <View style={{flex:1, flexDirection:'row',paddingHorizontal:10}}>
                             <View style={{flex:.8,justifyContent:'center',paddingHorizontal:10}}>
-                              <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{item.nickname}</Text>
+                              <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold',marginBottom:5}}>{item.nickname}</Text>
                               <View style={[styles4.teeColorView,{flex:.2}]}>
                                 <View style={[styles4.colorSquare, { backgroundColor: item.colorTee, marginVertical:2}]} />
+                                <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginLeft:5 }}>{item.tee}</Text>
                               </View>
-                              <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b', marginLeft:20 }}>{item.tee}</Text>
+                             
                               <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'handicap: '+item.handicap}</Text>
                             </View>
                             <View style={{flex: 1, margin:20, marginTop:10, alignSelf:'center'}}>

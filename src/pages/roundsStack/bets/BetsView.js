@@ -711,24 +711,24 @@ export default function betsView(route) {
       <Spinner
         visible={carga}
         color={Colors.Primary} />
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row',padding:5}}>
         <View style={{ flex: 0.2, justifyContent: 'flex-start' }}>
-          <TouchableOpacity style={{ margin: 20, marginTop: 40 }} onPress={() => navigation.openDrawer()}>
+          <TouchableOpacity  onPress={() => navigation.openDrawer()}>
             <MaterialIcon name={'menu'} size={25} color={Colors.Primary} />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={{ margin: 20, marginTop: 40 }} onPress={() => setSubebaja(!subebaja)}>
+        <TouchableOpacity onPress={() => setSubebaja(!subebaja)}>
           <FontAwesome name={subebaja ? 'toggle-on' : 'toggle-off'} size={20} color={Colors.Primary} />
         </TouchableOpacity>
         <View style={{ flex: 0.6, justifyContent: 'flex-start' }}>
-          <Text style={{ margin: 20, marginTop: 40, fontSize: 16, fontFamily: 'BankGothic Lt BT', alignSelf: 'center', color: Colors.Primary, fontWeight: 'bold' }}>{bets[language]}</Text>
+          <Text style={{ fontSize: 16, fontFamily: 'BankGothic Lt BT', alignSelf: 'center', color: Colors.Primary, fontWeight: 'bold' }}>{bets[language]}</Text>
         </View>
-        <TouchableOpacity style={{ margin: 20, marginTop: 40 }} onPress={() => cambia2()}>
+        <TouchableOpacity onPress={() => cambia2()}>
           <MaterialIcon name={'sync'} size={25} color={Colors.Primary} />
         </TouchableOpacity>
       </View>
 
-      {search && <View style={{ margin: 5,width:'100%' }}>
+      {/*search && <View style={{ margin: 5,width:'100%' }}>
         <SearchBar
           icon={() => <Entypo name={'magnifying-glass'} size={20} color={Colors.Primary} />}
           placeholder={nickname[language]}
@@ -747,9 +747,9 @@ export default function betsView(route) {
             borderBottomWidth: 0.5
           }}
         />
-      </View>}
+      </View>*/}
 
-                <View style={{ flexDirection: 'row', padding:20 }}>
+                <View style={{ flexDirection: 'row' }}>
                       <TouchableOpacity style={{marginLeft:20, flex: 0.2, justifyContent: 'flex-start', marginLeft: 15 }} onPress={() => muestraRonda(1, IDRound)}>
                         <Entypo name={collapsed2[0] ? 'chevron-thin-up' : 'chevron-thin-down'} size={20} color={Colors.Primary} />
                       </TouchableOpacity>
@@ -867,7 +867,7 @@ export default function betsView(route) {
                   //onSwipeValueChange={this.onSwipeValueChange}
                   />
                   }
-                  <View style={{ flexDirection: 'row' ,padding:20,width:'100%'}}>
+                  <View style={{ flexDirection: 'row'}}>
                     <TouchableOpacity style={{marginLeft:20, flex: 0.2, justifyContent: 'flex-start', marginLeft: 15 }} onPress={() => muestraRonda(2, IDRound)}>
                         <Entypo name={collapsed2[1] ? 'chevron-thin-up' : 'chevron-thin-down'} size={20} color={Colors.Primary} />
                       </TouchableOpacity>

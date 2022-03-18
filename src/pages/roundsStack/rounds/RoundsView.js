@@ -39,6 +39,7 @@ export default function RoundsView(route) {
 
     const navigation = useNavigation();
     const [IDRound, setIDRound] = useState(0);
+    const [IDCourse, setIDCourse] = useState('');
     const [IDUsuarioCreo, setIDUsuarioCreo] = useState(0);
     const [rounds, setRounds] = useState([]);
     const [arrayholder, setArrayholder] = useState([]);
@@ -72,8 +73,8 @@ export default function RoundsView(route) {
           AsyncStorage.setItem('IDUsuarioCreo', '0');
         }
     console.log(IDRound)
-    console.log(IDCourse)
     setIDRound(IDRound)
+    setIDCourse(IDCourse)
                 setStatus(true)
     let idUsu = await AsyncStorage.getItem('usu_id')
     let language = await AsyncStorage.getItem('language')
@@ -424,15 +425,33 @@ export default function RoundsView(route) {
               />
             }
             data={rounds}
-            renderItem={({item}) =>
-                    <View style={styleDos.campos}>
+            renderItem={({item}) =>{
+
+              console.log(item.id,IDRound)
+              let seleccionado=false
+              if(item.id==IDRound)
+              {
+                seleccionado=true
+              }
+
+            return(
+                    <View style={{
+                      shadowColor: "#000",
+                      shadowOffset: {
+                        width: 0,
+                        height: 2,
+                      },
+                      shadowOpacity: 0.23,
+                      shadowRadius: 2.62,
+                      elevation: 4,
+                    }}>
                         <ScrollView
                           horizontal={true}
                           showsHorizontalScrollIndicator={false}>
                           <TouchableOpacity 
                           style={{
+                            backgroundColor:seleccionado?Colors.Primary:Colors.White,
                             width: ScreenWidth, 
-                            backgroundColor:Colors.White,
                             padding:10,
                             justifyContent:'center',
                             shadowColor: "#000",
@@ -445,12 +464,14 @@ export default function RoundsView(route) {
                             elevation: 11,
                           }} 
                           activeOpacity={0} 
-                          onPress={()=> muestraRonda(item.idUsuCreo,item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)}>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{date[language]+ item.fecha}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{course[language]+': '+ item.nombre}</Text>
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>
-                                    {item.status == 1?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{open[language]}</Text>:
-                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{close[language]}</Text>}
+                          onPress={()=> {
+                            muestraRonda(item.idUsuCreo,item.idCourse,item.id,item.nombreRonda,item.handicap,item.hole,item.adv,item.fecha,item.nombre, item.status)
+                          }}>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:seleccionado?Colors.White:'#123c5b'}}>{date[language]+ item.fecha}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:seleccionado?Colors.White:'#123c5b'}}>{course[language]+': '+ item.nombre}</Text>
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:seleccionado?Colors.White:'#123c5b',fontWeight:'bold'}}>{round[language]+': '+ item.nombreRonda}</Text>
+                                    {item.status == 1?<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT',color:seleccionado?Colors.White:'#123c5b'}}>{open[language]}</Text>:
+                                    <Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:seleccionado?Colors.White:'#123c5b'}}>{close[language]}</Text>}
                                     {/*<Text style={{ fontSize: 13, fontFamily: 'BankGothic Lt BT', color:'#123c5b'}}>{'Hoyo inicial: '+item.hole}</Text>*/}
                               {/*<View style={{flex:.2,padding:5}}>
                               <View style={{flex:.5}}>
@@ -468,7 +489,8 @@ export default function RoundsView(route) {
                           </View>:null}
                           </ScrollView>
                     </View>
-              }
+              )
+              }}
               keyExtractor={item=>item.id}
               //ListHeaderComponent={renderHeader}
               ItemSeparatorComponent={()=>{
