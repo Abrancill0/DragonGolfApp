@@ -242,6 +242,7 @@ export default class App extends Component {
         if (IDUsuario != null )
         {
           this.setState({
+            isLoading:false,
             logeado:true,
             splash:false,
             activo:true
@@ -252,13 +253,16 @@ export default class App extends Component {
         {
           this.setState({
             logeado:false,
-            isLoading:false
+            isLoading:false,
+            splash:false,
+
           })
         }
       } catch (error) {
         this.setState({
           logeado:false,
-          isLoading:false
+          isLoading:false,
+          splash:false,
         })
       }
 
@@ -272,6 +276,7 @@ export default class App extends Component {
           //console.warn(res)
             let result=res.Result[0]
             this.setState({
+              isLoading:false,
               logeado:true,
               UsuNombre:result.usu_nombre,
               UsuApellidoPaterno:result.usu_apellido_paterno,
