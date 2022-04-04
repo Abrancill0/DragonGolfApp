@@ -69,6 +69,8 @@ class HistoryScreen extends Component {
         this.setState({
           language:language
         })
+        console.warn(this.props.route.params.playerId)
+        console.warn(token)
         Historia(token,this.props.route.params.playerId)
         .then((res) => {
           console.warn(res)

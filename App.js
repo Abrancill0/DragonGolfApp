@@ -181,7 +181,7 @@ export default class App extends Component {
   async componentDidMount() {
    await this.performTimeConsumingTask();
 
-    this.loadSesion()//this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
+    this.getUserData()//this.netinfoUnsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
     Dimensions.addEventListener('change', (dimensions) => {
       const { width, height } = dimensions.window;
       //this.setState({ isLandscape: width > height });
@@ -197,10 +197,22 @@ export default class App extends Component {
             language:language
           })
         }
-    if(this.state.conexion){
+    if(token != null){
     InfoUsuarioAB(token)
     .then((res) => {
         if(res.estatus==1){
+
+          let result=res.Result[0]
+            this.setState({
+              isLoading:false,
+              logeado:true,
+              UsuNombre:result.usu_nombre,
+              UsuApellidoPaterno:result.usu_apellido_paterno,
+              UsuApelidoMaterno:result.usu_apellido_materno,
+              splash:false,
+              activo:true
+              //UsuFoto:result.UsuFoto+'?'+Math.random()
+            })
 
             const lista =[
             {
@@ -223,192 +235,12 @@ export default class App extends Component {
       })
     }
     else{
-      this.LoadUsuarioLocal(token)
-    }
-  }
+      this.setState({
+        logeado:false,
+        isLoading:false,
+        splash:false,
 
-  loadSesion = async () => {
-
-    try {
-        let IDUsuario = await AsyncStorage.getItem('usu_id')
-        const language = await AsyncStorage.getItem('language')
-        if (language != null )
-        {
-          this.setState({
-            language:language
-          })
-        }
-        console.warn('lan: '+language)
-        if (IDUsuario != null )
-        {
-          this.setState({
-            isLoading:false,
-            logeado:true,
-            splash:false,
-            activo:true
-          })
-          this.LoadUsuario(IDUsuario)
-        }
-        else
-        {
-          this.setState({
-            logeado:false,
-            isLoading:false,
-            splash:false,
-
-          })
-        }
-      } catch (error) {
-        this.setState({
-          logeado:false,
-          isLoading:false,
-          splash:false,
-        })
-      }
-
-  };
-
-  LoadUsuario(CLVUsuario) 
-  {
-    InfoUsuarioAB(CLVUsuario)
-    .then((res) => {
-        if(res.estatus==1){
-          //console.warn(res)
-            let result=res.Result[0]
-            this.setState({
-              isLoading:false,
-              logeado:true,
-              UsuNombre:result.usu_nombre,
-              UsuApellidoPaterno:result.usu_apellido_paterno,
-              UsuApelidoMaterno:result.usu_apellido_materno
-              //UsuFoto:result.UsuFoto+'?'+Math.random()
-            })
-            const lista =[
-            {
-              id: result.IDUsuario,
-              name: result.usu_nombre,
-              last_name: result.usu_apellido_paterno,
-              last_name2: result.usu_apellido_materno,
-              nick_name: result.usu_nickname,
-              email: result.usu_email,
-              ghin_number: result.usu_ghinnumber,
-              handicap: result.usu_handicapindex,
-              cellphone:result.usu_telefono,
-              //language: result.set_idioma,
-              photo: RutaBaseAB+'/images'  + res.Result[0].usu_imagen
-              //language: result.set_idioma.substring(0,2)
-            }]
-            //console.warn(result)
-            this.setState({
-            userData: lista[0],
-            //language: lista[0].language
-          })
-        }  
-        else{
-            this.setState({
-              isLoading:false
-            })
-            showMessage({
-                message: res.mensaje,
-                type: 'info',
-            });
-        }
-    }).catch(error=>{
-        this.setState({
-          isLoading:false
-        })
-        showMessage({
-            message: "Error de conexión" + error,
-            type:'error',
-        });
-    })
-  }
-
-
-
-  loadSesionLocal = async () => {
-
-    try {
-        let IDUsuario = await AsyncStorage.getItem('usu_id')
-        //console.warn(IDUsuario)
-        if (IDUsuario != null )
-        {
-          this.setState({
-            logeado:true,
-            isLoading:false,
-            activo:true
-          })
-          //this.LoadUsuarioLocal(IDUsuario)
-        }
-        else
-        {
-          this.setState({
-            logeado:false,
-            isLoading:false
-          })
-        }
-      } catch (error) {
-        this.setState({
-          logeado:false,
-          isLoading:false
-        })
-      }
-
-  };
-
-  LoadUsuarioLocal(CLVUsuario) 
-  {
-    try{
-      db.transaction((tx) => {
-
-      let sql = `SELECT * FROM Usuario`
-      //console.warn(sql)
-      tx.executeSql(sql, [], (tx, results) => {
-        //console.warn('Consulta OK')
-        //console.warn(results)
-
-        var len = results.rows.length;
-
-        const tempticket = [];
-
-        for (let i = 0; i < len; i++) {
-          let row = results.rows.item(i);
-          //console.warn(row)
-
-          this.setState({
-              logeado:true,
-              isLoading:false,
-              UsuNombre:row.FirstName,
-              UsuApellidoPaterno:row.FirstLastName,
-              UsuApelidoMaterno:row.LastName
-              //UsuFoto:result.UsuFoto+'?'+Math.random()
-            })
-
-          const lista =[
-            {
-              id: row.OnlineId,
-              name: row.FirstName,
-              last_name: row.FirstLastName,
-              last_name2: row.LastName,
-              nick_name: row.Nickname,
-              email: row.Email,
-              ghin_number: row.GhinNumber,
-              handicap: row.Handicap,
-              cellphone:row.Cellphone,
-              password:row.Password,
-              //photo: 'http://20.115.123.73/dragongolf/images' + res.Result[0].usu_imagen
-            }]
-
-          this.setState({
-            userData: lista[0]
-          })
-        }
-      });
-      //console.warn(tx)
-    }) 
-    }
-    catch(e){
-      //console.warn(e)
+      })
     }
   }
 
@@ -421,7 +253,7 @@ export default class App extends Component {
         {
           text: continuar[this.state.language], onPress: () => {
             AsyncStorage.clear();
-            this.loadSesion()
+            this.getUserData()
           }
         },
       ],
@@ -1623,7 +1455,7 @@ export default class App extends Component {
       const AuthStack  = () => {
         return(
         <StackHome.Navigator screenOptions={{cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}>
-          <StackHome.Screen name='Login' children={() => <Login logeadoHandler={this.loadSesion}/>}
+          <StackHome.Screen name='Login' children={() => <Login logeadoHandler={this.getUserData}/>}
             options={({ route }) => ({
               headerShown:false
             })} />
