@@ -89,7 +89,8 @@ class HistoryScreen extends Component {
                       next_hp: item.StrokeSiguiente,
                       date: moment(item.Fecha).format('DD/MM/YYYY').toString(),
                       date2: new Date(item.Fecha),
-                      IDUsuarioGano: item.IDUsuarioGano
+                      IDUsuarioGano: item.IDUsuarioGano,
+                      Carry: item.Carry
                     }
                 ))
                 this.total = suma

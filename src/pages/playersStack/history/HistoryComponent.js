@@ -18,36 +18,72 @@ export default class HistoryComponent extends Component {
     }
 
     obtenHistorial = async () => {
-        console.warn()
+        let Carry = this.props.item.Carry;
+        console.warn(this.props.item.IDUsuarioGano)
+        console.warn(this.props.language)
+        console.warn(Carry)
         const token = await AsyncStorage.getItem('usu_id')
-        if(this.props.item.IDUsuarioGano == token && this.props.language=='en'){
+        if(this.props.item.IDUsuarioGano == token && this.props.language=='en' && Carry==0){
             this.setState({
                 resultado: 'W'
             })
         }
-        else if(this.props.item.IDUsuarioGano != token && this.props.language=='en'){
+        else if(this.props.item.IDUsuarioGano != token && this.props.language=='en' && Carry==0){
             this.setState({
                 resultado: 'L'
             })
         }
-        else if(this.props.item.IDUsuarioGano == 0 && this.props.language=='en'){
+        else if(this.props.item.IDUsuarioGano == 0 && this.props.language=='en' && Carry==0){
             this.setState({
                 resultado: 'D'
             })
         }
-        else if(this.props.item.IDUsuarioGano == 0 && this.props.language=='es'){
+        else if(this.props.item.IDUsuarioGano == 0 && this.props.language=='es' && Carry==0){
+            console.warn("Entró E")
             this.setState({
                 resultado: 'E'
             })
         }
-        else if(this.props.item.IDUsuarioGano == token && this.props.language=='es'){
+        else if(this.props.item.IDUsuarioGano == token && this.props.language=='es' && Carry==0){
+            console.warn("Entró G")
             this.setState({
                 resultado: 'G'
             })
         }
-        else{
+        else if(this.props.item.IDUsuarioGano != token && this.props.language=='es' && Carry==0){
+            console.warn("Entró G")
             this.setState({
                 resultado: 'P'
+            })
+        }
+        if(this.props.item.IDUsuarioGano == token && this.props.language=='en' && Carry==1){
+            this.setState({
+                resultado: 'Carry, W'
+            })
+        }
+        else if(this.props.item.IDUsuarioGano != token && this.props.language=='en' && Carry==1){
+            this.setState({
+                resultado: 'Carry, L'
+            })
+        }
+        else if(this.props.item.IDUsuarioGano == 0 && this.props.language=='en' && Carry==1){
+            this.setState({
+                resultado: 'Carry, D'
+            })
+        }
+        else if(this.props.item.IDUsuarioGano == 0 && this.props.language=='es' && Carry==1){
+            this.setState({
+                resultado: 'Carry, E'
+            })
+        }
+        else if(this.props.item.IDUsuarioGano == token && this.props.language=='es' && Carry==1){
+            this.setState({
+                resultado: 'Carry, G'
+            })
+        }
+        else if(this.props.item.IDUsuarioGano != token && this.props.language=='es' && Carry==1){
+            this.setState({
+                resultado: 'Carry, P'
             })
         }
     }
